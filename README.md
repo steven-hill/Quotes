@@ -9,7 +9,7 @@
 
 ### Technical details
 - This app was written in Swift 5.9, on Xcode 15.4.
-- Almost entirely SwiftUI. UIKit was used for the UIActivityController on iPad.
+- Almost entirely SwiftUI. UIKit was used for the UIActivityViewController on iPad.
 - The deployment target is iOS 17.5.
 - MVVM, Core Data and Swift concurrency.
 
