@@ -19,4 +19,5 @@
 - Light and dark modes are also supported.
 
 ### Coming soon
-- Unit tests to be added.
+- Unit tests.
+- Improve the accessibility experience.
