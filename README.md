@@ -9,7 +9,7 @@
 - This app was written in Swift 5.9, on Xcode 15.4.
 - The deployment target is iOS 17.5.
 - MVVM, Core Data and Swift concurrency.
-- Unit tests will be added for the networking and persistence layers.
+- Unit tests to be added soon.
 
 - The network code uses Swift concurrency, and there is dependency injection for loose coupling and testability.
 - Persistence is achieved via Core Data. I was looking for an approach which separated Core Data from the rest of the app as much as possible, which ruled out using @FetchRequest in my app's views. For this purpose I wanted to try out Donny Wals' approach of using ObservableObject, the @Published property wrapper and NSFetchedResultsController. You can read his article on it [here](https://www.donnywals.com/fetching-objects-from-core-data-in-a-swiftui-project/).
