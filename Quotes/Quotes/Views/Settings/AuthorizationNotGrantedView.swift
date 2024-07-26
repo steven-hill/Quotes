@@ -17,7 +17,7 @@ struct AuthorizationNotGrantedView: View {
                 .padding()
             
             Button("Enable notifications", systemImage: "bell.badge.fill") {
-                localNotificationManager.goToQuotesDemoInSettingsApp()
+                localNotificationManager.goToQuotesInSettingsApp()
             }
             .buttonStyle(.automatic)
         }

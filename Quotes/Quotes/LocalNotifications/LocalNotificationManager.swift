@@ -53,14 +53,9 @@ class LocalNotificationManager: ObservableObject {
         authorizationGranted = (currentSetting.authorizationStatus == .authorized)
     }
     
-    func goToQuotesDemoInSettingsApp() {
-        if let url = URL(string: UIApplication.openSettingsURLString) {
-            if UIApplication.shared.canOpenURL(url) {
-                Task {
-                    await UIApplication.shared.open(url)
-                }
-            }
-        }
+    func goToQuotesInSettingsApp() {
+        guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
+        Task { await UIApplication.shared.open(url) }
     }
     
     func scheduleUserChosenNotificationTime(userChosenNotificationHour: Int, userChosenNotificationMinute: Int) async throws {
