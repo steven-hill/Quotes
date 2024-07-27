@@ -36,6 +36,8 @@
 		5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */; };
 		5B3FB8012C52EB41000994DC /* QuoteServiceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB8002C52EB41000994DC /* QuoteServiceResult.swift */; };
 		5B3FB8032C52EB69000994DC /* QuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB8022C52EB69000994DC /* QuoteService.swift */; };
+		5B96B27A2C55ADA600255C4D /* QuoteResponse.json in Sources */ = {isa = PBXBuildFile; fileRef = 5B96B2792C55ADA600255C4D /* QuoteResponse.json */; };
+		5B96B27C2C55AE0500255C4D /* InvalidJSON.json in Sources */ = {isa = PBXBuildFile; fileRef = 5B96B27B2C55AE0500255C4D /* InvalidJSON.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 		5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		5B3FB8002C52EB41000994DC /* QuoteServiceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteServiceResult.swift; sourceTree = "<group>"; };
 		5B3FB8022C52EB69000994DC /* QuoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteService.swift; sourceTree = "<group>"; };
+		5B96B2792C55ADA600255C4D /* QuoteResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuoteResponse.json; sourceTree = "<group>"; };
+		5B96B27B2C55AE0500255C4D /* InvalidJSON.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = InvalidJSON.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,7 @@
 		5B3FB7B62C52DE47000994DC /* QuotesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5B96B2722C55AC5B00255C4D /* JSON files */,
 				5B3FB7B72C52DE47000994DC /* QuotesTests.swift */,
 			);
 			path = QuotesTests;
@@ -255,6 +260,15 @@
 				5B3FB8022C52EB69000994DC /* QuoteService.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		5B96B2722C55AC5B00255C4D /* JSON files */ = {
+			isa = PBXGroup;
+			children = (
+				5B96B2792C55ADA600255C4D /* QuoteResponse.json */,
+				5B96B27B2C55AE0500255C4D /* InvalidJSON.json */,
+			);
+			path = "JSON files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,6 +432,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B96B27A2C55ADA600255C4D /* QuoteResponse.json in Sources */,
+				5B96B27C2C55AE0500255C4D /* InvalidJSON.json in Sources */,
 				5B3FB7B82C52DE47000994DC /* QuotesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
