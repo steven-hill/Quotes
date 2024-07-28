@@ -28,7 +28,7 @@ class LocalNotificationManager: ObservableObject {
         }
     }
     
-    let notificationCenter = UNUserNotificationCenter.current()
+    private let notificationCenter = UNUserNotificationCenter.current()
     @Published var authorizationGranted = false
     @Published var hasError: Bool = false
     @Published var notificationError: NotificationError = .none
