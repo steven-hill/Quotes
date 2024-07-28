@@ -23,8 +23,8 @@
 <img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Home%20screen%20(iPhone%20-%20light%20mode).png" width="275" height="575" alt="Home screen in light mode on iPhone"> 
 <img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Home%20screen%20(iPhone%20-%20dark%20mode).png" width="275" height="575" alt="Home screen in dark mode on iPhone">
 <img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Reflection%20sheet%20(iPhone%20-%20light%20mode).png" width="275" height="575" alt="Reflection sheet in light mode on iPhone">
-<img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Saved%20screen%20(iPad%20-%20landscape%3Alight%20mode).png" width="1080" height="810" alt="Saved screen in light mode on iPad in landscape">
-<img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Settings%20screen%20(iPad%20-%20light%20mode).png" width="810" height="1080" alt="Settings screen in light mode on iPad">
+<img src="https://github.com/steven-hill/Quotes/blob/f9e6502cf6d6d5b77af6650291f3ff285fc19ed5/Saved%20screen%20(iPhone%20-%20dark%20mode).png" width="275" height="575" alt="Saved screen in dark mode on iPhone">
+<img src="https://github.com/steven-hill/Quotes/blob/f9e6502cf6d6d5b77af6650291f3ff285fc19ed5/Settings%20sceen%20(iPhone%20-%20light%20mode).png" width="275" height="575" alt="Settings screen in light mode on iPhone">
 
 ### Coming soon
 - Unit tests.
