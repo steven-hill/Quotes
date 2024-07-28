@@ -18,6 +18,8 @@
 - The app includes code to support different size classes, portrait and landscape, and iPhone and iPad.
 - Light and dark modes are also supported.
 
+### Screenshots
+
 ### Coming soon
 - Unit tests.
 - Improve the accessibility experience.
