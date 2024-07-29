@@ -1,14 +1,13 @@
 //
-//  QuotesTests.swift
+//  QuoteServiceTests.swift
 //  QuotesTests
 //
-//  Created by Steven Hill on 25/07/2024.
+//  Created by Steven Hill on 29/07/2024.
 //
 
 import XCTest
-@testable import Quotes
 
-final class QuotesTests: XCTestCase {
+final class QuoteServiceTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

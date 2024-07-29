@@ -1,8 +1,0 @@
-//
-//  InvalidJSON.swift
-//  QuotesTests
-//
-//  Created by Steven Hill on 27/07/2024.
-//
-
-[ {"quote": 40,"a": 500} ]
