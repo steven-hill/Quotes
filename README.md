@@ -5,7 +5,7 @@
 ### Features
 - The app displays a new quote every day via the API in the 'Home' tab. The user can then choose to share this quote with other apps or reflect on the quote and save their thoughts/feelings.
 - Quotes which have been reflected upon will be shown in the 'Saved' tab. The user is then able to view, edit or delete any of them.
-- In 'Settings' the user can configure a local notification to remind them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications).
+- In the 'Settings' tab the user can configure a local notification to remind them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications).
 
 ### Technical details
 - This app was written in Swift 5.9, on Xcode 15.4.
