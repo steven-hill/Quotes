@@ -40,6 +40,7 @@
 		5B812CEB2C5992B900B12213 /* MockQuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CE52C5992B900B12213 /* MockQuoteService.swift */; };
 		5B812CEC2C5992B900B12213 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CE62C5992B900B12213 /* MockURLProtocol.swift */; };
 		5B812CED2C5992B900B12213 /* QuoteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CE72C5992B900B12213 /* QuoteServiceTests.swift */; };
+		5B812CF02C599B0C00B12213 /* QuoteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		5B812CE52C5992B900B12213 /* MockQuoteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockQuoteService.swift; sourceTree = "<group>"; };
 		5B812CE62C5992B900B12213 /* MockURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		5B812CE72C5992B900B12213 /* QuoteServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteServiceTests.swift; sourceTree = "<group>"; };
+		5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 		5B3FB7B62C52DE47000994DC /* QuotesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5B812CEE2C599AEB00B12213 /* ViewModelTests */,
 				5B812CE82C5992B900B12213 /* NetworkingTests */,
 			);
 			path = QuotesTests;
@@ -283,6 +286,14 @@
 				5B812CE72C5992B900B12213 /* QuoteServiceTests.swift */,
 			);
 			path = NetworkingTests;
+			sourceTree = "<group>";
+		};
+		5B812CEE2C599AEB00B12213 /* ViewModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */,
+			);
+			path = ViewModelTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -449,6 +460,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B812CED2C5992B900B12213 /* QuoteServiceTests.swift in Sources */,
+				5B812CF02C599B0C00B12213 /* QuoteViewModelTests.swift in Sources */,
 				5B812CEB2C5992B900B12213 /* MockQuoteService.swift in Sources */,
 				5B812CEC2C5992B900B12213 /* MockURLProtocol.swift in Sources */,
 			);
