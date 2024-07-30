@@ -52,7 +52,6 @@ final class QuoteServiceTests: XCTestCase {
         let result = try await api.fetchQuoteOfTheDay()
         XCTAssertFalse(result.isEmpty)
         XCTAssertEqual(result.count, 1)
-        //XCTAssertEqual(result.count, mockData.count)
     }
     
     func test_FetchQuoteOfTheDay_DecodesCorrectly() async throws {
@@ -73,7 +72,6 @@ final class QuoteServiceTests: XCTestCase {
         
         let mockQuoteService = MockQuoteService()
         let decodedData = mockQuoteService.readMockQuoteResponseJsonFile()
-        print(decodedData)
         let result = try await api.fetchQuoteOfTheDay()
         
         XCTAssertEqual(decodedData, result)
@@ -121,7 +119,7 @@ final class QuoteServiceTests: XCTestCase {
             _ = try api.decoder.decode(QuoteServiceResult.self, from: data)
         } catch {
             print(error.localizedDescription)
-            if error is QuoteService.QuoteServiceError { // Add breakpoint on this line to see decoding error in console
+            if error is QuoteService.QuoteServiceError { 
                 XCTFail("The error should be a JSON decoding error.")
             }
         }
