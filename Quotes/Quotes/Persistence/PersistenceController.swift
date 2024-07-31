@@ -88,3 +88,17 @@ extension PersistenceController {
     }
 }
 
+extension PersistenceController.PersistenceError: Equatable {
+    static func == (lhs: PersistenceController.PersistenceError, rhs: PersistenceController.PersistenceError) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none):
+            return true
+        case (.loadingError(let lhsError), .loadingError(let rhsError)):
+            return lhsError.localizedDescription == rhsError.localizedDescription
+        case (.saveError(let lhsError), .saveError(let rhsError)):
+            return lhsError.localizedDescription == rhsError.localizedDescription
+        default:
+            return false
+        }
+    }
+}
