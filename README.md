@@ -19,9 +19,7 @@
 
 ### Currently working on
 - Adding unit tests.
-
-### Coming soon
-- Improve the accessibility experience.
+- Improving the accessibility experience.
 
 ### Screenshots (showing light and dark mode on iPhone)
 
