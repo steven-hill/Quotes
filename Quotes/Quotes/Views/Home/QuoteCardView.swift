@@ -36,6 +36,8 @@ struct QuoteCardView: View {
             Text(quoteAuthor)
                 .font(.title2)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
         .padding(.all)
         .background {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
