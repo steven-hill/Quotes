@@ -22,8 +22,11 @@ struct ReflectOnQuoteView: View {
         NavigationStack {
             VStack {
                 Text(quoteContent + " - " + quoteAuthor)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
                 ZStack {
                     TextEditor(text: $userThoughts)
+                        .accessibilityLabel("Enter your reflection.")
                         .foregroundStyle(.primary)
                         .background(.gray)
                         .overlay(
@@ -54,6 +57,7 @@ struct ReflectOnQuoteView: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .accessibilityLabel("Cancel reflection and don't save.")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
@@ -73,6 +77,7 @@ struct ReflectOnQuoteView: View {
                             }
                         }
                     }
+                    .accessibilityLabel("Save quote and reflection.")
                     .buttonStyle(.bordered)
                     .confirmationDialog("Tapped save button without entering text.", isPresented: $showConfirmationDialog, titleVisibility: .hidden, actions: {
                         Button(role: .destructive, action: {
