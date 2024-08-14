@@ -38,7 +38,6 @@ struct SavedCardView: View {
                                     do {
                                         try PersistenceController.shared.delete(savedQuote: savedQuote)
                                     } catch {
-                                        print(error.localizedDescription)
                                         showAlert.toggle()
                                         alertMessage = PersistenceController.shared.persistenceError.localizedDescription
                                     }
@@ -48,6 +47,7 @@ struct SavedCardView: View {
                             } label: {
                                 Label("", systemImage: "ellipsis.circle.fill")
                             }
+                            .accessibilityLabel("Menu")
                             .sheet(isPresented: $isEditReflectionSheetPresented) {
                                 EditReflectionView(savedQuote: savedQuote, quoteContent: savedQuote.quoteContent ?? "Content unavailable", quoteAuthor: savedQuote.quoteAuthor ?? "Author name unavailable", userThoughts: savedQuote.reflection ?? "Reflection unavailable")
                                     .presentationDragIndicator(.visible)
@@ -64,6 +64,8 @@ struct SavedCardView: View {
                     Image(systemName: "quote.opening")
                     Spacer()
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Start quote")
                 Text(savedQuote.quoteContent ?? "Quote unavailable")
                     .minimumScaleFactor(0.5)
                     .padding([.leading, .trailing])
@@ -72,6 +74,8 @@ struct SavedCardView: View {
                     Spacer()
                     Image(systemName: "quote.closing")
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("End quote")
                 Text(savedQuote.quoteAuthor ?? "Author name unavailable")
                     .font(.callout)
             }
@@ -94,8 +98,8 @@ extension SavedCardView {
             let windows = windowScene.windows
             if UIDevice.current.userInterfaceIdiom == .pad {
                 activityController.popoverPresentationController?.sourceView = windows.first
-                activityController.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0) // Puts activityController in the centre of screen.
-                activityController.popoverPresentationController?.permittedArrowDirections = [] // Removes the directional arrow.
+                activityController.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0)
+                activityController.popoverPresentationController?.permittedArrowDirections = []
             }
             windows.first?.rootViewController?.present(activityController, animated: true, completion: nil)
         }
