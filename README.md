@@ -18,8 +18,10 @@
 - The app includes code to support different size classes, portrait and landscape orientation, and light and dark mode.
 
 ### Currently working on
+- Caching the network response.
 - Adding unit tests.
 - Improving the accessibility experience.
+- Modifying Persistence away from using a singleton in order to make it easier to test.
 
 ### Screenshots (showing light and dark mode on iPhone)
 
