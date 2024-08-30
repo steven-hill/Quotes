@@ -21,7 +21,7 @@
 - Caching the network response.
 - Adding unit tests.
 - Improving the accessibility experience.
-- Modifying Persistence away from using a singleton in order to make it easier to test.
+- Modifying PersistenceController to avoid using a singleton in order to improve testability of the persistence layer.
 
 ### Screenshots (showing light and dark mode on iPhone)
 
