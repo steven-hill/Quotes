@@ -36,6 +36,9 @@
 		5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */; };
 		5B3FB8012C52EB41000994DC /* QuoteServiceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB8002C52EB41000994DC /* QuoteServiceResult.swift */; };
 		5B3FB8032C52EB69000994DC /* QuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB8022C52EB69000994DC /* QuoteService.swift */; };
+		5B7CC8E02C861FD100DDE9D4 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CC8DF2C861FD100DDE9D4 /* CacheManager.swift */; };
+		5B7CC8E22C87333200DDE9D4 /* CacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CC8E12C87333200DDE9D4 /* CacheManagerTests.swift */; };
+		5B7CC8E42C873E7C00DDE9D4 /* MockCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CC8E32C873E7C00DDE9D4 /* MockCacheManager.swift */; };
 		5B812CE92C5992B900B12213 /* InvalidJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B812CE22C5992B900B12213 /* InvalidJSON.json */; };
 		5B812CEA2C5992B900B12213 /* QuoteResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B812CE32C5992B900B12213 /* QuoteResponse.json */; };
 		5B812CEB2C5992B900B12213 /* MockQuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CE52C5992B900B12213 /* MockQuoteService.swift */; };
@@ -94,6 +97,9 @@
 		5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		5B3FB8002C52EB41000994DC /* QuoteServiceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteServiceResult.swift; sourceTree = "<group>"; };
 		5B3FB8022C52EB69000994DC /* QuoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteService.swift; sourceTree = "<group>"; };
+		5B7CC8DF2C861FD100DDE9D4 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		5B7CC8E12C87333200DDE9D4 /* CacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManagerTests.swift; sourceTree = "<group>"; };
+		5B7CC8E32C873E7C00DDE9D4 /* MockCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCacheManager.swift; sourceTree = "<group>"; };
 		5B812CE22C5992B900B12213 /* InvalidJSON.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = InvalidJSON.json; sourceTree = "<group>"; };
 		5B812CE32C5992B900B12213 /* QuoteResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QuoteResponse.json; sourceTree = "<group>"; };
 		5B812CE52C5992B900B12213 /* MockQuoteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockQuoteService.swift; sourceTree = "<group>"; };
@@ -275,6 +281,7 @@
 			children = (
 				5B3FB8002C52EB41000994DC /* QuoteServiceResult.swift */,
 				5B3FB8022C52EB69000994DC /* QuoteService.swift */,
+				5B7CC8DF2C861FD100DDE9D4 /* CacheManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -295,6 +302,8 @@
 				5B812CE52C5992B900B12213 /* MockQuoteService.swift */,
 				5B812CE62C5992B900B12213 /* MockURLProtocol.swift */,
 				5B812CE72C5992B900B12213 /* QuoteServiceTests.swift */,
+				5B7CC8E12C87333200DDE9D4 /* CacheManagerTests.swift */,
+				5B7CC8E32C873E7C00DDE9D4 /* MockCacheManager.swift */,
 			);
 			path = NetworkingTests;
 			sourceTree = "<group>";
@@ -450,6 +459,7 @@
 				5B3FB7F02C52E57D000994DC /* SettingsView.swift in Sources */,
 				5B3FB7F62C52E6D2000994DC /* ZenQuotesAttributionView.swift in Sources */,
 				5B3FB7EE2C52E537000994DC /* EditReflectionView.swift in Sources */,
+				5B7CC8E02C861FD100DDE9D4 /* CacheManager.swift in Sources */,
 				5B3FB7E82C52E47B000994DC /* NoSearchResultsFoundView.swift in Sources */,
 				5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */,
 				5B3FB7D42C52E0ED000994DC /* QuoteViewModel.swift in Sources */,
@@ -470,7 +480,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B7CC8E22C87333200DDE9D4 /* CacheManagerTests.swift in Sources */,
 				5B812CED2C5992B900B12213 /* QuoteServiceTests.swift in Sources */,
+				5B7CC8E42C873E7C00DDE9D4 /* MockCacheManager.swift in Sources */,
 				5B812CF02C599B0C00B12213 /* QuoteViewModelTests.swift in Sources */,
 				5B177CF62C5ADF4A00CCEC8B /* PersistenceControllerTests.swift in Sources */,
 				5B812CEB2C5992B900B12213 /* MockQuoteService.swift in Sources */,

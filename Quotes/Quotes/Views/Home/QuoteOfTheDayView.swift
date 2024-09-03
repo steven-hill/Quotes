@@ -53,5 +53,5 @@ struct QuoteOfTheDayView: View {
 }
 
 #Preview {
-    QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService()))
+    QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager())))
 }

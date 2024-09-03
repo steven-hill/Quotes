@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct QuotesApp: App {
-    @StateObject var viewModel = QuoteViewModel(quoteService: QuoteService())
+    @StateObject var viewModel = QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager()))
     
     @StateObject var localNotificationManager = LocalNotificationManager()
     

@@ -22,16 +22,24 @@ final class QuoteService: QuoteServiceProtocol {
     }
     
     private let URLString = "https://zenquotes.io/api/today"
+    private let cacheKey = "cachedDailyQuote"
     
     let session: URLSession
     let decoder: JSONDecoder
+    let cacheManager: CacheProtocol
     
-    init(session: URLSession = URLSession.shared, decoder: JSONDecoder = JSONDecoder()) {
+    init(session: URLSession = URLSession.shared, decoder: JSONDecoder = JSONDecoder(), cacheManager: CacheProtocol) {
         self.session = session
         self.decoder = decoder
+        self.cacheManager = cacheManager
     }
     
     func fetchQuoteOfTheDay() async throws -> QuoteServiceResult {
+        
+        if let cachedData = cacheManager.retrieve(key: cacheKey) {
+            return try decoder.decode(QuoteServiceResult.self, from: cachedData)
+        }
+
         guard let url = URL(string: URLString) else {
             throw QuoteServiceError.invalidURL
         }
@@ -42,6 +50,8 @@ final class QuoteService: QuoteServiceProtocol {
             let statusCode = (response as! HTTPURLResponse).statusCode
             throw QuoteServiceError.invalidStatusCode(statusCode: statusCode)
         }
+        
+        cacheManager.save(key: cacheKey, value: data)
         
         do {
             return try decoder.decode(QuoteServiceResult.self, from: data)
