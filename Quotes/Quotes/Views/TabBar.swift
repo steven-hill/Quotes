@@ -14,7 +14,7 @@ struct TabBar: View {
     
     var body: some View {
         TabView() {
-            QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService()))
+            QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager())))
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }

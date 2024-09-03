@@ -11,6 +11,7 @@ import XCTest
 final class QuoteServiceTests: XCTestCase {
     
     private var url: URL!
+    private var mockCacheManager = MockCacheManager()
     
     lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.ephemeral
@@ -19,7 +20,7 @@ final class QuoteServiceTests: XCTestCase {
     }()
     
     lazy var api: QuoteService = {
-        QuoteService(session: session)
+        QuoteService(session: session, cacheManager: mockCacheManager)
     }()
     
     override func setUp() {
@@ -37,7 +38,7 @@ final class QuoteServiceTests: XCTestCase {
             """
             [ {"q":"When you want to be honored by others, you learn to honor them first.","a":"Sathya Sai Baba","h":"<blockquote>&ldquo;When you want to be honored by others, you learn to honor them first.&rdquo; &mdash; <footer>Sathya Sai Baba</footer></blockquote>"} ]
             """.data(using: .utf8)!
-        
+
         MockURLProtocol.requestHandler = { request in
             XCTAssertEqual(request.url?.absoluteString, self.url.absoluteString)
             

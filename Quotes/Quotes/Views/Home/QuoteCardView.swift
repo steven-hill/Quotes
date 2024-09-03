@@ -53,6 +53,9 @@ struct QuoteCardView: View {
             offset = 0
         })
         .animation(.smooth(duration: 1), value: showCard)
+        .onDisappear(perform: {
+            showCard = false
+        })
     }
 }
 
