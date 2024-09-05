@@ -11,25 +11,26 @@ import XCTest
 final class QuoteServiceTests: XCTestCase {
     
     private var url: URL!
-    private var mockCacheManager = MockCacheManager()
+    private var sut: QuoteService!
+    private var mockCacheManager: MockCacheManager!
     
-    lazy var session: URLSession = {
+    lazy var mockSession: URLSession = {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
         return URLSession(configuration: configuration)
     }()
     
-    lazy var api: QuoteService = {
-        QuoteService(session: session, cacheManager: mockCacheManager)
-    }()
-    
     override func setUp() {
         url = URL(string: "https://zenquotes.io/api/today")
+        mockCacheManager = MockCacheManager()
+        sut = QuoteService(session: mockSession, cacheManager: mockCacheManager)
     }
     
     override func tearDown() {
         MockURLProtocol.requestHandler = nil
         url = nil
+        mockCacheManager = nil
+        sut = nil
         super.tearDown()
     }
     
@@ -50,7 +51,7 @@ final class QuoteServiceTests: XCTestCase {
             )!
             return (response, mockData)
         }
-        let result = try await api.fetchQuoteOfTheDay()
+        let result = try await sut.fetchQuoteOfTheDay()
         XCTAssertFalse(result.isEmpty)
         XCTAssertEqual(result.count, 1)
     }
@@ -73,7 +74,7 @@ final class QuoteServiceTests: XCTestCase {
         
         let mockQuoteService = MockQuoteService()
         let decodedData = mockQuoteService.readMockQuoteResponseJsonFile()
-        let result = try await api.fetchQuoteOfTheDay()
+        let result = try await sut.fetchQuoteOfTheDay()
         
         XCTAssertEqual(decodedData, result)
     }
@@ -93,7 +94,7 @@ final class QuoteServiceTests: XCTestCase {
         }
         
         do {
-            let _ = try await api.fetchQuoteOfTheDay()
+            let _ = try await sut.fetchQuoteOfTheDay()
         } catch {
             guard let networkError = error as? QuoteService.QuoteServiceError else {
                 XCTFail("Wrong error type, expecting QuoteService.QuoteServiceError")
@@ -117,7 +118,7 @@ final class QuoteServiceTests: XCTestCase {
         }
         
         do {
-            _ = try api.decoder.decode(QuoteServiceResult.self, from: data)
+            _ = try sut.decoder.decode(QuoteServiceResult.self, from: data)
         } catch {
             print(error.localizedDescription)
             if error is QuoteService.QuoteServiceError { 
