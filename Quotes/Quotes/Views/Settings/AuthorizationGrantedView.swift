@@ -18,22 +18,22 @@ struct AuthorizationGrantedView: View {
         VStack {
             VStack(alignment: .leading) {
                 Text("Each day has a new quote. We'll send you a notification at 10am to ensure you don't miss it.")
-                Text("If you'd like to change the time you receive it, select another time below and tap 'Confirm':")
+                Text("If you prefer a different time, select it below and tap 'Confirm'.")
             }
             .font(.title3)
             .minimumScaleFactor(0.5)
             
-            DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
+            DatePicker("I'd rather receive it at:", selection: $notificationTime, displayedComponents: .hourAndMinute)
                 .datePickerStyle(.compact)
-                .padding(.trailing)
+                .padding([.leading, .trailing])
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Time picker. Button. Activate to choose a different time.")
                 .onChange(of: notificationTime) {
                     isDisabled = false
                 }
             Button("Confirm") {
                 Task {
                     let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
-                    print(components.hour!)
-                    print(components.minute!)
                     try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
                 }
                 isDisabled = true
