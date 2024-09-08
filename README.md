@@ -4,8 +4,8 @@
 
 ### Features
 - The app displays a new quote every day via the API in the 'Home' tab. The user can then choose to share this quote with other apps or reflect on the quote and save their thoughts/feelings.
-- Quotes which have been reflected upon will be shown in the 'Saved' tab. The user is then able to view, edit or delete any of them.
-- In the 'Settings' tab the user can configure a local notification to remind them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications).
+- Quotes which have been reflected upon will be shown in the 'Saved' tab. The user is then able to see the quote and view, edit or delete their reflection.
+- In the 'Settings' tab the user can change the time they receive a local notification. This notification is to remind them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications).
 
 ### Technical details
 - This app was written in Swift 5.9, on Xcode 15.4.
@@ -13,13 +13,14 @@
 - The deployment target is iOS 17.5.
 - MVVM, Core Data and Swift concurrency.
 - The network code uses Swift concurrency, and there is dependency injection for loose coupling and testability.
-- Implemented a network cache with NSCache. Caching will avoid exceeding the API usage limit of 5 per 30 second period. I looked at various caching solutions such as NSCache, URLCache, and in-memory caching and persistent caching. An in-memory NSCache suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API. 
+- The network response is cached using NSCache. Caching will avoid exceeding the API usage limit of 5 requests per 30 second period. I looked at various caching solutions such as NSCache, URLCache, and in-memory caching and persistent caching. An in-memory NSCache suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API.
 - Persistence is achieved via Core Data. I was looking for an approach which separated Core Data from the rest of the app as much as possible, which ruled out using @FetchRequest in my app's views. For this purpose I wanted to try out Donny Wals' approach of using ObservableObject, the @Published property wrapper and NSFetchedResultsController. You can read his article on it [here](https://www.donnywals.com/fetching-objects-from-core-data-in-a-swiftui-project/).
+- Accessibility labels have been added for VoiceOver.
 - iPhone and iPad are both supported.
 - The app includes code to support different size classes, portrait and landscape orientation, and light and dark mode.
 
 ### Currently working on
-- Adding and improving the unit tests.
+- Adding to and improving the unit tests.
 - Improving the accessibility experience.
 - Modifying PersistenceController to avoid using a singleton in order to improve testability of the persistence layer.
 
