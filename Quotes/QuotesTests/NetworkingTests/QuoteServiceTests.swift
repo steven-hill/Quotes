@@ -34,7 +34,8 @@ final class QuoteServiceTests: XCTestCase {
         super.tearDown()
     }
     
-    func test_FetchQuoteOfTheDay_URL_IsValid_And_ReturnsOneResult() async throws {
+    func test_FetchQuoteOfTheDay_URL_IsValid_And_ReturnsOneResult_And_CachesIt() async throws {
+        let mockKey = "cachedDailyQuote"
         let mockData =
             """
             [ {"q":"When you want to be honored by others, you learn to honor them first.","a":"Sathya Sai Baba","h":"<blockquote>&ldquo;When you want to be honored by others, you learn to honor them first.&rdquo; &mdash; <footer>Sathya Sai Baba</footer></blockquote>"} ]
@@ -52,8 +53,11 @@ final class QuoteServiceTests: XCTestCase {
             return (response, mockData)
         }
         let result = try await sut.fetchQuoteOfTheDay()
+        
         XCTAssertFalse(result.isEmpty)
         XCTAssertEqual(result.count, 1)
+        XCTAssertFalse(mockCacheManager.cachedItems.isEmpty)
+        XCTAssertEqual(mockCacheManager.cachedItems.count, 1)
     }
     
     func test_FetchQuoteOfTheDay_DecodesCorrectly() async throws {
