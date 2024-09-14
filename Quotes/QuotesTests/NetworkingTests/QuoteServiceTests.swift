@@ -35,7 +35,6 @@ final class QuoteServiceTests: XCTestCase {
     }
     
     func test_FetchQuoteOfTheDay_URL_IsValid_And_ReturnsOneResult_And_CachesIt() async throws {
-        let mockKey = "cachedDailyQuote"
         let mockData =
             """
             [ {"q":"When you want to be honored by others, you learn to honor them first.","a":"Sathya Sai Baba","h":"<blockquote>&ldquo;When you want to be honored by others, you learn to honor them first.&rdquo; &mdash; <footer>Sathya Sai Baba</footer></blockquote>"} ]
