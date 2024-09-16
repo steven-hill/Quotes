@@ -25,7 +25,7 @@ class FetchRequestStore: NSObject, ObservableObject, FetchRequestStoreProtocol {
     @Published var savedQuotes: [SavedQuote] = []
     @Published var filteredResults = [SavedQuote]()
     @Published var fetchState: FetchState = .none
-    @Published var fetchRequestError: Bool = false
+    @Published var fetchRequestHasError: Bool = false
     let savedQuotesController: NSFetchedResultsController<SavedQuote>
     
     let request = "quoteAuthor CONTAINS[cd] %@"
@@ -44,7 +44,7 @@ class FetchRequestStore: NSObject, ObservableObject, FetchRequestStoreProtocol {
             print("savedQuotes = \(savedQuotes)")
             fetchState = .success(data: savedQuotes)
         } catch {
-            fetchRequestError = true
+            fetchRequestHasError = true
             fetchState = .failure(error: error)
         }
     }
@@ -95,7 +95,7 @@ extension FetchRequestStore {
                 fetchState = .success(data: filteredResults)
             }
         } catch {
-            fetchRequestError = true
+            fetchRequestHasError = true
             fetchState = .failure(error: error)
         }
     }

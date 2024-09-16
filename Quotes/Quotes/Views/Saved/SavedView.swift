@@ -54,7 +54,7 @@ struct SavedView: View {
                 .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
             }
         }
-        .alert("Error", isPresented: $fetched.fetchRequestError, presenting: fetched.fetchState) { detail in
+        .alert("Error", isPresented: $fetched.fetchRequestHasError, presenting: fetched.fetchState) { detail in
             Button("Retry") {
                 fetched.tryFetch()
             }
