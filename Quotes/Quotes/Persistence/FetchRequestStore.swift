@@ -8,7 +8,11 @@
 import Foundation
 import CoreData
 
-class FetchRequestStore: NSObject, ObservableObject {
+protocol FetchRequestStoreProtocol {
+    func tryFetch()
+}
+
+class FetchRequestStore: NSObject, ObservableObject, FetchRequestStoreProtocol {
     
     enum FetchState {
         case none
