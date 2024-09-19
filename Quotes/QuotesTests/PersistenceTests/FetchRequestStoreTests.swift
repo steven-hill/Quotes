@@ -43,25 +43,25 @@ final class FetchRequestStoreTests: XCTestCase {
     }
     
     func test_tryFetch_returnsOneQuoteWhenStoreHasOneObject() {
-        let test = createMockFetchedQuote(quoteContent: "Test content", quoteAuthor: "Test author", reflection: "Test reflection")
+        let quote = createMockFetchedQuote(quoteContent: "content", quoteAuthor: "author", reflection: "reflection")
         
         sut.tryFetch()
-        sut.savedQuotes.append(test)
+        sut.savedQuotes.append(quote)
         
         XCTAssertEqual(sut.savedQuotes.count, 1, "There should be one saved quote in the fetched objects.")
     }
     
     func test_tryFetch_returnsMultipleQuotesWhenStoreHasMultipleObjects() {
-        let test1 = createMockFetchedQuote(quoteContent: "Test content", quoteAuthor: "Test author", reflection: "Test reflection")
-        let test2 = createMockFetchedQuote(quoteContent: "Test content", quoteAuthor: "Test author", reflection: "Test reflection")
-        let test3 = createMockFetchedQuote(quoteContent: "Test content", quoteAuthor: "Test author", reflection: "Test reflection")
+        let quote1 = createMockFetchedQuote(quoteContent: "content1", quoteAuthor: "author1", reflection: "reflection1")
+        let quote2 = createMockFetchedQuote(quoteContent: "content2", quoteAuthor: "author2", reflection: "reflection2")
+        let quote3 = createMockFetchedQuote(quoteContent: "content3", quoteAuthor: "author3", reflection: "reflection3")
         
         sut.tryFetch()
-        sut.savedQuotes.append(test1)
-        sut.savedQuotes.append(test2)
-        sut.savedQuotes.append(test3)
+        sut.savedQuotes.append(quote1)
+        sut.savedQuotes.append(quote2)
+        sut.savedQuotes.append(quote3)
         
-        XCTAssertEqual(sut.savedQuotes.count, 3, "There should be three saved quotes in the fetched objects.")
+        XCTAssertEqual(sut.savedQuotes.count, 3, "There should be three quotes in the fetched objects.")
     }
 
     // MARK: - Helper Method
