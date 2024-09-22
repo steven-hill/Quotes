@@ -20,6 +20,7 @@
 - The app includes code to support different size classes, portrait and landscape orientation, and light and dark mode.
 
 ### Currently working on
+- Adding an 'are you sure?' alert when the user deletes a saved quote as the deletion can't be undone.
 - Adding to and improving the unit tests.
 - Improving the accessibility experience.
 - Modifying PersistenceController to avoid using a singleton in order to improve testability of the persistence layer.
