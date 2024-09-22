@@ -15,6 +15,8 @@ struct SavedCardView: View {
     @State private var isEditReflectionSheetPresented = false
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var showDeleteQuoteAlert: Bool = false
+    @State private var deleteQuoteAlertMessage = "This action can't be undone."
     let savedQuote: SavedQuote
     
     var body: some View {
@@ -35,12 +37,7 @@ struct SavedCardView: View {
                                     isEditReflectionSheetPresented.toggle()
                                 }
                                 Button(role: .destructive) {
-                                    do {
-                                        try PersistenceController.shared.delete(savedQuote: savedQuote)
-                                    } catch {
-                                        showAlert.toggle()
-                                        alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-                                    }
+                                    showDeleteQuoteAlert.toggle()
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
@@ -56,6 +53,20 @@ struct SavedCardView: View {
                                 Button("Please try again") {}
                             } message: { detail in
                                 Text(alertMessage)
+                            }
+                            .alert("Are you sure?", isPresented: $showDeleteQuoteAlert, presenting: deleteQuoteAlertMessage) { detail in
+                                Button("Delete", role: .destructive) {
+                                    withAnimation {
+                                        do {
+                                            try PersistenceController.shared.delete(savedQuote: savedQuote)
+                                        } catch {
+                                            showAlert.toggle()
+                                            alertMessage = PersistenceController.shared.persistenceError.localizedDescription
+                                        }
+                                    }
+                                }
+                            } message: { detail in
+                                Text(deleteQuoteAlertMessage)
                             }
                         }
                     }
