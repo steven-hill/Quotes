@@ -8,9 +8,8 @@
 - In the 'Settings' tab the user can change the time they receive a local notification. This notification is to remind them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications).
 
 ### Technical details
-- This app was written in Swift 5.9, on Xcode 15.4.
-- Almost entirely SwiftUI. UIKit was used for the UIActivityViewController on iPad.
-- The deployment target is iOS 17.5.
+- This app is almost entirely SwiftUI. UIKit was used for the UIActivityViewController on iPad.
+- The deployment target is iOS 17.5+.
 - MVVM, Core Data and Swift concurrency.
 - The network code uses Swift concurrency, and there is dependency injection for loose coupling and testability.
 - The network response is cached using NSCache. Caching will avoid exceeding the API usage limit of 5 requests per 30 second period. I looked at various caching solutions such as NSCache, URLCache, and in-memory caching and persistent caching. An in-memory NSCache suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API.
