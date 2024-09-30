@@ -56,13 +56,11 @@ struct SavedCardView: View {
                             }
                             .alert("Are you sure?", isPresented: $showDeleteQuoteAlert, presenting: deleteQuoteAlertMessage) { detail in
                                 Button("Delete", role: .destructive) {
-                                    withAnimation {
-                                        do {
-                                            try PersistenceController.shared.delete(savedQuote: savedQuote)
-                                        } catch {
-                                            showAlert.toggle()
-                                            alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-                                        }
+                                    do {
+                                        try PersistenceController.shared.delete(savedQuote: savedQuote)
+                                    } catch {
+                                        showAlert.toggle()
+                                        alertMessage = PersistenceController.shared.persistenceError.localizedDescription
                                     }
                                 }
                             } message: { detail in
