@@ -14,6 +14,9 @@ struct SavedView: View {
     @State private var searchText: FetchRequestStore.Search = .init()
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var showDeleteQuoteAlert: Bool = false
+    @State private var deleteQuoteAlertMessage = "This action can't be undone."
+    @State private var quoteToDelete: SavedQuote?
     
     var body: some View {
         NavigationStack {
@@ -29,14 +32,10 @@ struct SavedView: View {
                         SavedCardView(savedQuote: savedQuote)
                             .navigationTitle("Saved")
                             .listRowSeparator(.hidden)
-                            .swipeActions(edge: .trailing) {
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                 Button(role: .destructive) {
-                                    do {
-                                        try PersistenceController.shared.delete(savedQuote: savedQuote)
-                                    } catch {
-                                        showAlert.toggle()
-                                        alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-                                    }
+                                    showDeleteQuoteAlert.toggle()
+                                    quoteToDelete = savedQuote
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
@@ -52,6 +51,18 @@ struct SavedView: View {
                 }
                 .listStyle(PlainListStyle())
                 .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
+                .alert("Are you sure?", isPresented: $showDeleteQuoteAlert, presenting: quoteToDelete) { quoteToDelete in
+                    Button("Delete", role: .destructive) {
+                        do {
+                            try PersistenceController.shared.delete(savedQuote: quoteToDelete)
+                        } catch {
+                            showAlert.toggle()
+                            alertMessage = PersistenceController.shared.persistenceError.localizedDescription
+                        }
+                    }
+                } message: { _ in
+                    Text(deleteQuoteAlertMessage)
+                }
             }
         }
         .alert("Error", isPresented: $fetched.fetchRequestHasError, presenting: fetched.fetchState) { detail in
