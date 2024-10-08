@@ -21,6 +21,7 @@
 ### Currently working on
 - Adding to and improving the unit tests.
 - Improving the accessibility experience.
+- Improving the structure, readability and reusability of some views.
 - Modifying PersistenceController to avoid using a singleton in order to improve testability of the persistence layer.
 
 ### Screenshots (showing light and dark mode on iPhone)
