@@ -9,16 +9,23 @@ import SwiftUI
 import UIKit
 
 struct SavedCardView: View {
+    
+    // MARK: - Environment
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.colorScheme) private var colorScheme
+    
+    // MARK: - State
     @State private var isPopoverPresented = false
     @State private var isEditReflectionSheetPresented = false
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var showDeleteQuoteAlert: Bool = false
-    @State private var deleteQuoteAlertMessage = "This action can't be undone."
+    
+    // MARK: - Constants
+    let deleteQuoteAlertMessage = "This action can't be undone."
     let savedQuote: SavedQuote
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
