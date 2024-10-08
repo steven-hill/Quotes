@@ -106,18 +106,23 @@ struct SavedCardView: View {
 }
 
 extension SavedCardView {
-    func presentActivityController() {
+    private func presentActivityController() {
         var quoteToShare: String = ""
         quoteToShare = "\(savedQuote.quoteContent ?? "Content unavailable")" + " - " + "\(savedQuote.quoteAuthor ?? "Author name unavailable")"
         let activityController = UIActivityViewController(activityItems: [quoteToShare], applicationActivities: nil)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            let windows = windowScene.windows
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
             if UIDevice.current.userInterfaceIdiom == .pad {
-                activityController.popoverPresentationController?.sourceView = windows.first
-                activityController.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0)
-                activityController.popoverPresentationController?.permittedArrowDirections = []
+                configurePopoverForIPad(activityController, in: window)
             }
-            windows.first?.rootViewController?.present(activityController, animated: true, completion: nil)
+            window.rootViewController?.present(activityController, animated: true, completion: nil)
         }
+    }
+    
+    private func configurePopoverForIPad(_ activityController: UIActivityViewController, in window: UIWindow) {
+        activityController.popoverPresentationController?.sourceView = window
+        activityController.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0)
+        activityController.popoverPresentationController?.permittedArrowDirections = []
     }
 }
