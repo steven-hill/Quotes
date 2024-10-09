@@ -96,12 +96,16 @@ struct SavedCardView: View {
                     .font(.callout)
             }
             .padding()
-            .background {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(colorScheme == .light ? .black.opacity(0.1) : .gray)
-                    .stroke(.primary, lineWidth: 2)
-            }
+            .background(cardBackground)
         }
+    }
+    
+    // MARK: - UI Components
+    
+    private var cardBackground: some View {
+        RoundedRectangle(cornerRadius: 20, style: .continuous)
+            .fill(colorScheme == .light ? .black.opacity(0.1) : .gray)
+            .stroke(.primary, lineWidth: 2)
     }
 }
 
