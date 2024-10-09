@@ -34,48 +34,32 @@ struct SavedCardView: View {
                         HStack {
                             Spacer()
                             menuButton
-                            .sheet(isPresented: $isEditReflectionSheetPresented) {
-                                EditReflectionView(savedQuote: savedQuote, quoteContent: savedQuote.quoteContent ?? "Content unavailable", quoteAuthor: savedQuote.quoteAuthor ?? "Author name unavailable", userThoughts: savedQuote.reflection ?? "Reflection unavailable")
-                                    .presentationDragIndicator(.visible)
-                            }
-                            .alert("Error", isPresented: $showAlert, presenting: alertMessage) { detail in
-                                Button("Please try again") {}
-                            } message: { detail in
-                                Text(alertMessage)
-                            }
-                            .alert("Are you sure?", isPresented: $showDeleteQuoteAlert, presenting: deleteQuoteAlertMessage) { detail in
-                                Button("Delete", role: .destructive) {
-                                    do {
-                                        try PersistenceController.shared.delete(savedQuote: savedQuote)
-                                    } catch {
-                                        showAlert.toggle()
-                                        alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-                                    }
+                                .sheet(isPresented: $isEditReflectionSheetPresented) {
+                                    EditReflectionView(savedQuote: savedQuote, quoteContent: savedQuote.quoteContent ?? "Content unavailable", quoteAuthor: savedQuote.quoteAuthor ?? "Author name unavailable", userThoughts: savedQuote.reflection ?? "Reflection unavailable")
+                                        .presentationDragIndicator(.visible)
                                 }
-                            } message: { detail in
-                                Text(deleteQuoteAlertMessage)
-                            }
+                                .alert("Error", isPresented: $showAlert, presenting: alertMessage) { detail in
+                                    Button("Please try again") {}
+                                } message: { detail in
+                                    Text(alertMessage)
+                                }
+                                .alert("Are you sure?", isPresented: $showDeleteQuoteAlert, presenting: deleteQuoteAlertMessage) { detail in
+                                    Button("Delete", role: .destructive) {
+                                        do {
+                                            try PersistenceController.shared.delete(savedQuote: savedQuote)
+                                        } catch {
+                                            showAlert.toggle()
+                                            alertMessage = PersistenceController.shared.persistenceError.localizedDescription
+                                        }
+                                    }
+                                } message: { detail in
+                                    Text(deleteQuoteAlertMessage)
+                                }
                         }
                     }
                 }
-                HStack {
-                    Image(systemName: "quote.opening")
-                    Spacer()
-                }
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("Start quote")
-                Text(savedQuote.quoteContent ?? "Quote unavailable")
-                    .minimumScaleFactor(0.5)
-                    .padding([.leading, .trailing])
-                    .font(.callout)
-                HStack {
-                    Spacer()
-                    Image(systemName: "quote.closing")
-                }
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("End quote")
-                Text(savedQuote.quoteAuthor ?? "Author name unavailable")
-                    .font(.callout)
+                quoteContentView
+                quoteAuthorView
             }
             .padding()
             .background(cardBackground)
@@ -103,6 +87,36 @@ struct SavedCardView: View {
             Label("", systemImage: "ellipsis.circle.fill")
         }
         .accessibilityLabel("Menu")
+    }
+    
+    struct QuoteSymbol: View {
+        let isOpen: Bool
+        
+        var body: some View {
+            HStack {
+                if isOpen { Image(systemName: "quote.opening") }
+                Spacer()
+                if !isOpen { Image(systemName: "quote.closing") }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(isOpen ? "Start quote" : "End quote")
+        }
+    }
+
+    private var quoteContentView: some View {
+        VStack {
+            QuoteSymbol(isOpen: true)
+            Text(savedQuote.quoteContent ?? "Quote unavailable")
+                .minimumScaleFactor(0.5)
+                .padding([.leading, .trailing])
+                .font(.callout)
+            QuoteSymbol(isOpen: false)
+        }
+    }
+
+    private var quoteAuthorView: some View {
+        Text(savedQuote.quoteAuthor ?? "Author name unavailable")
+            .font(.callout)
     }
     
     private var cardBackground: some View {
