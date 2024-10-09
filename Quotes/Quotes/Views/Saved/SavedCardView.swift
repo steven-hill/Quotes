@@ -33,25 +33,7 @@ struct SavedCardView: View {
                     VStack {
                         HStack {
                             Spacer()
-                            Menu {
-                                Button {
-                                    isPopoverPresented.toggle()
-                                    presentActivityController()
-                                } label: {
-                                    Label("Share this quote", systemImage: "square.and.arrow.up")
-                                }
-                                Button("Edit your reflection", systemImage: "square.and.pencil") {
-                                    isEditReflectionSheetPresented.toggle()
-                                }
-                                Button(role: .destructive) {
-                                    showDeleteQuoteAlert.toggle()
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            } label: {
-                                Label("", systemImage: "ellipsis.circle.fill")
-                            }
-                            .accessibilityLabel("Menu")
+                            menuButton
                             .sheet(isPresented: $isEditReflectionSheetPresented) {
                                 EditReflectionView(savedQuote: savedQuote, quoteContent: savedQuote.quoteContent ?? "Content unavailable", quoteAuthor: savedQuote.quoteAuthor ?? "Author name unavailable", userThoughts: savedQuote.reflection ?? "Reflection unavailable")
                                     .presentationDragIndicator(.visible)
@@ -101,6 +83,27 @@ struct SavedCardView: View {
     }
     
     // MARK: - UI Components
+    private var menuButton: some View {
+        Menu {
+            Button {
+                isPopoverPresented.toggle()
+                presentActivityController()
+            } label: {
+                Label("Share this quote", systemImage: "square.and.arrow.up")
+            }
+            Button("Edit your reflection", systemImage: "square.and.pencil") {
+                isEditReflectionSheetPresented.toggle()
+            }
+            Button(role: .destructive) {
+                showDeleteQuoteAlert.toggle()
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        } label: {
+            Label("", systemImage: "ellipsis.circle.fill")
+        }
+        .accessibilityLabel("Menu")
+    }
     
     private var cardBackground: some View {
         RoundedRectangle(cornerRadius: 20, style: .continuous)
