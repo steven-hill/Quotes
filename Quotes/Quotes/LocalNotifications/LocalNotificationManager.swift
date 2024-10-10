@@ -40,7 +40,7 @@ class LocalNotificationManager: ObservableObject {
     
     func requestAuthorization() async throws {
         do {
-            try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
+            try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound, .provisional])
         } catch {
             self.hasError = true
             notificationError = .requestAuthorizationFailure
