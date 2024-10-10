@@ -33,7 +33,7 @@ class LocalNotificationManager: ObservableObject {
     @Published var hasError: Bool = false
     @Published var notificationError: NotificationError = .none
     private let badgeCount = 1
-    private let notificationTitle = "QuoteDemo"
+    private let notificationTitle = "Quotes"
     private let notificationBody = "Today's quote is available. Tap here to see it."
     var userChosenNotificationHour: Int?
     var userChosenNotificationMinute: Int?
