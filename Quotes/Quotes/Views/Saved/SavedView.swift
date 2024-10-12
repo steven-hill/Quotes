@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct SavedView: View {
+    
+    // MARK: - Environment
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.isSearching) private var isSearching
+    
+    // MARK: - Observed object
     @ObservedObject var fetched: FetchRequestStore
+    
+    // MARK: - State
     @State private var searchText: FetchRequestStore.Search = .init()
     @State private var showAlert = false
     @State private var alertMessage = ""
@@ -18,6 +24,7 @@ struct SavedView: View {
     @State private var deleteQuoteAlertMessage = "This action can't be undone."
     @State private var quoteToDelete: SavedQuote?
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             if !searchText.query.isEmpty && fetched.filteredResults.isEmpty {
