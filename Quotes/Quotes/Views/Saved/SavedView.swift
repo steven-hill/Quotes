@@ -41,11 +41,7 @@ struct SavedView: View {
         }
         .searchable(text: $searchText.query, prompt: "Search by author")
         .onChange(of: searchText) { _, newValue in
-            if searchText.query.isEmpty && !isSearching {
-                fetched.reFetchAll()
-            } else {
-                fetched.filterListByAuthor(with: newValue.query)
-            }
+            updateSearchResults(newValue)
         }
     }
     
@@ -95,6 +91,14 @@ struct SavedView: View {
             }
         } message: { _ in
             Text(deleteQuoteAlertMessage)
+        }
+    }
+    
+    private func updateSearchResults(_ newValue: FetchRequestStore.Search) {
+        if newValue.query.isEmpty && !isSearching {
+            fetched.reFetchAll()
+        } else {
+            fetched.filterListByAuthor(with: newValue.query)
         }
     }
 }
