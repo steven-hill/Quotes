@@ -28,9 +28,7 @@ struct EditReflectionView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text(quoteContent + " - " + quoteAuthor)
-                    .accessibilityElement(children: .ignore)
-                    .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
+                quoteContentAndAuthorView
                 ZStack {
                     TextEditor(text: $userThoughts)
                         .accessibilityLabel("Edit your reflection.")
@@ -98,5 +96,12 @@ struct EditReflectionView: View {
                 }
             }
         }
+    }
+    
+    // MARK: - UI components
+    private var quoteContentAndAuthorView: some View {
+        Text(quoteContent + " - " + quoteAuthor)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
     }
 }
