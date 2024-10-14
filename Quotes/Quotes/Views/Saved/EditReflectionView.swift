@@ -29,34 +29,11 @@ struct EditReflectionView: View {
         NavigationStack {
             VStack {
                 quoteContentAndAuthorView
-                ZStack {
-                    TextEditor(text: $userThoughts)
-                        .accessibilityLabel("Edit your reflection.")
-                        .foregroundStyle(.primary)
-                        .background(.gray)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(.primary, lineWidth: 2)
-                        )
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationTitle("Edit reflection")
-                        .scrollDismissesKeyboard(.immediately)
-                    
-                    if userThoughts.isEmpty {
-                        VStack {
-                            HStack {
-                                Text("What are your thoughts on this quote?")
-                                    .foregroundStyle(.secondary)
-                                    .padding(.top, 10)
-                                    .padding(.leading, 10)
-                                Spacer()
-                            }
-                            Spacer()
-                        }
-                    }
-                }
+                reflectionEditor
             }
             .padding()
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Edit reflection")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {
@@ -103,5 +80,26 @@ struct EditReflectionView: View {
         Text(quoteContent + " - " + quoteAuthor)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
+    }
+    
+    private var reflectionEditor: some View {
+        ZStack(alignment: .topLeading) {
+            TextEditor(text: $userThoughts)
+                .accessibilityLabel("Edit your reflection.")
+                .foregroundStyle(.primary)
+                .background(.gray)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(.primary, lineWidth: 2)
+                )
+                .scrollDismissesKeyboard(.immediately)
+            
+            if userThoughts.isEmpty {
+                Text("What are your thoughts on this quote?")
+                    .foregroundStyle(.secondary)
+                    .padding(.top, 10)
+                    .padding(.leading, 10)
+            }
+        }
     }
 }
