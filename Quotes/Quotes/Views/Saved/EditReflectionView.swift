@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct EditReflectionView: View {
+    
+    // MARK: - Environment
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.dismiss) private var dismiss
     
-    let savedQuote: SavedQuote
-    let quoteContent: String
-    let quoteAuthor: String
+    // MARK: - State
     @State var userThoughts: String
     @State private var showConfirmationDialog = false
     @State private var showAlert = false
     @State private var alertMessage = ""
     
+    // MARK: - Constants
+    let savedQuote: SavedQuote
+    let quoteContent: String
+    let quoteAuthor: String
+    
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
