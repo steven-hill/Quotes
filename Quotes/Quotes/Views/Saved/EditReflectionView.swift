@@ -36,36 +36,7 @@ struct EditReflectionView: View {
             .navigationTitle("Edit reflection")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { cancelButton }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
-                        if userThoughts.isEmpty {
-                            showConfirmationDialog.toggle()
-                        } else {
-                            savedQuote.reflection = userThoughts
-                            do {
-                                try PersistenceController.shared.save()
-                                dismiss()
-                            } catch {
-                                showAlert.toggle()
-                                alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-                            }
-                        }
-                    }
-                    .accessibilityLabel("Save quote and reflection.")
-                    .buttonStyle(.bordered)
-                    .confirmationDialog("Tapped save button without any text.", isPresented: $showConfirmationDialog, titleVisibility: .hidden, actions: {
-                        Button(role: .cancel, action: {}, label: {
-                            Text("Keep reflecting")
-                        })
-                    }, message: {
-                        Text("Please add some text so your reflection can be updated.")
-                    })
-                    .alert("Error", isPresented: $showAlert, presenting: alertMessage) { detail in
-                        Button("Ok") {}
-                    } message: { detail in
-                        Text("\(alertMessage). Please try again.")
-                    }
-                }
+                ToolbarItem(placement: .topBarTrailing) { saveButton }
             }
         }
     }
@@ -103,5 +74,41 @@ struct EditReflectionView: View {
             dismiss()
         }
         .accessibilityLabel("Cancel editing and don't save.")
+    }
+    
+    private var saveButton: some View {
+        Button("Save") {
+            saveReflection()
+        }
+        .accessibilityLabel("Save quote and reflection.")
+        .buttonStyle(.bordered)
+        .confirmationDialog("Tapped save button without any text.", isPresented: $showConfirmationDialog, titleVisibility: .hidden, actions: {
+            Button(role: .cancel, action: {}, label: {
+                Text("Keep reflecting")
+            })
+        }, message: {
+            Text("Please add some text so your reflection can be updated.")
+        })
+        .alert("Error", isPresented: $showAlert, presenting: alertMessage) { detail in
+            Button("Ok") {}
+        } message: { detail in
+            Text("\(alertMessage). Please try again.")
+        }
+    }
+    
+    // MARK: - Save method
+    private func saveReflection() {
+        if userThoughts.isEmpty {
+            showConfirmationDialog.toggle()
+        } else {
+            savedQuote.reflection = userThoughts
+            do {
+                try PersistenceController.shared.save()
+                dismiss()
+            } catch {
+                showAlert.toggle()
+                alertMessage = PersistenceController.shared.persistenceError.localizedDescription
+            }
+        }
     }
 }
