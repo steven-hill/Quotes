@@ -35,12 +35,7 @@ struct EditReflectionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Edit reflection")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                    .accessibilityLabel("Cancel editing and don't save.")
-                }
+                ToolbarItem(placement: .topBarLeading) { cancelButton }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         if userThoughts.isEmpty {
@@ -101,5 +96,12 @@ struct EditReflectionView: View {
                     .padding(.leading, 10)
             }
         }
+    }
+    
+    private var cancelButton: some View {
+        Button("Cancel") {
+            dismiss()
+        }
+        .accessibilityLabel("Cancel editing and don't save.")
     }
 }
