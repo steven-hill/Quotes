@@ -89,9 +89,9 @@ struct EditReflectionView: View {
         }, message: {
             Text("Please add some text so your reflection can be updated.")
         })
-        .alert("Error", isPresented: $showAlert, presenting: alertMessage) { detail in
+        .alert("Save failed", isPresented: $showAlert, presenting: alertMessage) { _ in
             Button("Ok") {}
-        } message: { detail in
+        } message: { _ in
             Text("\(alertMessage). Please try again.")
         }
     }
