@@ -21,8 +21,10 @@ struct SavedView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var showDeleteQuoteAlert: Bool = false
-    @State private var deleteQuoteAlertMessage = "This action can't be undone."
     @State private var quoteToDelete: SavedQuote?
+    
+    // MARK: - Constants
+    let deleteQuoteAlertMessage = "This action can't be undone."
     
     // MARK: - Body
     var body: some View {
