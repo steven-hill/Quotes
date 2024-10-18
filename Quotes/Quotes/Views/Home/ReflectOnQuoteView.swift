@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct ReflectOnQuoteView: View {
+    
+    // MARK: - Environment
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) var managedObjectContext
     
+    // MARK: - State
     @State var userThoughts: String = ""
     @State private var showConfirmationDialog = false
     @State private var showAlert = false
     @State private var alertMessage = ""
+    
+    // MARK: - Constants
     let quoteContent: String
     let quoteAuthor: String
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
