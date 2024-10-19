@@ -97,10 +97,10 @@ struct ReflectOnQuoteView: View {
                     }, message: {
                         Text("This quote won't be saved if no reflection is added.")
                     })
-                    .alert("Error saving", isPresented: $showAlert, presenting: alertMessage) { detail in
+                    .alert("Save failed", isPresented: $showAlert, presenting: alertMessage) { _ in
                         Button("Ok") {}
-                    } message: { detail in
-                        Text(alertMessage)
+                    } message: { _ in
+                        Text("\(alertMessage). Please try again.")
                     }
                 }
             }
