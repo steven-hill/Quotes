@@ -35,10 +35,7 @@ struct ReflectOnQuoteView: View {
             .navigationTitle("Reflection")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                    .accessibilityLabel("Cancel reflection and don't save.")
+                    cancelButton
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
@@ -108,6 +105,13 @@ struct ReflectOnQuoteView: View {
                     .padding(.leading, 10)
             }
         }
+    }
+    
+    private var cancelButton: some View {
+        Button("Cancel") {
+            dismiss()
+        }
+        .accessibilityLabel("Cancel reflection and don't save.")
     }
 }
 
