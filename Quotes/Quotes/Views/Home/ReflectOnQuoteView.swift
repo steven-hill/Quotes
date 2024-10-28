@@ -34,12 +34,8 @@ struct ReflectOnQuoteView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Reflection")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    cancelButton
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    saveButton
-                }
+                ToolbarItem(placement: .topBarLeading) { cancelButton }
+                ToolbarItem(placement: .topBarTrailing) { saveButton }
             }
         }
     }
