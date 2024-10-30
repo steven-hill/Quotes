@@ -10,7 +10,7 @@ import SwiftUI
 struct AuthorizationGrantedView: View {
     
     // MARK: - Environment Object
-    @EnvironmentObject var localNotificationManager: LocalNotificationManager
+    @EnvironmentObject private var localNotificationManager: LocalNotificationManager
     
     // MARK: - Environment
     @Environment(\.colorScheme) private var colorScheme
