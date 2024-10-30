@@ -17,7 +17,7 @@ struct AuthorizationGrantedView: View {
     
     // MARK: - State
     @State private var notificationTime = Date.now
-    @State private var isDisabled = true
+    @State private var isConfirmButtonDisabled = true
     
     // MARK: - Body
     var body: some View {
@@ -35,16 +35,16 @@ struct AuthorizationGrantedView: View {
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel("Time picker. Button. Activate to choose a different time.")
                 .onChange(of: notificationTime) {
-                    isDisabled = false
+                    isConfirmButtonDisabled = false
                 }
             Button("Confirm") {
                 Task {
                     let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
                     try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
                 }
-                isDisabled = true
+                isConfirmButtonDisabled = true
             }
-            .disabled(isDisabled)
+            .disabled(isConfirmButtonDisabled)
             .buttonStyle(.borderedProminent)
             .foregroundStyle(colorScheme == .dark ? .black : .white)
         }
