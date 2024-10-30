@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct AuthorizationGrantedView: View {
+    
+    // MARK: - Environment Object
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
+    
+    // MARK: - Environment
     @Environment(\.colorScheme) private var colorScheme
     
+    // MARK: - State
     @State private var notificationTime = Date.now
     @State private var isDisabled = true
     
+    // MARK: - Body
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
