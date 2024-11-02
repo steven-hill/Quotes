@@ -22,12 +22,7 @@ struct AuthorizationGrantedView: View {
     // MARK: - Body
     var body: some View {
         VStack {
-            VStack(alignment: .leading) {
-                Text("Each day has a new quote. We'll send you a notification at 10am to ensure you don't miss it.")
-                Text("If you prefer a different time, select it below and tap 'Confirm'.")
-            }
-            .font(.title3)
-            .minimumScaleFactor(0.5)
+            notificationExplanationText
             
             DatePicker("I'd rather receive it at:", selection: $notificationTime, displayedComponents: .hourAndMinute)
                 .datePickerStyle(.compact)
@@ -50,6 +45,16 @@ struct AuthorizationGrantedView: View {
         }
         .padding()
         .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
+    }
+    
+    // MARK: - UI Components
+    private var notificationExplanationText: some View {
+        VStack(alignment: .leading) {
+            Text("Each day has a new quote. We'll send you a notification at 10am to ensure you don't miss it.")
+            Text("If you prefer a different time, select it below and tap 'Confirm'.")
+        }
+        .font(.title3)
+        .minimumScaleFactor(0.5)
     }
 }
 
