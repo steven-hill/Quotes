@@ -23,15 +23,7 @@ struct AuthorizationGrantedView: View {
     var body: some View {
         VStack {
             notificationExplanationText
-            
-            DatePicker("I'd rather receive it at:", selection: $notificationTime, displayedComponents: .hourAndMinute)
-                .datePickerStyle(.compact)
-                .padding([.leading, .trailing])
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("Time picker. Button. Activate to choose a different time.")
-                .onChange(of: notificationTime) {
-                    isConfirmButtonDisabled = false
-                }
+            timePicker
             Button("Confirm") {
                 Task {
                     let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
@@ -55,6 +47,17 @@ struct AuthorizationGrantedView: View {
         }
         .font(.title3)
         .minimumScaleFactor(0.5)
+    }
+    
+    private var timePicker: some View {
+        DatePicker("I'd rather receive it at:", selection: $notificationTime, displayedComponents: .hourAndMinute)
+            .datePickerStyle(.compact)
+            .padding(.horizontal)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Time picker. Button. Activate to choose a different time.")
+            .onChange(of: notificationTime) {
+                isConfirmButtonDisabled = false
+        }
     }
 }
 
