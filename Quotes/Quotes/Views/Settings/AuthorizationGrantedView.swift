@@ -24,16 +24,7 @@ struct AuthorizationGrantedView: View {
         VStack {
             notificationExplanationText
             timePicker
-            Button("Confirm") {
-                Task {
-                    let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
-                    try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
-                }
-                isConfirmButtonDisabled = true
-            }
-            .disabled(isConfirmButtonDisabled)
-            .buttonStyle(.borderedProminent)
-            .foregroundStyle(colorScheme == .dark ? .black : .white)
+            confirmButton
         }
         .padding()
         .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
@@ -58,6 +49,19 @@ struct AuthorizationGrantedView: View {
             .onChange(of: notificationTime) {
                 isConfirmButtonDisabled = false
         }
+    }
+    
+    private var confirmButton: some View {
+        Button("Confirm") {
+            Task {
+                let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
+                try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
+            }
+            isConfirmButtonDisabled = true
+        }
+        .disabled(isConfirmButtonDisabled)
+        .buttonStyle(.borderedProminent)
+        .foregroundStyle(colorScheme == .dark ? .black : .white)
     }
 }
 
