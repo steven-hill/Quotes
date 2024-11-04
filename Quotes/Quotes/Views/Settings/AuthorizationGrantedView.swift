@@ -52,16 +52,19 @@ struct AuthorizationGrantedView: View {
     }
     
     private var confirmButton: some View {
-        Button("Confirm") {
-            Task {
-                let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
-                try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
-            }
+        Button("Confirm", action: scheduleNotification)
+            .disabled(isConfirmButtonDisabled)
+            .buttonStyle(.borderedProminent)
+            .foregroundStyle(colorScheme == .dark ? .black : .white)
+    }
+    
+    // MARK: - Schedule notification function
+    private func scheduleNotification() {
+        Task {
+            let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
+            try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
             isConfirmButtonDisabled = true
         }
-        .disabled(isConfirmButtonDisabled)
-        .buttonStyle(.borderedProminent)
-        .foregroundStyle(colorScheme == .dark ? .black : .white)
     }
 }
 
