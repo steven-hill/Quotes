@@ -18,13 +18,8 @@ struct SettingsView: View {
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            if localNotificationManager.authorizationGranted {
-                AuthorizationGrantedView()
-                    .navigationTitle("Settings")
-            } else {
-                AuthorizationNotGrantedView()
-                    .navigationTitle("Settings")
-            }
+            content
+                .navigationTitle("Settings")
             Spacer()
             ZenQuotesAttributionView()
         }
@@ -39,6 +34,15 @@ struct SettingsView: View {
             Button("Ok") {}
         } message: { detail in
             Text(localNotificationManager.notificationError.errorDescription)
+        }
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        if localNotificationManager.authorizationGranted {
+            AuthorizationGrantedView()
+        } else {
+            AuthorizationNotGrantedView()
         }
     }
 }
