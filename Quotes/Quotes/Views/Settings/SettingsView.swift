@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    // MARK: - Environment Object
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
+    
+    // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             if localNotificationManager.authorizationGranted {
