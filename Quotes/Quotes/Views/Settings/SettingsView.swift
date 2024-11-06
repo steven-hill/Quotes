@@ -24,11 +24,7 @@ struct SettingsView: View {
             ZenQuotesAttributionView()
         }
         .onChange(of: scenePhase) { _, newValue in
-            if newValue == .active {
-                Task {
-                    await localNotificationManager.getCurrentAuthorizationSetting()
-                }
-            }
+            handleScenePhaseChange(newValue)
         }
         .alert("Error", isPresented: $localNotificationManager.hasError, presenting: localNotificationManager.notificationError) { detail in
             Button("Ok") {}
@@ -43,6 +39,15 @@ struct SettingsView: View {
             AuthorizationGrantedView()
         } else {
             AuthorizationNotGrantedView()
+        }
+    }
+    
+    // MARK: - Handle scene phase change function
+    private func handleScenePhaseChange(_ newValue: ScenePhase) {
+        if newValue == .active {
+            Task {
+                await localNotificationManager.getCurrentAuthorizationSetting()
+            }
         }
     }
 }
