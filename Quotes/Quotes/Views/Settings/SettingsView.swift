@@ -26,10 +26,10 @@ struct SettingsView: View {
         .onChange(of: scenePhase) { _, newValue in
             handleScenePhaseChange(newValue)
         }
-        .alert("Error", isPresented: $localNotificationManager.hasError, presenting: localNotificationManager.notificationError) { detail in
+        .alert("Error", isPresented: $localNotificationManager.hasError, presenting: localNotificationManager.notificationError) { _ in
             Button("Ok") {}
         } message: { detail in
-            Text(localNotificationManager.notificationError.errorDescription)
+            Text(detail.errorDescription)
         }
     }
     
