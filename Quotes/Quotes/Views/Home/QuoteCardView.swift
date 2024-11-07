@@ -23,33 +23,13 @@ struct QuoteCardView: View {
     // MARK: - Body
     var body: some View {
         VStack {
-            HStack {
-                Image(systemName: "quote.opening")
-                Spacer()
-            }
-            
-            Text(quoteContent)
-                .minimumScaleFactor(0.5)
-                .padding([.leading, .trailing])
-                .font(.title)
-            
-            HStack {
-                Spacer()
-                Image(systemName: "quote.closing")
-            }
-            .padding(.bottom)
-            
-            Text(quoteAuthor)
-                .font(.title2)
+            quoteContentView
+            authorView
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
-        .padding(.all)
-        .background {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(colorScheme == .light ? .black.opacity(0.1) : .gray)
-                .stroke(.primary, lineWidth: 2)
-        }
+        .padding()
+        .background(cardBackgroundView)
         .padding()
         .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
         .offset(y: offset)
@@ -65,6 +45,36 @@ struct QuoteCardView: View {
     }
     
     // MARK: - UI components
+    private var quoteContentView: some View {
+        VStack {
+            HStack {
+                Image(systemName: "quote.opening")
+                Spacer()
+            }
+            
+            Text(quoteContent)
+                .minimumScaleFactor(0.5)
+                .padding(.horizontal)
+                .font(.title)
+            
+            HStack {
+                Spacer()
+                Image(systemName: "quote.closing")
+            }
+            .padding(.bottom)
+        }
+    }
+    
+    private var authorView: some View {
+        Text(quoteAuthor)
+            .font(.title2)
+    }
+    
+    private var cardBackgroundView: some View {
+        RoundedRectangle(cornerRadius: 20, style: .continuous)
+            .fill(colorScheme == .light ? .black.opacity(0.1) : .gray)
+            .stroke(.primary, lineWidth: 2)
+    }
 }
 
 #Preview {
