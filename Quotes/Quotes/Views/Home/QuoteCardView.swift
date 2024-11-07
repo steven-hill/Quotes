@@ -13,8 +13,8 @@ struct QuoteCardView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     // MARK: - State
-    @State var showCard = false
-    @State var offset: CGFloat = -UIScreen.main.bounds.height
+    @State private var showCard = false
+    @State private var offset: CGFloat = -UIScreen.main.bounds.height
     
     // MARK: - Constants
     let quoteContent: String
