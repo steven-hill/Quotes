@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct QuoteCardView: View {
+    
+    // MARK: - Environment
     @Environment(\.colorScheme) private var colorScheme
+    
+    // MARK: - State
     @State var showCard = false
     @State var offset: CGFloat = -UIScreen.main.bounds.height
     
+    // MARK: - Constants
     let quoteContent: String
     let quoteAuthor: String
     
+    // MARK: - Body
     var body: some View {
         VStack {
             HStack {
@@ -57,6 +63,8 @@ struct QuoteCardView: View {
             showCard = false
         })
     }
+    
+    // MARK: - UI components
 }
 
 #Preview {
