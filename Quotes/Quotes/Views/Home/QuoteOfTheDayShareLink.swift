@@ -8,13 +8,18 @@
 import SwiftUI
 
 struct QuoteOfTheDayShareLink: View {
+    
+    // MARK: - Environment
     @Environment(\.colorScheme) private var colorScheme
+    
+    // MARK: - Constant
     let item: String
     
+    // MARK: - Body
     var body: some View {
         ShareLink("Share", item: item)
             .tint(.primary)
-            .padding(.all)
+            .padding()
             .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.buttonWidth : .infinity)
             .foregroundStyle(.gray)
             .bold()
