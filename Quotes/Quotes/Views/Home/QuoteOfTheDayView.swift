@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct QuoteOfTheDayView: View {
+    
+    // MARK: - Environment
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    
+    // MARK: - State object
     @StateObject var quoteOfTheDayVM: QuoteViewModel
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             switch quoteOfTheDayVM.state {
@@ -50,6 +55,8 @@ struct QuoteOfTheDayView: View {
             }
         }
     }
+    
+    // MARK: - UI components
 }
 
 #Preview {
