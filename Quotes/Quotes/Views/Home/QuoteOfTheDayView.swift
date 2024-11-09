@@ -18,27 +18,8 @@ struct QuoteOfTheDayView: View {
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            switch quoteOfTheDayVM.state {
-            case .success(_):
-                QuoteCardView(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
-                    .navigationTitle("Quote of the day")
-                
-                if verticalSizeClass == .compact {
-                    HStack {
-                        ReflectOnThisQuoteButton(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
-                        QuoteOfTheDayShareLink(item: quoteOfTheDayVM.quoteToShare)
-                    }
-                } else {
-                    VStack {
-                        ReflectOnThisQuoteButton(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
-                        QuoteOfTheDayShareLink(item: quoteOfTheDayVM.quoteToShare)
-                    }
-                }
-            case .loading:
-                ProgressView()
-            default:
-                ContentUnavailableView("A quote will appear here.", systemImage: "quote.bubble")
-            }
+            content
+                .navigationTitle("Quote of the day")
         }
         .task {
             await quoteOfTheDayVM.getQuoteOfTheDay()
@@ -57,6 +38,35 @@ struct QuoteOfTheDayView: View {
     }
     
     // MARK: - UI components
+    @ViewBuilder
+    private var content: some View {
+        switch quoteOfTheDayVM.state {
+        case .success(_):
+            quoteCardAndButtons
+        case .loading:
+            ProgressView()
+        default:
+            ContentUnavailableView("A quote will appear here.", systemImage: "quote.bubble")
+        }
+    }
+    
+    private var quoteCardAndButtons: some View {
+        VStack {
+            QuoteCardView(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
+            
+            if verticalSizeClass == .compact {
+                HStack {
+                    ReflectOnThisQuoteButton(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
+                    QuoteOfTheDayShareLink(item: quoteOfTheDayVM.quoteToShare)
+                }
+            } else {
+                VStack {
+                    ReflectOnThisQuoteButton(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
+                    QuoteOfTheDayShareLink(item: quoteOfTheDayVM.quoteToShare)
+                }
+            }
+        }
+    }
 }
 
 #Preview {
