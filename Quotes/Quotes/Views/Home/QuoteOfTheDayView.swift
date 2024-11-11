@@ -53,18 +53,22 @@ struct QuoteOfTheDayView: View {
     private var quoteCardAndButtons: some View {
         VStack {
             QuoteCardView(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
-            
             if verticalSizeClass == .compact {
                 HStack {
-                    ReflectOnThisQuoteButton(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
-                    QuoteOfTheDayShareLink(item: quoteOfTheDayVM.quoteToShare)
+                    buttons
                 }
             } else {
                 VStack {
-                    ReflectOnThisQuoteButton(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
-                    QuoteOfTheDayShareLink(item: quoteOfTheDayVM.quoteToShare)
+                    buttons
                 }
             }
+        }
+    }
+    
+    private var buttons: some View {
+        Group {
+            ReflectOnThisQuoteButton(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
+            QuoteOfTheDayShareLink(item: quoteOfTheDayVM.quoteToShare)
         }
     }
 }
