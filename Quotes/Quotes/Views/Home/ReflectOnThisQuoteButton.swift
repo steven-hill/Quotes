@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct ReflectOnThisQuoteButton: View {
+    
+    // MARK: - Environment
     @Environment(\.colorScheme) private var colorScheme
+    
+    // MARK: - State
     @State private var reflectionSheetIsPresented = false
+    
+    // MARK: - Constants
     let quoteContent: String
     let quoteAuthor: String
     let userThoughts: String = ""
     
+    // MARK: - Body
     var body: some View {
         Button("Reflect on this quote", systemImage: "square.and.pencil") {
             reflectionSheetIsPresented.toggle()
