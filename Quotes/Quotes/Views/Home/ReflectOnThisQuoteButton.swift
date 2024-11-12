@@ -27,7 +27,7 @@ struct ReflectOnThisQuoteButton: View {
         }
         .tint(.primary)
         .bold()
-        .padding(.all)
+        .padding()
         .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.buttonWidth : .infinity)
         .background(colorScheme == .light ? .black.opacity(0.1) : .gray)
         .clipShape(RoundedRectangle(cornerRadius: 10))
