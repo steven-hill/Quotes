@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct TabBar: View {
+    
+    // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.managedObjectContext) var managedObjectContext
+    
+    // MARK: - Environment Object
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     
+    // MARK: - Body
     var body: some View {
         TabView() {
             QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager())))
