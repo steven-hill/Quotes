@@ -47,5 +47,6 @@ struct TabBar: View {
 #Preview {
     TabBar()
         .environmentObject(LocalNotificationManager())
+        .environmentObject(AppearanceManager())
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

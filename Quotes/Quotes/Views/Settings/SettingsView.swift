@@ -11,6 +11,7 @@ struct SettingsView: View {
     
     // MARK: - Environment Object
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
+    @EnvironmentObject var appearanceManager: AppearanceManager
     
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
@@ -18,8 +19,38 @@ struct SettingsView: View {
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            content
-                .navigationTitle("Settings")
+            VStack {
+                HStack {
+                    Text("NOTIFICATIONS")
+                        .padding(.horizontal)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+                content
+                    .padding(.bottom, 16)
+                HStack {
+                    Text("APPEARANCE")
+                        .padding(.horizontal)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+                HStack {
+                    Text("Set appearance to:")
+                        .padding(.horizontal)
+                    Spacer()
+                    Picker("Set appearance to", selection: $appearanceManager.selectedAppearance) {
+                        Text("System").tag(Appearance.unspecified)
+                        Text("Light").tag(Appearance.light)
+                        Text("Dark").tag(Appearance.dark)
+                    }
+                }
+                .font(.title3)
+            }
+            .navigationTitle("Settings")
+            .padding(.top, 15)
+            .padding(.horizontal)
             Spacer()
             ZenQuotesAttributionView()
         }
@@ -55,4 +86,5 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .environmentObject(LocalNotificationManager())
+        .environmentObject(AppearanceManager())
 }
