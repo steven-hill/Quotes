@@ -19,40 +19,17 @@ struct SettingsView: View {
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            VStack {
-                HStack {
-                    Text("NOTIFICATIONS")
-                        .padding(.horizontal)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                }
-                content
-                    .padding(.bottom, 16)
-                HStack {
-                    Text("APPEARANCE")
-                        .padding(.horizontal)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                }
-                HStack {
-                    Text("Set appearance to:")
-                        .padding(.horizontal)
-                    Spacer()
-                    Picker("Set appearance to", selection: $appearanceManager.selectedAppearance) {
-                        Text("System").tag(Appearance.unspecified)
-                        Text("Light").tag(Appearance.light)
-                        Text("Dark").tag(Appearance.dark)
-                    }
-                }
-                .font(.title3)
+            VStack(alignment: .leading, spacing: 20) {
+                sectionHeader(title: "NOTIFICATIONS")
+                notificationContent
+                sectionHeader(title: "APPEARANCE")
+                appearanceContent
+                Spacer()
+                ZenQuotesAttributionView()
             }
             .navigationTitle("Settings")
-            .padding(.top, 15)
+            .padding(.top, 8)
             .padding(.horizontal)
-            Spacer()
-            ZenQuotesAttributionView()
         }
         .onChange(of: scenePhase) { _, newValue in
             handleScenePhaseChange(newValue)
@@ -64,13 +41,34 @@ struct SettingsView: View {
         }
     }
     
+    // MARK: - UI Components
     @ViewBuilder
-    private var content: some View {
+    private var notificationContent: some View {
         if localNotificationManager.authorizationGranted {
             AuthorizationGrantedView()
         } else {
             AuthorizationNotGrantedView()
         }
+    }
+    
+    private func sectionHeader(title: String) -> some View {
+        Text(title)
+            .font(.subheadline)
+            .foregroundStyle(.secondary)
+    }
+    
+    private var appearanceContent: some View {
+        HStack {
+            Text("Set appearance to:")
+                .padding(.horizontal)
+            Spacer()
+            Picker("Set appearance to", selection: $appearanceManager.selectedAppearance) {
+                Text("System").tag(Appearance.unspecified)
+                Text("Light").tag(Appearance.light)
+                Text("Dark").tag(Appearance.dark)
+            }
+        }
+        .font(.title3)
     }
     
     // MARK: - Handle scene phase change function
