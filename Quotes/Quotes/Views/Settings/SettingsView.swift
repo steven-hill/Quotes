@@ -19,17 +19,21 @@ struct SettingsView: View {
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 20) {
-                sectionHeader(title: "NOTIFICATIONS")
-                notificationContent
-                sectionHeader(title: "APPEARANCE")
-                appearanceContent
-                Spacer()
-                ZenQuotesAttributionView()
+            ScrollView {
+                VStack() {
+                    sectionHeader(title: "NOTIFICATIONS")
+                    notificationContent
+                    Divider()
+                    sectionHeader(title: "APPEARANCE")
+                        .padding(.top, 8)
+                    appearanceContent
+                    Divider()
+                    ZenQuotesAttributionView()
+                }
+                .padding(.top, 8)
+                .padding(.horizontal)
             }
             .navigationTitle("Settings")
-            .padding(.top, 8)
-            .padding(.horizontal)
         }
         .onChange(of: scenePhase) { _, newValue in
             handleScenePhaseChange(newValue)
@@ -52,22 +56,25 @@ struct SettingsView: View {
     }
     
     private func sectionHeader(title: String) -> some View {
-        Text(title)
-            .font(.subheadline)
-            .foregroundStyle(.secondary)
+        HStack {
+            Text(title)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            Spacer()
+        }
     }
     
     private var appearanceContent: some View {
-        HStack {
+        HStack() {
             Text("Set appearance to:")
-                .padding(.horizontal)
-            Spacer()
+            if UIDevice.current.userInterfaceIdiom == .phone { Spacer() }
             Picker("Set appearance to", selection: $appearanceManager.selectedAppearance) {
                 Text("System").tag(Appearance.unspecified)
                 Text("Light").tag(Appearance.light)
                 Text("Dark").tag(Appearance.dark)
             }
         }
+        .padding(.horizontal)
         .font(.title3)
     }
     
