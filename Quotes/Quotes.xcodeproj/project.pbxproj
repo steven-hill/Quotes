@@ -114,6 +114,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
+		5B3F9D782D10C8EC009151CB /* AppearanceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppearanceTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +200,7 @@
 		5B3FB7B62C52DE47000994DC /* QuotesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
 				5B177CF42C5ADF0F00CCEC8B /* PersistenceTests */,
 				5B812CEE2C599AEB00B12213 /* ViewModelTests */,
 				5B812CE82C5992B900B12213 /* NetworkingTests */,
@@ -362,6 +364,9 @@
 			);
 			dependencies = (
 				5B3FB7B52C52DE47000994DC /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
 			);
 			name = QuotesTests;
 			productName = QuotesTests;
