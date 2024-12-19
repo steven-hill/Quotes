@@ -18,15 +18,17 @@ final class AppearanceManager: ObservableObject {
     private let userDefaults: UserDefaults
     private let windowProvider: () -> UIWindow?
     
-    init(userDefaults: UserDefaults = .standard, windowProvider: @escaping () -> UIWindow? = {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-        return nil
-    }
-        return windowScene.windows.first
-    }) {
+    init(userDefaults: UserDefaults = .standard, windowProvider: @escaping () -> UIWindow? = defaultWindowProvider) {
         self.userDefaults = userDefaults
         self.windowProvider = windowProvider
         self.selectedAppearance = Appearance(rawValue: userDefaults.integer(forKey: "selectedAppearance")) ?? .unspecified
+    }
+    
+    private static func defaultWindowProvider() -> UIWindow? {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return nil
+        }
+        return windowScene.windows.first
     }
     
     func overrideDisplayMode() {
