@@ -62,7 +62,7 @@ struct SavedCardView: View {
                 quoteAuthorView
             }
             .padding()
-            .background(cardBackground)
+            .cardBackground()
         }
     }
     
@@ -117,12 +117,6 @@ struct SavedCardView: View {
     private var quoteAuthorView: some View {
         Text(savedQuote.quoteAuthor ?? "Author name unavailable")
             .font(.callout)
-    }
-    
-    private var cardBackground: some View {
-        RoundedRectangle(cornerRadius: 20, style: .continuous)
-            .fill(colorScheme == .light ? .black.opacity(0.1) : .gray)
-            .stroke(.primary, lineWidth: 2)
     }
 }
 
