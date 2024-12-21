@@ -29,7 +29,7 @@ struct QuoteCardView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
         .padding()
-        .background(cardBackgroundView)
+        .cardBackground()
         .padding()
         .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
         .offset(y: offset)
@@ -68,12 +68,6 @@ struct QuoteCardView: View {
     private var authorView: some View {
         Text(quoteAuthor)
             .font(.title2)
-    }
-    
-    private var cardBackgroundView: some View {
-        RoundedRectangle(cornerRadius: 20, style: .continuous)
-            .fill(colorScheme == .light ? .black.opacity(0.1) : .gray)
-            .stroke(.primary, lineWidth: 2)
     }
 }
 
