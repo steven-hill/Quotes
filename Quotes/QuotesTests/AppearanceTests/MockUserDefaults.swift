@@ -6,15 +6,16 @@
 //
 
 import Foundation
+@testable import Quotes
 
-class MockUserDefaults: UserDefaults {
-    var storedValues: [String: Any] = [:]
-
-    override func set(_ value: Int, forKey defaultName: String) {
-        storedValues[defaultName] = value
+class MockUserDefaults: UserDefaultsProviding {
+    private var storedValues: [String: Any] = [:]
+    
+    func integer(forKey defaultName: String) -> Int {
+        return storedValues[defaultName] as? Int ?? 0
     }
 
-    override func integer(forKey defaultName: String) -> Int {
-        return storedValues[defaultName] as? Int ?? 0
+    func set(_ value: Int, forKey defaultName: String) {
+        storedValues[defaultName] = value
     }
 }
