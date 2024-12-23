@@ -20,10 +20,10 @@
 - The app includes code to support different size classes, portrait and landscape orientation, and light, dark or system appearance.
 
 ### Currently working on
+- Improving the testability of the app.
 - Adding to and improving the unit tests.
 - Improving the accessibility experience.
 - Improving the structure, readability and reusability of some views.
-- Modifying PersistenceController to avoid using a singleton in order to improve testability of the persistence layer.
 
 ### Screenshots (showing light and dark mode on iPhone)
 
