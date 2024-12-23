@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+protocol UserDefaultsProviding {
+    func integer(forKey defaultName: String) -> Int
+    func set(_ value: Int, forKey defaultName: String)
+}
+
+extension UserDefaults: UserDefaultsProviding {}
+
 enum Appearance: Int {
     case unspecified
     case light
@@ -15,10 +22,10 @@ enum Appearance: Int {
 
 final class AppearanceManager: ObservableObject {
     @Published var selectedAppearance: Appearance
-    private let userDefaults: UserDefaults
+    private let userDefaults: UserDefaultsProviding
     private let windowProvider: () -> UIWindow?
     
-    init(userDefaults: UserDefaults = .standard, windowProvider: @escaping () -> UIWindow? = defaultWindowProvider) {
+    init(userDefaults: UserDefaultsProviding = UserDefaults.standard, windowProvider: @escaping () -> UIWindow? = defaultWindowProvider) {
         self.userDefaults = userDefaults
         self.windowProvider = windowProvider
         self.selectedAppearance = Appearance(rawValue: userDefaults.integer(forKey: "selectedAppearance")) ?? .unspecified
