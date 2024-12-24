@@ -11,20 +11,20 @@ import XCTest
 final class AppearanceManagerTests: XCTestCase {
 
     private var mockUserDefaults: MockUserDefaults!
-    private var mockWindow: MockWindow!
+    private var mockWindowProvider: MockWindowProvider!
     private var sut: AppearanceManager!
     
     override func setUp() {
         super.setUp()
         mockUserDefaults = MockUserDefaults()
-        mockWindow = MockWindow()
-        sut = AppearanceManager(userDefaults: mockUserDefaults) { self.mockWindow }
+        mockWindowProvider = MockWindowProvider()
+        sut = AppearanceManager(userDefaults: mockUserDefaults, windowProvider: mockWindowProvider)
     }
     
     override func tearDown() {
         super.tearDown()
         mockUserDefaults = nil
-        mockWindow = nil
+        mockWindowProvider = nil
         sut = nil
     }
     
@@ -35,19 +35,19 @@ final class AppearanceManagerTests: XCTestCase {
     func test_settingAppearanceToLight_setsDisplayModeToLight() {
         sut.setAppearance(.light)
         sut.overrideDisplayMode()
-        XCTAssertEqual(mockWindow.overriddenStyle, .light, "Overridden display mode should be light.")
+        XCTAssertEqual(mockWindowProvider.mockWindow.overrideUserInterfaceStyle, .light, "Should be light.")
     }
     
     func test_settingAppearanceToDark_setsDisplayModeToDark() {
         sut.setAppearance(.dark)
         sut.overrideDisplayMode()
-        XCTAssertEqual(mockWindow.overriddenStyle, .dark, "Overridden display mode should be dark.")
+        XCTAssertEqual(mockWindowProvider.mockWindow.overrideUserInterfaceStyle, .dark, "Should be dark.")
     }
     
     func test_settingAppearanceToSystem_setsDisplayModeToSystem() {
         sut.setAppearance(.unspecified)
         sut.overrideDisplayMode()
-        XCTAssertEqual(mockWindow.overriddenStyle, .unspecified, "Overridden display mode should be system.")
+        XCTAssertEqual(mockWindowProvider.mockWindow.overrideUserInterfaceStyle, .unspecified, "Should be system.")
     }
     
     func test_settingAppearanceToLight_setsUserDefaultsAppearanceToLight() {

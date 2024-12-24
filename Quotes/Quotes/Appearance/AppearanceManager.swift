@@ -23,23 +23,16 @@ enum Appearance: Int {
 final class AppearanceManager: ObservableObject {
     @Published var selectedAppearance: Appearance
     private let userDefaults: UserDefaultsProviding
-    private let windowProvider: () -> UIWindow?
+    private let windowProvider: WindowProviding
     
-    init(userDefaults: UserDefaultsProviding = UserDefaults.standard, windowProvider: @escaping () -> UIWindow? = defaultWindowProvider) {
+    init(userDefaults: UserDefaultsProviding = UserDefaults.standard, windowProvider: WindowProviding = DefaultWindowProvider()) {
         self.userDefaults = userDefaults
         self.windowProvider = windowProvider
         self.selectedAppearance = Appearance(rawValue: userDefaults.integer(forKey: "selectedAppearance")) ?? .unspecified
     }
     
-    private static func defaultWindowProvider() -> UIWindow? {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-            return nil
-        }
-        return windowScene.windows.first
-    }
-    
     func overrideDisplayMode() {
-        guard let window = windowProvider() else { return }
+        guard let window = windowProvider.currentWindow() else { return }
         window.overrideUserInterfaceStyle = UIUserInterfaceStyle(rawValue: selectedAppearance.rawValue) ?? .unspecified
     }
     
