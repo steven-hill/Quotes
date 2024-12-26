@@ -76,6 +76,8 @@ struct SettingsView: View {
         }
         .padding(.horizontal)
         .font(.title3)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Set appearance. Button. Activate to choose between system, light or dark appearance.")
     }
     
     // MARK: - Handle scene phase change function
