@@ -47,6 +47,7 @@
 		5B812CF02C599B0C00B12213 /* QuoteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */; };
 		5BCF66882C98CD8700FFEAAA /* MockFetchRequestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66872C98CD8700FFEAAA /* MockFetchRequestStore.swift */; };
 		5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */; };
+		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,7 @@
 		5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteViewModelTests.swift; sourceTree = "<group>"; };
 		5BCF66872C98CD8700FFEAAA /* MockFetchRequestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchRequestStore.swift; sourceTree = "<group>"; };
 		5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStoreTests.swift; sourceTree = "<group>"; };
+		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -287,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */,
+				5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */,
 			);
 			path = LocalNotifications;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				5B3FB7E82C52E47B000994DC /* NoSearchResultsFoundView.swift in Sources */,
 				5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */,
 				5B3FB7D42C52E0ED000994DC /* QuoteViewModel.swift in Sources */,
+				5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */,
 				5B3FB7DE2C52E285000994DC /* QuoteCardView.swift in Sources */,
 				5B3FB7E62C52E3DC000994DC /* SavedView.swift in Sources */,
 				5B3FB7A22C52DE45000994DC /* QuotesApp.swift in Sources */,
