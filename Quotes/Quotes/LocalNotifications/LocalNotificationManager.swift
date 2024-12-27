@@ -8,6 +8,13 @@
 import Foundation
 import NotificationCenter
 
+protocol NotificationCenterProtocol {
+    func requestAuthorization(options: UNAuthorizationOptions) async throws
+    func notificationSettings() async -> UNNotificationSettings
+    func add(_ request: UNNotificationRequest) async throws
+    func removeAllPendingNotificationRequests()
+}
+
 @MainActor
 class LocalNotificationManager: ObservableObject {
     
@@ -28,7 +35,7 @@ class LocalNotificationManager: ObservableObject {
         }
     }
     
-    private let notificationCenter = UNUserNotificationCenter.current()
+    private let notificationCenter: NotificationCenterProtocol
     @Published var authorizationGranted = false
     @Published var hasError: Bool = false
     @Published var notificationError: NotificationError = .none
@@ -37,6 +44,10 @@ class LocalNotificationManager: ObservableObject {
     private let notificationBody = "Today's quote is available. Tap here to see it."
     var userChosenNotificationHour: Int?
     var userChosenNotificationMinute: Int?
+    
+    init(notificationCenter: NotificationCenterProtocol = NotificationCenterWrapper()) {
+        self.notificationCenter = notificationCenter
+    }
     
     func requestAuthorization() async throws {
         do {
