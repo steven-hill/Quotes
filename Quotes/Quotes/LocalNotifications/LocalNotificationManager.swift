@@ -15,6 +15,11 @@ protocol NotificationCenterProtocol {
     func removeAllPendingNotificationRequests()
 }
 
+protocol ApplicationProtocol {
+    func canOpenURL(_ url: URL) -> Bool
+    func open(_ url: URL) async
+}
+
 @MainActor
 class LocalNotificationManager: ObservableObject {
     
@@ -36,6 +41,7 @@ class LocalNotificationManager: ObservableObject {
     }
     
     private let notificationCenter: NotificationCenterProtocol
+    private let application: ApplicationProtocol
     @Published var authorizationGranted = false
     @Published var hasError: Bool = false
     @Published var notificationError: NotificationError = .none
@@ -45,8 +51,10 @@ class LocalNotificationManager: ObservableObject {
     var userChosenNotificationHour: Int?
     var userChosenNotificationMinute: Int?
     
-    init(notificationCenter: NotificationCenterProtocol = NotificationCenterWrapper()) {
+    init(notificationCenter: NotificationCenterProtocol = NotificationCenterWrapper(),
+         application: ApplicationProtocol = UIApplicationWrapper()) {
         self.notificationCenter = notificationCenter
+        self.application = application
     }
     
     func requestAuthorization() async throws {
@@ -65,8 +73,8 @@ class LocalNotificationManager: ObservableObject {
     }
     
     func goToQuotesInSettingsApp() {
-        guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
-        Task { await UIApplication.shared.open(url) }
+        guard let url = URL(string: UIApplication.openSettingsURLString), application.canOpenURL(url) else { return }
+        Task { await application.open(url) }
     }
     
     func scheduleUserChosenNotificationTime(userChosenNotificationHour: Int, userChosenNotificationMinute: Int) async throws {

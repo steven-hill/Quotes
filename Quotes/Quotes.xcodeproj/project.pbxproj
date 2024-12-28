@@ -36,6 +36,7 @@
 		5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */; };
 		5B3FB8012C52EB41000994DC /* QuoteServiceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB8002C52EB41000994DC /* QuoteServiceResult.swift */; };
 		5B3FB8032C52EB69000994DC /* QuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB8022C52EB69000994DC /* QuoteService.swift */; };
+		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
 		5B7CC8E02C861FD100DDE9D4 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CC8DF2C861FD100DDE9D4 /* CacheManager.swift */; };
 		5B7CC8E22C87333200DDE9D4 /* CacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CC8E12C87333200DDE9D4 /* CacheManagerTests.swift */; };
 		5B7CC8E42C873E7C00DDE9D4 /* MockCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CC8E32C873E7C00DDE9D4 /* MockCacheManager.swift */; };
@@ -100,6 +101,7 @@
 		5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		5B3FB8002C52EB41000994DC /* QuoteServiceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteServiceResult.swift; sourceTree = "<group>"; };
 		5B3FB8022C52EB69000994DC /* QuoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteService.swift; sourceTree = "<group>"; };
+		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
 		5B7CC8DF2C861FD100DDE9D4 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		5B7CC8E12C87333200DDE9D4 /* CacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManagerTests.swift; sourceTree = "<group>"; };
 		5B7CC8E32C873E7C00DDE9D4 /* MockCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCacheManager.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			children = (
 				5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */,
 				5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */,
+				5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */,
 			);
 			path = LocalNotifications;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				5B3FB7F92C52E930000994DC /* PersistenceController.swift in Sources */,
 				5B3FB7E22C52E31E000994DC /* ReflectOnThisQuoteButton.swift in Sources */,
 				5B3FB7E42C52E3A6000994DC /* ReflectOnQuoteView.swift in Sources */,
+				5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */,
 				5B3FB7EA2C52E4BC000994DC /* SavedCardView.swift in Sources */,
 				5B3FB7EC2C52E50F000994DC /* NoSavedQuotesView.swift in Sources */,
 				5B3FB7DC2C52E243000994DC /* QuoteOfTheDayView.swift in Sources */,
