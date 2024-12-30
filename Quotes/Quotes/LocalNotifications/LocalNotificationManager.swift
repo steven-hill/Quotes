@@ -21,7 +21,7 @@ protocol ApplicationProtocol {
 }
 
 @MainActor
-class LocalNotificationManager: ObservableObject {
+final class LocalNotificationManager: ObservableObject {
     
     enum NotificationError: Error, LocalizedError {
         case none

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class UIApplicationWrapper: ApplicationProtocol {
+final class UIApplicationWrapper: ApplicationProtocol {
     private let application: UIApplication
     
     init(application: UIApplication = UIApplication.shared) {

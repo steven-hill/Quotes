@@ -8,7 +8,7 @@
 import Foundation
 import NotificationCenter
 
-class NotificationCenterWrapper: NotificationCenterProtocol {
+final class NotificationCenterWrapper: NotificationCenterProtocol {
     private let notificationCenter = UNUserNotificationCenter.current()
     
     func requestAuthorization(options: UNAuthorizationOptions) async throws {
