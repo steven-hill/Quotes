@@ -7,7 +7,7 @@
 
 import Foundation
 
-class QuoteViewModel: ObservableObject {
+final class QuoteViewModel: ObservableObject {
     
     enum State {
         case notAvailable
