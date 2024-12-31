@@ -119,6 +119,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
 		5B3F9D782D10C8EC009151CB /* AppearanceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppearanceTests; sourceTree = "<group>"; };
+		5B43F82B2D24643D009C4C32 /* LocalNotificationsTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalNotificationsTests; sourceTree = "<group>"; };
 		5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomViewModifiers; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -205,6 +206,7 @@
 		5B3FB7B62C52DE47000994DC /* QuotesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5B43F82B2D24643D009C4C32 /* LocalNotificationsTests */,
 				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
 				5B177CF42C5ADF0F00CCEC8B /* PersistenceTests */,
 				5B812CEE2C599AEB00B12213 /* ViewModelTests */,
@@ -376,6 +378,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
+				5B43F82B2D24643D009C4C32 /* LocalNotificationsTests */,
 			);
 			name = QuotesTests;
 			productName = QuotesTests;
