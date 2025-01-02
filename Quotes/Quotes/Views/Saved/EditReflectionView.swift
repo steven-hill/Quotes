@@ -53,7 +53,6 @@ struct EditReflectionView: View {
             TextEditor(text: $userThoughts)
                 .accessibilityLabel("Edit your reflection.")
                 .foregroundStyle(.primary)
-                .background(.gray)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(.primary, lineWidth: 2)

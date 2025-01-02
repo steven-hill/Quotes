@@ -52,7 +52,6 @@ struct ReflectOnQuoteView: View {
             TextEditor(text: $userThoughts)
                 .accessibilityLabel("Enter your reflection.")
                 .foregroundStyle(.primary)
-                .background(.gray)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(.primary, lineWidth: 2)
