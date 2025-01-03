@@ -28,7 +28,7 @@ struct ReflectOnQuoteView: View {
         NavigationStack {
             VStack {
                 quoteContentAndAuthorView
-                reflectionEditor
+                ReflectionEditor(text: $userThoughts, accessibilityLabel: "Enter your reflection.")
             }
             .padding()
             .navigationBarTitleDisplayMode(.inline)
@@ -45,26 +45,6 @@ struct ReflectOnQuoteView: View {
         Text(quoteContent + " - " + quoteAuthor)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
-    }
-    
-    private var reflectionEditor: some View {
-        ZStack(alignment: .topLeading) {
-            TextEditor(text: $userThoughts)
-                .accessibilityLabel("Enter your reflection.")
-                .foregroundStyle(.primary)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(.primary, lineWidth: 2)
-                )
-                .scrollDismissesKeyboard(.immediately)
-            
-            if userThoughts.isEmpty {
-                Text("What are your thoughts on today's quote?")
-                    .foregroundStyle(.secondary)
-                    .padding(.top, 10)
-                    .padding(.leading, 10)
-            }
-        }
     }
     
     private var cancelButton: some View {

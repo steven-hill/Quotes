@@ -119,6 +119,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
 		5B3F9D782D10C8EC009151CB /* AppearanceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppearanceTests; sourceTree = "<group>"; };
+		5B73D74B2D287F2F0076159F /* ReusableComponents */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReusableComponents; sourceTree = "<group>"; };
 		5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomViewModifiers; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -233,6 +234,7 @@
 		5B3FB7D52C52E160000994DC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B73D74B2D287F2F0076159F /* ReusableComponents */,
 				5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */,
 				5B3FB7D62C52E194000994DC /* TabBar.swift */,
 				5B3FB7D82C52E1D1000994DC /* Home */,
@@ -354,6 +356,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
+				5B73D74B2D287F2F0076159F /* ReusableComponents */,
 				5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */,
 			);
 			name = Quotes;
