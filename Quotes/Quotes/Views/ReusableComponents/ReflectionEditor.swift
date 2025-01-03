@@ -33,26 +33,7 @@ struct ReflectionEditor: View {
     }
 }
 
-//#Preview {
-//    StatefulPreviewWrapper("") { userThoughts in
-//        ReflectionEditor as! AnyView(
-//                    text: userThoughts,
-//                    accessibilityLabel: "What are your thoughts on today's quote?"
-//                )
-//                //.previewLayout(.sizeThatFits) // Adjust the layout to fit content
-//            }
-//}
-//
-//struct StatefulPreviewWrapper<T>: View {
-//    @State var value: T
-//    let content: (Binding<T>) -> AnyView
-//
-//    init(_ initialValue: T, @ViewBuilder content: @escaping (Binding<T>) -> AnyView) {
-//        _value = State(initialValue: initialValue)
-//        self.content = content
-//    }
-//
-//    var body: some View {
-//        content($value)
-//    }
-//}
+#Preview {
+    @Previewable @State var text: String = "User's thoughts go here."
+    ReflectionEditor(text: $text, accessibilityLabel: "Edit your thoughts.")
+}
