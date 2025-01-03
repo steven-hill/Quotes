@@ -64,7 +64,7 @@ struct ReflectOnQuoteView: View {
             Button(role: .destructive, action: {
                 dismiss()
             }, label: {
-                Text("Delete reflection")
+                Text("Discard reflection")
             })
             Button(role: .cancel, action: {}, label: {
                 Text("Keep reflecting")
