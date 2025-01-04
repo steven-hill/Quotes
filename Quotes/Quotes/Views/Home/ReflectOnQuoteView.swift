@@ -27,7 +27,7 @@ struct ReflectOnQuoteView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                quoteContentAndAuthorView
+                QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
                 ReflectionEditor(text: $userThoughts, accessibilityLabel: "Enter your reflection.")
             }
             .padding()
@@ -41,12 +41,6 @@ struct ReflectOnQuoteView: View {
     }
     
     // MARK: - UI components
-    private var quoteContentAndAuthorView: some View {
-        Text(quoteContent + " - " + quoteAuthor)
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
-    }
-    
     private var cancelButton: some View {
         Button("Cancel") {
             dismiss()
