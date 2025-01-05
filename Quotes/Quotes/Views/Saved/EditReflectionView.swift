@@ -35,20 +35,13 @@ struct EditReflectionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Edit reflection")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) { cancelButton }
+                ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel editing and don't save.") }
                 ToolbarItem(placement: .topBarTrailing) { saveButton }
             }
         }
     }
     
-    // MARK: - UI components
-    private var cancelButton: some View {
-        Button("Cancel") {
-            dismiss()
-        }
-        .accessibilityLabel("Cancel editing and don't save.")
-    }
-    
+    // MARK: - UI component
     private var saveButton: some View {
         Button("Save") {
             saveReflection()
