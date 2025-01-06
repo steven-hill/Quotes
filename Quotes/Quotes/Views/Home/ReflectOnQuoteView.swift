@@ -35,34 +35,13 @@ struct ReflectOnQuoteView: View {
             .navigationTitle("Reflection")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel reflection and don't save.") }
-                ToolbarItem(placement: .topBarTrailing) { saveButton }
+                ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
+                    [
+                        IdentifiableButton(button: Button(role: .destructive, action: { dismiss() }, label: { Text("Discard reflection") })),
+                        IdentifiableButton(button: Button(role: .cancel, action: {}, label: { Text("Continue reflecting") }))
+                    ]
+                }, confirmationDialogMessage: "This quote won't be saved if no reflection is added.", showAlert: $showAlert, alertMessage: alertMessage) }
             }
-        }
-    }
-    
-    // MARK: - UI component
-    private var saveButton: some View {
-        Button("Save") {
-            saveReflection()
-        }
-        .accessibilityLabel("Save quote and reflection.")
-        .buttonStyle(.bordered)
-        .confirmationDialog("Tapped save button without entering text.", isPresented: $showConfirmationDialog, titleVisibility: .hidden, actions: {
-            Button(role: .destructive, action: {
-                dismiss()
-            }, label: {
-                Text("Discard reflection")
-            })
-            Button(role: .cancel, action: {}, label: {
-                Text("Keep reflecting")
-            })
-        }, message: {
-            Text("This quote won't be saved if no reflection is added.")
-        })
-        .alert("Save failed", isPresented: $showAlert, presenting: alertMessage) { _ in
-            Button("Ok") {}
-        } message: { _ in
-            Text("\(alertMessage). Please try again.")
         }
     }
     
