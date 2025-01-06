@@ -36,29 +36,13 @@ struct EditReflectionView: View {
             .navigationTitle("Edit reflection")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel editing and don't save.") }
-                ToolbarItem(placement: .topBarTrailing) { saveButton }
+                ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
+                    [
+                        IdentifiableButton(button: Button(role: .destructive, action: { dismiss() }, label: { Text("Discard changes") })),
+                        IdentifiableButton(button: Button(role: .cancel, action: {}, label: { Text("Continue editing reflection") }))
+                    ]
+                }, confirmationDialogMessage: "Please add some text so your reflection can be updated.", showAlert: $showAlert, alertMessage: alertMessage) }
             }
-        }
-    }
-    
-    // MARK: - UI component
-    private var saveButton: some View {
-        Button("Save") {
-            saveReflection()
-        }
-        .accessibilityLabel("Save quote and reflection.")
-        .buttonStyle(.bordered)
-        .confirmationDialog("Tapped save button without any text.", isPresented: $showConfirmationDialog, titleVisibility: .hidden, actions: {
-            Button(role: .cancel, action: {}, label: {
-                Text("Keep reflecting")
-            })
-        }, message: {
-            Text("Please add some text so your reflection can be updated.")
-        })
-        .alert("Save failed", isPresented: $showAlert, presenting: alertMessage) { _ in
-            Button("Ok") {}
-        } message: { _ in
-            Text("\(alertMessage). Please try again.")
         }
     }
     
