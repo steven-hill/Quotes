@@ -62,3 +62,13 @@ struct EditReflectionView: View {
         }
     }
 }
+
+#Preview {
+    let previewSavedQuote = SavedQuote()
+    EditReflectionView(
+        savedQuote: previewSavedQuote,
+        quoteContent: "Never allow someone to be your priority while allowing yourself to be their option.",
+        quoteAuthor: "Mark Twain",
+        userThoughts: "User's reflection goes here."
+    )
+}
