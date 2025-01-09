@@ -36,7 +36,7 @@ struct EditReflectionView: View {
             .navigationTitle("Edit reflection")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel editing and don't save.") }
-                ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
+                ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveEditedReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
                     [
                         IdentifiableButton(button: Button(role: .destructive, action: { dismiss() }, label: { Text("Discard changes") })),
                         IdentifiableButton(button: Button(role: .cancel, action: {}, label: { Text("Continue editing reflection") }))
@@ -47,7 +47,7 @@ struct EditReflectionView: View {
     }
     
     // MARK: - Save method
-    private func saveReflection() {
+    private func saveEditedReflection() {
         if userThoughts.isEmpty {
             showConfirmationDialog.toggle()
         } else {
