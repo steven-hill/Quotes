@@ -35,7 +35,7 @@ struct ReflectOnQuoteView: View {
             .navigationTitle("Reflection")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel reflection and don't save.") }
-                ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
+                ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveNewQuoteWithReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
                     [
                         IdentifiableButton(button: Button(role: .destructive, action: { dismiss() }, label: { Text("Discard reflection") })),
                         IdentifiableButton(button: Button(role: .cancel, action: {}, label: { Text("Continue reflecting") }))
@@ -46,7 +46,7 @@ struct ReflectOnQuoteView: View {
     }
     
     // MARK: - Save method
-    private func saveReflection() {
+    private func saveNewQuoteWithReflection() {
         if userThoughts.isEmpty {
             showConfirmationDialog.toggle()
         } else {
