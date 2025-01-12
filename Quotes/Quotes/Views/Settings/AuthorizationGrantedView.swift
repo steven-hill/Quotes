@@ -19,6 +19,9 @@ struct AuthorizationGrantedView: View {
     @State private var notificationTime = Date.now
     @State private var isConfirmButtonDisabled = true
     
+    // MARK: - Action
+    let scheduleNotificationSuccess: () -> Void
+    
     // MARK: - Body
     var body: some View {
         VStack {
@@ -64,10 +67,11 @@ struct AuthorizationGrantedView: View {
             let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
             try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
             isConfirmButtonDisabled = true
+            scheduleNotificationSuccess()
         }
     }
 }
 
 #Preview {
-    AuthorizationGrantedView()
+    AuthorizationGrantedView(scheduleNotificationSuccess: {})
 }

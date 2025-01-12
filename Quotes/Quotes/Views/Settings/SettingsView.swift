@@ -16,6 +16,9 @@ struct SettingsView: View {
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
     
+    // MARK: - State
+    @State private var scheduleNotificationIsSuccessful = false
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -43,13 +46,30 @@ struct SettingsView: View {
         } message: { detail in
             Text(detail.errorDescription)
         }
+        .overlay {
+            if scheduleNotificationIsSuccessful {
+                CustomPopUpView(message: "Notification scheduled successfully!")
+                    .transition(.scale.combined(with: .opacity))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation(.spring()) {
+                                scheduleNotificationIsSuccessful.toggle()
+                            }
+                        }
+                    }
+            }
+        }
     }
     
     // MARK: - UI Components
     @ViewBuilder
     private var notificationContent: some View {
         if localNotificationManager.authorizationGranted {
-            AuthorizationGrantedView()
+            AuthorizationGrantedView(scheduleNotificationSuccess: {
+                withAnimation(.spring().delay(0.25)) {
+                    scheduleNotificationIsSuccessful.toggle()
+                }
+            })
         } else {
             AuthorizationNotGrantedView()
         }

@@ -69,7 +69,7 @@ struct SavedCardView: View {
                             CustomPopUpView(message: "Changes saved successfully!")
                                 .transition(.scale.combined(with: .opacity))
                                 .onAppear {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                         withAnimation(.spring()) {
                                             saveIsSuccessful.toggle()
                                         }
