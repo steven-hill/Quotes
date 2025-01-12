@@ -24,6 +24,9 @@ struct EditReflectionView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     
+    // MARK: - Action
+    let successfulSave: () -> Void
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -55,6 +58,7 @@ struct EditReflectionView: View {
             do {
                 try PersistenceController.shared.save()
                 dismiss()
+                successfulSave()
             } catch {
                 showAlert.toggle()
                 alertMessage = PersistenceController.shared.persistenceError.localizedDescription
@@ -69,6 +73,5 @@ struct EditReflectionView: View {
         savedQuote: previewSavedQuote,
         quoteContent: "Never allow someone to be your priority while allowing yourself to be their option.",
         quoteAuthor: "Mark Twain",
-        userThoughts: "User's reflection goes here."
-    )
+        userThoughts: "User's reflection goes here.", successfulSave: {})
 }
