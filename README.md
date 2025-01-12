@@ -5,7 +5,7 @@
 ### Features
 - The app displays a new quote every day via the API in the 'Home' tab. The user can then choose to share this quote with other apps or reflect on the quote and save their thoughts/feelings.
 - Quotes which have been reflected upon will be shown in the 'Saved' tab. The user is then able to see the quote and view, edit or delete their reflection.
-- In the 'Settings' tab the user can change the time they receive a local notification. This notification is to remind them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications).
+- In the 'Settings' tab the user can change their notifications and appearance settings. The notification reminds them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications). The user can switch between light, dark and system appearance.
 
 ### Technical details
 - This app is almost entirely SwiftUI. UIKit was used for the UIActivityViewController on iPad.
