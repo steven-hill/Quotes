@@ -19,7 +19,8 @@ struct SavedCardView: View {
     @State private var isEditReflectionSheetPresented = false
     @State private var showAlert = false
     @State private var alertMessage = ""
-    @State private var showDeleteQuoteAlert: Bool = false
+    @State private var showDeleteQuoteAlert = false
+    @State private var saveIsSuccessful = false
     
     // MARK: - Constants
     let deleteQuoteAlertMessage = "This action can't be undone."
@@ -35,7 +36,11 @@ struct SavedCardView: View {
                             Spacer()
                             menuButton
                                 .sheet(isPresented: $isEditReflectionSheetPresented) {
-                                    EditReflectionView(savedQuote: savedQuote, quoteContent: savedQuote.quoteContent ?? "Content unavailable", quoteAuthor: savedQuote.quoteAuthor ?? "Author name unavailable", userThoughts: savedQuote.reflection ?? "Reflection unavailable")
+                                    EditReflectionView(savedQuote: savedQuote, quoteContent: savedQuote.quoteContent ?? "Content unavailable", quoteAuthor: savedQuote.quoteAuthor ?? "Author name unavailable", userThoughts: savedQuote.reflection ?? "Reflection unavailable", successfulSave: {
+                                        withAnimation(.spring().delay(0.25)) {
+                                            saveIsSuccessful.toggle()
+                                        }
+                                    })
                                         .presentationDragIndicator(.visible)
                                 }
                                 .alert("Error", isPresented: $showAlert, presenting: alertMessage) { detail in
@@ -59,6 +64,19 @@ struct SavedCardView: View {
                     }
                 }
                 quoteContentView
+                    .overlay {
+                        if saveIsSuccessful {
+                            CustomPopUpView(message: "Changes saved successfully!")
+                                .transition(.scale.combined(with: .opacity))
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                        withAnimation(.spring()) {
+                                            saveIsSuccessful.toggle()
+                                        }
+                                    }
+                                }
+                        }
+                    }
                 quoteAuthorView
             }
             .padding()

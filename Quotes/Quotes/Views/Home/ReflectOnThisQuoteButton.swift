@@ -14,6 +14,7 @@ struct ReflectOnThisQuoteButton: View {
     
     // MARK: - State
     @State private var reflectionSheetIsPresented = false
+    @State private var saveIsSuccessful = false
     
     // MARK: - Constants
     let quoteContent: String
@@ -33,8 +34,25 @@ struct ReflectOnThisQuoteButton: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(.horizontal)
         .sheet(isPresented: $reflectionSheetIsPresented) {
-            ReflectOnQuoteView(userThoughts: userThoughts, quoteContent: quoteContent, quoteAuthor: quoteAuthor)
-                .presentationDragIndicator(.visible)
+            ReflectOnQuoteView(userThoughts: userThoughts, quoteContent: quoteContent, quoteAuthor: quoteAuthor, successfulSave: {
+                withAnimation(.spring().delay(0.25)) {
+                    saveIsSuccessful.toggle()
+                }
+            })
+            .presentationDragIndicator(.visible)
+        }
+        .overlay {
+            if saveIsSuccessful {
+                CustomPopUpView(message: "Saved successfully!")
+                    .transition(.scale.combined(with: .opacity))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            withAnimation(.spring()) {
+                                saveIsSuccessful.toggle()
+                            }
+                        }
+                    }
+            }
         }
     }
 }

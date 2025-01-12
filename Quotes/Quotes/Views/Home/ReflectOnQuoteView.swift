@@ -23,6 +23,9 @@ struct ReflectOnQuoteView: View {
     let quoteContent: String
     let quoteAuthor: String
     
+    // MARK: - Action
+    let successfulSave: () -> Void
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -57,6 +60,7 @@ struct ReflectOnQuoteView: View {
             do {
                 try PersistenceController.shared.save()
                 dismiss()
+                successfulSave()
             } catch {
                 showAlert.toggle()
                 alertMessage = PersistenceController.shared.persistenceError.localizedDescription
@@ -66,5 +70,5 @@ struct ReflectOnQuoteView: View {
 }
 
 #Preview {
-    ReflectOnQuoteView(userThoughts: "", quoteContent: "A man is great not because he hasn't failed; a man is great because failure hasn't stopped him.", quoteAuthor: "Confucius")
+    ReflectOnQuoteView(userThoughts: "", quoteContent: "A man is great not because he hasn't failed; a man is great because failure hasn't stopped him.", quoteAuthor: "Confucius", successfulSave: {})
 }
