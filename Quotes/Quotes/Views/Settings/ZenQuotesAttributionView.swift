@@ -11,13 +11,13 @@ struct ZenQuotesAttributionView: View {
     var body: some View {
         GroupBox {
             HStack {
-                Link("Quotes provided by ZenQuotes API", destination: URL(string: "https://zenquotes.io/")!)
+                Link("ZenQuotes API", destination: URL(string: "https://zenquotes.io/")!)
                     .font(.headline)
                     .foregroundStyle(.link)
             }
             .padding(.top, 5)
         } label: {
-            Label("Attribution", systemImage: "quote.bubble")
+            Label("Content for quotes provided by:", systemImage: "quote.bubble")
         }
         .padding()
         .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)

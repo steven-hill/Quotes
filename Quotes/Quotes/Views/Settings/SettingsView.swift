@@ -31,6 +31,8 @@ struct SettingsView: View {
                         .padding(.top, 8)
                     appearanceContent
                     Divider()
+                    sectionHeader(title: "ATTRIBUTION")
+                        .padding(.top, 8)
                     ZenQuotesAttributionView()
                 }
                 .padding(.top, 8)
