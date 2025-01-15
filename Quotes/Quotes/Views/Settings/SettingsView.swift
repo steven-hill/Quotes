@@ -23,7 +23,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack() {
+                VStack {
                     sectionHeader(title: "NOTIFICATIONS")
                     notificationContent
                     Divider()
@@ -87,7 +87,7 @@ struct SettingsView: View {
     }
     
     private var appearanceContent: some View {
-        HStack() {
+        HStack {
             Text("Set appearance to:")
             if UIDevice.current.userInterfaceIdiom == .phone { Spacer() }
             Picker("Set appearance to", selection: $appearanceManager.selectedAppearance) {
