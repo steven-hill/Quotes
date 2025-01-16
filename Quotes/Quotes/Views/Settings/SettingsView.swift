@@ -22,21 +22,16 @@ struct SettingsView: View {
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack {
-                    sectionHeader(title: "NOTIFICATIONS")
+            Form {
+                Section(header: sectionHeader(title: "NOTIFICATIONS")) {
                     notificationContent
-                    Divider()
-                    sectionHeader(title: "APPEARANCE")
-                        .padding(.top, 8)
+                }
+                Section(header: sectionHeader(title: "APPEARANCE")) {
                     appearanceContent
-                    Divider()
-                    sectionHeader(title: "ATTRIBUTION")
-                        .padding(.top, 8)
+                }
+                Section(header: sectionHeader(title: "ATTRIBUTION")) {
                     ZenQuotesAttributionView()
                 }
-                .padding(.top, 8)
-                .padding(.horizontal)
             }
             .navigationTitle("Settings")
         }
@@ -78,25 +73,18 @@ struct SettingsView: View {
     }
     
     private func sectionHeader(title: String) -> some View {
-        HStack {
-            Text(title)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            Spacer()
-        }
+        Text(title)
+            .font(.subheadline)
+            .bold()
+            .foregroundStyle(.secondary)
     }
     
     private var appearanceContent: some View {
-        HStack {
-            Text("Set appearance to:")
-            if UIDevice.current.userInterfaceIdiom == .phone { Spacer() }
-            Picker("Set appearance to", selection: $appearanceManager.selectedAppearance) {
-                Text("System").tag(Appearance.unspecified)
-                Text("Light").tag(Appearance.light)
-                Text("Dark").tag(Appearance.dark)
-            }
+        Picker("Set appearance to:", selection: $appearanceManager.selectedAppearance) {
+            Text("System").tag(Appearance.unspecified)
+            Text("Light").tag(Appearance.light)
+            Text("Dark").tag(Appearance.dark)
         }
-        .padding(.horizontal)
         .font(.title3)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Select appearance mode")
