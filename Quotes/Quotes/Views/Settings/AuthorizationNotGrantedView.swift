@@ -14,7 +14,7 @@ struct AuthorizationNotGrantedView: View {
         VStack {
             Text("Each day has a new quote. Turn on notifications to ensure you don't miss it.")
                 .font(.title3)
-                .padding()
+                .padding(.bottom, 8)
             
             Button("Enable notifications", systemImage: "bell.badge.fill") {
                 localNotificationManager.goToQuotesInSettingsApp()

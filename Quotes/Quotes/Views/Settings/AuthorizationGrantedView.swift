@@ -29,18 +29,13 @@ struct AuthorizationGrantedView: View {
             timePicker
             confirmButton
         }
-        .padding()
-        .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
     }
     
     // MARK: - UI Components
     private var notificationExplanationText: some View {
-        VStack(alignment: .leading) {
-            Text("Each day has a new quote. We'll send you a notification at 10am to ensure you don't miss it.")
-            Text("If you prefer a different time, select it below and tap 'Confirm'.")
-        }
-        .font(.title3)
-        .minimumScaleFactor(0.5)
+        Text("Each day has a new quote. We'll send you a notification at 10am to ensure you don't miss it. If you prefer a different time, select it below and tap 'Confirm'.")
+            .font(.title3)
+            .minimumScaleFactor(0.5)
     }
     
     private var timePicker: some View {
