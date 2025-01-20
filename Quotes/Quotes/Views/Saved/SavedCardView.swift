@@ -138,6 +138,7 @@ struct SavedCardView: View {
     }
 }
 
+// MARK: - Activity controller methods
 extension SavedCardView {
     private func presentActivityController() {
         var quoteToShare: String = ""
