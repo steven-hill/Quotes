@@ -47,6 +47,7 @@ struct SavedView: View {
         }
     }
     
+    // MARK: - UI components
     @ViewBuilder
     private var content: some View {
         if !searchText.query.isEmpty && fetched.filteredResults.isEmpty {
@@ -96,6 +97,7 @@ struct SavedView: View {
         }
     }
     
+    // MARK: - Update search results method
     private func updateSearchResults(_ newValue: FetchRequestStore.Search) {
         if newValue.query.isEmpty && !isSearching {
             fetched.reFetchAll()
@@ -105,6 +107,7 @@ struct SavedView: View {
     }
 }
 
+// MARK: - Remove quote method
 extension SavedView {
     func removeQuote(at offsets: IndexSet) {
         fetched.deleteQuote(atOffsets: offsets)
