@@ -159,3 +159,12 @@ extension SavedCardView {
         activityController.popoverPresentationController?.permittedArrowDirections = []
     }
 }
+
+#Preview {
+    let persistenceController = PersistenceController(inMemory: true)
+    let context = persistenceController.container.viewContext
+    let previewQuote = SavedQuote(context: context)
+    
+    SavedCardView(savedQuote: previewQuote)
+        .padding()
+}
