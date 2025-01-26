@@ -23,7 +23,7 @@ struct ReflectOnThisQuoteButton: View {
     
     // MARK: - Body
     var body: some View {
-        Button("Reflect on this quote", systemImage: "square.and.pencil") {
+        Button("Reflect", systemImage: "square.and.pencil") {
             reflectionSheetIsPresented.toggle()
         }
         .tint(.primary)
