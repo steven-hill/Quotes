@@ -22,7 +22,7 @@
 ### Currently working on
 - Improving the testability of the app.
 - Adding to and improving the unit tests.
-- Improving the accessibility experience.
+- Improving the accessibility experience by adding more support for dynamic type.
 - Improving the structure, readability and reusability of some views.
 
 ### Screenshots (showing light and dark mode on iPhone)
