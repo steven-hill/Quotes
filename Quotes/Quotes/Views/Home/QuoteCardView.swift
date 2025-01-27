@@ -54,7 +54,6 @@ struct QuoteCardView: View {
             
             Text(quoteContent)
                 .font(.title)
-                .minimumScaleFactor(0.5)
                 .padding(.horizontal)
             
             HStack {
