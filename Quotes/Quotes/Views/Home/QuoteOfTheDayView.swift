@@ -18,8 +18,11 @@ struct QuoteOfTheDayView: View {
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            content
-                .navigationTitle("Quote of the day")
+            ScrollView {
+                content
+                    .padding(.top, 30)
+                    .navigationTitle("Home")
+            }
         }
         .task {
             await quoteOfTheDayVM.getQuoteOfTheDay()
