@@ -30,7 +30,12 @@ struct ReflectOnQuoteView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                        .dynamicTypeSizeModifier()
+                } else {
+                    QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                }
                 ReflectionEditor(text: $userThoughts, accessibilityLabel: "Enter your reflection.")
             }
             .padding()
