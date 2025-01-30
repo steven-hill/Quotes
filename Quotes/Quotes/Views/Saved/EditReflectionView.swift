@@ -31,7 +31,13 @@ struct EditReflectionView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                        .minimumScaleFactor(0.75)
+                        .dynamicTypeSizeModifier()
+                } else {
+                    QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                }
                 ReflectionEditor(text: $userThoughts, accessibilityLabel: "Edit your reflection.")
             }
             .padding()
