@@ -24,6 +24,7 @@ struct CustomPopUpView: View {
 }
 
 #Preview {
-    CustomPopUpView(message: "Saved successfully!")
-    CustomPopUpView(message: "Set successfully!")
+    CustomPopUpView(message: "Saved")
+    CustomPopUpView(message: "Edit saved")
+    CustomPopUpView(message: "New time set")
 }

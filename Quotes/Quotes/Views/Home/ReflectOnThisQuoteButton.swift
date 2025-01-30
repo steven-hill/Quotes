@@ -43,7 +43,7 @@ struct ReflectOnThisQuoteButton: View {
         }
         .overlay {
             if saveIsSuccessful {
-                CustomPopUpView(message: "Saved successfully!")
+                CustomPopUpView(message: "Saved")
                     .transition(.scale.combined(with: .opacity))
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {

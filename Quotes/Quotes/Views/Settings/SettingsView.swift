@@ -45,7 +45,7 @@ struct SettingsView: View {
         }
         .overlay {
             if scheduleNotificationIsSuccessful {
-                CustomPopUpView(message: "Notification scheduled successfully!")
+                CustomPopUpView(message: "New time set")
                     .transition(.scale.combined(with: .opacity))
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {

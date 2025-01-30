@@ -66,7 +66,7 @@ struct SavedCardView: View {
                 quoteContentView
                     .overlay {
                         if saveIsSuccessful {
-                            CustomPopUpView(message: "Changes saved successfully!")
+                            CustomPopUpView(message: "Edit saved")
                                 .transition(.scale.combined(with: .opacity))
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
