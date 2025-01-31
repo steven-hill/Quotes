@@ -27,6 +27,9 @@ struct AuthorizationGrantedView: View {
         VStack {
             notificationExplanationText
             timePicker
+                .lineLimit(nil)
+                .fixedSize(horizontal: true, vertical: false)
+                .padding([.bottom, .trailing], 18)
             confirmButton
         }
     }
@@ -39,9 +42,8 @@ struct AuthorizationGrantedView: View {
     }
     
     private var timePicker: some View {
-        DatePicker("I'd rather receive it at:", selection: $notificationTime, displayedComponents: .hourAndMinute)
+        DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
             .datePickerStyle(.compact)
-            .padding(.horizontal)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Time picker. Button. Activate to choose a different time.")
             .onChange(of: notificationTime) {
