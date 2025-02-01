@@ -48,7 +48,7 @@ struct EditReflectionView: View {
                 ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveEditedReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
                     [
                         IdentifiableButton(button: Button(role: .destructive, action: { dismiss() }, label: { Text("Discard changes") })),
-                        IdentifiableButton(button: Button(role: .cancel, action: {}, label: { Text("Continue editing reflection") }))
+                        IdentifiableButton(button: Button(role: .cancel, action: {}, label: { Text("Continue editing") }))
                     ]
                 }, confirmationDialogMessage: "Please add some text so your reflection can be updated.", showAlert: $showAlert, alertMessage: alertMessage) }
             }
