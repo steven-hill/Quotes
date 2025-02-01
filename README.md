@@ -9,21 +9,21 @@
 
 ### Technical details
 - This app is almost entirely SwiftUI. UIKit was used for the UIActivityViewController on iPad.
-- The deployment target is iOS 17.5+.
+- The deployment target is iOS 17.5+ and iPadOS 17.5+.
 - MVVM, Core Data and Swift concurrency.
 - The network code uses Swift concurrency, and there is dependency injection for loose coupling and testability.
 - The network response is cached using NSCache. Caching will avoid exceeding the API usage limit of 5 requests per 30 second period (among other benefits to user experience and app performance). I looked at various caching solutions such as NSCache, URLCache, and in-memory caching and persistent caching. An in-memory NSCache suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API.
 - Persistence of saved quotes is achieved via Core Data. I was looking for an approach which separated Core Data from the rest of the app as much as possible, which ruled out using @FetchRequest in my app's views. For this purpose I wanted to try out Donny Wals' approach of using ObservableObject, the @Published property wrapper and NSFetchedResultsController. You can read his article on it [here](https://www.donnywals.com/fetching-objects-from-core-data-in-a-swiftui-project/).
 - The user's appearance setting is persisted by UserDefaults, and the user can change the appearance in the app's settings.
-- Accessibility labels have been added for VoiceOver.
+- Added support for VoiceOver and Dynamic Type.
 - iPhone and iPad are both supported.
 - The app includes code to support different size classes, portrait and landscape orientation, and light, dark or system appearance.
 
 ### Currently working on
 - Improving the testability of the app.
 - Adding to and improving the unit tests.
-- Improving the accessibility experience by adding more support for dynamic type.
-- Improving the structure, readability and reusability of some views.
+- Improving the accessibility experience.
+- Improving the structure, readability and reusability of the codebase.
 
 ### Screenshots (showing light and dark mode on iPhone)
 
