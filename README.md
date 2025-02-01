@@ -2,12 +2,12 @@
 
 ## A SwiftUI app that allows users to record their thoughts on a quote daily. Each day a new quote is displayed via the [Zen Quotes API](https://zenquotes.io/). 
 
-### Features
+### ⚙️ Features
 - The app displays a new quote every day via the API in the 'Home' tab. The user can then choose to share this quote with other apps or reflect on the quote and save their thoughts/feelings.
 - Quotes which have been reflected upon will be shown in the 'Saved' tab. The user is then able to see the quote and view, edit or delete their reflection.
 - In the 'Settings' tab the user can change their notifications and appearance settings. The notification reminds them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications). The user can switch between light, dark and system appearance.
 
-### Technical details
+### 🔍 Technical details
 - This app is almost entirely SwiftUI. UIKit was used for the UIActivityViewController on iPad.
 - The deployment target is iOS 17.5+ and iPadOS 17.5+.
 - MVVM, Core Data and Swift concurrency.
@@ -19,7 +19,7 @@
 - The user's appearance setting is persisted by UserDefaults, and the user can change the appearance in the app's settings.
 - There is support for VoiceOver and Dynamic Type.
 
-### Currently working on
+### 🚧 Currently working on
 - Improving the testability of the app.
 - Adding to and improving the unit tests.
 - Improving the accessibility experience.
