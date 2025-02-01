@@ -80,11 +80,12 @@ struct SettingsView: View {
     }
     
     private var appearanceContent: some View {
-        Picker("Set appearance to:", selection: $appearanceManager.selectedAppearance) {
+        Picker("Set to:", selection: $appearanceManager.selectedAppearance) {
             Text("System").tag(Appearance.unspecified)
             Text("Light").tag(Appearance.light)
             Text("Dark").tag(Appearance.dark)
         }
+        .pickerStyle(.inline)
         .font(.title3)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Select appearance mode")
