@@ -45,6 +45,7 @@ final class LocalNotificationManager: ObservableObject {
     @Published var authorizationGranted = false
     @Published var hasError: Bool = false
     @Published var notificationError: NotificationError = .none
+    @Published var notificationTime = "10:00"
     private let badgeCount = 1
     private let notificationTitle = "Quotes"
     private let notificationBody = "Today's quote is available. Tap here to see it."
@@ -96,6 +97,7 @@ final class LocalNotificationManager: ObservableObject {
         
         do {
             try await notificationCenter.add(request)
+            notificationTime = String(format: "%02d:%02d", userChosenNotificationHour, userChosenNotificationMinute)
         } catch {
             self.hasError = true
             notificationError = .failedToSetNotificationTime
