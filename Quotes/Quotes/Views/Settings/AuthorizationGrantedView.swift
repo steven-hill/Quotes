@@ -36,7 +36,7 @@ struct AuthorizationGrantedView: View {
     
     // MARK: - UI Components
     private var notificationExplanationText: some View {
-        Text("Each day has a new quote. We'll send you a notification at 10am to ensure you don't miss it. If you prefer a different time, select it below and tap 'Confirm'.")
+        Text("Each day has a new quote. We'll send you a notification at \(localNotificationManager.notificationTime) to ensure you don't miss it. If you prefer a different time, select it below and tap 'Confirm'.")
             .font(.title3)
             .minimumScaleFactor(0.5)
     }
@@ -71,4 +71,5 @@ struct AuthorizationGrantedView: View {
 
 #Preview {
     AuthorizationGrantedView(scheduleNotificationSuccess: {})
+        .environmentObject(LocalNotificationManager())
 }
