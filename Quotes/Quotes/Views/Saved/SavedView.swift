@@ -47,14 +47,33 @@ struct SavedView: View {
         }
     }
     
-    // MARK: - UI components
+    // MARK: - Enum for Content States
+    private enum ContentState {
+        case noSearchResults
+        case noSavedQuotes
+        case savedQuotesList
+    }
+    
+    // MARK: - Computed Property for Content State
+    private var contentState: ContentState {
+        if !searchText.query.isEmpty && fetched.filteredResults.isEmpty {
+            return .noSearchResults
+        } else if fetched.savedQuotes.isEmpty && !isSearching {
+            return .noSavedQuotes
+        } else {
+            return .savedQuotesList
+        }
+    }
+    
+    // MARK: - UI Components
     @ViewBuilder
     private var content: some View {
-        if !searchText.query.isEmpty && fetched.filteredResults.isEmpty {
+        switch contentState {
+        case .noSearchResults:
             NoSearchResultsFoundView(searchQuery: $searchText.query)
-        } else if fetched.savedQuotes.isEmpty && !isSearching {
+        case .noSavedQuotes:
             NoSavedQuotesView()
-        } else {
+        case .savedQuotesList:
             savedQuotesList
         }
     }
