@@ -42,6 +42,7 @@ struct SavedView: View {
             }
         }
         .searchable(text: $searchText.query, prompt: "Search by author")
+        .disabled(isSearchDisabled)
         .onChange(of: searchText) { _, newValue in
             updateSearchResults(newValue)
         }
@@ -114,6 +115,14 @@ struct SavedView: View {
         } message: { _ in
             Text(deleteQuoteAlertMessage)
         }
+    }
+    
+    // MARK: - Disable search bar based on content state
+    private var isSearchDisabled: Bool {
+        if case .noSavedQuotes = contentState {
+            return true
+        }
+        return false
     }
     
     // MARK: - Update search results method
