@@ -16,21 +16,35 @@ struct TabBar: View {
     // MARK: - Environment Object
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     
+    // MARK: - State
+    @State private var selectedTab: Int = 0
+    
     // MARK: - Body
     var body: some View {
-        TabView() {
+        TabView(selection: $selectedTab) {
             QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager())))
                 .tabItem {
-                    Label("Home", systemImage: "house.fill")
+                    Label("Home", systemImage: selectedTab == 0 ? "house.fill" : "house")
+                        .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
                 }
+                .onAppear { selectedTab = 0 }
+                .tag(0)
+            
             SavedView(fetched: FetchRequestStore(managedObjectContext: managedObjectContext))
                 .tabItem {
-                    Label("Saved", systemImage: "bookmark.fill")
+                    Label("Saved", systemImage: selectedTab == 1 ? "bookmark.fill" : "bookmark")
+                        .environment(\.symbolVariants, selectedTab == 1 ? .fill : .none)
                 }
+                .onAppear { selectedTab = 1 }
+                .tag(1)
+            
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
+                    Label("Settings", systemImage: selectedTab == 2 ? "gearshape.circle.fill" : "gearshape.circle")
+                        .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
                 }
+                .onAppear { selectedTab = 2 }
+                .tag(2)
         }
         .tint(.primary)
         .task {
