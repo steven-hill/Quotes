@@ -25,7 +25,7 @@
 - Improving the accessibility experience.
 - Improving the structure, readability and reusability of the codebase.
 
-### 📱 Screenshots (showing light and dark mode on iPhone)
+### 📱 Screenshots (preliminary designs showing light and dark mode on iPhone)
 
 <img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Home%20screen%20(iPhone%20-%20light%20mode).png" width="275" height="575" alt="Home screen in light mode on iPhone"> 
 <img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Home%20screen%20(iPhone%20-%20dark%20mode).png" width="275" height="575" alt="Home screen in dark mode on iPhone">
