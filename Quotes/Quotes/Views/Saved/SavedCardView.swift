@@ -80,7 +80,7 @@ struct SavedCardView: View {
                 quoteAuthorView
             }
             .padding()
-            .cardBackground()
+            .cardBackgroundModifier()
         }
     }
     

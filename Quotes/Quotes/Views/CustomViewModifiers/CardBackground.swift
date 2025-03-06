@@ -14,14 +14,14 @@ struct CardBackgroundModifier: ViewModifier {
         content
             .background(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(colorScheme == .light ? .black.opacity(0.1) : .gray)
+                    .fill(colorScheme == .light ? .black.opacity(0.1) : .gray.opacity(0.25))
                     .stroke(.primary, lineWidth: 2)
             )
     }
 }
 
 extension View {
-    func cardBackground() -> some View {
+    func cardBackgroundModifier() -> some View {
         self.modifier(CardBackgroundModifier())
     }
 }
@@ -29,5 +29,5 @@ extension View {
 #Preview {
     Text("Hello, world!")
         .padding()
-        .cardBackground()
+        .cardBackgroundModifier()
 }

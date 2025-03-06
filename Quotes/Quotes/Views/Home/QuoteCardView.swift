@@ -29,7 +29,7 @@ struct QuoteCardView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
         .padding()
-        .cardBackground()
+        .cardBackgroundModifier()
         .padding()
         .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
         .offset(y: offset)
