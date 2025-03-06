@@ -37,6 +37,7 @@ struct SettingsView: View {
                 .listRowClearBackgroundModifier()
             }
             .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
             .scrollContentBackground(.hidden)
             .pinkBluePurpleBackgroundModifier()
         }

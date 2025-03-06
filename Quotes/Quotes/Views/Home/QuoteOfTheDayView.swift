@@ -22,6 +22,7 @@ struct QuoteOfTheDayView: View {
                 content
                     .padding(.top, 30)
                     .navigationTitle("Home")
+                    .navigationBarTitleDisplayMode(.inline)
             }
             .pinkBluePurpleBackgroundModifier()
         }
