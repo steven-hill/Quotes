@@ -31,6 +31,7 @@ struct SavedView: View {
         NavigationStack {
             content
                 .navigationTitle("Saved")
+                .navigationBarTitleDisplayMode(.inline)
                 .pinkBluePurpleBackgroundModifier()
         }
         .alert("Error", isPresented: $fetched.fetchRequestHasError, presenting: fetched.fetchState) { detail in
