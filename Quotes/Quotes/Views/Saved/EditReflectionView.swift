@@ -43,6 +43,7 @@ struct EditReflectionView: View {
             .padding()
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Edit reflection")
+            .purpleGradientBackgroundModifier()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel editing and don't save.") }
                 ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveEditedReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {

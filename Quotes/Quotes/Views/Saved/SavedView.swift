@@ -31,6 +31,7 @@ struct SavedView: View {
         NavigationStack {
             content
                 .navigationTitle("Saved")
+                .pinkBluePurpleBackgroundModifier()
         }
         .alert("Error", isPresented: $fetched.fetchRequestHasError, presenting: fetched.fetchState) { detail in
             Button("Retry") {
@@ -84,6 +85,7 @@ struct SavedView: View {
             ForEach(fetched.savedQuotes, id: \.objectID) { savedQuote in
                 SavedCardView(savedQuote: savedQuote)
                     .listRowSeparator(.hidden)
+                    .listRowClearBackgroundModifier()
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button(role: .destructive) {
                             showDeleteQuoteAlert.toggle()

@@ -26,14 +26,19 @@ struct SettingsView: View {
                 Section(header: sectionHeader(title: "NOTIFICATIONS")) {
                     notificationContent
                 }
+                .listRowClearBackgroundModifier()
                 Section(header: sectionHeader(title: "APPEARANCE")) {
                     appearanceContent
                 }
+                .listRowClearBackgroundModifier()
                 Section(header: sectionHeader(title: "ATTRIBUTION")) {
                     ZenQuotesAttributionView()
                 }
+                .listRowClearBackgroundModifier()
             }
             .navigationTitle("Settings")
+            .scrollContentBackground(.hidden)
+            .pinkBluePurpleBackgroundModifier()
         }
         .onChange(of: scenePhase) { _, newValue in
             handleScenePhaseChange(newValue)
