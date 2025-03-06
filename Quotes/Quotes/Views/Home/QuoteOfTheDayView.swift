@@ -23,6 +23,7 @@ struct QuoteOfTheDayView: View {
                     .padding(.top, 30)
                     .navigationTitle("Home")
             }
+            .pinkBluePurpleBackgroundModifier()
         }
         .task {
             await quoteOfTheDayVM.getQuoteOfTheDay()
@@ -48,6 +49,7 @@ struct QuoteOfTheDayView: View {
             quoteCardAndButtons
         case .loading:
             ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         default:
             ContentUnavailableView("A quote will appear here.", systemImage: "quote.bubble")
         }

@@ -20,6 +20,7 @@ struct ReflectionEditor: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(.primary, lineWidth: 2)
+                        .purpleGradientBackgroundModifier()
                 )
                 .scrollDismissesKeyboard(.immediately)
             

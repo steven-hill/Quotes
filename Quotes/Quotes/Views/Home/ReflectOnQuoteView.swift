@@ -41,6 +41,7 @@ struct ReflectOnQuoteView: View {
             .padding()
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Reflection")
+            .purpleGradientBackgroundModifier()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel reflection and don't save.") }
                 ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveNewQuoteWithReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
