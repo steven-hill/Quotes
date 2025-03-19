@@ -17,34 +17,40 @@ struct TabBar: View {
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     
     // MARK: - State
-    @State private var selectedTab: Int = 0
+    @State private var selectedTab: Tab = .home
+
+    private enum Tab {
+        case home
+        case saved
+        case settings
+    }
     
     // MARK: - Body
     var body: some View {
         TabView(selection: $selectedTab) {
             QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager())))
                 .tabItem {
-                    Label("Home", systemImage: selectedTab == 0 ? "house.fill" : "house")
-                        .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
+                    Label("Home", systemImage: selectedTab == .home ? "house.fill" : "house")
+                        .environment(\.symbolVariants, selectedTab == .home ? .fill : .none)
                 }
-                .onAppear { selectedTab = 0 }
-                .tag(0)
+                .onAppear { selectedTab = .home }
+                .tag(Tab.home)
             
             SavedView(fetched: FetchRequestStore(managedObjectContext: managedObjectContext))
                 .tabItem {
-                    Label("Saved", systemImage: selectedTab == 1 ? "bookmark.fill" : "bookmark")
-                        .environment(\.symbolVariants, selectedTab == 1 ? .fill : .none)
+                    Label("Saved", systemImage: selectedTab == .saved ? "bookmark.fill" : "bookmark")
+                        .environment(\.symbolVariants, selectedTab == .saved ? .fill : .none)
                 }
-                .onAppear { selectedTab = 1 }
-                .tag(1)
+                .onAppear { selectedTab = .saved }
+                .tag(Tab.saved)
             
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: selectedTab == 2 ? "gearshape.circle.fill" : "gearshape.circle")
-                        .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
+                    Label("Settings", systemImage: selectedTab == .settings ? "gearshape.circle.fill" : "gearshape.circle")
+                        .environment(\.symbolVariants, selectedTab == .settings ? .fill : .none)
                 }
-                .onAppear { selectedTab = 2 }
-                .tag(2)
+                .onAppear { selectedTab = .settings }
+                .tag(Tab.settings)
         }
         .tint(.primary)
         .task {
