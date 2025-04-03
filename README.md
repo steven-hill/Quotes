@@ -34,6 +34,7 @@ Accessibility:
 - Adding to and improving the unit tests.
 - Improving the accessibility experience.
 - Improving the structure, readability and reusability of the codebase.
+- Using Instruments to optimise app performance.
 
 ### 📲 Getting started
 1. Clone the repo.
