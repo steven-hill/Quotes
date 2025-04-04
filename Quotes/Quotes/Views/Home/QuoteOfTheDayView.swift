@@ -13,7 +13,7 @@ struct QuoteOfTheDayView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     
     // MARK: - State object
-    @StateObject var quoteOfTheDayVM: QuoteViewModel
+    @StateObject var quoteOfTheDayVM = QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager()))
     
     // MARK: - Body
     var body: some View {

@@ -10,8 +10,7 @@ import SwiftUI
 @main
 struct QuotesApp: App {
     
-    // MARK: - State object
-    @StateObject var viewModel = QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager()))
+    // MARK: - State objects
     @StateObject var localNotificationManager = LocalNotificationManager()
     @StateObject var fetchRequestStore: FetchRequestStore
     @StateObject var appearanceManager = AppearanceManager()
@@ -30,7 +29,6 @@ struct QuotesApp: App {
     var body: some Scene {
         WindowGroup {
             TabBar()
-                .environmentObject(viewModel)
                 .environmentObject(localNotificationManager)
                 .environmentObject(appearanceManager)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
