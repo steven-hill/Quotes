@@ -28,7 +28,7 @@ struct TabBar: View {
     // MARK: - Body
     var body: some View {
         TabView(selection: $selectedTab) {
-            QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager())))
+            QuoteOfTheDayView()
                 .tabItem {
                     Label("Home", systemImage: selectedTab == .home ? "house.fill" : "house")
                         .environment(\.symbolVariants, selectedTab == .home ? .fill : .none)
