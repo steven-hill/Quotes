@@ -10,11 +10,10 @@ import SwiftUI
 struct SavedView: View {
     
     // MARK: - Environment
-    @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.isSearching) private var isSearching
     
-    // MARK: - Observed object
-    @ObservedObject var fetched: FetchRequestStore
+    // MARK: - Environment object
+    @EnvironmentObject var fetched: FetchRequestStore
     
     // MARK: - State
     @State private var searchText: FetchRequestStore.Search = .init()
@@ -143,4 +142,9 @@ extension SavedView {
     func removeQuote(at offsets: IndexSet) {
         fetched.deleteQuote(atOffsets: offsets)
     }
+}
+
+#Preview {
+    SavedView()
+        .environmentObject(FetchRequestStore(managedObjectContext: PersistenceController.preview.container.viewContext))
 }
