@@ -29,6 +29,7 @@ struct QuotesApp: App {
     var body: some Scene {
         WindowGroup {
             TabBar()
+                .environmentObject(fetchRequestStore)
                 .environmentObject(localNotificationManager)
                 .environmentObject(appearanceManager)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)

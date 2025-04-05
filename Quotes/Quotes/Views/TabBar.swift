@@ -11,10 +11,10 @@ struct TabBar: View {
     
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
-    @Environment(\.managedObjectContext) var managedObjectContext
     
-    // MARK: - Environment Object
+    // MARK: - Environment Objects
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
+    @EnvironmentObject var fetchRequestStore: FetchRequestStore
     
     // MARK: - State
     @State private var selectedTab: Tab = .home
@@ -36,7 +36,7 @@ struct TabBar: View {
                 .onAppear { selectedTab = .home }
                 .tag(Tab.home)
             
-            SavedView(fetched: FetchRequestStore(managedObjectContext: managedObjectContext))
+            SavedView()
                 .tabItem {
                     Label("Saved", systemImage: selectedTab == .saved ? "bookmark.fill" : "bookmark")
                         .environment(\.symbolVariants, selectedTab == .saved ? .fill : .none)
@@ -66,7 +66,7 @@ struct TabBar: View {
 
 #Preview {
     TabBar()
+        .environmentObject(FetchRequestStore(managedObjectContext: PersistenceController.preview.container.viewContext))
         .environmentObject(LocalNotificationManager())
         .environmentObject(AppearanceManager())
-        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
