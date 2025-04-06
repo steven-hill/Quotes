@@ -10,7 +10,6 @@ import SwiftUI
 struct EditReflectionView: View {
     
     // MARK: - Environment
-    @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.dismiss) private var dismiss
     
     // MARK: - Constants
