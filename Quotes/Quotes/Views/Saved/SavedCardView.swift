@@ -11,7 +11,6 @@ import UIKit
 struct SavedCardView: View {
     
     // MARK: - Environment
-    @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.colorScheme) private var colorScheme
     
     // MARK: - State
