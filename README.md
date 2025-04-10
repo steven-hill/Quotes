@@ -4,7 +4,7 @@
 
 ### ⚙️ Features
 - The app displays a new quote every day via the API in the 'Home' tab. The user can then choose to share this quote with other apps or reflect on the quote and save their thoughts/feelings.
-- Quotes which have been reflected upon will be shown in the 'Saved' tab. The user is then able to see the quote and view, edit or delete their reflection.
+- Quotes which have been reflected upon will appear in the 'Saved' tab. The user can scroll through the list of their saved quotes or search by author or quote content. Each quote's reflection can be viewed, edited or deleted from here.
 - In the 'Settings' tab the user can change their notifications and appearance settings. The notification reminds them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications). The user can switch between light, dark and system appearance.
 
 ### 🔍 Technical details
@@ -18,7 +18,7 @@ Overview:
 Networking:   
   - The network code uses Swift concurrency, and there is dependency injection for loose coupling and testability.
   - The network response is cached using NSCache.
-  - Caching will avoid exceeding the API usage limit of 5 requests per 30 second period (among other benefits to user experience and app performance).
+  - Caching will avoid exceeding the API usage limit of 5 requests per 30 second period (among other benefits to the user experience and app performance).
   - I looked at various caching solutions such as NSCache, URLCache, and in-memory caching and persistent caching. An in-memory NSCache suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API.
 
 Persistence:
