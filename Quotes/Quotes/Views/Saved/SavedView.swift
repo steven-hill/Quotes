@@ -42,7 +42,7 @@ struct SavedView: View {
                 Text(error.localizedDescription)
             }
         }
-        .searchable(text: $searchText.query, prompt: "Search by author")
+        .searchable(text: $searchText.query, prompt: "Search by author or quote")
         .disabled(isSearchDisabled)
         .onChange(of: searchText) { _, newValue in
             updateSearchResults(newValue)
@@ -59,6 +59,8 @@ struct SavedView: View {
     // MARK: - Computed Property for Content State
     private var contentState: ContentState {
         if !searchText.query.isEmpty && fetched.filteredResults.isEmpty {
+            return .noSearchResults
+        } else if !searchText.query.isEmpty && fetched.savedQuotes.isEmpty {
             return .noSearchResults
         } else if fetched.savedQuotes.isEmpty && !isSearching {
             return .noSavedQuotes
@@ -132,7 +134,7 @@ struct SavedView: View {
         if newValue.query.isEmpty && !isSearching {
             fetched.reFetchAll()
         } else {
-            fetched.filterListByAuthor(with: newValue.query)
+            fetched.filterListByAuthorOrQuote(with: newValue.query)
         }
     }
 }

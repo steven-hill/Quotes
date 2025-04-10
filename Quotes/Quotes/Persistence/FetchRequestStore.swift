@@ -28,7 +28,8 @@ class FetchRequestStore: NSObject, ObservableObject, FetchRequestStoreProtocol {
     @Published var fetchRequestHasError: Bool = false
     let savedQuotesController: NSFetchedResultsController<SavedQuote>
     
-    private let searchRequest = "quoteAuthor CONTAINS[cd] %@"
+    private let authorSearchRequest = "quoteAuthor CONTAINS[cd] %@"
+    private let quoteSearchRequest = "quoteContent CONTAINS[cd] %@"
     
     init(managedObjectContext: NSManagedObjectContext) {
         savedQuotesController = NSFetchedResultsController(fetchRequest: PersistenceController.shared.savedQuotesFetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
@@ -74,12 +75,14 @@ extension FetchRequestStore {
         var query = ""
     }
     
-    func filterListByAuthor(with query: String) {
+    func filterListByAuthorOrQuote(with query: String) {
         if query.isEmpty {
             reFetchAll()
         } else {
-            let searchPredicate = NSPredicate(format: searchRequest, query)
-            savedQuotesController.fetchRequest.predicate = searchPredicate
+            let authorSearchPredicate = NSPredicate(format: authorSearchRequest, query)
+            let quoteSearchPredicate = NSPredicate(format: quoteSearchRequest, query)
+            let compoundSearchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [authorSearchPredicate, quoteSearchPredicate])
+            savedQuotesController.fetchRequest.predicate = compoundSearchPredicate
             fetchFilteredResults()
         }
     }
