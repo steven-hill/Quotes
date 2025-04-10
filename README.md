@@ -4,7 +4,7 @@
 
 ### ⚙️ Features
 - The app displays a new quote every day via the API in the 'Home' tab. The user can then choose to share this quote with other apps or reflect on the quote and save their thoughts/feelings.
-- Quotes which have been reflected upon will appear in the 'Saved' tab. The user can scroll through the list of their saved quotes or search by author or quote content. Each quote's reflection can be viewed, edited or deleted from here.
+- Quotes which have been reflected upon will appear in the 'Saved' tab. The user can scroll through the list of their saved quotes or search by author or quote content. Each quote's reflection can be viewed or edited from here. Each quote can be deleted from the menu button or by swipe action.
 - In the 'Settings' tab the user can change their notifications and appearance settings. The notification reminds them to open the app each day to see a new quote (assuming the user has granted permission to receive notifications). The user can switch between light, dark and system appearance.
 
 ### 🔍 Technical details
