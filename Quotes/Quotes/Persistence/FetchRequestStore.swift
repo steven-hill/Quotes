@@ -20,21 +20,22 @@ class FetchRequestStore: NSObject, ObservableObject, FetchRequestStoreProtocol {
         case failure(error: Error)
     }
     
-    let context = PersistenceController.shared.container.viewContext
+    private let savedQuotesController: NSFetchedResultsController<SavedQuote>
+    private let context: NSManagedObjectContext
     
     @Published var savedQuotes: [SavedQuote] = []
     @Published var filteredResults = [SavedQuote]()
     @Published var fetchState: FetchState = .none
     @Published var fetchRequestHasError: Bool = false
-    let savedQuotesController: NSFetchedResultsController<SavedQuote>
     
     private let authorSearchRequest = "quoteAuthor CONTAINS[cd] %@"
     private let quoteSearchRequest = "quoteContent CONTAINS[cd] %@"
     
-    init(managedObjectContext: NSManagedObjectContext) {
-        savedQuotesController = NSFetchedResultsController(fetchRequest: PersistenceController.shared.savedQuotesFetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+    init(savedQuotesController: NSFetchedResultsController<SavedQuote>, context: NSManagedObjectContext) {
+        self.savedQuotesController = savedQuotesController
+        self.context = context
         super.init()
-        savedQuotesController.delegate = self
+        self.savedQuotesController.delegate = self
         tryFetch()
     }
     
@@ -103,6 +104,16 @@ extension FetchRequestStore {
             fetchRequestHasError = true
             fetchState = .failure(error: error)
         }
+    }
+}
+
+// MARK: - Data for SwiftUI previews
+extension FetchRequestStore {
+    static var preview: FetchRequestStore {
+        let managedObjectContext = PersistenceController.preview.container.viewContext
+        let savedQuotesController = NSFetchedResultsController(fetchRequest: PersistenceController.shared.savedQuotesFetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let previewStore = FetchRequestStore(savedQuotesController: savedQuotesController, context: managedObjectContext)
+        return previewStore
     }
 }
 

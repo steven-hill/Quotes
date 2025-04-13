@@ -12,9 +12,8 @@ struct TabBar: View {
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
     
-    // MARK: - Environment Objects
+    // MARK: - Environment Object
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
-    @EnvironmentObject var fetchRequestStore: FetchRequestStore
     
     // MARK: - State
     @State private var selectedTab: Tab = .home
@@ -66,7 +65,7 @@ struct TabBar: View {
 
 #Preview {
     TabBar()
-        .environmentObject(FetchRequestStore(managedObjectContext: PersistenceController.preview.container.viewContext))
+        .environmentObject(FetchRequestStore.preview)
         .environmentObject(LocalNotificationManager())
         .environmentObject(AppearanceManager())
 }

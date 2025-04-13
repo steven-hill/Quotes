@@ -161,10 +161,6 @@ extension SavedCardView {
 }
 
 #Preview {
-    let persistenceController = PersistenceController(inMemory: true)
-    let context = persistenceController.container.viewContext
-    let previewQuote = SavedQuote(context: context)
-    
-    SavedCardView(savedQuote: previewQuote)
+    SavedCardView(savedQuote: FetchRequestStore.preview.savedQuotes[0])
         .padding()
 }

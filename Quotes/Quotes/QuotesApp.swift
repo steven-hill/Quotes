@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 @main
 struct QuotesApp: App {
@@ -21,7 +22,8 @@ struct QuotesApp: App {
     // MARK: - Init
     init() {
         let managedObjectContext = persistenceController.container.viewContext
-        let store = FetchRequestStore(managedObjectContext: managedObjectContext)
+        let savedQuotesController = NSFetchedResultsController(fetchRequest: persistenceController.savedQuotesFetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let store = FetchRequestStore(savedQuotesController: savedQuotesController, context: managedObjectContext)
         self._fetchRequestStore = StateObject(wrappedValue: store)
     }
     

@@ -148,5 +148,5 @@ extension SavedView {
 
 #Preview {
     SavedView()
-        .environmentObject(FetchRequestStore(managedObjectContext: PersistenceController.preview.container.viewContext))
+        .environmentObject(FetchRequestStore.preview)
 }
