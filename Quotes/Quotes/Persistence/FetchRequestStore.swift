@@ -60,7 +60,10 @@ extension FetchRequestStore: NSFetchedResultsControllerDelegate {
         print("updated = \(updated)")
         savedQuotes = updated
     }
-    
+}
+
+// MARK: - Delete method
+extension FetchRequestStore {
     func deleteQuote(atOffsets offsets: IndexSet) {
         savedQuotes.remove(atOffsets: offsets)
     }
