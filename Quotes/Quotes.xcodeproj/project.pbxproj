@@ -46,7 +46,6 @@
 		5B812CEC2C5992B900B12213 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CE62C5992B900B12213 /* MockURLProtocol.swift */; };
 		5B812CED2C5992B900B12213 /* QuoteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CE72C5992B900B12213 /* QuoteServiceTests.swift */; };
 		5B812CF02C599B0C00B12213 /* QuoteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */; };
-		5BCF66882C98CD8700FFEAAA /* MockFetchRequestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66872C98CD8700FFEAAA /* MockFetchRequestStore.swift */; };
 		5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */; };
 		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
 /* End PBXBuildFile section */
@@ -111,7 +110,6 @@
 		5B812CE62C5992B900B12213 /* MockURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		5B812CE72C5992B900B12213 /* QuoteServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteServiceTests.swift; sourceTree = "<group>"; };
 		5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteViewModelTests.swift; sourceTree = "<group>"; };
-		5BCF66872C98CD8700FFEAAA /* MockFetchRequestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchRequestStore.swift; sourceTree = "<group>"; };
 		5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStoreTests.swift; sourceTree = "<group>"; };
 		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				5B177CF52C5ADF4A00CCEC8B /* PersistenceControllerTests.swift */,
-				5BCF66872C98CD8700FFEAAA /* MockFetchRequestStore.swift */,
 				5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */,
 			);
 			path = PersistenceTests;
@@ -513,7 +510,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BCF66882C98CD8700FFEAAA /* MockFetchRequestStore.swift in Sources */,
 				5B7CC8E22C87333200DDE9D4 /* CacheManagerTests.swift in Sources */,
 				5B812CED2C5992B900B12213 /* QuoteServiceTests.swift in Sources */,
 				5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */,
