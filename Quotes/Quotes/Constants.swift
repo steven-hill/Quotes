@@ -9,7 +9,6 @@ import Foundation
 
 struct Constants {
     struct iPad {
-        static let viewWidth: CGFloat = 700
         static let buttonWidth: CGFloat = 350
     }
 }

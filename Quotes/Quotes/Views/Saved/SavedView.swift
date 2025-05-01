@@ -106,7 +106,7 @@ struct SavedView: View {
             }
         }
         .listStyle(PlainListStyle())
-        .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
+        .frame(maxWidth: .infinity)
         .alert("Are you sure?", isPresented: $showDeleteQuoteAlert, presenting: quoteToDelete) { quoteToDelete in
             Button("Delete", role: .destructive) {
                 do {

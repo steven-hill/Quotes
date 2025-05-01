@@ -31,7 +31,7 @@ struct QuoteCardView: View {
         .padding()
         .cardBackgroundModifier()
         .padding()
-        .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.viewWidth : .infinity)
+        .frame(maxWidth: .infinity)
         .offset(y: offset)
         .rotation3DEffect(.init(degrees: showCard ? 0 : 180), axis: (x: showCard ? 0 : 1.0, y: 0, z: 0))
         .onAppear(perform: {
