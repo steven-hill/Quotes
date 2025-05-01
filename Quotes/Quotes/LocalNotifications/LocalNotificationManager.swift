@@ -10,7 +10,7 @@ import NotificationCenter
 
 protocol NotificationCenterProtocol {
     func requestAuthorization(options: UNAuthorizationOptions) async throws
-    func notificationSettings() async -> UNNotificationSettings
+    func notificationSettings() async -> NotificationSettings
     func add(_ request: UNNotificationRequest) async throws
     func removeAllPendingNotificationRequests()
 }

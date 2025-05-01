@@ -15,8 +15,18 @@ final class NotificationCenterWrapper: NotificationCenterProtocol {
         try await notificationCenter.requestAuthorization(options: options)
     }
     
-    func notificationSettings() async -> UNNotificationSettings {
-        return await notificationCenter.notificationSettings()
+    func notificationSettings() async -> NotificationSettings {
+        let settings = await notificationCenter.notificationSettings()
+        let status: AuthorizationStatus
+        switch settings.authorizationStatus {
+            case .authorized: status = .authorized
+            case .denied: status = .denied
+            case .notDetermined: status = .notDetermined
+            case .provisional: status = .provisional
+            case .ephemeral: status = .ephemeral
+            @unknown default: status = .notDetermined
+        }
+        return NotificationSettings(authorizationStatus: status)
     }
     
     func add(_ request: UNNotificationRequest) async throws {

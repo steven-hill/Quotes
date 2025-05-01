@@ -47,6 +47,7 @@
 		5B812CED2C5992B900B12213 /* QuoteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CE72C5992B900B12213 /* QuoteServiceTests.swift */; };
 		5B812CF02C599B0C00B12213 /* QuoteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */; };
 		5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */; };
+		5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */; };
 		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		5B812CE72C5992B900B12213 /* QuoteServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteServiceTests.swift; sourceTree = "<group>"; };
 		5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteViewModelTests.swift; sourceTree = "<group>"; };
 		5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStoreTests.swift; sourceTree = "<group>"; };
+		5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
 		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,6 +121,7 @@
 		5B3F9D782D10C8EC009151CB /* AppearanceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppearanceTests; sourceTree = "<group>"; };
 		5B73D74B2D287F2F0076159F /* ReusableComponents */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReusableComponents; sourceTree = "<group>"; };
 		5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomViewModifiers; sourceTree = "<group>"; };
+		5BDFEDBE2DC29DDF0065ACCC /* LocalNotificationsTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalNotificationsTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +206,7 @@
 		5B3FB7B62C52DE47000994DC /* QuotesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5BDFEDBE2DC29DDF0065ACCC /* LocalNotificationsTests */,
 				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
 				5B177CF42C5ADF0F00CCEC8B /* PersistenceTests */,
 				5B812CEE2C599AEB00B12213 /* ViewModelTests */,
@@ -292,6 +296,7 @@
 				5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */,
 				5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */,
 				5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */,
+				5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */,
 			);
 			path = LocalNotifications;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
+				5BDFEDBE2DC29DDF0065ACCC /* LocalNotificationsTests */,
 			);
 			name = QuotesTests;
 			productName = QuotesTests;
@@ -498,6 +504,7 @@
 				5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */,
 				5B3FB7F92C52E930000994DC /* PersistenceController.swift in Sources */,
 				5B3FB7E22C52E31E000994DC /* ReflectOnThisQuoteButton.swift in Sources */,
+				5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */,
 				5B3FB7E42C52E3A6000994DC /* ReflectOnQuoteView.swift in Sources */,
 				5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */,
 				5B3FB7EA2C52E4BC000994DC /* SavedCardView.swift in Sources */,
