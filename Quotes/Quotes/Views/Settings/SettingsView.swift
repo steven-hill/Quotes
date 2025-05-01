@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    // MARK: - Environment Object
+    // MARK: - Environment Objects
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     @EnvironmentObject var appearanceManager: AppearanceManager
     
