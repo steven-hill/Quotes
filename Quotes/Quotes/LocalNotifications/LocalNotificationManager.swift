@@ -33,7 +33,7 @@ final class LocalNotificationManager: ObservableObject {
             case .none:
                 return ""
             case .requestAuthorizationFailure:
-                return "Sorry, there was an error completing notification authorization. Please try again in Settings."
+                return "Sorry, there was an error completing notification authorization. Please try again in the Settings app."
             case .failedToSetNotificationTime:
                 return "Sorry, there was an error setting the notification time. Please try again."
             }
