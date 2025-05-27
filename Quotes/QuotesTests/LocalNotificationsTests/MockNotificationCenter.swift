@@ -15,6 +15,7 @@ final class MockNotificationCenter: NotificationCenterProtocol {
     var removeAllPendingNotificationRequestsCalled = false
     var shouldThrowAddError = false
     var mockSettings: NotificationSettings = .init(authorizationStatus: .authorized)
+    var badgeCount = 0
     
     func requestAuthorization(options: UNAuthorizationOptions) async throws {
         requestAuthorizationCalled = true
@@ -36,5 +37,9 @@ final class MockNotificationCenter: NotificationCenterProtocol {
     
     func removeAllPendingNotificationRequests() {
         removeAllPendingNotificationRequestsCalled = true
+    }
+    
+    func setBadgeCountToZero() {
+        badgeCount = 0
     }
 }

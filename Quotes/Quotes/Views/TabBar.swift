@@ -57,7 +57,7 @@ struct TabBar: View {
         }
         .onChange(of: scenePhase) { _, newValue in
             if newValue == .active {
-                UNUserNotificationCenter.current().setBadgeCount(0)
+                localNotificationManager.setBadgeCountToZero()
             }
         }
     }

@@ -112,7 +112,7 @@ final class LocalNotificationManagerTests: XCTestCase {
         XCTAssertEqual(sut.notificationTime, "09:30", "Notification time should be set correctly.")
     }
     
-    func test_scheduleNotificationFailure() async {
+    func test_scheduleNotificationFailure() async throws {
         mockNotificationCenter.shouldThrowAddError = true
         
         do {
@@ -122,5 +122,13 @@ final class LocalNotificationManagerTests: XCTestCase {
             XCTAssertTrue(sut.hasError, "Error should be set to true.")
             XCTAssertEqual(sut.notificationError, .failedToSetNotificationTime, "`NotificationError` should be .failedToSetNotificationTime.")
         }
+    }
+    
+    func test_badgeCountResetsToZero_whenNotificationIsTappedAndAppLaunches() {
+        mockNotificationCenter.badgeCount = 1
+        
+        sut.setBadgeCountToZero()
+        
+        XCTAssertEqual(mockNotificationCenter.badgeCount, 0, "The badge count should be reset to zero.")
     }
 }

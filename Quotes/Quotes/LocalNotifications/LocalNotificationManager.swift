@@ -13,6 +13,7 @@ protocol NotificationCenterProtocol {
     func notificationSettings() async -> NotificationSettings
     func add(_ request: UNNotificationRequest) async throws
     func removeAllPendingNotificationRequests()
+    func setBadgeCountToZero()
 }
 
 protocol ApplicationProtocol {
@@ -107,5 +108,9 @@ final class LocalNotificationManager: ObservableObject {
     
     func removeAnyPendingNotifications() {
         notificationCenter.removeAllPendingNotificationRequests()
+    }
+    
+    func setBadgeCountToZero() {
+        notificationCenter.setBadgeCountToZero()
     }
 }
