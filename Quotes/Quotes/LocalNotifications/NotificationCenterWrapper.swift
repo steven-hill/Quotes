@@ -36,4 +36,8 @@ final class NotificationCenterWrapper: NotificationCenterProtocol {
     func removeAllPendingNotificationRequests() {
         notificationCenter.removeAllPendingNotificationRequests()
     }
+    
+    func setBadgeCountToZero() {
+        notificationCenter.setBadgeCount(0)
+    }
 }
