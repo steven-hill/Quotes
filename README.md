@@ -13,7 +13,8 @@ Overview:
   - The deployment target is iOS 17.5+ and iPadOS 17.5+.
   - MVVM, Core Data and Swift concurrency.
   - iPhone and iPad are both supported.
-  - The app includes code to support different size classes, portrait and landscape orientation, and light, dark or system appearance.
+  - The app supports different size classes, portrait and landscape orientation, and light, dark or system appearance.
+  - XCTest is used for testing.
 
 Networking:   
   - The network code uses Swift concurrency, and there is dependency injection for loose coupling and testability.
@@ -30,10 +31,9 @@ Accessibility:
 - There is support for VoiceOver and Dynamic Type.
 
 ### 🚧 Currently working on
+- Making enhancements to the notifications experience.
 - Improving the testability of the app.
 - Adding to and improving the unit tests.
-- Improving the accessibility experience.
-- Improving the structure, readability and reusability of the codebase.
 - Using Instruments to optimise app performance.
 
 ### 📲 Getting started
