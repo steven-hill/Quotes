@@ -13,19 +13,22 @@ final class LocalNotificationManagerTests: XCTestCase {
     
     private var mockNotificationCenter: MockNotificationCenter!
     private var mockApplication: MockApplication!
+    private var mockNotificationTimeUserDefaults: MockNotificationTimeUserDefaults!
     private var sut: LocalNotificationManager!
     
     override func setUp() {
         super.setUp()
         mockNotificationCenter = MockNotificationCenter()
         mockApplication = MockApplication()
-        sut = LocalNotificationManager(notificationCenter: mockNotificationCenter, application: mockApplication)
+        mockNotificationTimeUserDefaults = MockNotificationTimeUserDefaults()
+        sut = LocalNotificationManager(notificationCenter: mockNotificationCenter, application: mockApplication, userDefaults: mockNotificationTimeUserDefaults)
     }
     
     override func tearDown() {
         super.tearDown()
         mockNotificationCenter = nil
         mockApplication = nil
+        mockNotificationTimeUserDefaults = nil
         sut = nil
     }
     
@@ -130,5 +133,19 @@ final class LocalNotificationManagerTests: XCTestCase {
         sut.setBadgeCountToZero()
         
         XCTAssertEqual(mockNotificationCenter.badgeCount, 0, "The badge count should be reset to zero.")
+    }
+    
+    func test_notificationTimeIsSetToDefaultTime_whenUserDefaultsHasNoValue() {
+        sut.notificationTime = mockNotificationTimeUserDefaults.getNotificationTime(forKey: "chosenTime")
+        
+        XCTAssertEqual(sut.notificationTime, "10:00", "Default time should be set to 10:00.")
+    }
+    
+    func test_notificationTimeIsSetToUserDefaultsValue_whenUserDefaultsHasValue() {
+        mockNotificationTimeUserDefaults.updateNotificationTime(to: "15:30", forKey: "chosenTime")
+        
+        sut.notificationTime = mockNotificationTimeUserDefaults.getNotificationTime(forKey: "chosenTime")
+        
+        XCTAssertEqual(sut.notificationTime, "15:30", "Notification time and the time in UserDefaults should match.")
     }
 }
