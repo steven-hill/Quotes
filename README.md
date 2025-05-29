@@ -26,12 +26,12 @@ Persistence:
 - Persistence of saved quotes is achieved via Core Data.
 - I was looking for an approach which separated Core Data from the rest of the app as much as possible, which ruled out using @FetchRequest in my app's views. For this purpose I wanted to try out Donny Wals' approach of using ObservableObject, the @Published property wrapper and NSFetchedResultsController. You can read his article on it [here](https://www.donnywals.com/fetching-objects-from-core-data-in-a-swiftui-project/).
 - The user's appearance setting is persisted by UserDefaults, and the user can change the appearance in the app's settings.
+- If the user sets a new time for notifications that time will be saved to UserDefaults. 
   
 Accessibility:
 - There is support for VoiceOver and Dynamic Type.
 
 ### 🚧 Currently working on
-- Making enhancements to the notifications experience.
 - Improving the testability of the app.
 - Adding to and improving the unit tests.
 - Using Instruments to optimise app performance.
