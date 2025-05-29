@@ -21,6 +21,20 @@ protocol ApplicationProtocol {
     func open(_ url: URL) async
 }
 
+protocol NotificationTimeProtocol {
+    func getNotificationTime(forKey: String) -> String
+    func updateNotificationTime(to: String, forKey: String)
+}
+
+extension UserDefaults: NotificationTimeProtocol {
+    func getNotificationTime(forKey: String) -> String {
+        UserDefaults.standard.string(forKey: forKey) ?? "10:00"
+    }
+    func updateNotificationTime(to: String, forKey: String) {
+        UserDefaults.standard.set(to, forKey: forKey)
+    }
+}
+
 @MainActor
 final class LocalNotificationManager: ObservableObject {
     
@@ -43,10 +57,11 @@ final class LocalNotificationManager: ObservableObject {
     
     private let notificationCenter: NotificationCenterProtocol
     private let application: ApplicationProtocol
+    private let userDefaults: NotificationTimeProtocol
     @Published var authorizationGranted = false
     @Published var hasError: Bool = false
     @Published var notificationError: NotificationError = .none
-    @Published var notificationTime = "10:00"
+    @Published var notificationTime = ""
     private let badgeCount = 1
     private let notificationTitle = "Quotes"
     private let notificationBody = "Today's quote is available. Tap here to see it."
@@ -54,9 +69,11 @@ final class LocalNotificationManager: ObservableObject {
     var userChosenNotificationMinute: Int?
     
     init(notificationCenter: NotificationCenterProtocol = NotificationCenterWrapper(),
-         application: ApplicationProtocol = UIApplicationWrapper()) {
+         application: ApplicationProtocol = UIApplicationWrapper(), userDefaults: NotificationTimeProtocol = UserDefaults.standard) {
         self.notificationCenter = notificationCenter
         self.application = application
+        self.userDefaults = userDefaults
+        self.notificationTime = userDefaults.getNotificationTime(forKey: "userChosenNotificationTime")
     }
     
     func requestAuthorization() async throws {
@@ -99,6 +116,7 @@ final class LocalNotificationManager: ObservableObject {
         do {
             try await notificationCenter.add(request)
             notificationTime = String(format: "%02d:%02d", userChosenNotificationHour, userChosenNotificationMinute)
+            setTimeInUserDefaults()
         } catch {
             self.hasError = true
             notificationError = .failedToSetNotificationTime
@@ -112,5 +130,9 @@ final class LocalNotificationManager: ObservableObject {
     
     func setBadgeCountToZero() {
         notificationCenter.setBadgeCountToZero()
+    }
+    
+    func setTimeInUserDefaults() {
+        userDefaults.updateNotificationTime(to: notificationTime, forKey: "userChosenNotificationTime")
     }
 }
