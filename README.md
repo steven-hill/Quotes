@@ -41,10 +41,12 @@ Accessibility:
 2. Open `Quotes.xcodeproj`.
 3. Build and run.
 
-### 📱 Screenshots (preliminary designs showing light and dark mode on iPhone)
+### 📱 Screenshots
 
-<img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Home%20screen%20(iPhone%20-%20light%20mode).png" width="275" height="575" alt="Home screen in light mode on iPhone"> 
-<img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Home%20screen%20(iPhone%20-%20dark%20mode).png" width="275" height="575" alt="Home screen in dark mode on iPhone">
-<img src="https://github.com/steven-hill/Quotes/blob/f808d4faa373cb53aba8c062e2b12756165d853c/Simulator%20screenshots/Reflection%20sheet%20(iPhone%20-%20light%20mode).png" width="275" height="575" alt="Reflection sheet in light mode on iPhone">
-<img src="https://github.com/steven-hill/Quotes/blob/f9e6502cf6d6d5b77af6650291f3ff285fc19ed5/Saved%20screen%20(iPhone%20-%20dark%20mode).png" width="275" height="575" alt="Saved screen in dark mode on iPhone">
-<img src="https://github.com/steven-hill/Quotes/blob/f9e6502cf6d6d5b77af6650291f3ff285fc19ed5/Settings%20sceen%20(iPhone%20-%20light%20mode).png" width="275" height="575" alt="Settings screen in light mode on iPhone">
+<p align="center">
+  <img src="Simulator screenshots/Home screen - light mode.png" width="175"/>
+  <img src="Simulator screenshots/Reflection screen - light mode.png" width="175" hspace="10"/>
+  <br/>
+  <img src="Simulator screenshots/Saved screen - light mode.png" width="175"/>
+  <img src="Simulator screenshots/Settings screen - light mode.png" width="175" hspace="10"/>
+</p>
