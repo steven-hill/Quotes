@@ -44,9 +44,9 @@ Accessibility:
 ### 📱 Screenshots
 
 <p align="center">
-  <img src="Simulator screenshots/Home screen - light mode.png" width="175"/>
-  <img src="Simulator screenshots/Reflection screen - light mode.png" width="175" hspace="10"/>
+  <img src="Simulator screenshots/Home screen - light mode.png" width="200"/>
+  <img src="Simulator screenshots/Reflection screen - light mode.png" width="200" hspace="10"/>
   <br/>
-  <img src="Simulator screenshots/Saved screen - light mode.png" width="175"/>
-  <img src="Simulator screenshots/Settings screen - light mode.png" width="175" hspace="10"/>
+  <img src="Simulator screenshots/Saved screen - light mode.png" width="200"/>
+  <img src="Simulator screenshots/Settings screen - light mode.png" width="200" hspace="10"/>
 </p>
