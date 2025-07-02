@@ -11,7 +11,7 @@ struct NoSearchResultsFoundView: View {
     @Binding var searchQuery: String
     
     var body: some View {
-        ContentUnavailableView("No results found for '\(searchQuery)'.", systemImage: "magnifyingglass", description: Text("Check the spelling or try a new search."))
+        ContentUnavailableView("No results found for '\(searchQuery)'", systemImage: "magnifyingglass", description: Text("Check the spelling or try a new search."))
     }
 }
 
