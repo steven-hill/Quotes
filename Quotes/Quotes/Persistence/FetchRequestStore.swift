@@ -79,8 +79,9 @@ extension FetchRequestStore {
         if query.isEmpty {
             reFetchAll()
         } else {
-            let authorSearchPredicate = NSPredicate(format: authorSearchRequest, query)
-            let quoteSearchPredicate = NSPredicate(format: quoteSearchRequest, query)
+            let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+            let authorSearchPredicate = NSPredicate(format: authorSearchRequest, trimmedQuery)
+            let quoteSearchPredicate = NSPredicate(format: quoteSearchRequest, trimmedQuery)
             let compoundSearchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [authorSearchPredicate, quoteSearchPredicate])
             savedQuotesController.fetchRequest.predicate = compoundSearchPredicate
             fetchFilteredResults()

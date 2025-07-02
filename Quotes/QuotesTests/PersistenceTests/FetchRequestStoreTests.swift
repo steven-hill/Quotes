@@ -140,6 +140,33 @@ final class FetchRequestStoreTests: XCTestCase {
         XCTAssertEqual(sut.savedQuotes.count, 0, "Search returned no results. There should be no quotes in the array.")
     }
     
+    func test_filterListByAuthorOrQuote_trimsQueryWithWhiteSpaces() throws {
+        try createAndSaveOneTestQuote()
+        sut.tryFetch()
+        
+        sut.filterListByAuthorOrQuote(with: " Author 1 ")
+        
+        XCTAssertEqual(sut.savedQuotes.count, 1, "There should be one quote in the array.")
+    }
+    
+    func test_filterListByAuthorOrQuote_trimsQueryWithTabs() throws {
+        try createAndSaveOneTestQuote()
+        sut.tryFetch()
+        
+        sut.filterListByAuthorOrQuote(with: "   Author 1   ")
+        
+        XCTAssertEqual(sut.savedQuotes.count, 1, "There should be one quote in the array.")
+    }
+    
+    func test_filterListByAuthorOrQuote_trimsQueryWithNewLines() throws {
+        try createAndSaveOneTestQuote()
+        sut.fetchFilteredResults()
+        
+        sut.filterListByAuthorOrQuote(with: "\n   Author 1   \n")
+        
+        XCTAssertEqual(sut.savedQuotes.count, 1, "There should be one quote in the array.")
+    }
+    
     func test_deleteQuote_removesQuoteFromSavedQuotesArray() throws {
         try createAndSaveMultipleTestQuotes()
         sut.tryFetch()
