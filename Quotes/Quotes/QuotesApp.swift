@@ -15,6 +15,7 @@ struct QuotesApp: App {
     @StateObject var localNotificationManager = LocalNotificationManager()
     @StateObject var fetchRequestStore: FetchRequestStore
     @StateObject var appearanceManager = AppearanceManager()
+    @StateObject var tabRouter = TabRouter()
     
     // MARK: - Constant
     let persistenceController = PersistenceController.shared
@@ -34,6 +35,7 @@ struct QuotesApp: App {
                 .environmentObject(fetchRequestStore)
                 .environmentObject(localNotificationManager)
                 .environmentObject(appearanceManager)
+                .environmentObject(tabRouter)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .onAppear() {
                     appearanceManager.overrideDisplayMode()

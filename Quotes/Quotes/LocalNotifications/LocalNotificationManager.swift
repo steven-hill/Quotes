@@ -14,6 +14,9 @@ protocol NotificationCenterProtocol {
     func add(_ request: UNNotificationRequest) async throws
     func removeAllPendingNotificationRequests()
     func setBadgeCountToZero()
+    func setup(tabRouter: TabRouter)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async
+    func handleNotificationTap() async
 }
 
 protocol ApplicationProtocol {
@@ -134,5 +137,9 @@ final class LocalNotificationManager: ObservableObject {
     
     func setTimeInUserDefaults() {
         userDefaults.updateNotificationTime(to: notificationTime, forKey: "userChosenNotificationTime")
+    }
+    
+    func setUpNotificationTabRouter(tabRouter: TabRouter) {
+        notificationCenter.setup(tabRouter: tabRouter)
     }
 }

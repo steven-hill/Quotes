@@ -148,4 +148,41 @@ final class LocalNotificationManagerTests: XCTestCase {
         
         XCTAssertEqual(sut.notificationTime, "15:30", "Notification time and the time in UserDefaults should match.")
     }
+    
+    func test_notificationCenterRouterIsNil_whenInitialized() {
+        XCTAssertTrue(mockNotificationCenter.mockRouter == nil, "mockRouter should be nil.")
+    }
+    
+    func test_notificationCenterRouterIsNotNil_whenDependencyInjected() {
+        _ = setUpMockRouterAndSetDelegate()
+        
+        XCTAssertTrue(mockNotificationCenter.mockRouter !== nil, "mockRouter should not be nil.")
+    }
+    
+    func test_routerTabToBeShownPropertyIsSetToNone_whenInitialized() {
+        let mockRouter = setUpMockRouterAndSetDelegate()
+        XCTAssertEqual(mockRouter.tabToBeShown, .none, "TabRouter should set `tabToBeShown` to .none at initialization.")
+    }
+    
+    func test_UNUserNotificationCenterDelegateIsSet_whenSetUpNotificationTabRouterIsCalled() {
+        _ = setUpMockRouterAndSetDelegate()
+        
+        XCTAssertTrue(mockNotificationCenter.isMockDelegateSet, "`UNUserNotificationCenterDelegate` should be set when `setUpNotificationTabRouter(tabRouter:)` is called.")
+    }
+    
+    func test_notificationTapSetsTabBarToHomeTab() async {
+        let mockRouter = setUpMockRouterAndSetDelegate()
+        
+        mockNotificationCenter.handleNotificationTap()
+        
+        XCTAssertEqual(mockRouter.tabToBeShown, .home, "TabRouter should set `tabToBeShown` to .home after notification tap.")
+    }
+    
+    // MARK: - Helper method
+
+    private func setUpMockRouterAndSetDelegate() -> TabRouter {
+        let mockRouter = TabRouter()
+        sut.setUpNotificationTabRouter(tabRouter: mockRouter)
+        return mockRouter
+    }
 }
