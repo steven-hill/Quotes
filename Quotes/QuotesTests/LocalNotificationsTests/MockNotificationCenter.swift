@@ -16,6 +16,8 @@ final class MockNotificationCenter: NotificationCenterProtocol {
     var shouldThrowAddError = false
     var mockSettings: NotificationSettings = .init(authorizationStatus: .authorized)
     var badgeCount = 0
+    var mockRouter: TabRouter?
+    var isMockDelegateSet = false
     
     func requestAuthorization(options: UNAuthorizationOptions) async throws {
         requestAuthorizationCalled = true
@@ -41,5 +43,18 @@ final class MockNotificationCenter: NotificationCenterProtocol {
     
     func setBadgeCountToZero() {
         badgeCount = 0
+    }
+    
+    func setup(tabRouter: TabRouter) {
+        mockRouter = tabRouter
+        isMockDelegateSet = true
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        handleNotificationTap()
+    }
+    
+    func handleNotificationTap() {
+        mockRouter?.tabToBeShown = .home
     }
 }

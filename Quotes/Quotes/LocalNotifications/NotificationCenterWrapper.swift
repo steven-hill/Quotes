@@ -7,9 +7,12 @@
 
 import Foundation
 import NotificationCenter
+import UserNotifications
 
-final class NotificationCenterWrapper: NotificationCenterProtocol {
+final class NotificationCenterWrapper: NSObject, NotificationCenterProtocol, UNUserNotificationCenterDelegate {
     private let notificationCenter = UNUserNotificationCenter.current()
+    
+    var tabRouter: TabRouter?
     
     func requestAuthorization(options: UNAuthorizationOptions) async throws {
         try await notificationCenter.requestAuthorization(options: options)
@@ -39,5 +42,19 @@ final class NotificationCenterWrapper: NotificationCenterProtocol {
     
     func setBadgeCountToZero() {
         notificationCenter.setBadgeCount(0)
+    }
+    
+    func setup(tabRouter: TabRouter) {
+        self.tabRouter = tabRouter
+        notificationCenter.delegate = self
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        await handleNotificationTap()
+    }
+    
+    @MainActor
+    func handleNotificationTap() async {
+        self.tabRouter?.tabToBeShown = .home
     }
 }
