@@ -55,6 +55,7 @@ final class MockNotificationCenter: NotificationCenterProtocol {
     }
     
     func handleNotificationTap() {
-        mockRouter?.tabToBeShown = .home
+        guard let mockRouter = mockRouter else { return }
+        mockRouter.tabToBeShown = .home
     }
 }
