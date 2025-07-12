@@ -55,6 +55,7 @@ final class NotificationCenterWrapper: NSObject, NotificationCenterProtocol, UNU
     
     @MainActor
     func handleNotificationTap() async {
-        self.tabRouter?.tabToBeShown = .home
+        guard let tabRouter = tabRouter else { return }
+        tabRouter.tabToBeShown = .home
     }
 }
