@@ -31,11 +31,6 @@ Persistence:
 Accessibility:
 - There is support for VoiceOver and Dynamic Type.
 
-### 🚧 Currently working on
-- Improving the testability of the app.
-- Adding to and improving the unit tests.
-- Using Instruments to optimise app performance.
-
 ### 📲 Getting started
 1. Clone the repo.
 2. Open `Quotes.xcodeproj`.
