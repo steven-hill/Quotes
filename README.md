@@ -9,7 +9,7 @@
 
 ### 🔍 Technical details
 Overview:
-  - This app is almost entirely SwiftUI. UIKit was used for the UIActivityViewController on iPad.
+  - This app is almost entirely SwiftUI. UIKit was used for the `UIActivityViewController` on iPad.
   - The deployment target is iOS 17.5+ and iPadOS 17.5+.
   - MVVM, Core Data and Swift concurrency.
   - iPhone and iPad are both supported.
@@ -20,7 +20,7 @@ Networking:
   - The network code uses async/await with `URLSession`, and there is dependency injection for loose coupling and testability.
   - The network response is cached using `NSCache`.
   - Caching will avoid exceeding the rate limit of 5 requests per 30 second period (among other benefits to the user experience and app performance).
-  - I looked at various caching solutions such as NSCache, URLCache, and in-memory caching and persistent caching. An in-memory NSCache suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API.
+  - I looked at various caching solutions such as `NSCache`, `URLCache`, and in-memory caching and persistent caching. An in-memory `NSCache` suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API.
 
 Persistence:
 - Persistence of saved quotes is achieved via `CoreData`.
