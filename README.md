@@ -17,16 +17,16 @@ Overview:
   - XCTest is used for testing.
 
 Networking:   
-  - The network code uses Swift concurrency, and there is dependency injection for loose coupling and testability.
-  - The network response is cached using NSCache.
-  - Caching will avoid exceeding the API usage limit of 5 requests per 30 second period (among other benefits to the user experience and app performance).
+  - The network code uses async/await with `URLSession`, and there is dependency injection for loose coupling and testability.
+  - The network response is cached using `NSCache`.
+  - Caching will avoid exceeding the rate limit of 5 requests per 30 second period (among other benefits to the user experience and app performance).
   - I looked at various caching solutions such as NSCache, URLCache, and in-memory caching and persistent caching. An in-memory NSCache suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API.
 
 Persistence:
-- Persistence of saved quotes is achieved via Core Data.
-- I was looking for an approach which separated Core Data from the rest of the app as much as possible, which ruled out using @FetchRequest in my app's views. For this purpose I wanted to try out Donny Wals' approach of using ObservableObject, the @Published property wrapper and NSFetchedResultsController. You can read his article on it [here](https://www.donnywals.com/fetching-objects-from-core-data-in-a-swiftui-project/).
-- The user's appearance setting is persisted by UserDefaults, and the user can change the appearance in the app's settings.
-- If the user sets a new time for notifications that time will be saved to UserDefaults. 
+- Persistence of saved quotes is achieved via `CoreData`.
+- I was looking for an approach which separated Core Data from the rest of the app as much as possible, which ruled out using @FetchRequest in my app's views. For this purpose I wanted to try out Donny Wals' approach of using `ObservableObject`, the `@Published` property wrapper and `NSFetchedResultsController`. You can read his article on it [here](https://www.donnywals.com/fetching-objects-from-core-data-in-a-swiftui-project/).
+- The user's appearance setting is persisted by `UserDefaults`, and the user can change the appearance in the app's settings.
+- If the user sets a new time for notifications that time will be saved to `UserDefaults`. 
   
 Accessibility:
 - There is support for VoiceOver and Dynamic Type.
