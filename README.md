@@ -10,7 +10,7 @@
 ### 🔍 Technical details
 Overview:
   - This app is almost entirely SwiftUI. UIKit was used for the `UIActivityViewController` on iPad.
-  - The deployment target is iOS 17.5+ and iPadOS 17.5+.
+  - The minimum deployment target is iOS 26.0 and iPadOS 26.0.
   - MVVM, Core Data and Swift concurrency.
   - iPhone and iPad are both supported.
   - The app supports different size classes, portrait and landscape orientation, and light, dark or system appearance.
