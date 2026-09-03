@@ -9,14 +9,15 @@ import XCTest
 @testable import Quotes
 import CoreData
 
+@MainActor
 final class FetchRequestStoreTests: XCTestCase {
     
     private var sut: FetchRequestStore!
     private var mockContext: NSManagedObjectContext!
     private var mockFetchedResultsController: NSFetchedResultsController<SavedQuote>!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         let persistentContainer = NSPersistentContainer(name: "Quotes")
         let description = NSPersistentStoreDescription()
         description.type = NSInMemoryStoreType
@@ -40,11 +41,11 @@ final class FetchRequestStoreTests: XCTestCase {
         sut = FetchRequestStore(savedQuotesController: mockFetchedResultsController, context: mockContext)
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         mockContext = nil
         mockFetchedResultsController = nil
-        super.tearDown()
+        try await super.tearDown()
     }
     
     func test_fetchSavedQuotes_returnsEmptyArray_ifThereAreNoQuotesInTheStore() {
