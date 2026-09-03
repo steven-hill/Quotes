@@ -16,16 +16,16 @@ final class LocalNotificationManagerTests: XCTestCase {
     private var mockNotificationTimeUserDefaults: MockNotificationTimeUserDefaults!
     private var sut: LocalNotificationManager!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         mockNotificationCenter = MockNotificationCenter()
         mockApplication = MockApplication()
         mockNotificationTimeUserDefaults = MockNotificationTimeUserDefaults()
         sut = LocalNotificationManager(notificationCenter: mockNotificationCenter, application: mockApplication, userDefaults: mockNotificationTimeUserDefaults)
     }
     
-    override func tearDown() {
-        super.tearDown()
+    override func tearDown() async throws {
+        try await super.tearDown()
         mockNotificationCenter = nil
         mockApplication = nil
         mockNotificationTimeUserDefaults = nil
