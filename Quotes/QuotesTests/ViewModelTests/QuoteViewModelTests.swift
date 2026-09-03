@@ -8,21 +8,22 @@
 import XCTest
 @testable import Quotes
 
+@MainActor
 final class QuoteViewModelTests: XCTestCase {
     
-    var quoteViewModel: QuoteViewModel!
-    var mockQuoteService: MockQuoteService!
+    private var quoteViewModel: QuoteViewModel!
+    private var mockQuoteService: MockQuoteService!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         mockQuoteService = MockQuoteService()
         quoteViewModel = QuoteViewModel(quoteService: mockQuoteService)
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         quoteViewModel = nil
         mockQuoteService = nil
-        super.tearDown()
+        try await super.tearDown()
     }
     
     func test_Get_QuoteOfTheDay_Success() async {

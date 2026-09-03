@@ -8,8 +8,8 @@
 import SwiftUI
 @testable import Quotes
 
-class MockWindowProvider: WindowProviding {
-    var mockWindow = UIWindow()
+final class MockWindowProvider: WindowProviding {
+    var mockWindow: UIWindow?
     
     func currentWindow() -> UIWindow? {
         return mockWindow

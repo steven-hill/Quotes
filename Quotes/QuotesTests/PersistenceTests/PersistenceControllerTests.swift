@@ -9,18 +9,19 @@ import XCTest
 @testable import Quotes
 import CoreData
 
+@MainActor
 final class PersistenceControllerTests: XCTestCase {
     
-    var sut: PersistenceController!
+    private var sut: PersistenceController!
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
         sut = PersistenceController(inMemory: true)
     }
     
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         sut = nil
-        try super.tearDownWithError()
+        try await super.tearDown()
     }
     
     func test_Initialization() {

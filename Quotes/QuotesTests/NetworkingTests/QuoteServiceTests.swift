@@ -8,30 +8,30 @@
 import XCTest
 @testable import Quotes
 
+@MainActor
 final class QuoteServiceTests: XCTestCase {
     
     private var url: URL!
     private var sut: QuoteService!
     private var mockCacheManager: MockCacheManager!
+    private var mockSession: URLSession!
     
-    lazy var mockSession: URLSession = {
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.protocolClasses = [MockURLProtocol.self]
-        return URLSession(configuration: configuration)
-    }()
-    
-    override func setUp() {
+    override func setUp() async throws {
+        try await super.setUp()
         url = URL(string: "https://zenquotes.io/api/today")
         mockCacheManager = MockCacheManager()
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [MockURLProtocol.self]
+        mockSession = URLSession(configuration: configuration)
         sut = QuoteService(session: mockSession, cacheManager: mockCacheManager)
     }
     
-    override func tearDown() {
-        MockURLProtocol.requestHandler = nil
+    override func tearDown() async throws {
+        mockSession = nil
         url = nil
         mockCacheManager = nil
         sut = nil
-        super.tearDown()
+        try await super.tearDown()
     }
     
     func test_FetchQuoteOfTheDay_URL_IsValid_And_ReturnsOneResult_And_CachesIt() async throws {
