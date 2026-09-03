@@ -8,6 +8,7 @@
 import XCTest
 @testable import Quotes
 
+@MainActor
 final class QuoteServiceTests: XCTestCase {
     
     private var url: URL!
@@ -20,18 +21,19 @@ final class QuoteServiceTests: XCTestCase {
         return URLSession(configuration: configuration)
     }()
     
-    override func setUp() {
+    override func setUp() async throws {
+        try await super.setUp()
         url = URL(string: "https://zenquotes.io/api/today")
         mockCacheManager = MockCacheManager()
         sut = QuoteService(session: mockSession, cacheManager: mockCacheManager)
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         MockURLProtocol.requestHandler = nil
         url = nil
         mockCacheManager = nil
         sut = nil
-        super.tearDown()
+        try await super.tearDown()
     }
     
     func test_FetchQuoteOfTheDay_URL_IsValid_And_ReturnsOneResult_And_CachesIt() async throws {
