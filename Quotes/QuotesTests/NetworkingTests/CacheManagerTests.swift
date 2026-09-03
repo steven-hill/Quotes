@@ -8,18 +8,19 @@
 import XCTest
 @testable import Quotes
 
+@MainActor
 final class CacheManagerTests: XCTestCase {
     
-    var sut: MockCacheManager!
+    private var sut: MockCacheManager!
     
-    override func setUpWithError() throws {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         sut = MockCacheManager()
     }
     
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         sut = nil
-        super.tearDown()
+        try await super.tearDown()
     }
     
     func test_cacheManager_canSaveAndRetrieve() {
