@@ -8,21 +8,22 @@
 import XCTest
 @testable import Quotes
 
+@MainActor
 final class AppearanceManagerTests: XCTestCase {
 
     private var mockUserDefaults: MockUserDefaults!
     private var mockWindowProvider: MockWindowProvider!
     private var sut: AppearanceManager!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         mockUserDefaults = MockUserDefaults()
         mockWindowProvider = MockWindowProvider()
         sut = AppearanceManager(userDefaults: mockUserDefaults, windowProvider: mockWindowProvider)
     }
     
-    override func tearDown() {
-        super.tearDown()
+    override func tearDown() async throws {
+        try await super.tearDown()
         mockUserDefaults = nil
         mockWindowProvider = nil
         sut = nil
