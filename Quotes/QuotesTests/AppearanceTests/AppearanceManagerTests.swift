@@ -37,8 +37,10 @@ final class AppearanceManagerTests: XCTestCase {
         
         XCTAssertEqual(sut.selectedAppearance, .light, "Should be light.")
         
-        let savedValue = mockUD.string(forKey: "selectedAppearance")
-        XCTAssertEqual(savedValue, "light", "Should be light.")
+        XCTAssertEqual(
+            mockUD.string(forKey: "selectedAppearance"),
+            Appearance.light.rawValue, "Should be light."
+        )
     }
     
 //    func test_settingAppearanceToDark_setsDisplayModeToDark() {
