@@ -37,13 +37,6 @@ struct QuotesApp: App {
                 .environmentObject(appearanceManager)
                 .environmentObject(tabRouter)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .onAppear() {
-                    appearanceManager.overrideDisplayMode()
-                }
-                .onChange(of: appearanceManager.selectedAppearance) { _, newValue in
-                    appearanceManager.setAppearance(newValue)
-                    appearanceManager.overrideDisplayMode()
-                }
         }
     }
 }
