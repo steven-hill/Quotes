@@ -61,19 +61,4 @@ final class AppearanceManagerTests: XCTestCase {
             Appearance.system.rawValue, "Should be `system`."
         )
     }
-    
-//    func test_settingAppearanceToLight_setsUserDefaultsAppearanceToLight() {
-//        sut.setAppearance(.light)
-//        XCTAssertEqual(mockUserDefaults.integer(forKey: "selectedAppearance"), Appearance.light.rawValue, "User defaults appearance should be light.")
-//    }
-//    
-//    func test_settingAppearanceToDark_setsUserDefaultsAppearanceToDark() {
-//        sut.setAppearance(.dark)
-//        XCTAssertEqual(mockUserDefaults.integer(forKey: "selectedAppearance"), Appearance.dark.rawValue, "User defaults appearance should be dark.")
-//    }
-//    
-//    func test_settingAppearanceToSystem_setsUserDefaultsAppearanceToUnspecified() {
-//        sut.setAppearance(.unspecified)
-//        XCTAssertEqual(mockUserDefaults.integer(forKey: "selectedAppearance"), Appearance.unspecified.rawValue, "User defaults appearance should be system.")
-//    }
 }
