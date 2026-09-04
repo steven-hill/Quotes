@@ -11,16 +11,12 @@ import XCTest
 @MainActor
 final class AppearanceManagerTests: XCTestCase {
 
-    private var mockUserDefaults: MockUserDefaults!
-    private var mockWindowProvider: MockWindowProvider!
     private var mockUD: UserDefaults!
     private var suiteName: String!
     private var sut: AppearanceManager!
     
     override func setUp() async throws {
         try await super.setUp()
-        mockUserDefaults = MockUserDefaults()
-        mockWindowProvider = MockWindowProvider()
         suiteName = "AppearanceManagerTests.\(UUID().uuidString)"
         mockUD = UserDefaults(suiteName: suiteName)
         sut = AppearanceManager(store: mockUD)
@@ -28,8 +24,6 @@ final class AppearanceManagerTests: XCTestCase {
     
     override func tearDown() async throws {
         mockUD.removePersistentDomain(forName: suiteName)
-        mockUserDefaults = nil
-        mockWindowProvider = nil
         sut = nil
         try await super.tearDown()
     }
