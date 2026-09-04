@@ -29,7 +29,7 @@ final class AppearanceManagerTests: XCTestCase {
     }
     
     func test_appearanceManager_onInit_selectedAppearance_isSystem() {
-        XCTAssertEqual(sut.selectedAppearance, .system)
+        XCTAssertEqual(sut.selectedAppearance, .system, "Should be system.")
     }
     
     func test_appearanceManager_setAppearance_toLight_setsSelectedAppearanceToLight() {
@@ -52,12 +52,16 @@ final class AppearanceManagerTests: XCTestCase {
         )
     }
     
-//    func test_settingAppearanceToSystem_setsDisplayModeToSystem() {
-//        sut.setAppearance(.unspecified)
-//        sut.overrideDisplayMode()
-//        XCTAssertEqual(mockWindowProvider.mockWindow.overrideUserInterfaceStyle, .unspecified, "Should be system.")
-//    }
-//    
+    func test_appearanceManager_setAppearance_toSystem_setsSelectedAppearanceToSystem() {
+        sut.setAppearance(.system)
+
+        XCTAssertEqual(sut.selectedAppearance, .system, "Should be system.")
+        XCTAssertEqual(
+            mockUD.string(forKey: "selectedAppearance"),
+            Appearance.system.rawValue, "Should be `system`."
+        )
+    }
+    
 //    func test_settingAppearanceToLight_setsUserDefaultsAppearanceToLight() {
 //        sut.setAppearance(.light)
 //        XCTAssertEqual(mockUserDefaults.integer(forKey: "selectedAppearance"), Appearance.light.rawValue, "User defaults appearance should be light.")
