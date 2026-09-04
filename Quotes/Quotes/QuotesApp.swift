@@ -37,6 +37,7 @@ struct QuotesApp: App {
                 .environmentObject(appearanceManager)
                 .environmentObject(tabRouter)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
         }
     }
 }
