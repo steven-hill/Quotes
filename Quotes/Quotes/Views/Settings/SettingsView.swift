@@ -11,7 +11,7 @@ struct SettingsView: View {
     
     // MARK: - Environment Objects
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
-    @EnvironmentObject var appearanceManager: AppearanceManager
+    @EnvironmentObject private var appearanceManager: AppearanceManager
     
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase

@@ -14,7 +14,7 @@ struct QuotesApp: App {
     // MARK: - State objects
     @StateObject var localNotificationManager = LocalNotificationManager()
     @StateObject var fetchRequestStore: FetchRequestStore
-    @StateObject var appearanceManager = AppearanceManager()
+    @StateObject private var appearanceManager = AppearanceManager()
     @StateObject var tabRouter = TabRouter()
     
     // MARK: - Constant
