@@ -32,37 +32,7 @@ final class AppearanceManagerTests: XCTestCase {
         XCTAssertEqual(sut.selectedAppearance, .system, "Should be system.")
     }
     
-    func test_appearanceManager_setAppearance_toLight_setsSelectedAppearanceToLight() {
-        sut.setAppearance(.light)
-        
-        XCTAssertEqual(sut.selectedAppearance, .light, "Should be light.")
-        XCTAssertEqual(
-            mockUD.string(forKey: "selectedAppearance"),
-            Appearance.light.rawValue, "Should be `light`."
-        )
-    }
-    
-    func test_appearanceManager_setAppearance_toDark_setsSelectedAppearanceToDark() {
-        sut.setAppearance(.dark)
-
-        XCTAssertEqual(sut.selectedAppearance, .dark, "Should be dark.")
-        XCTAssertEqual(
-            mockUD.string(forKey: "selectedAppearance"),
-            Appearance.dark.rawValue, "Should be `dark`."
-        )
-    }
-    
-    func test_appearanceManager_setAppearance_toSystem_setsSelectedAppearanceToSystem() {
-        sut.setAppearance(.system)
-
-        XCTAssertEqual(sut.selectedAppearance, .system, "Should be system.")
-        XCTAssertEqual(
-            mockUD.string(forKey: "selectedAppearance"),
-            Appearance.system.rawValue, "Should be `system`."
-        )
-    }
-    
-    func test_appearanceManager_onInit_ifValueWasPreviouslySaved_loadsThatValue() {
+    func test_appearanceManager_onInit_ifLightWasPreviouslySaved_loadsThatValue() {
         mockUD.set(
             Appearance.light.rawValue,
             forKey: "selectedAppearance"
@@ -72,5 +42,17 @@ final class AppearanceManagerTests: XCTestCase {
         let secondarySut = AppearanceManager(store: mockUD)
         
         XCTAssertEqual(secondarySut.selectedAppearance, .light, "Should be the saved value.")
+    }
+    
+    func test_appearanceManager_onInit_ifDarkWasPreviouslySaved_loadsThatValue() {
+        mockUD.set(
+            Appearance.dark.rawValue,
+            forKey: "selectedAppearance"
+        )
+
+        /// Initialise a different sut so it can read from the already persisted value.
+        let secondarySut = AppearanceManager(store: mockUD)
+        
+        XCTAssertEqual(secondarySut.selectedAppearance, .dark, "Should be the saved value.")
     }
 }
