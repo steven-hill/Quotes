@@ -61,4 +61,16 @@ final class AppearanceManagerTests: XCTestCase {
             Appearance.system.rawValue, "Should be `system`."
         )
     }
+    
+    func test_appearanceManager_onInit_ifValueWasPreviouslySaved_loadsThatValue() {
+        mockUD.set(
+            Appearance.light.rawValue,
+            forKey: "selectedAppearance"
+        )
+
+        /// Initialise a different sut so it can read from the already persisted value.
+        let secondarySut = AppearanceManager(store: mockUD)
+        
+        XCTAssertEqual(secondarySut.selectedAppearance, .light, "Should be the saved value.")
+    }
 }
