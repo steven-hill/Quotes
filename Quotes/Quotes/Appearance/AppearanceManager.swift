@@ -21,23 +21,13 @@ enum Appearance: Int {
 }
 
 final class AppearanceManager: ObservableObject {
-    @Published var selectedAppearance: Appearance
-    private let userDefaults: UserDefaultsProviding
-    private let windowProvider: WindowProviding
+    @AppStorage private var selectedAppearance: Appearance
     
-    init(userDefaults: UserDefaultsProviding = UserDefaults.standard, windowProvider: WindowProviding = DefaultWindowProvider()) {
-        self.userDefaults = userDefaults
-        self.windowProvider = windowProvider
-        self.selectedAppearance = Appearance(rawValue: userDefaults.integer(forKey: "selectedAppearance")) ?? .unspecified
-    }
-    
-    func overrideDisplayMode() {
-        guard let window = windowProvider.currentWindow() else { return }
-        window.overrideUserInterfaceStyle = UIUserInterfaceStyle(rawValue: selectedAppearance.rawValue) ?? .unspecified
+    init(store: UserDefaults = .standard) {
+        _selectedAppearance = AppStorage(wrappedValue: .unspecified, "selectedAppearance", store: store)
     }
     
     func setAppearance(_ appearance: Appearance) {
         selectedAppearance = appearance
-        userDefaults.set(appearance.rawValue, forKey: "selectedAppearance")
     }
 }
