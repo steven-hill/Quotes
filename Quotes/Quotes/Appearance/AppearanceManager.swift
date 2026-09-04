@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Appearance: Int {
-    case unspecified
+    case system
     case light
     case dark
 }
@@ -17,7 +17,7 @@ final class AppearanceManager: ObservableObject {
     @AppStorage private var selectedAppearance: Appearance
     
     init(store: UserDefaults = .standard) {
-        _selectedAppearance = AppStorage(wrappedValue: .unspecified, "selectedAppearance", store: store)
+        _selectedAppearance = AppStorage(wrappedValue: .system, "selectedAppearance", store: store)
     }
     
     func setAppearance(_ appearance: Appearance) {
