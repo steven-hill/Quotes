@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 
-class MockURLProtocol: URLProtocol {
+class MockURLProtocol: URLProtocol, @unchecked Sendable {
     override class func canInit(with request: URLRequest) -> Bool {
         return true
     }
@@ -17,22 +17,24 @@ class MockURLProtocol: URLProtocol {
         return request
     }
 
-    static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data))?
+    @MainActor static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data))?
 
     override func startLoading() {
-        guard let handler = MockURLProtocol.requestHandler else {
-            XCTFail("No request handler provided.")
-            return
-        }
-        
-        do {
-            let (response, data) = try handler(request)
+        Task { @MainActor in
+            guard let handler = Self.requestHandler else {
+                XCTFail("No request handler provided.")
+                return
+            }
             
-            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-            client?.urlProtocol(self, didLoad: data)
-            client?.urlProtocolDidFinishLoading(self)
-        } catch {
-            XCTFail("Error handling the request: \(error)")
+            do {
+                let (response, data) = try handler(request)
+                
+                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+                client?.urlProtocol(self, didLoad: data)
+                client?.urlProtocolDidFinishLoading(self)
+            } catch {
+                XCTFail("Error handling the request: \(error)")
+            }
         }
     }
 
