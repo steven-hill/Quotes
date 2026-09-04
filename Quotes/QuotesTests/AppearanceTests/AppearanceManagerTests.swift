@@ -13,20 +13,25 @@ final class AppearanceManagerTests: XCTestCase {
 
     private var mockUserDefaults: MockUserDefaults!
     private var mockWindowProvider: MockWindowProvider!
+    private var mockUD: UserDefaults!
+    private var suiteName: String!
     private var sut: AppearanceManager!
     
     override func setUp() async throws {
         try await super.setUp()
         mockUserDefaults = MockUserDefaults()
         mockWindowProvider = MockWindowProvider()
-        sut = AppearanceManager(userDefaults: mockUserDefaults, windowProvider: mockWindowProvider)
+        suiteName = "AppearanceManagerTests.\(UUID().uuidString)"
+        mockUD = UserDefaults(suiteName: suiteName)
+        sut = AppearanceManager(store: mockUD)
     }
     
     override func tearDown() async throws {
-        try await super.tearDown()
+        mockUD.removePersistentDomain(forName: suiteName)
         mockUserDefaults = nil
         mockWindowProvider = nil
         sut = nil
+        try await super.tearDown()
     }
     
     func test_defaultAppearance_IsSystemWhenAppearanceManagerIsInitialized() {
