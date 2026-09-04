@@ -11,7 +11,7 @@ struct SettingsView: View {
     
     // MARK: - Environment Objects
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
-    @EnvironmentObject var appearanceManager: AppearanceManager
+    @EnvironmentObject private var appearanceManager: AppearanceManager
     
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
@@ -87,9 +87,9 @@ struct SettingsView: View {
     
     private var appearanceContent: some View {
         Picker("Set to:", selection: $appearanceManager.selectedAppearance) {
-            Text("System").tag(Appearance.unspecified)
-            Text("Light").tag(Appearance.light)
-            Text("Dark").tag(Appearance.dark)
+            ForEach(Appearance.allCases) { appearance in
+                Text(appearance.title).tag(appearance)
+            }
         }
         .pickerStyle(.inline)
         .font(.title3)

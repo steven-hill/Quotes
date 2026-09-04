@@ -14,7 +14,7 @@ struct QuotesApp: App {
     // MARK: - State objects
     @StateObject var localNotificationManager = LocalNotificationManager()
     @StateObject var fetchRequestStore: FetchRequestStore
-    @StateObject var appearanceManager = AppearanceManager()
+    @StateObject private var appearanceManager = AppearanceManager()
     @StateObject var tabRouter = TabRouter()
     
     // MARK: - Constant
@@ -37,13 +37,7 @@ struct QuotesApp: App {
                 .environmentObject(appearanceManager)
                 .environmentObject(tabRouter)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .onAppear() {
-                    appearanceManager.overrideDisplayMode()
-                }
-                .onChange(of: appearanceManager.selectedAppearance) { _, newValue in
-                    appearanceManager.setAppearance(newValue)
-                    appearanceManager.overrideDisplayMode()
-                }
+                .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
         }
     }
 }
