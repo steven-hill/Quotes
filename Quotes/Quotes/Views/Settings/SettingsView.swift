@@ -87,7 +87,7 @@ struct SettingsView: View {
     
     private var appearanceContent: some View {
         Picker("Set to:", selection: $appearanceManager.selectedAppearance) {
-            Text("System").tag(Appearance.unspecified)
+            Text("System").tag(Appearance.system)
             Text("Light").tag(Appearance.light)
             Text("Dark").tag(Appearance.dark)
         }

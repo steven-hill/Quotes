@@ -14,7 +14,7 @@ enum Appearance: Int {
 }
 
 final class AppearanceManager: ObservableObject {
-    @AppStorage private var selectedAppearance: Appearance
+    @AppStorage var selectedAppearance: Appearance
     
     init(store: UserDefaults = .standard) {
         _selectedAppearance = AppStorage(wrappedValue: .system, "selectedAppearance", store: store)
