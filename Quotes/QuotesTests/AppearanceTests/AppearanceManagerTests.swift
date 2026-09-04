@@ -32,12 +32,15 @@ final class AppearanceManagerTests: XCTestCase {
         XCTAssertEqual(sut.selectedAppearance, .system)
     }
     
-//    func test_settingAppearanceToLight_setsDisplayModeToLight() {
-//        sut.setAppearance(.light)
-//        sut.overrideDisplayMode()
-//        XCTAssertEqual(mockWindowProvider.mockWindow.overrideUserInterfaceStyle, .light, "Should be light.")
-//    }
-//    
+    func test_appearanceManager_settingAppearanceToLight_setsSelectedAppearanceToLight() {
+        sut.setAppearance(.light)
+        
+        XCTAssertEqual(sut.selectedAppearance, .light, "Should be light.")
+        
+        let savedValue = mockUD.string(forKey: "selectedAppearance")
+        XCTAssertEqual(savedValue, "light", "Should be light.")
+    }
+    
 //    func test_settingAppearanceToDark_setsDisplayModeToDark() {
 //        sut.setAppearance(.dark)
 //        sut.overrideDisplayMode()

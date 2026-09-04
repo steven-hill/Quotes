@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Appearance: Int {
+enum Appearance: String {
     case system
     case light
     case dark
