@@ -35,6 +35,7 @@
 		5B3FB7FB2C52E9BC000994DC /* FetchRequestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FA2C52E9BC000994DC /* FetchRequestStore.swift */; };
 		5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */; };
 		5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */; };
+		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
 		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
 		5B7CC8E22C87333200DDE9D4 /* CacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CC8E12C87333200DDE9D4 /* CacheManagerTests.swift */; };
 		5B7CC8E42C873E7C00DDE9D4 /* MockCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CC8E32C873E7C00DDE9D4 /* MockCacheManager.swift */; };
@@ -97,6 +98,7 @@
 		5B3FB7FA2C52E9BC000994DC /* FetchRequestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStore.swift; sourceTree = "<group>"; };
 		5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubNetworkSession.swift; sourceTree = "<group>"; };
+		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
 		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
 		5B7CC8E12C87333200DDE9D4 /* CacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManagerTests.swift; sourceTree = "<group>"; };
 		5B7CC8E32C873E7C00DDE9D4 /* MockCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCacheManager.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 				5B7CC8E12C87333200DDE9D4 /* CacheManagerTests.swift */,
 				5B7CC8E32C873E7C00DDE9D4 /* MockCacheManager.swift */,
 				5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */,
+				5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */,
 			);
 			path = NetworkingTests;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				5B812CEB2C5992B900B12213 /* MockNetworkClient.swift in Sources */,
 				5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */,
 				5B812CEC2C5992B900B12213 /* MockURLProtocol.swift in Sources */,
+				5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
