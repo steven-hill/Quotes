@@ -26,7 +26,6 @@ final class NetworkClient: Networking {
     }
     
     func fetchQuoteOfTheDay() async throws -> QuoteServiceResult {
-        
         if let cachedData = cacheManager.retrieve(key: cacheKey) {
             return try decoder.decode(QuoteServiceResult.self, from: cachedData)
         }
@@ -37,9 +36,12 @@ final class NetworkClient: Networking {
         
         let (data, response) = try await session.data(from: url)
         
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            let statusCode = (response as! HTTPURLResponse).statusCode
-            throw NetworkError.invalidStatusCode(statusCode: statusCode)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+
+        guard httpResponse.statusCode == 200 else {
+            throw NetworkError.invalidStatusCode(statusCode: httpResponse.statusCode)
         }
         
         cacheManager.save(key: cacheKey, value: data)
