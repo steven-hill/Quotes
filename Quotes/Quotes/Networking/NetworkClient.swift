@@ -36,7 +36,7 @@ final class NetworkClient: Networking {
         if let cachedData = cacheManager.retrieve(key: cacheKey) {
             return try decoder.decode(QuoteNetworkResult.self, from: cachedData)
         }
-
+        
         guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
         }
@@ -46,15 +46,15 @@ final class NetworkClient: Networking {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
         }
-
+        
         guard httpResponse.statusCode == 200 else {
             throw NetworkError.invalidStatusCode(statusCode: httpResponse.statusCode)
         }
         
-        cacheManager.save(key: cacheKey, value: data)
-        
         do {
-            return try decoder.decode(QuoteNetworkResult.self, from: data)
+            let result = try decoder.decode(QuoteNetworkResult.self, from: data)
+            cacheManager.save(key: cacheKey, value: data)
+            return result
         } catch {
             throw NetworkError.invalidData
         }
