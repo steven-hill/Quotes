@@ -99,11 +99,11 @@ final class NetworkClientTests: XCTestCase {
         do {
             let _ = try await sut.fetchQuoteOfTheDay()
         } catch {
-            guard let networkError = error as? NetworkClient.QuoteServiceError else {
+            guard let networkError = error as? NetworkClient.NetworkError else {
                 XCTFail("Wrong error type, expecting QuoteService.QuoteServiceError")
                 return
             }
-            XCTAssertEqual(networkError, NetworkClient.QuoteServiceError.invalidStatusCode(statusCode: invalidStatusCode), "Expecting a networking error that throws invalid status code 400")
+            XCTAssertEqual(networkError, NetworkClient.NetworkError.invalidStatusCode(statusCode: invalidStatusCode), "Expecting a networking error that throws invalid status code 400")
         }
     }
     
@@ -124,7 +124,7 @@ final class NetworkClientTests: XCTestCase {
             _ = try sut.decoder.decode(QuoteServiceResult.self, from: data)
         } catch {
             print(error.localizedDescription)
-            if error is NetworkClient.QuoteServiceError { 
+            if error is NetworkClient.NetworkError { 
                 XCTFail("The error should be a JSON decoding error.")
             }
         }

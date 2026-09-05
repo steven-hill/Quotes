@@ -12,15 +12,6 @@ protocol Networking {
 }
 
 final class NetworkClient: Networking {
-    
-    enum QuoteServiceError: Error, LocalizedError {
-        case networkConnectionOffline
-        case invalidURL
-        case invalidStatusCode(statusCode: Int)
-        case invalidData
-        case unknown(Error)
-    }
-    
     private let URLString = "https://zenquotes.io/api/today"
     private let cacheKey = "cachedDailyQuote"
     
@@ -41,14 +32,14 @@ final class NetworkClient: Networking {
         }
 
         guard let url = URL(string: URLString) else {
-            throw QuoteServiceError.invalidURL
+            throw NetworkError.invalidURL
         }
         
         let (data, response) = try await session.data(from: url)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
             let statusCode = (response as! HTTPURLResponse).statusCode
-            throw QuoteServiceError.invalidStatusCode(statusCode: statusCode)
+            throw NetworkError.invalidStatusCode(statusCode: statusCode)
         }
         
         cacheManager.save(key: cacheKey, value: data)
@@ -56,26 +47,7 @@ final class NetworkClient: Networking {
         do {
             return try decoder.decode(QuoteServiceResult.self, from: data)
         } catch {
-            throw QuoteServiceError.invalidData
-        }
-    }
-}
-
-extension NetworkClient.QuoteServiceError: Equatable {
-    static func == (lhs: NetworkClient.QuoteServiceError, rhs: NetworkClient.QuoteServiceError) -> Bool {
-        switch(lhs, rhs) {
-        case(.networkConnectionOffline, .networkConnectionOffline):
-            return true
-        case(.invalidURL, .invalidURL):
-            return true
-        case(.invalidStatusCode(let lhsType), .invalidStatusCode(let rhsType)):
-            return lhsType == rhsType
-        case(.invalidData, .invalidData):
-            return true
-        case(.unknown(let lhsType), .unknown(let rhsType)):
-            return lhsType.localizedDescription == rhsType.localizedDescription
-        default:
-            return false
+            throw NetworkError.invalidData
         }
     }
 }
