@@ -8,7 +8,7 @@
 import Foundation
 
 protocol Networking {
-    func fetchQuoteOfTheDay() async throws -> QuoteServiceResult
+    func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult
 }
 
 final class NetworkClient: Networking {
@@ -32,9 +32,9 @@ final class NetworkClient: Networking {
         self.cacheManager = cacheManager
     }
     
-    func fetchQuoteOfTheDay() async throws -> QuoteServiceResult {
+    func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
         if let cachedData = cacheManager.retrieve(key: cacheKey) {
-            return try decoder.decode(QuoteServiceResult.self, from: cachedData)
+            return try decoder.decode(QuoteNetworkResult.self, from: cachedData)
         }
 
         guard let url = URL(string: urlString) else {
@@ -54,7 +54,7 @@ final class NetworkClient: Networking {
         cacheManager.save(key: cacheKey, value: data)
         
         do {
-            return try decoder.decode(QuoteServiceResult.self, from: data)
+            return try decoder.decode(QuoteNetworkResult.self, from: data)
         } catch {
             throw NetworkError.invalidData
         }

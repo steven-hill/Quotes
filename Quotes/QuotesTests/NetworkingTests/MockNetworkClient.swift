@@ -10,7 +10,7 @@ import Foundation
 
 final class MockNetworkClient: Networking {
     
-    var quoteResponse: QuoteServiceResult = []
+    var quoteResponse: QuoteNetworkResult = []
     let mockURL = URL(string: "https://zenquotes.io/api/today")
     var shouldSucceed: Bool = true
     
@@ -26,14 +26,14 @@ final class MockNetworkClient: Networking {
         return Bundle(for: type(of: self))
     }
     
-    func readMockQuoteResponseJsonFile() -> QuoteServiceResult {
+    func readMockQuoteResponseJsonFile() -> QuoteNetworkResult {
         guard let path = bundle.url(forResource: "QuoteResponse", withExtension: "json") else {
             fatalError("Failed to load the mock quote response JSON file.")
         }
         
         do {
             let data = try Data(contentsOf: path)
-            let decodedObject = try JSONDecoder().decode(QuoteServiceResult.self, from: data)
+            let decodedObject = try JSONDecoder().decode(QuoteNetworkResult.self, from: data)
             return decodedObject
         } catch {
             print("\(error)")
@@ -41,7 +41,7 @@ final class MockNetworkClient: Networking {
         }
     }
     
-    func fetchQuoteOfTheDay() async throws -> QuoteServiceResult {
+    func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
         if shouldSucceed {
             quoteResponse = readMockQuoteResponseJsonFile()
             return quoteResponse

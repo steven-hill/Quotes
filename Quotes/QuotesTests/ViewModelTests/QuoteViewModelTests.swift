@@ -27,16 +27,16 @@ final class QuoteViewModelTests: XCTestCase {
     }
     
     func test_Get_QuoteOfTheDay_Success() async {
-        let mockQuote = Quote(q: "When you want to be honored by others, you learn to honor them first.", a: "Sathya Sai Baba", h: "<blockquote>&ldquo;When you want to be honored by others, you learn to honor them first.&rdquo; &mdash; <footer>Sathya Sai Baba</footer></blockquote>")
+        let mockQuote = Quote(text: "When you want to be honored by others, you learn to honor them first.", author: "Sathya Sai Baba")
         mockQuoteService.quoteResponse = [mockQuote]
         
         await quoteViewModel.getQuoteOfTheDay()
         
         XCTAssertEqual(quoteViewModel.state, .success(data: [mockQuote]))
         XCTAssertFalse(quoteViewModel.hasError)
-        XCTAssertEqual(quoteViewModel.quoteContent, mockQuote.quote)
+        XCTAssertEqual(quoteViewModel.quoteContent, mockQuote.text)
         XCTAssertEqual(quoteViewModel.quoteAuthor, mockQuote.author)
-        XCTAssertEqual(quoteViewModel.quoteToShare, "\(mockQuote.quote) - \(mockQuote.author)")
+        XCTAssertEqual(quoteViewModel.quoteToShare, "\(mockQuote.text) - \(mockQuote.author)")
     }
     
     func test_Get_QuoteOfTheDay_Failure() async {

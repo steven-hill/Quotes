@@ -7,14 +7,15 @@
 
 import Foundation
 
-struct Quote: Decodable, Equatable {
-    let q, a, h: String
+/// Model for network response.
+struct Quote: Codable, Equatable {
+    let text: String
+    let author: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case text = "q"
+        case author = "a"
+    }
 }
 
-typealias QuoteServiceResult = [Quote]
-
-extension Quote {
-    var quote: String { return q }
-    var author: String { return a }
-    var blockQuote: String { return h }
-}
+typealias QuoteNetworkResult = [Quote]
