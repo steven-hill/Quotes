@@ -25,7 +25,7 @@ final class NetworkClient: Networking {
         cacheManager: CacheProtocol
     ) {
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForRequest = 15
         config.timeoutIntervalForResource = 30
         self.session = session ?? URLSession(configuration: config)
         self.decoder = decoder
