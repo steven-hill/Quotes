@@ -19,3 +19,12 @@ struct Quote: Codable, Equatable {
 }
 
 typealias QuoteNetworkResult = [Quote]
+
+extension Quote {
+    static let sample = [
+        Quote(
+            text: "However difficult life may seem, there is always something you can do and succeed at.",
+            author: "Stephen Hawking"
+        )
+    ]
+}
