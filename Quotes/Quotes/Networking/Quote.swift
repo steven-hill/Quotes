@@ -11,10 +11,12 @@ import Foundation
 struct Quote: Codable, Equatable {
     let text: String
     let author: String
+    let date: Date
     
     private enum CodingKeys: String, CodingKey {
         case text = "q"
         case author = "a"
+        case date = "date"
     }
 }
 
@@ -24,7 +26,8 @@ extension Quote {
     static let sample = [
         Quote(
             text: "However difficult life may seem, there is always something you can do and succeed at.",
-            author: "Stephen Hawking"
+            author: "Stephen Hawking",
+            date: Date()
         )
     ]
 }

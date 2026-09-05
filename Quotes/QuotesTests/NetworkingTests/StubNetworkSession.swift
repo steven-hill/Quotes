@@ -23,7 +23,7 @@ struct StubNetworkSession: NetworkSession {
         self.response = response
     }
     
-    func data(from url: URL) async throws -> (Data, URLResponse) {
+    func data(for request: URLRequest) async throws -> (Data, URLResponse) {
         if let error = error {
             throw error
         }
