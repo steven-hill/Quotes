@@ -11,6 +11,7 @@
 Overview:
   - This app is almost entirely SwiftUI. UIKit was used for the `UIActivityViewController` on iPad.
   - The minimum deployment target is iOS 26.0 and iPadOS 26.0.
+  - Swift language version is Swift 6.
   - MVVM, Core Data and Swift concurrency.
   - iPhone and iPad are both supported.
   - The app supports different size classes, portrait and landscape orientation, and light, dark or system appearance.
