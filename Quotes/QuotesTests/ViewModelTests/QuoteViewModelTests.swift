@@ -27,7 +27,7 @@ final class QuoteViewModelTests: XCTestCase {
     }
     
     func test_Get_QuoteOfTheDay_Success() async {
-        let mockQuote = QuoteServiceResultElement(q: "When you want to be honored by others, you learn to honor them first.", a: "Sathya Sai Baba", h: "<blockquote>&ldquo;When you want to be honored by others, you learn to honor them first.&rdquo; &mdash; <footer>Sathya Sai Baba</footer></blockquote>")
+        let mockQuote = Quote(q: "When you want to be honored by others, you learn to honor them first.", a: "Sathya Sai Baba", h: "<blockquote>&ldquo;When you want to be honored by others, you learn to honor them first.&rdquo; &mdash; <footer>Sathya Sai Baba</footer></blockquote>")
         mockQuoteService.quoteResponse = [mockQuote]
         
         await quoteViewModel.getQuoteOfTheDay()
