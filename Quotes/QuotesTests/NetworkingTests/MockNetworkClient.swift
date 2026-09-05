@@ -1,5 +1,5 @@
 //
-//  MockQuoteService.swift
+//  MockNetworkClient.swift
 //  QuotesTests
 //
 //  Created by Steven Hill on 29/07/2024.
@@ -8,7 +8,7 @@
 import Foundation
 @testable import Quotes
 
-final class MockQuoteService: QuoteServiceProtocol {
+final class MockNetworkClient: QuoteServiceProtocol {
     
     var quoteResponse: QuoteServiceResult = []
     let mockURL = URL(string: "https://zenquotes.io/api/today")
@@ -51,8 +51,8 @@ final class MockQuoteService: QuoteServiceProtocol {
     }
 }
 
-extension MockQuoteService.MockQuoteServiceError: Equatable {
-    static func == (lhs: MockQuoteService.MockQuoteServiceError, rhs: MockQuoteService.MockQuoteServiceError) -> Bool {
+extension MockNetworkClient.MockQuoteServiceError: Equatable {
+    static func == (lhs: MockNetworkClient.MockQuoteServiceError, rhs: MockNetworkClient.MockQuoteServiceError) -> Bool {
         switch(lhs, rhs) {
         case(.networkConnectionOffline, .networkConnectionOffline):
             return true

@@ -1,5 +1,5 @@
 //
-//  QuoteService.swift
+//  NetworkClient.swift
 //  Quotes
 //
 //  Created by Steven Hill on 25/07/2024.
@@ -11,7 +11,7 @@ protocol QuoteServiceProtocol {
     func fetchQuoteOfTheDay() async throws -> QuoteServiceResult
 }
 
-final class QuoteService: QuoteServiceProtocol {
+final class NetworkClient: QuoteServiceProtocol {
     
     enum QuoteServiceError: Error, LocalizedError {
         case networkConnectionOffline
@@ -61,8 +61,8 @@ final class QuoteService: QuoteServiceProtocol {
     }
 }
 
-extension QuoteService.QuoteServiceError: Equatable {
-    static func == (lhs: QuoteService.QuoteServiceError, rhs: QuoteService.QuoteServiceError) -> Bool {
+extension NetworkClient.QuoteServiceError: Equatable {
+    static func == (lhs: NetworkClient.QuoteServiceError, rhs: NetworkClient.QuoteServiceError) -> Bool {
         switch(lhs, rhs) {
         case(.networkConnectionOffline, .networkConnectionOffline):
             return true

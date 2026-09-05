@@ -1,5 +1,5 @@
 //
-//  QuoteServiceTests.swift
+//  NetworkClientTests.swift
 //  QuotesTests
 //
 //  Created by Steven Hill on 29/07/2024.
@@ -9,10 +9,10 @@ import XCTest
 @testable import Quotes
 
 @MainActor
-final class QuoteServiceTests: XCTestCase {
+final class NetworkClientTests: XCTestCase {
     
     private var url: URL!
-    private var sut: QuoteService!
+    private var sut: NetworkClient!
     private var mockCacheManager: MockCacheManager!
     private var mockSession: URLSession!
     
@@ -23,7 +23,7 @@ final class QuoteServiceTests: XCTestCase {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
         mockSession = URLSession(configuration: configuration)
-        sut = QuoteService(session: mockSession, cacheManager: mockCacheManager)
+        sut = NetworkClient(session: mockSession, cacheManager: mockCacheManager)
     }
     
     override func tearDown() async throws {
@@ -75,7 +75,7 @@ final class QuoteServiceTests: XCTestCase {
             return (response!, data)
         }
         
-        let mockQuoteService = MockQuoteService()
+        let mockQuoteService = MockNetworkClient()
         let decodedData = mockQuoteService.readMockQuoteResponseJsonFile()
         let result = try await sut.fetchQuoteOfTheDay()
         
@@ -99,11 +99,11 @@ final class QuoteServiceTests: XCTestCase {
         do {
             let _ = try await sut.fetchQuoteOfTheDay()
         } catch {
-            guard let networkError = error as? QuoteService.QuoteServiceError else {
+            guard let networkError = error as? NetworkClient.QuoteServiceError else {
                 XCTFail("Wrong error type, expecting QuoteService.QuoteServiceError")
                 return
             }
-            XCTAssertEqual(networkError, QuoteService.QuoteServiceError.invalidStatusCode(statusCode: invalidStatusCode), "Expecting a networking error that throws invalid status code 400")
+            XCTAssertEqual(networkError, NetworkClient.QuoteServiceError.invalidStatusCode(statusCode: invalidStatusCode), "Expecting a networking error that throws invalid status code 400")
         }
     }
     
@@ -124,7 +124,7 @@ final class QuoteServiceTests: XCTestCase {
             _ = try sut.decoder.decode(QuoteServiceResult.self, from: data)
         } catch {
             print(error.localizedDescription)
-            if error is QuoteService.QuoteServiceError { 
+            if error is NetworkClient.QuoteServiceError { 
                 XCTFail("The error should be a JSON decoding error.")
             }
         }

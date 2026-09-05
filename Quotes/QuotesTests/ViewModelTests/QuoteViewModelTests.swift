@@ -12,11 +12,11 @@ import XCTest
 final class QuoteViewModelTests: XCTestCase {
     
     private var quoteViewModel: QuoteViewModel!
-    private var mockQuoteService: MockQuoteService!
+    private var mockQuoteService: MockNetworkClient!
     
     override func setUp() async throws {
         try await super.setUp()
-        mockQuoteService = MockQuoteService()
+        mockQuoteService = MockNetworkClient()
         quoteViewModel = QuoteViewModel(quoteService: mockQuoteService)
     }
     

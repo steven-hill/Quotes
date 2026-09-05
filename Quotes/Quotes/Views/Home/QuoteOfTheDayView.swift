@@ -13,7 +13,7 @@ struct QuoteOfTheDayView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     
     // MARK: - State object
-    @StateObject var quoteOfTheDayVM = QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager()))
+    @StateObject var quoteOfTheDayVM = QuoteViewModel(quoteService: NetworkClient(cacheManager: CacheManager()))
     
     // MARK: - Body
     var body: some View {
@@ -80,5 +80,5 @@ struct QuoteOfTheDayView: View {
 }
 
 #Preview {
-    QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: QuoteService(cacheManager: CacheManager())))
+    QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: NetworkClient(cacheManager: CacheManager())))
 }
