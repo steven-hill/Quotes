@@ -13,11 +13,8 @@ protocol Networking {
 
 final class NetworkClient: Networking {
     private let urlString = "https://zenquotes.io/api/today"
-    private let cacheKey = "cachedDailyQuote"
-    
     private let session: NetworkSession
     private let decoder: JSONDecoder
-    private let cacheManager: CacheProtocol
     
     private let quoteDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -29,7 +26,6 @@ final class NetworkClient: Networking {
     init(
         session: NetworkSession? = nil,
         decoder: JSONDecoder = JSONDecoder(),
-        cacheManager: CacheProtocol
     ) {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 15
@@ -37,14 +33,9 @@ final class NetworkClient: Networking {
         self.session = session ?? URLSession(configuration: config)
         self.decoder = decoder
         self.decoder.dateDecodingStrategy = .formatted(quoteDateFormatter)
-        self.cacheManager = cacheManager
     }
     
     func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
-        if let cachedData = cacheManager.retrieve(key: cacheKey) {
-            return try decoder.decode(QuoteNetworkResult.self, from: cachedData)
-        }
-        
         guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
         }
