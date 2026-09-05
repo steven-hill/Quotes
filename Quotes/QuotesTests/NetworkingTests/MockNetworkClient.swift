@@ -8,7 +8,7 @@
 import Foundation
 @testable import Quotes
 
-final class MockNetworkClient: QuoteServiceProtocol {
+final class MockNetworkClient: Networking {
     
     var quoteResponse: QuoteServiceResult = []
     let mockURL = URL(string: "https://zenquotes.io/api/today")

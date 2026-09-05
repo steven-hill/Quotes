@@ -22,9 +22,9 @@ final class QuoteViewModel: ObservableObject {
     @Published var quoteAuthor: String = ""
     @Published var quoteToShare: String = ""
     
-    private let quoteService: QuoteServiceProtocol
+    private let quoteService: Networking
     
-    init(quoteService: QuoteServiceProtocol) {
+    init(quoteService: Networking) {
         self.quoteService = quoteService
     }
     

@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol QuoteServiceProtocol {
+protocol Networking {
     func fetchQuoteOfTheDay() async throws -> QuoteServiceResult
 }
 
-final class NetworkClient: QuoteServiceProtocol {
+final class NetworkClient: Networking {
     
     enum QuoteServiceError: Error, LocalizedError {
         case networkConnectionOffline
