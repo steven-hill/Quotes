@@ -56,7 +56,7 @@ final class NetworkClient: Networking {
             cacheManager.save(key: cacheKey, value: data)
             return result
         } catch {
-            throw NetworkError.invalidData
+            throw NetworkError.invalidData(error.localizedDescription)
         }
     }
 }

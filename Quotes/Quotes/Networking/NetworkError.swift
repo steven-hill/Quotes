@@ -14,7 +14,7 @@ enum NetworkError: Error, Equatable {
     case invalidURL
     case invalidResponse
     case invalidStatusCode(statusCode: Int)
-    case invalidData
+    case invalidData(String)
     case unknown
 }
 
@@ -32,6 +32,30 @@ extension NetworkError: LocalizedError {
             return "Something went wrong."
         case .invalidStatusCode(let statusCode):
             return "Invalid response from server (Status: \(statusCode))."
+        }
+    }
+}
+
+// MARK: - Debugging Descriptions
+extension NetworkError: CustomDebugStringConvertible {
+    var debugDescription: String {
+        switch self {
+        case .networkConnectionOffline:
+            return "NetworkError.noInternetConnection"
+        case .networkConnectionLost:
+            return "NetworkError.networkConnectionLost"
+        case .networkTimeout:
+            return "NetworkError.networkTimeout"
+        case .invalidURL:
+            return "NetworkError.invalidURL"
+        case .invalidResponse:
+            return "NetworkError.invalidResponse"
+        case .invalidStatusCode(let statusCode):
+            return "NetworkError.serverError(statusCode: \(statusCode))"
+        case .invalidData(let context):
+            return "NetworkError.decodingError: \(context)"
+        case .unknown:
+            return "NetworkError.unknown"
         }
     }
 }
@@ -59,8 +83,8 @@ extension NetworkError {
             return
         }
         
-        if error is DecodingError {
-            self = .invalidData
+        if let decodingError = error as? DecodingError {
+            self = .invalidData(decodingError.failureReason ?? decodingError.localizedDescription)
             return
         }
         
