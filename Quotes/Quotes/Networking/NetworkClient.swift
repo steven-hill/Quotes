@@ -12,7 +12,7 @@ protocol Networking {
 }
 
 final class NetworkClient: Networking {
-    private let URLString = "https://zenquotes.io/api/today"
+    private let urlString = "https://zenquotes.io/api/today"
     private let cacheKey = "cachedDailyQuote"
     
     let session: URLSession
@@ -30,7 +30,7 @@ final class NetworkClient: Networking {
             return try decoder.decode(QuoteServiceResult.self, from: cachedData)
         }
 
-        guard let url = URL(string: URLString) else {
+        guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
         }
         
