@@ -47,7 +47,7 @@ final class NetworkClient: Networking {
             throw NetworkError.invalidResponse
         }
         
-        guard httpResponse.statusCode == 200 else {
+        guard (200...299).contains(httpResponse.statusCode) else {
             throw NetworkError.invalidStatusCode(statusCode: httpResponse.statusCode)
         }
         
