@@ -15,12 +15,19 @@ final class NetworkClient: Networking {
     private let urlString = "https://zenquotes.io/api/today"
     private let cacheKey = "cachedDailyQuote"
     
-    let session: URLSession
-    let decoder: JSONDecoder
-    let cacheManager: CacheProtocol
+    private let session: URLSession
+    private let decoder: JSONDecoder
+    private let cacheManager: CacheProtocol
     
-    init(session: URLSession = URLSession.shared, decoder: JSONDecoder = JSONDecoder(), cacheManager: CacheProtocol) {
-        self.session = session
+    init(
+        session: URLSession? = nil,
+        decoder: JSONDecoder = JSONDecoder(),
+        cacheManager: CacheProtocol
+    ) {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 30
+        self.session = session ?? URLSession(configuration: config)
         self.decoder = decoder
         self.cacheManager = cacheManager
     }
