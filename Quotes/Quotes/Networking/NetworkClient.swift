@@ -52,29 +52,18 @@ final class NetworkClient: Networking {
         /// If `URLCache` is stale or empty, try the network.
         var networkRequest = request
         networkRequest.cachePolicy = .reloadIgnoringLocalCacheData
-        
         let (data, response) = try await session.data(for: networkRequest)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.invalidResponse
-        }
-        
-        guard (200...299).contains(httpResponse.statusCode) else {
-            throw NetworkError.invalidStatusCode(statusCode: httpResponse.statusCode)
-        }
+        try validate(response)
 
-        do {
-            let result = try decoder.decode(QuoteNetworkResult.self, from: data)
-            /// Store valid response to cache for any more network requests today.
-            let cachedData = CachedURLResponse(response: response, data: data)
-            cache.storeCachedResponse(cachedData, for: request)
-            return result
-        } catch {
-            throw NetworkError.invalidData(error.localizedDescription)
-        }
+        /// Decode and save the response to the cache.
+        return try decodeAndCache(
+            data: data,
+            response: response,
+            request: request
+        )
     }
     
-    //MARK: - Helper
+    //MARK: - Helpers
     private func retrieveCacheResult(for request: URLRequest) -> QuoteNetworkResult? {
         guard let cachedResponse = cache.cachedResponse(for: request),
               let networkResult = try? decoder.decode(QuoteNetworkResult.self, from: cachedResponse.data),
@@ -82,5 +71,30 @@ final class NetworkClient: Networking {
             return nil
         }
         return Calendar.current.isDateInToday(quote.date) ? networkResult : nil
+    }
+    
+    private func validate(_ response: URLResponse) throws {
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkError.invalidStatusCode(statusCode: httpResponse.statusCode)
+        }
+    }
+    
+    private func decodeAndCache(
+        data: Data,
+        response: URLResponse,
+        request: URLRequest
+    ) throws -> QuoteNetworkResult {
+        do {
+            let result = try decoder.decode(QuoteNetworkResult.self, from: data)
+            let cachedData = CachedURLResponse(response: response, data: data)
+            cache.storeCachedResponse(cachedData, for: request)
+            return result
+        } catch {
+            throw NetworkError.invalidData(error.localizedDescription)
+        }
     }
 }
