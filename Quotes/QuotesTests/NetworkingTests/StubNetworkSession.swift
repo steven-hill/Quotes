@@ -9,7 +9,6 @@ import Foundation
 @testable import Quotes
 
 final class StubNetworkSession: NetworkSession {
-    var configuration: URLSessionConfiguration = .ephemeral
     var lastRequest: URLRequest?
     var data: Data?
     var response: URLResponse?
