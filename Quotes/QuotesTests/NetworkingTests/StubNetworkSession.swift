@@ -8,22 +8,22 @@
 import Foundation
 @testable import Quotes
 
-struct StubNetworkSession: NetworkSession {
-    var configuration: URLSessionConfiguration
+final class StubNetworkSession: NetworkSession {
+    var configuration: URLSessionConfiguration = .ephemeral
+    var lastRequest: URLRequest?
     var data: Data?
     var response: URLResponse?
     var error: Error?
     
-    init(configuration: URLSessionConfiguration = .ephemeral,
-        data: Data? = nil,
+    init(data: Data? = nil,
         response: URLResponse? = nil,
         error: Error? = nil) {
-        self.configuration = configuration
         self.data = data
         self.response = response
     }
     
     func data(for request: URLRequest) async throws -> (Data, URLResponse) {
+        self.lastRequest = request
         if let error = error {
             throw error
         }

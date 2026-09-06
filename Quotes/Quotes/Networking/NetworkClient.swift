@@ -15,7 +15,6 @@ final class NetworkClient: Networking {
     private let urlString = "https://zenquotes.io/api/today"
     private let session: NetworkSession
     private let decoder: JSONDecoder
-    
     private let quoteDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
