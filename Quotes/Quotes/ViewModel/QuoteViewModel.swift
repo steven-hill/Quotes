@@ -12,7 +12,7 @@ final class QuoteViewModel: ObservableObject {
     enum State {
         case notAvailable
         case loading
-        case success(data: QuoteServiceResult)
+        case success(data: QuoteNetworkResult)
         case failure(error: Error)
     }
     
@@ -22,9 +22,9 @@ final class QuoteViewModel: ObservableObject {
     @Published var quoteAuthor: String = ""
     @Published var quoteToShare: String = ""
     
-    private let quoteService: QuoteServiceProtocol
+    private let quoteService: Networking
     
-    init(quoteService: QuoteServiceProtocol) {
+    init(quoteService: Networking) {
         self.quoteService = quoteService
     }
     
@@ -34,7 +34,7 @@ final class QuoteViewModel: ObservableObject {
         self.hasError = false
         do {
             let quoteOfTheDay = try await quoteService.fetchQuoteOfTheDay()
-            quoteContent = quoteOfTheDay.first?.quote ?? "Content Unavailable"
+            quoteContent = quoteOfTheDay.first?.text ?? "Content Unavailable"
             quoteAuthor = quoteOfTheDay.first?.author ?? "Author Name Unavailable"
             quoteToShare = quoteContent + " - " + quoteAuthor
             self.state = .success(data: quoteOfTheDay)
