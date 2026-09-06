@@ -27,22 +27,30 @@ final class QuoteViewModelTests: XCTestCase {
     }
     
     func test_Get_QuoteOfTheDay_Success() async {
-        let mockQuote = Quote(text: "When you want to be honored by others, you learn to honor them first.", author: "Sathya Sai Baba", date: .now)
-        mockQuoteService.quoteResponse = [mockQuote]
+        let mockQuoteResult = Quote.sample
+        mockQuoteService.quoteResponse = mockQuoteResult
         
         await quoteViewModel.getQuoteOfTheDay()
         
-        XCTAssertEqual(quoteViewModel.state, .success(data: [mockQuote]))
+        XCTAssertEqual(mockQuoteService.fetchQuoteOfTheDayCallCount, 1, "Should have been called once.")
+        XCTAssertEqual(quoteViewModel.state, .success(data: mockQuoteResult))
         XCTAssertFalse(quoteViewModel.hasError)
-        XCTAssertEqual(quoteViewModel.quoteContent, mockQuote.text)
-        XCTAssertEqual(quoteViewModel.quoteAuthor, mockQuote.author)
-        XCTAssertEqual(quoteViewModel.quoteToShare, "\(mockQuote.text) - \(mockQuote.author)")
+        
+        guard let quote = mockQuoteResult.first else {
+            XCTFail("No quote found")
+            return
+        }
+        XCTAssertEqual(quoteViewModel.quoteContent, quote.text)
+        XCTAssertEqual(quoteViewModel.quoteAuthor, quote.author)
+        XCTAssertEqual(quoteViewModel.quoteToShare, "\(quote.text) - \(quote.author)")
     }
     
     func test_Get_QuoteOfTheDay_Failure() async {
         mockQuoteService.shouldSucceed = false
+        
         await quoteViewModel.getQuoteOfTheDay()
         
+        XCTAssertEqual(mockQuoteService.fetchQuoteOfTheDayCallCount, 1, "Should have been called once.")
         XCTAssertEqual(quoteViewModel.state, .failure(error: NSError(domain: "com.example.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "Mock error"])))
         XCTAssertTrue(quoteViewModel.hasError)
         XCTAssertEqual(quoteViewModel.quoteAuthor, "")
@@ -54,10 +62,12 @@ final class QuoteViewModelTests: XCTestCase {
     final class MockNetworkClient: Networking {
         var quoteResponse: QuoteNetworkResult = []
         var shouldSucceed: Bool = true
+        var fetchQuoteOfTheDayCallCount = 0
         
         func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
+            fetchQuoteOfTheDayCallCount += 1
             if shouldSucceed {
-                quoteResponse
+                return quoteResponse
             } else {
                 throw NSError(domain: "com.example.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "Mock error"])
             }
