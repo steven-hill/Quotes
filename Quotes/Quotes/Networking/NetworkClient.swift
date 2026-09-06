@@ -45,7 +45,7 @@ final class NetworkClient: Networking {
         /// Inspect `URLCache` first, comparing decoded object's date against user's current day.
         /// If cache is valid for today, skip network.
         let request = URLRequest(url: url)
-        if let cachedResult = retrieveTodaysCacheResult(for: request) {
+        if let cachedResult = retrieveCacheResult(for: request) {
             return cachedResult
         }
             
@@ -75,7 +75,7 @@ final class NetworkClient: Networking {
     }
     
     //MARK: - Helper
-    private func retrieveTodaysCacheResult(for request: URLRequest) -> QuoteNetworkResult? {
+    private func retrieveCacheResult(for request: URLRequest) -> QuoteNetworkResult? {
         guard let cachedResponse = cache.cachedResponse(for: request),
               let networkResult = try? decoder.decode(QuoteNetworkResult.self, from: cachedResponse.data),
               let quote = networkResult.first  else {
