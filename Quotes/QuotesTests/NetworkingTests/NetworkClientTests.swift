@@ -94,6 +94,35 @@ struct NetworkClientTests {
         #expect(dateInResult == todayString, "The date in the network result should not be yesterday because it should be overwritten with today's.")
     }
     
+    @MainActor @Test("When server returns non-200 status code, should throw correct error")
+    func networkClient_fetchQuoteOfTheDay_whenServerStatusCodeIsInvalid_throwsCorrectError() async throws {
+        let testURL = URL(string: "https://zenquotes.io/api/today")!
+        let statusCode = 429
+        let networkResponse = HTTPURLResponse(
+            url: testURL,
+            statusCode: statusCode,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        let stubSession = StubNetworkSession(
+            data: Data(),
+            response: networkResponse
+        )
+        let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
+        let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
+        
+        do {
+            _ = try await sut.fetchQuoteOfTheDay()
+            Issue.record("Expected an error to be thrown, but network call succeeded.")
+        } catch let error as NetworkError {
+            if case .invalidStatusCode(statusCode: let code) = error {
+                #expect(code == statusCode)
+            } else {
+                Issue.record("Expected `.invalidStatusCode` to be thrown, but got \(error).")
+            }
+        }
+    }
+    
     //MARK: - Helpers
     private func createDateString(daysOffset: Int) -> String {
         let formatter = DateFormatter()
