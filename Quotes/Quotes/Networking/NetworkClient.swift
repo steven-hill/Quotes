@@ -15,6 +15,7 @@ final class NetworkClient: Networking {
     private let urlString = "https://zenquotes.io/api/today"
     private let session: NetworkSession
     private let decoder: JSONDecoder
+    private let cache: URLCache
     private let quoteDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -25,6 +26,7 @@ final class NetworkClient: Networking {
     init(
         session: NetworkSession? = nil,
         decoder: JSONDecoder = JSONDecoder(),
+        cache: URLCache = .shared
     ) {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 15
@@ -32,6 +34,7 @@ final class NetworkClient: Networking {
         self.session = session ?? URLSession(configuration: config)
         self.decoder = decoder
         self.decoder.dateDecodingStrategy = .formatted(quoteDateFormatter)
+        self.cache = cache
     }
     
     func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
@@ -42,7 +45,7 @@ final class NetworkClient: Networking {
         /// Inspect `URLCache` first, comparing decoded object's date against user's current day.
         /// If cache is valid for today, skip network.
         let request = URLRequest(url: url)
-        if let cachedResponse = URLCache.shared.cachedResponse(for: request),
+        if let cachedResponse = cache.cachedResponse(for: request),
            let networkResult = try? decoder.decode(QuoteNetworkResult.self, from: cachedResponse.data),
            let quote = networkResult.first {
             if Calendar.current.isDateInToday(quote.date) {
@@ -68,7 +71,7 @@ final class NetworkClient: Networking {
             let result = try decoder.decode(QuoteNetworkResult.self, from: data)
             /// Store valid response to cache for any more network requests today.
             let cachedData = CachedURLResponse(response: response, data: data)
-            URLCache.shared.storeCachedResponse(cachedData, for: request)
+            cache.storeCachedResponse(cachedData, for: request)
             return result
         } catch {
             throw NetworkError.invalidData(error.localizedDescription)

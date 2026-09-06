@@ -20,6 +20,7 @@ final class StubNetworkSession: NetworkSession {
         error: Error? = nil) {
         self.data = data
         self.response = response
+        self.error = error
     }
     
     func data(for request: URLRequest) async throws -> (Data, URLResponse) {
