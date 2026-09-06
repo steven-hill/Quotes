@@ -13,7 +13,7 @@ struct NetworkClientTests {
     
     @MainActor @Test("When `URLCache` contains a cached response for today, `fetchQuoteOfTheDay` returns the cached response and skips the network")
     func networkClient_fetchQuoteOfTheDay_whenValidCacheExistsForToday_returnsCacheAndSkipsNetwork() async throws {
-        let testURL = URL(string: "https://zenquotes.io/api/today")!
+        let testURL = makeTestURL()
         let stubSession = StubNetworkSession()
         let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let today = createDateString(daysOffset: 0)
@@ -50,7 +50,7 @@ struct NetworkClientTests {
     
     @MainActor @Test("When `URLCache` contains yesterday's data, `fetchQuoteOfTheDay` fetches today's data from the network and overwrites cache")
     func networkClient_fetchQuoteOfTheDay_whenCacheIsStale_hitsNetworkAndOverwritesCache() async throws {
-        let testURL = URL(string: "https://zenquotes.io/api/today")!
+        let testURL = makeTestURL()
         let stubSession = StubNetworkSession()
         let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let yesterdayString = createDateString(daysOffset: -1)
@@ -96,7 +96,7 @@ struct NetworkClientTests {
     
     @MainActor @Test("When server returns invalid response, should throw correct error")
     func networkClient_fetchQuoteOfTheDay_whenHTTPResponseIsInvalid_throwsCorrectError() async {
-        let testURL = URL(string: "https://zenquotes.io/api/today")!
+        let testURL = makeTestURL()
         let invalidResponse = URLResponse(
             url: testURL,
             mimeType: nil,
@@ -117,7 +117,7 @@ struct NetworkClientTests {
     
     @MainActor @Test("When server returns non-200 status code, should throw correct error")
     func networkClient_fetchQuoteOfTheDay_whenServerStatusCodeIsInvalid_throwsCorrectError() async throws {
-        let testURL = URL(string: "https://zenquotes.io/api/today")!
+        let testURL = makeTestURL()
         let statusCode = 429
         let networkResponse = HTTPURLResponse(
             url: testURL,
@@ -139,7 +139,7 @@ struct NetworkClientTests {
     
     @MainActor @Test("When server returns malformed JSON, should throw correct error")
     func networkClient_fetchQuoteOfTheDay_whenServerReturnsMalformedJSON_throwsCorrectError() async throws {
-        let testURL = URL(string: "https://zenquotes.io/api/today")!
+        let testURL = makeTestURL()
         let corruptData = "{\"invalid_json\": true".data(using: .utf8)!
         let networkResponse = HTTPURLResponse(
             url: testURL,
@@ -161,6 +161,10 @@ struct NetworkClientTests {
     }
     
     //MARK: - Helpers
+    private func makeTestURL() -> URL {
+        URL(string: "https://zenquotes.io/api/today")!
+    }
+    
     private func createDateString(daysOffset: Int) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
