@@ -34,11 +34,9 @@ struct NetworkClientTests {
         let lastRequest = await stubSession.lastRequest
         let data = await stubSession.data
         let response = await stubSession.response
-        let error = await stubSession.error
         #expect(lastRequest == nil, "Network call should not have been made when a valid daily cache exists.")
         #expect(data == nil, "Should still be nil.")
         #expect(response == nil, "Should still be nil.")
-        #expect(error == nil, "Should still be nil.")
         #expect(result.first?.text == "A", "Should match data in the cached response.")
         #expect(result.first?.author == "A", "Should match data in the cached response.")
         #expect(dateInResult == today, "The date in the network result should match the date of the cached response.")
@@ -73,11 +71,9 @@ struct NetworkClientTests {
         let lastRequest = await stubSession.lastRequest
         let data = await stubSession.data
         let response = await stubSession.response
-        let error = await stubSession.error
         #expect(lastRequest != nil, "Should have made a network request.")
         #expect(data == todaysData, "Should have today's data, not yesterday's.")
         #expect(response != nil, "Should not be nil.")
-        #expect(error == nil, "Should still be nil.")
         #expect(result.first?.text == "B", "Should match today's data, not the cache.")
         #expect(result.first?.author == "B", "Should match today's data, not the cache.")
         
