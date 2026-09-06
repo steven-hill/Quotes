@@ -94,6 +94,27 @@ struct NetworkClientTests {
         #expect(dateInResult == todayString, "The date in the network result should not be yesterday because it should be overwritten with today's.")
     }
     
+    @MainActor @Test("When server returns invalid response, should throw correct error")
+    func networkClient_fetchQuoteOfTheDay_whenHTTPResponseIsInvalid_throwsCorrectError() async {
+        let testURL = URL(string: "https://zenquotes.io/api/today")!
+        let invalidResponse = URLResponse(
+            url: testURL,
+            mimeType: nil,
+            expectedContentLength: 0,
+            textEncodingName: nil
+        )
+        let stubSession = StubNetworkSession(
+            data: Data(),
+            response: invalidResponse
+        )
+        let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
+        let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
+        
+        await #expect(throws: NetworkError.invalidResponse, "Should be `.invalidResponse`.") {
+            try await sut.fetchQuoteOfTheDay()
+        }
+    }
+    
     @MainActor @Test("When server returns non-200 status code, should throw correct error")
     func networkClient_fetchQuoteOfTheDay_whenServerStatusCodeIsInvalid_throwsCorrectError() async throws {
         let testURL = URL(string: "https://zenquotes.io/api/today")!
@@ -111,15 +132,8 @@ struct NetworkClientTests {
         let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
         
-        do {
-            _ = try await sut.fetchQuoteOfTheDay()
-            Issue.record("Expected an error to be thrown, but network call succeeded.")
-        } catch let error as NetworkError {
-            if case .invalidStatusCode(statusCode: let code) = error {
-                #expect(code == statusCode)
-            } else {
-                Issue.record("Expected `.invalidStatusCode` to be thrown, but got \(error).")
-            }
+        await #expect(throws: NetworkError.invalidStatusCode(statusCode: statusCode), "Should be `.invalidResponse`.") {
+            try await sut.fetchQuoteOfTheDay()
         }
     }
     
