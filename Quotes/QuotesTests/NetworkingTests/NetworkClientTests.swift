@@ -137,6 +137,29 @@ struct NetworkClientTests {
         }
     }
     
+    @MainActor @Test("When server returns malformed JSON, should throw correct error")
+    func networkClient_fetchQuoteOfTheDay_whenServerReturnsMalformedJSON_throwsCorrectError() async throws {
+        let testURL = URL(string: "https://zenquotes.io/api/today")!
+        let corruptData = "{\"invalid_json\": true".data(using: .utf8)!
+        let networkResponse = HTTPURLResponse(
+            url: testURL,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        let stubSession = StubNetworkSession(
+            data: corruptData,
+            response: networkResponse
+        )
+        let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
+        let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
+        
+        let context = "The data couldn’t be read because it isn’t in the correct format."
+        await #expect(throws: NetworkError.invalidData(context), "Should be `.invalidResponse`.") {
+            try await sut.fetchQuoteOfTheDay()
+        }
+    }
+    
     //MARK: - Helpers
     private func createDateString(daysOffset: Int) -> String {
         let formatter = DateFormatter()
