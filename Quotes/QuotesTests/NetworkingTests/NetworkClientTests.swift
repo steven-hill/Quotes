@@ -11,13 +11,17 @@ import Foundation
 
 struct NetworkClientTests {
     
-    @MainActor @Test("When URLCache contains a cached response for today, `fetchQuoteOfTheDay` returns the cached response and skips the network")
+    @MainActor @Test("When `URLCache` contains a cached response for today, `fetchQuoteOfTheDay` returns the cached response and skips the network")
     func networkClient_fetchQuoteOfTheDay_whenValidCacheExistsForToday_returnsCacheAndSkipsNetwork() async throws {
         let testURL = URL(string: "https://zenquotes.io/api/today")!
         let stubSession = StubNetworkSession()
         let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let today = createDateString(daysOffset: 0)
-        let sampleData = createSampleQuoteData(dateString: today)
+        let todaysData = createQuoteData(
+            quote: "A",
+            author: "A",
+            dateString: today
+        )
         let response = HTTPURLResponse(
             url: testURL,
             statusCode: 200,
@@ -26,7 +30,7 @@ struct NetworkClientTests {
         )!
         let cachedResponse = CachedURLResponse(
             response: response,
-            data: sampleData
+            data: todaysData
         )
         let request = URLRequest(url: testURL)
         ephemeralCache.storeCachedResponse(cachedResponse, for: request)
@@ -39,16 +43,22 @@ struct NetworkClientTests {
         #expect(stubSession.data == nil, "Should still be nil.")
         #expect(stubSession.response == nil, "Should still be nil.")
         #expect(stubSession.error == nil, "Should still be nil.")
+        #expect(result.first?.text == "A", "Should match data in the cached response.")
+        #expect(result.first?.author == "A", "Should match data in the cached response.")
         #expect(dateInResult == today, "The date in the network result should match the date of the cached response.")
     }
     
-    @MainActor @Test("When URLCache contains stale data, `fetchQuoteOfTheDay` fetches new data from the network and overwrites cache")
+    @MainActor @Test("When `URLCache` contains yesterday's data, `fetchQuoteOfTheDay` fetches today's data from the network and overwrites cache")
     func networkClient_fetchQuoteOfTheDay_whenCacheIsStale_hitsNetworkAndOverwritesCache() async throws {
         let testURL = URL(string: "https://zenquotes.io/api/today")!
         let stubSession = StubNetworkSession()
         let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let yesterdayString = createDateString(daysOffset: -1)
-        let staleData = createSampleQuoteData(dateString: yesterdayString)
+        let yesterdaysData = createQuoteData(
+            quote: "A",
+            author: "A",
+            dateString: yesterdayString
+        )
         let response = HTTPURLResponse(
             url: testURL,
             statusCode: 200,
@@ -57,22 +67,28 @@ struct NetworkClientTests {
         )!
         let cachedResponse = CachedURLResponse(
             response: response,
-            data: staleData
+            data: yesterdaysData
         )
         let request = URLRequest(url: testURL)
         ephemeralCache.storeCachedResponse(cachedResponse, for: request)        
         let todayString = createDateString(daysOffset: 0)
-        let freshData = createSampleQuoteData(dateString: todayString)
-        stubSession.data = freshData
+        let todaysData = createQuoteData(
+            quote: "B",
+            author: "B",
+            dateString: todayString
+        )
+        stubSession.data = todaysData
         stubSession.response = response
         let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
         
         let result = try await sut.fetchQuoteOfTheDay()
         
         #expect(stubSession.lastRequest != nil, "Should have made a network request.")
-        #expect(stubSession.data == freshData, "Should have today's data, not yesterday's.")
+        #expect(stubSession.data == todaysData, "Should have today's data, not yesterday's.")
         #expect(stubSession.response != nil, "Should not be nil.")
         #expect(stubSession.error == nil, "Should still be nil.")
+        #expect(result.first?.text == "B", "Should match today's data, not the cache.")
+        #expect(result.first?.author == "B", "Should match today's data, not the cache.")
         
         let dateInResult = dateFormatter.string(from: result.first!.date)
         #expect(dateInResult == todayString, "The date in the network result should not be yesterday because it should be overwritten with today's.")
@@ -87,12 +103,16 @@ struct NetworkClientTests {
         return formatter.string(from: targetedDate)
     }
     
-    private func createSampleQuoteData(dateString: String) -> Data {
+    private func createQuoteData(
+        quote: String,
+        author: String,
+        dateString: String
+    ) -> Data {
             """
             [
               {
-                "q": "Test Quote",
-                "a": "Test Author",
+                "q": "\(quote)",
+                "a": "\(author)",
                 "date": "\(dateString)"
               }
             ]
