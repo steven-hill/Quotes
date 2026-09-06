@@ -7,10 +7,12 @@
 
 import Foundation
 
+nonisolated
 protocol Networking {
     func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult
 }
 
+nonisolated
 final class NetworkClient: Networking {
     //MARK: - Properties
     private let urlString = "https://zenquotes.io/api/today"
