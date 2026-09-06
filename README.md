@@ -15,13 +15,13 @@ Overview:
   - MVVM, Core Data and Swift concurrency.
   - iPhone and iPad are both supported.
   - The app supports different size classes, portrait and landscape orientation, and light, dark or system appearance.
-  - XCTest is used for testing.
+  - XCTest and Swift Testing are used for testing.
 
 Networking:   
   - The network code uses async/await with `URLSession`, and there is dependency injection for loose coupling and testability.
-  - The network response is cached using `NSCache`.
-  - Caching will avoid exceeding the rate limit of 5 requests per 30 second period (among other benefits to the user experience and app performance).
-  - I looked at various caching solutions such as `NSCache`, `URLCache`, and in-memory caching and persistent caching. An in-memory `NSCache` suits my case as I want the cache to be emptied when the app is terminated / the current session ends because a new quote is delivered daily by the API.
+  - The network response is cached using `URLCache`.
+  - The caching strategy avoids exceeding the rate limit of 5 requests per 30 second period, and the cached data is overwritten when new data is available (daily).
+  - I looked at various caching solutions such as `NSCache`, `URLCache`, and in-memory caching and persistent caching. `NSCache` is emptied when the app is terminated / the current session ends, so this doesn't stop the rate limit being exceeded. The caching strategy now uses `URLCache` which can persist data across app launches, and the data's date is used to determine if a new network request is needed.
 
 Persistence:
 - Persistence of saved quotes is achieved via `CoreData`.
