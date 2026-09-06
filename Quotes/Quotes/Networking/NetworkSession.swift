@@ -9,7 +9,6 @@ import Foundation
 
 nonisolated
 protocol NetworkSession: Sendable {
-    var configuration: URLSessionConfiguration { get }
     func data(for request: URLRequest) async throws -> (Data, URLResponse)
 }
 
