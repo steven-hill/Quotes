@@ -49,4 +49,19 @@ final class QuoteViewModelTests: XCTestCase {
         XCTAssertEqual(quoteViewModel.quoteContent, "")
         XCTAssertEqual(quoteViewModel.quoteToShare, "")
     }
+    
+    //MARK: - Mock Network Client
+    final class MockNetworkClient: Networking {
+        var quoteResponse: QuoteNetworkResult = []
+        var shouldSucceed: Bool = true
+        
+        func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
+            if shouldSucceed {
+                quoteResponse
+            } else {
+                throw NSError(domain: "com.example.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "Mock error"])
+            }
+        }
+    }
 }
+
