@@ -8,7 +8,7 @@
 import Foundation
 @testable import Quotes
 
-final class StubNetworkSession: NetworkSession {
+actor StubNetworkSession: NetworkSession {
     var lastRequest: URLRequest?
     var data: Data?
     var response: URLResponse?
