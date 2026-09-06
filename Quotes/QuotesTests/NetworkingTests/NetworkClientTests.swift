@@ -132,7 +132,7 @@ struct NetworkClientTests {
         let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
         
-        await #expect(throws: NetworkError.invalidStatusCode(statusCode: statusCode), "Should be `.invalidResponse`.") {
+        await #expect(throws: NetworkError.invalidStatusCode(statusCode: statusCode), "Should be `.invalidStatusCode`.") {
             try await sut.fetchQuoteOfTheDay()
         }
     }
