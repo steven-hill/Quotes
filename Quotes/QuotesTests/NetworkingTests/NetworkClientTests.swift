@@ -155,7 +155,7 @@ struct NetworkClientTests {
         let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
         
         let context = "The data couldn’t be read because it isn’t in the correct format."
-        await #expect(throws: NetworkError.invalidData(context), "Should be `.invalidResponse`.") {
+        await #expect(throws: NetworkError.invalidData(context), "Should be `.invalidData`.") {
             try await sut.fetchQuoteOfTheDay()
         }
     }
