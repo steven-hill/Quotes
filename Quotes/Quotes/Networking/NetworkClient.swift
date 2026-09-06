@@ -12,6 +12,7 @@ protocol Networking {
 }
 
 final class NetworkClient: Networking {
+    //MARK: - Properties
     private let urlString = "https://zenquotes.io/api/today"
     private let session: NetworkSession
     private let decoder: JSONDecoder
@@ -23,6 +24,7 @@ final class NetworkClient: Networking {
         return formatter
     }()
     
+    //MARK: - Initialisation
     init(
         session: NetworkSession? = nil,
         decoder: JSONDecoder = JSONDecoder(),
@@ -37,6 +39,7 @@ final class NetworkClient: Networking {
         self.cache = cache
     }
     
+    //MARK: - Method
     func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
         guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
