@@ -14,25 +14,20 @@ struct NetworkClientTests {
     @MainActor @Test("When `URLCache` contains a cached response for today, `fetchQuoteOfTheDay` returns the cached response and skips the network")
     func networkClient_fetchQuoteOfTheDay_whenValidCacheExistsForToday_returnsCacheAndSkipsNetwork() async throws {
         let testURL = makeTestURL()
-        let stubSession = StubNetworkSession()
-        let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let today = createDateString(daysOffset: 0)
         let todaysData = createQuoteData(
             quote: "A",
             author: "A",
             dateString: today
         )
-        let response = HTTPURLResponse(
-            url: testURL,
-            statusCode: 200,
-            httpVersion: nil,
-            headerFields: nil
-        )!
+        let response = makeHTTPResponse(statusCode: 200)
         let cachedResponse = CachedURLResponse(
             response: response,
             data: todaysData
         )
+        let stubSession = StubNetworkSession()
         let request = URLRequest(url: testURL)
+        let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         ephemeralCache.storeCachedResponse(cachedResponse, for: request)
         let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
         
@@ -50,33 +45,28 @@ struct NetworkClientTests {
     
     @MainActor @Test("When `URLCache` contains yesterday's data, `fetchQuoteOfTheDay` fetches today's data from the network and overwrites cache")
     func networkClient_fetchQuoteOfTheDay_whenCacheIsStale_hitsNetworkAndOverwritesCache() async throws {
-        let testURL = makeTestURL()
-        let stubSession = StubNetworkSession()
-        let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let yesterdayString = createDateString(daysOffset: -1)
         let yesterdaysData = createQuoteData(
             quote: "A",
             author: "A",
             dateString: yesterdayString
         )
-        let response = HTTPURLResponse(
-            url: testURL,
-            statusCode: 200,
-            httpVersion: nil,
-            headerFields: nil
-        )!
+        let response = makeHTTPResponse(statusCode: 200)
         let cachedResponse = CachedURLResponse(
             response: response,
             data: yesterdaysData
         )
+        let testURL = makeTestURL()
         let request = URLRequest(url: testURL)
-        ephemeralCache.storeCachedResponse(cachedResponse, for: request)        
+        let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
+        ephemeralCache.storeCachedResponse(cachedResponse, for: request)
         let todayString = createDateString(daysOffset: 0)
         let todaysData = createQuoteData(
             quote: "B",
             author: "B",
             dateString: todayString
         )
+        let stubSession = StubNetworkSession()
         stubSession.data = todaysData
         stubSession.response = response
         let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
@@ -117,17 +107,11 @@ struct NetworkClientTests {
     
     @MainActor @Test("When server returns non-200 status code, should throw correct error")
     func networkClient_fetchQuoteOfTheDay_whenServerStatusCodeIsInvalid_throwsCorrectError() async throws {
-        let testURL = makeTestURL()
         let statusCode = 429
-        let networkResponse = HTTPURLResponse(
-            url: testURL,
-            statusCode: statusCode,
-            httpVersion: nil,
-            headerFields: nil
-        )!
+        let response = makeHTTPResponse(statusCode: statusCode)
         let stubSession = StubNetworkSession(
             data: Data(),
-            response: networkResponse
+            response: response
         )
         let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
@@ -139,17 +123,11 @@ struct NetworkClientTests {
     
     @MainActor @Test("When server returns malformed JSON, should throw correct error")
     func networkClient_fetchQuoteOfTheDay_whenServerReturnsMalformedJSON_throwsCorrectError() async throws {
-        let testURL = makeTestURL()
         let corruptData = "{\"invalid_json\": true".data(using: .utf8)!
-        let networkResponse = HTTPURLResponse(
-            url: testURL,
-            statusCode: 200,
-            httpVersion: nil,
-            headerFields: nil
-        )!
+        let response = makeHTTPResponse(statusCode: 200)
         let stubSession = StubNetworkSession(
             data: corruptData,
-            response: networkResponse
+            response: response
         )
         let ephemeralCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
         let sut = NetworkClient(session: stubSession, cache: ephemeralCache)
@@ -158,6 +136,16 @@ struct NetworkClientTests {
         await #expect(throws: NetworkError.invalidData(context), "Should be `.invalidData`.") {
             try await sut.fetchQuoteOfTheDay()
         }
+    }
+    
+    //MARK: - SUT helper
+    @MainActor private func makeHTTPResponse(statusCode: Int) -> HTTPURLResponse {
+        HTTPURLResponse(
+            url: makeTestURL(),
+            statusCode: statusCode,
+            httpVersion: nil,
+            headerFields: nil
+        )!
     }
     
     //MARK: - Helpers
