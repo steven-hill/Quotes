@@ -62,7 +62,7 @@ final class NetworkClient: Networking {
         let (data, response) = try await session.data(for: networkRequest)
         try validate(response)
 
-        /// Decode and save the response to the cache.
+        /// Decode the data, and store the data in the cache.
         return try decodeAndCache(
             data: data,
             response: response,
