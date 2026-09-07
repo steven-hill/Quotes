@@ -30,11 +30,12 @@ final class NetworkClient: Networking {
     init(
         session: NetworkSession? = nil,
         decoder: JSONDecoder = JSONDecoder(),
-        cache: URLCache = .shared
+        cache: URLCache = makeCache()
     ) {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 15
         config.timeoutIntervalForResource = 30
+        config.urlCache = cache
         self.session = session ?? URLSession(configuration: config)
         self.decoder = decoder
         self.decoder.dateDecodingStrategy = .formatted(quoteDateFormatter)
@@ -47,20 +48,21 @@ final class NetworkClient: Networking {
             throw NetworkError.invalidURL
         }
         
-        /// Inspect `URLCache` first, comparing decoded object's date against user's current day.
-        /// If cache is valid for today, skip network.
+        /// Check `URLCache` first, comparing decoded object's date against the current date.
+        /// If cache has today's quote, return it and skip the network request.
         let request = URLRequest(url: url)
         if let cachedResult = retrieveCacheResult(for: request) {
             return cachedResult
         }
             
-        /// If `URLCache` is stale or empty, try the network.
+        /// `URLCache` contains yesterday's data or is empty, so try the network.
+        /// Avoid the `URLSession` HTTP requests cache.
         var networkRequest = request
         networkRequest.cachePolicy = .reloadIgnoringLocalCacheData
         let (data, response) = try await session.data(for: networkRequest)
         try validate(response)
 
-        /// Decode and save the response to the cache.
+        /// Decode the data, and store the data in the cache.
         return try decodeAndCache(
             data: data,
             response: response,
@@ -68,11 +70,23 @@ final class NetworkClient: Networking {
         )
     }
     
+    //MARK: - Cache Factory
+    /// Creates a specifically configured cache for one, small JSON response.
+    private static func makeCache() -> URLCache {
+        URLCache(
+            memoryCapacity: 1 * 1024 * 1024,
+            diskCapacity: 5 * 1024 * 1024
+        )
+    }
+    
     //MARK: - Helpers
     private func retrieveCacheResult(for request: URLRequest) -> QuoteNetworkResult? {
         guard let cachedResponse = cache.cachedResponse(for: request),
-              let networkResult = try? decoder.decode(QuoteNetworkResult.self, from: cachedResponse.data),
-              let quote = networkResult.first  else {
+              let networkResult = try? decoder.decode(
+                QuoteNetworkResult.self,
+                from: cachedResponse.data
+              ),
+              let quote = networkResult.first else {
             return nil
         }
         return Calendar.current.isDateInToday(quote.date) ? networkResult : nil

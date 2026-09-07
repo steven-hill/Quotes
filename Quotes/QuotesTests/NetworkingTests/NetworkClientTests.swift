@@ -138,7 +138,11 @@ struct NetworkClientTests {
     }
     
     private func makeTestCache() -> URLCache {
-        URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 0, directory: nil)
+        URLCache(
+            memoryCapacity: 1 * 1024 * 1024,
+            diskCapacity: 0,
+            directory: nil
+        )
     }
     
     private func makeHTTPResponse(statusCode: Int) -> HTTPURLResponse {
