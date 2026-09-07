@@ -30,10 +30,7 @@ final class NetworkClient: Networking {
     init(
         session: NetworkSession? = nil,
         decoder: JSONDecoder = JSONDecoder(),
-        cache: URLCache = URLCache(
-            memoryCapacity: 1 * 1024 * 1024,
-            diskCapacity: 5 * 1024 * 1024
-        )
+        cache: URLCache = makeCache()
     ) {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 15
@@ -72,7 +69,16 @@ final class NetworkClient: Networking {
         )
     }
     
-    //MARK: - Helpers
+    //MARK: - Cache Factory
+    /// Creates a specifically configured cache for one, small JSON response.
+    private static func makeCache() -> URLCache {
+        URLCache(
+            memoryCapacity: 1 * 1024 * 1024,
+            diskCapacity: 5 * 1024 * 1024
+        )
+    }
+    
+    //MARK: - Network and Cache Helpers
     private func retrieveCacheResult(for request: URLRequest) -> QuoteNetworkResult? {
         guard let cachedResponse = cache.cachedResponse(for: request),
               let networkResult = try? decoder.decode(QuoteNetworkResult.self, from: cachedResponse.data),
