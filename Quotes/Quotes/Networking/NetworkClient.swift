@@ -48,8 +48,8 @@ final class NetworkClient: Networking {
             throw NetworkError.invalidURL
         }
         
-        /// Inspect `URLCache` first, comparing decoded object's date against user's current day.
-        /// If cache is valid for today, return it and skip the network request.
+        /// Check `URLCache` first, comparing decoded object's date against the current date.
+        /// If cache has today's quote, return it and skip the network request.
         let request = URLRequest(url: url)
         if let cachedResult = retrieveCacheResult(for: request) {
             return cachedResult
