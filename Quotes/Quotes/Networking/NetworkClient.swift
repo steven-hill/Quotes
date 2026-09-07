@@ -56,6 +56,7 @@ final class NetworkClient: Networking {
         }
             
         /// `URLCache` contains yesterday's data or is empty, so try the network.
+        /// Avoid the `URLSession` HTTP requests cache.
         var networkRequest = request
         networkRequest.cachePolicy = .reloadIgnoringLocalCacheData
         let (data, response) = try await session.data(for: networkRequest)
@@ -78,11 +79,14 @@ final class NetworkClient: Networking {
         )
     }
     
-    //MARK: - Network and Cache Helpers
+    //MARK: - Helpers
     private func retrieveCacheResult(for request: URLRequest) -> QuoteNetworkResult? {
         guard let cachedResponse = cache.cachedResponse(for: request),
-              let networkResult = try? decoder.decode(QuoteNetworkResult.self, from: cachedResponse.data),
-              let quote = networkResult.first  else {
+              let networkResult = try? decoder.decode(
+                QuoteNetworkResult.self,
+                from: cachedResponse.data
+              ),
+              let quote = networkResult.first else {
             return nil
         }
         return Calendar.current.isDateInToday(quote.date) ? networkResult : nil
