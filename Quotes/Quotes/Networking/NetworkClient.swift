@@ -30,11 +30,15 @@ final class NetworkClient: Networking {
     init(
         session: NetworkSession? = nil,
         decoder: JSONDecoder = JSONDecoder(),
-        cache: URLCache = .shared
+        cache: URLCache = URLCache(
+            memoryCapacity: 1 * 1024 * 1024,
+            diskCapacity: 5 * 1024 * 1024
+        )
     ) {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 15
         config.timeoutIntervalForResource = 30
+        config.urlCache = cache
         self.session = session ?? URLSession(configuration: config)
         self.decoder = decoder
         self.decoder.dateDecodingStrategy = .formatted(quoteDateFormatter)
@@ -48,13 +52,13 @@ final class NetworkClient: Networking {
         }
         
         /// Inspect `URLCache` first, comparing decoded object's date against user's current day.
-        /// If cache is valid for today, skip network.
+        /// If cache is valid for today, return it and skip the network request.
         let request = URLRequest(url: url)
         if let cachedResult = retrieveCacheResult(for: request) {
             return cachedResult
         }
             
-        /// If `URLCache` is stale or empty, try the network.
+        /// `URLCache` contains yesterday's data or is empty, so try the network.
         var networkRequest = request
         networkRequest.cachePolicy = .reloadIgnoringLocalCacheData
         let (data, response) = try await session.data(for: networkRequest)
