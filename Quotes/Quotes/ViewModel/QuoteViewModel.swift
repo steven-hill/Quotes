@@ -12,7 +12,7 @@ final class QuoteViewModel: ObservableObject {
     enum State {
         case notAvailable
         case loading
-        case success(data: QuoteNetworkResult)
+        case success
         case failure(error: Error)
     }
     
@@ -34,10 +34,10 @@ final class QuoteViewModel: ObservableObject {
         self.hasError = false
         do {
             let quoteOfTheDay = try await quoteService.fetchQuoteOfTheDay()
-            quoteContent = quoteOfTheDay.first?.text ?? "Content Unavailable"
-            quoteAuthor = quoteOfTheDay.first?.author ?? "Author Name Unavailable"
+            quoteContent = quoteOfTheDay.text
+            quoteAuthor = quoteOfTheDay.author
             quoteToShare = quoteContent + " - " + quoteAuthor
-            self.state = .success(data: quoteOfTheDay)
+            self.state = .success
         } catch {
             self.state = .failure(error: error)
             self.hasError = true
@@ -52,8 +52,8 @@ extension QuoteViewModel.State: Equatable {
             return true
         case(.loading, .loading):
             return true
-        case(.success(let lhsType), .success(let rhsType)):
-            return lhsType == rhsType
+        case(.success, .success):
+            return true
         case(.failure(let lhsType), .failure(let rhsType)):
             return lhsType.localizedDescription == rhsType.localizedDescription
         default:
