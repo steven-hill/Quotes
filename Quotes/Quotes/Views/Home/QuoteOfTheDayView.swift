@@ -46,7 +46,7 @@ struct QuoteOfTheDayView: View {
     @ViewBuilder
     private var content: some View {
         switch quoteOfTheDayVM.state {
-        case .success(_):
+        case .success:
             quoteCardAndButtons
         case .loading:
             ProgressView()
