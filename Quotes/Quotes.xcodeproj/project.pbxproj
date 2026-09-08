@@ -37,7 +37,6 @@
 		5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */; };
 		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
 		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
-		5B812CF02C599B0C00B12213 /* QuoteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */; };
 		5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */; };
 		5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */; };
 		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
@@ -94,7 +93,6 @@
 		5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubNetworkSession.swift; sourceTree = "<group>"; };
 		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
 		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
-		5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteViewModelTests.swift; sourceTree = "<group>"; };
 		5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStoreTests.swift; sourceTree = "<group>"; };
 		5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
 		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 		5B812CEE2C599AEB00B12213 /* ViewModelTests */ = {
 			isa = PBXGroup;
 			children = (
-				5B812CEF2C599B0C00B12213 /* QuoteViewModelTests.swift */,
 			);
 			path = ViewModelTests;
 			sourceTree = "<group>";
@@ -479,7 +476,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */,
-				5B812CF02C599B0C00B12213 /* QuoteViewModelTests.swift in Sources */,
 				5B177CF62C5ADF4A00CCEC8B /* PersistenceControllerTests.swift in Sources */,
 				5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */,
 				5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */,
