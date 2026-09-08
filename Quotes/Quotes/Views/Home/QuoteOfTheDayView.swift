@@ -13,7 +13,7 @@ struct QuoteOfTheDayView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     
     // MARK: - State object
-    @StateObject var quoteOfTheDayVM = QuoteViewModel(quoteService: NetworkClient())
+    @StateObject var quoteOfTheDayVM = QuoteOfTheDayViewModel(quoteService: NetworkClient())
     
     // MARK: - Body
     var body: some View {
@@ -80,5 +80,5 @@ struct QuoteOfTheDayView: View {
 }
 
 #Preview {
-    QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: NetworkClient()))
+    QuoteOfTheDayView(quoteOfTheDayVM: QuoteOfTheDayViewModel(quoteService: NetworkClient()))
 }

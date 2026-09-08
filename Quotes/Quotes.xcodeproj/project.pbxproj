@@ -15,7 +15,7 @@
 		5B3FB7C22C52DE47000994DC /* QuotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */; };
 		5B3FB7C42C52DE47000994DC /* QuotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */; };
 		5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
-		5B3FB7D42C52E0ED000994DC /* QuoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D32C52E0ED000994DC /* QuoteViewModel.swift */; };
+		5B3FB7D42C52E0ED000994DC /* QuoteOfTheDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D32C52E0ED000994DC /* QuoteOfTheDayViewModel.swift */; };
 		5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D62C52E194000994DC /* TabBar.swift */; };
 		5B3FB7DC2C52E243000994DC /* QuoteOfTheDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7DB2C52E243000994DC /* QuoteOfTheDayView.swift */; };
 		5B3FB7DE2C52E285000994DC /* QuoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7DD2C52E285000994DC /* QuoteCardView.swift */; };
@@ -71,7 +71,7 @@
 		5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITests.swift; sourceTree = "<group>"; };
 		5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B3FB7D02C52DFF9000994DC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5B3FB7D32C52E0ED000994DC /* QuoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteViewModel.swift; sourceTree = "<group>"; };
+		5B3FB7D32C52E0ED000994DC /* QuoteOfTheDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayViewModel.swift; sourceTree = "<group>"; };
 		5B3FB7D62C52E194000994DC /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		5B3FB7DB2C52E243000994DC /* QuoteOfTheDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayView.swift; sourceTree = "<group>"; };
 		5B3FB7DD2C52E285000994DC /* QuoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCardView.swift; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 		5B3FB7D22C52E01F000994DC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				5B3FB7D32C52E0ED000994DC /* QuoteViewModel.swift */,
+				5B3FB7D32C52E0ED000994DC /* QuoteOfTheDayViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -454,7 +454,7 @@
 				5B3FB7EE2C52E537000994DC /* EditReflectionView.swift in Sources */,
 				5B3FB7E82C52E47B000994DC /* NoSearchResultsFoundView.swift in Sources */,
 				5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */,
-				5B3FB7D42C52E0ED000994DC /* QuoteViewModel.swift in Sources */,
+				5B3FB7D42C52E0ED000994DC /* QuoteOfTheDayViewModel.swift in Sources */,
 				5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */,
 				5B3FB7DE2C52E285000994DC /* QuoteCardView.swift in Sources */,
 				5B3FB7E62C52E3DC000994DC /* SavedView.swift in Sources */,
