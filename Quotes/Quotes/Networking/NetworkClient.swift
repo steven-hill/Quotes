@@ -108,10 +108,13 @@ final class NetworkClient: Networking {
         request: URLRequest
     ) throws -> Quote {
         do {
-            let result = try decoder.decode(Quote.self, from: data)
+            let result = try decoder.decode([Quote].self, from: data)
             let cachedData = CachedURLResponse(response: response, data: data)
             cache.storeCachedResponse(cachedData, for: request)
-            return result
+            guard let quote = result.first else {
+                throw NetworkError.invalidData("Data is missing")
+            }
+            return quote
         } catch {
             throw NetworkError.invalidData(error.localizedDescription)
         }
