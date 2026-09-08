@@ -43,7 +43,7 @@ final class QuoteViewModelTests: XCTestCase {
         await quoteViewModel.getQuoteOfTheDay()
         
         XCTAssertEqual(mockQuoteService.fetchQuoteOfTheDayCallCount, 1, "Should have been called once.")
-        XCTAssertEqual(quoteViewModel.state, .failure(error: NSError(domain: "com.example.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "Mock error"])))
+        XCTAssertEqual(quoteViewModel.state, .failure(.unknown))
         XCTAssertTrue(quoteViewModel.hasError)
         XCTAssertEqual(quoteViewModel.quoteAuthor, "")
         XCTAssertEqual(quoteViewModel.quoteContent, "")
@@ -61,7 +61,7 @@ final class QuoteViewModelTests: XCTestCase {
             if shouldSucceed {
                 return quote
             } else {
-                throw NSError(domain: "com.example.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "Mock error"])
+                throw NetworkError.unknown
             }
         }
     }
