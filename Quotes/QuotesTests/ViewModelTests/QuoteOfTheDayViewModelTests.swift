@@ -24,9 +24,7 @@ struct QuoteOfTheDayViewModelTests {
     
     @Test("VM's state is correct during network request")
     func quoteOfTheDayViewModel_getQuoteOfTheDay_duringNetworkRequest_stateIsCorrect() async {
-        let mockNetworkClient = MockNetworkClient()
-        mockNetworkClient.shouldPauseForLoadingStateTest = true
-        let sut = QuoteOfTheDayViewModel(quoteService: mockNetworkClient)
+        let (sut, mockNetworkClient) = makeSUTForLoadingState()
         
         let task = Task {
             await sut.getQuoteOfTheDay()
@@ -62,10 +60,7 @@ struct QuoteOfTheDayViewModelTests {
         NetworkError.unknown,
     ])
     func quoteOfTheDayViewModel_getQuoteOfTheDay_whenFailed_handlesError(expectedError: NetworkError) async {
-        let mockNetworkClient = MockNetworkClient()
-        mockNetworkClient.shouldSucceed = false
-        mockNetworkClient.error = expectedError
-        let sut = QuoteOfTheDayViewModel(quoteService: mockNetworkClient)
+        let sut = makeSUTForNetworkFailure(error: expectedError)
         
         await sut.getQuoteOfTheDay()
         
@@ -76,9 +71,26 @@ struct QuoteOfTheDayViewModelTests {
         #expect(sut.quoteToShare.isEmpty, "Should be empty on failure.")
     }
     
+    //MARK: - SUT Helpers
+    private func makeSUTForLoadingState() -> (
+        sut: QuoteOfTheDayViewModel,
+        mockNetworkClient: MockNetworkClient
+    ) {
+        let mockNetworkClient = MockNetworkClient()
+        mockNetworkClient.shouldPauseForLoadingStateTest = true
+        let sut = QuoteOfTheDayViewModel(quoteService: mockNetworkClient)
+        return (sut, mockNetworkClient)
+    }
+    
+    private func makeSUTForNetworkFailure(error: NetworkError) -> QuoteOfTheDayViewModel {
+        let mockNetworkClient = MockNetworkClient()
+        mockNetworkClient.shouldSucceed = false
+        mockNetworkClient.error = error
+        return QuoteOfTheDayViewModel(quoteService: mockNetworkClient)
+    }
+    
     //MARK: - Mock Network Client
     final class MockNetworkClient: Networking {
-        let quote = Quote.sample
         var shouldSucceed: Bool = true
         private var continuation: CheckedContinuation<Quote, Error>?
         var shouldPauseForLoadingStateTest = false
@@ -91,7 +103,7 @@ struct QuoteOfTheDayViewModelTests {
                 return try await withCheckedThrowingContinuation { self.continuation = $0 }
             }
             if shouldSucceed {
-                return quote
+                return Quote.sample
             } else {
                 let networkError = error ?? NetworkError.unknown
                 throw networkError
