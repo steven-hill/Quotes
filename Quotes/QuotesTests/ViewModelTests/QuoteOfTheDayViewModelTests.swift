@@ -51,6 +51,31 @@ struct QuoteOfTheDayViewModelTests {
         #expect(sut.quoteToShare.isEmpty == false, "Should not be empty.")
     }
     
+    @Test("VM handles failed network request", arguments: [
+        NetworkError.networkConnectionOffline,
+        NetworkError.networkConnectionLost,
+        NetworkError.networkTimeout,
+        NetworkError.invalidURL,
+        NetworkError.invalidResponse,
+        NetworkError.invalidStatusCode(statusCode: 429),
+        NetworkError.invalidData(""),
+        NetworkError.unknown,
+    ])
+    func quoteOfTheDayViewModel_getQuoteOfTheDay_whenFailed_handlesError(expectedError: NetworkError) async {
+        let mockNetworkClient = MockNetworkClient()
+        mockNetworkClient.shouldSucceed = false
+        mockNetworkClient.error = expectedError
+        let sut = QuoteOfTheDayViewModel(quoteService: mockNetworkClient)
+        
+        await sut.getQuoteOfTheDay()
+        
+        #expect(sut.state == .failure(expectedError), "Should be `.failure(NetworkError)`.")
+        #expect(sut.hasError, "Should be true.")
+        #expect(sut.quoteContent.isEmpty, "Should be empty on failure.")
+        #expect(sut.quoteAuthor.isEmpty, "Should be empty on failure.")
+        #expect(sut.quoteToShare.isEmpty, "Should be empty on failure.")
+    }
+    
     //MARK: - Mock Network Client
     final class MockNetworkClient: Networking {
         let quote = Quote.sample
@@ -58,6 +83,7 @@ struct QuoteOfTheDayViewModelTests {
         private var continuation: CheckedContinuation<Quote, Error>?
         var shouldPauseForLoadingStateTest = false
         var fetchQuoteOfTheDayCallCount = 0
+        var error: Error?
         
         func fetchQuoteOfTheDay() async throws -> Quote {
             fetchQuoteOfTheDayCallCount += 1
@@ -67,7 +93,8 @@ struct QuoteOfTheDayViewModelTests {
             if shouldSucceed {
                 return quote
             } else {
-                throw NetworkError.unknown
+                let networkError = error ?? NetworkError.unknown
+                throw networkError
             }
         }
     }
