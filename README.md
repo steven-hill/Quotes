@@ -21,7 +21,7 @@ Networking:
   - The network code uses async/await with `URLSession`, and there is dependency injection for loose coupling and testability.
   - The network response is cached using `URLCache`.
   - The caching strategy avoids exceeding the rate limit of 5 requests per 30 second period, and the cached data is overwritten when new data is available (daily).
-  - I looked at various caching solutions such as `NSCache`, `URLCache`, and in-memory caching and persistent caching. `NSCache` is emptied when the app is terminated / the current session ends, so this doesn't stop the rate limit being exceeded. The caching strategy now uses `URLCache` which can persist data across app launches, and the data's date is used to determine if a new network request is needed.
+  - I looked at various caching solutions such as `NSCache`, `URLCache`, and in-memory caching and persistent caching. `NSCache` is emptied when the app is terminated / the current session ends, so this doesn't stop the rate limit being exceeded. The caching strategy now uses `URLCache` which may persist data across app launches, and the data's date is used to determine if a new network request is needed.
 
 Persistence:
 - Persistence of saved quotes is achieved via `CoreData`.
