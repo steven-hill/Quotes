@@ -38,6 +38,19 @@ struct QuoteOfTheDayViewModelTests {
         task.cancel()
     }
     
+    @Test("VM updates properties and state after successful network request")
+    func quoteOfTheDayViewModel_getQuoteOfTheDay_whenSuccessful_updatesPropertiesAndState() async {
+        let sut = QuoteOfTheDayViewModel(quoteService: MockNetworkClient())
+        
+        await sut.getQuoteOfTheDay()
+        
+        #expect(sut.state == .success, "Should be `.success`.")
+        #expect(sut.hasError == false, "Should still be false.")
+        #expect(sut.quoteContent.isEmpty == false, "Should not be empty.")
+        #expect(sut.quoteAuthor.isEmpty == false, "Should not be empty.")
+        #expect(sut.quoteToShare.isEmpty == false, "Should not be empty.")
+    }
+    
     //MARK: - Mock Network Client
     final class MockNetworkClient: Networking {
         let quote = Quote.sample
