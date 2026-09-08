@@ -21,11 +21,9 @@ nonisolated struct Quote: Codable, Equatable {
 }
 
 extension Quote {
-    static let sample = [
-        Quote(
-            text: "However difficult life may seem, there is always something you can do and succeed at.",
-            author: "Stephen Hawking",
-            date: Date()
-        )
-    ]
+    static let sample = Quote(
+        text: "However difficult life may seem, there is always something you can do and succeed at.",
+        author: "Stephen Hawking",
+        date: Date()
+    )
 }

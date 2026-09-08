@@ -27,22 +27,14 @@ final class QuoteViewModelTests: XCTestCase {
     }
     
     func test_Get_QuoteOfTheDay_Success() async {
-        let mockQuoteResult = Quote.sample
-        mockQuoteService.quoteResponse = mockQuoteResult
-        
         await quoteViewModel.getQuoteOfTheDay()
         
         XCTAssertEqual(mockQuoteService.fetchQuoteOfTheDayCallCount, 1, "Should have been called once.")
-        XCTAssertEqual(quoteViewModel.state, .success(data: mockQuoteResult))
+        XCTAssertEqual(quoteViewModel.state, .success)
         XCTAssertFalse(quoteViewModel.hasError)
-        
-        guard let quote = mockQuoteResult.first else {
-            XCTFail("No quote found")
-            return
-        }
-        XCTAssertEqual(quoteViewModel.quoteContent, quote.text)
-        XCTAssertEqual(quoteViewModel.quoteAuthor, quote.author)
-        XCTAssertEqual(quoteViewModel.quoteToShare, "\(quote.text) - \(quote.author)")
+        XCTAssertEqual(quoteViewModel.quoteContent, mockQuoteService.quote.text)
+        XCTAssertEqual(quoteViewModel.quoteAuthor, mockQuoteService.quote.author)
+        XCTAssertEqual(quoteViewModel.quoteToShare, "\(mockQuoteService.quote.text) - \(mockQuoteService.quote.author)")
     }
     
     func test_Get_QuoteOfTheDay_Failure() async {
@@ -60,14 +52,14 @@ final class QuoteViewModelTests: XCTestCase {
     
     //MARK: - Mock Network Client
     final class MockNetworkClient: Networking {
-        var quoteResponse: QuoteNetworkResult = []
+        let quote = Quote.sample
         var shouldSucceed: Bool = true
         var fetchQuoteOfTheDayCallCount = 0
         
-        func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
+        func fetchQuoteOfTheDay() async throws -> Quote {
             fetchQuoteOfTheDayCallCount += 1
             if shouldSucceed {
-                return quoteResponse
+                return quote
             } else {
                 throw NSError(domain: "com.example.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "Mock error"])
             }
