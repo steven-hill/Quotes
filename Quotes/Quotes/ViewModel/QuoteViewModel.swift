@@ -28,7 +28,6 @@ final class QuoteViewModel: ObservableObject {
         self.quoteService = quoteService
     }
     
-    @MainActor
     func getQuoteOfTheDay() async {
         self.state = .loading
         self.hasError = false
