@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Observation
 
-final class QuoteOfTheDayViewModel: ObservableObject {
+@Observable
+final class QuoteOfTheDayViewModel {
     
     //MARK: - State Definition
     enum State: Equatable {
@@ -18,16 +20,18 @@ final class QuoteOfTheDayViewModel: ObservableObject {
     }
     
     //MARK: - Properties
-    @Published private(set) var state: State = .idle
-    @Published var hasError: Bool = false
-    @Published var quoteContent: String = ""
-    @Published var quoteAuthor: String = ""
-    @Published var quoteToShare: String = ""
-    private let quoteService: Networking
+    private(set) var state: State = .idle
+    private(set) var quoteContent: String = ""
+    private(set) var quoteAuthor: String = ""
+    private(set) var quoteToShare: String = ""
+    var hasError: Bool = false
+    
+    //MARK: - Dependency
+    private let networkClient: Networking
     
     //MARK: - Initialisation
-    init(quoteService: Networking) {
-        self.quoteService = quoteService
+    init(networkClient: Networking) {
+        self.networkClient = networkClient
     }
     
     //MARK: - Method
@@ -35,7 +39,7 @@ final class QuoteOfTheDayViewModel: ObservableObject {
         self.state = .loading
         self.hasError = false
         do {
-            let quoteOfTheDay = try await quoteService.fetchQuoteOfTheDay()
+            let quoteOfTheDay = try await networkClient.fetchQuoteOfTheDay()
             quoteContent = quoteOfTheDay.text
             quoteAuthor = quoteOfTheDay.author
             quoteToShare = quoteContent + " - " + quoteAuthor

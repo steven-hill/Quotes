@@ -13,7 +13,7 @@ struct QuoteOfTheDayViewModelTests {
     
     @Test("VM's properties are set correctly on init")
     func quoteOfTheDayViewModel_onInit_propertiesAreCorrect() {
-        let sut = QuoteOfTheDayViewModel(quoteService: MockNetworkClient())
+        let sut = QuoteOfTheDayViewModel(networkClient: MockNetworkClient())
         
         #expect(sut.state == .idle, "Should be `.idle` on init.")
         #expect(sut.hasError == false, "Should be false on init.")
@@ -38,7 +38,7 @@ struct QuoteOfTheDayViewModelTests {
     
     @Test("VM updates properties and state after successful network request")
     func quoteOfTheDayViewModel_getQuoteOfTheDay_whenSuccessful_updatesPropertiesAndState() async {
-        let sut = QuoteOfTheDayViewModel(quoteService: MockNetworkClient())
+        let sut = QuoteOfTheDayViewModel(networkClient: MockNetworkClient())
         
         await sut.getQuoteOfTheDay()
         
@@ -78,7 +78,7 @@ struct QuoteOfTheDayViewModelTests {
     ) {
         let mockNetworkClient = MockNetworkClient()
         mockNetworkClient.shouldPauseForLoadingStateTest = true
-        let sut = QuoteOfTheDayViewModel(quoteService: mockNetworkClient)
+        let sut = QuoteOfTheDayViewModel(networkClient: mockNetworkClient)
         return (sut, mockNetworkClient)
     }
     
@@ -86,7 +86,7 @@ struct QuoteOfTheDayViewModelTests {
         let mockNetworkClient = MockNetworkClient()
         mockNetworkClient.shouldSucceed = false
         mockNetworkClient.error = error
-        return QuoteOfTheDayViewModel(quoteService: mockNetworkClient)
+        return QuoteOfTheDayViewModel(networkClient: mockNetworkClient)
     }
     
     //MARK: - Mock Network Client
