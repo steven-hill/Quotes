@@ -8,7 +8,7 @@
 import Foundation
 
 /// Model for network response.
-struct Quote: Codable, Equatable {
+nonisolated struct Quote: Codable, Equatable {
     let text: String
     let author: String
     let date: Date
