@@ -8,9 +8,10 @@
 import Testing
 @testable import Quotes
 
+@MainActor
 struct QuoteOfTheDayViewModelTests {
     
-    @MainActor @Test("VM's properties are set correctly on init")
+    @Test("VM's properties are set correctly on init")
     func quoteOfTheDayViewModel_onInit_propertiesAreCorrect() {
         let sut = QuoteOfTheDayViewModel(quoteService: MockNetworkClient())
         
@@ -21,14 +22,35 @@ struct QuoteOfTheDayViewModelTests {
         #expect(sut.quoteToShare.isEmpty, "Should be empty on init.")
     }
     
+    @Test("VM's state is correct during network request")
+    func quoteOfTheDayViewModel_getQuoteOfTheDay_duringNetworkRequest_stateIsCorrect() async {
+        let mockNetworkClient = MockNetworkClient()
+        mockNetworkClient.shouldPauseForLoadingStateTest = true
+        let sut = QuoteOfTheDayViewModel(quoteService: mockNetworkClient)
+        
+        let task = Task {
+            await sut.getQuoteOfTheDay()
+        }
+        await Task.yield()
+        
+        #expect(sut.state == .loading, "Should be `.loading` during network request.")
+        #expect(mockNetworkClient.fetchQuoteOfTheDayCallCount == 1, "Should call the method once.")
+        task.cancel()
+    }
+    
     //MARK: - Mock Network Client
     final class MockNetworkClient: Networking {
         let quote = Quote.sample
         var shouldSucceed: Bool = true
+        private var continuation: CheckedContinuation<Quote, Error>?
+        var shouldPauseForLoadingStateTest = false
         var fetchQuoteOfTheDayCallCount = 0
         
         func fetchQuoteOfTheDay() async throws -> Quote {
             fetchQuoteOfTheDayCallCount += 1
+            if shouldPauseForLoadingStateTest {
+                return try await withCheckedThrowingContinuation { self.continuation = $0 }
+            }
             if shouldSucceed {
                 return quote
             } else {
