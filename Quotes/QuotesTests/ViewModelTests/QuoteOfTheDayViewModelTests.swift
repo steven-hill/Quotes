@@ -10,11 +10,15 @@ import Testing
 
 struct QuoteOfTheDayViewModelTests {
     
-    @MainActor @Test("VM state is set correctly on init")
-    func quoteOfTheDayViewModel_onInit_stateIsCorrect() {
+    @MainActor @Test("VM's properties are set correctly on init")
+    func quoteOfTheDayViewModel_onInit_propertiesAreCorrect() {
         let sut = QuoteOfTheDayViewModel(quoteService: MockNetworkClient())
         
         #expect(sut.state == .idle, "Should be `.idle` on init.")
+        #expect(sut.hasError == false, "Should be false on init.")
+        #expect(sut.quoteContent.isEmpty, "Should be empty on init.")
+        #expect(sut.quoteAuthor.isEmpty, "Should be empty on init.")
+        #expect(sut.quoteToShare.isEmpty, "Should be empty on init.")
     }
     
     //MARK: - Mock Network Client
