@@ -9,11 +9,11 @@ import Foundation
 
 final class QuoteViewModel: ObservableObject {
     
-    enum State {
+    enum State: Equatable {
         case notAvailable
         case loading
         case success
-        case failure(error: Error)
+        case failure(NetworkError)
     }
     
     @Published private(set) var state: State = .notAvailable
@@ -38,25 +38,9 @@ final class QuoteViewModel: ObservableObject {
             quoteToShare = quoteContent + " - " + quoteAuthor
             self.state = .success
         } catch {
-            self.state = .failure(error: error)
+            let networkError = NetworkError(from: error)
+            self.state = .failure(networkError)
             self.hasError = true
-        }
-    }
-}
-
-extension QuoteViewModel.State: Equatable {
-    static func == (lhs: QuoteViewModel.State, rhs: QuoteViewModel.State) -> Bool {
-        switch(lhs, rhs) {
-        case(.notAvailable, .notAvailable):
-            return true
-        case(.loading, .loading):
-            return true
-        case(.success, .success):
-            return true
-        case(.failure(let lhsType), .failure(let rhsType)):
-            return lhsType.localizedDescription == rhsType.localizedDescription
-        default:
-            return false
         }
     }
 }
