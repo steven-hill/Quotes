@@ -10,13 +10,13 @@ import Foundation
 final class QuoteOfTheDayViewModel: ObservableObject {
     
     enum State: Equatable {
-        case notAvailable
+        case idle
         case loading
         case success
         case failure(NetworkError)
     }
     
-    @Published private(set) var state: State = .notAvailable
+    @Published private(set) var state: State = .idle
     @Published var hasError: Bool = false
     @Published var quoteContent: String = ""
     @Published var quoteAuthor: String = ""
