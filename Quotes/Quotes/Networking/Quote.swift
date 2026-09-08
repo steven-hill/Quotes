@@ -20,8 +20,6 @@ struct Quote: Codable, Equatable {
     }
 }
 
-typealias QuoteNetworkResult = [Quote]
-
 extension Quote {
     static let sample = [
         Quote(
