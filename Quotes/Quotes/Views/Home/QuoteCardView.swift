@@ -33,7 +33,7 @@ struct QuoteCardView: View {
         .cardBackgroundModifier()
         .padding()
         .onAppear {
-            isPresented.toggle()
+            isPresented = true
         }
         .animation(.smooth(duration: 1), value: isPresented)
         .onDisappear {
