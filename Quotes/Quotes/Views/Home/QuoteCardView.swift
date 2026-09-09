@@ -13,7 +13,7 @@ struct QuoteCardView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     // MARK: - State
-    @State private var showCard = false
+    @State private var isPresented = false
     
     // MARK: - Constants
     let quoteContent: String
@@ -31,13 +31,13 @@ struct QuoteCardView: View {
         .cardBackgroundModifier()
         .padding()
         .frame(maxWidth: .infinity)
-        .rotation3DEffect(.init(degrees: showCard ? 0 : 180), axis: (x: showCard ? 0 : 1.0, y: 0, z: 0))
+        .rotation3DEffect(.init(degrees: isPresented ? 0 : 180), axis: (x: isPresented ? 0 : 1.0, y: 0, z: 0))
         .onAppear(perform: {
-            showCard.toggle()
+            isPresented.toggle()
         })
-        .animation(.smooth(duration: 1), value: showCard)
+        .animation(.smooth(duration: 1), value: isPresented)
         .onDisappear(perform: {
-            showCard = false
+            isPresented = false
         })
     }
     
