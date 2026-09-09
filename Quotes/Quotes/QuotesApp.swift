@@ -17,10 +17,11 @@ struct QuotesApp: App {
     @StateObject private var appearanceManager = AppearanceManager()
     @StateObject var tabRouter = TabRouter()
     
-    // MARK: - Constant
-    let persistenceController = PersistenceController.shared
+    //MARK: - Dependencies
+    private let networkClient = NetworkClient()
+    private let persistenceController = PersistenceController.shared
     
-    // MARK: - Init
+    // MARK: - Initialisation
     init() {
         let managedObjectContext = persistenceController.container.viewContext
         let savedQuotesController = NSFetchedResultsController(fetchRequest: persistenceController.savedQuotesFetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -31,7 +32,7 @@ struct QuotesApp: App {
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
-            TabBar()
+            TabBar(networkClient: networkClient)
                 .environmentObject(fetchRequestStore)
                 .environmentObject(localNotificationManager)
                 .environmentObject(appearanceManager)

@@ -9,7 +9,7 @@ import Foundation
 
 nonisolated
 protocol Networking {
-    func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult
+    func fetchQuoteOfTheDay() async throws -> Quote
 }
 
 nonisolated
@@ -43,7 +43,7 @@ final class NetworkClient: Networking {
     }
     
     //MARK: - Method
-    func fetchQuoteOfTheDay() async throws -> QuoteNetworkResult {
+    func fetchQuoteOfTheDay() async throws -> Quote {
         guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
         }
@@ -80,16 +80,16 @@ final class NetworkClient: Networking {
     }
     
     //MARK: - Helpers
-    private func retrieveCacheResult(for request: URLRequest) -> QuoteNetworkResult? {
+    private func retrieveCacheResult(for request: URLRequest) -> Quote? {
         guard let cachedResponse = cache.cachedResponse(for: request),
               let networkResult = try? decoder.decode(
-                QuoteNetworkResult.self,
+                [Quote].self,
                 from: cachedResponse.data
               ),
               let quote = networkResult.first else {
             return nil
         }
-        return Calendar.current.isDateInToday(quote.date) ? networkResult : nil
+        return Calendar.current.isDateInToday(quote.date) ? quote : nil
     }
     
     private func validate(_ response: URLResponse) throws {
@@ -106,12 +106,15 @@ final class NetworkClient: Networking {
         data: Data,
         response: URLResponse,
         request: URLRequest
-    ) throws -> QuoteNetworkResult {
+    ) throws -> Quote {
         do {
-            let result = try decoder.decode(QuoteNetworkResult.self, from: data)
+            let result = try decoder.decode([Quote].self, from: data)
             let cachedData = CachedURLResponse(response: response, data: data)
             cache.storeCachedResponse(cachedData, for: request)
-            return result
+            guard let quote = result.first else {
+                throw NetworkError.invalidData("Data is missing")
+            }
+            return quote
         } catch {
             throw NetworkError.invalidData(error.localizedDescription)
         }

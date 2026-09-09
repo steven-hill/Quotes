@@ -18,7 +18,11 @@ struct TabBar: View {
     
     // MARK: - State
     @State private var selectedTab: Tab = .home
+    
+    //MARK: - Dependency
+    let networkClient: NetworkClient
 
+    // MARK: - Tab Definition
     private enum Tab {
         case home
         case saved
@@ -28,7 +32,7 @@ struct TabBar: View {
     // MARK: - Body
     var body: some View {
         TabView(selection: $selectedTab) {
-            QuoteOfTheDayView()
+            QuoteOfTheDayView(networkClient: networkClient)
                 .tabItem {
                     Label("Home", systemImage: selectedTab == .home ? "house.fill" : "house")
                         .environment(\.symbolVariants, selectedTab == .home ? .fill : .none)
@@ -73,7 +77,7 @@ struct TabBar: View {
 }
 
 #Preview {
-    TabBar()
+    TabBar(networkClient: NetworkClient())
         .environmentObject(FetchRequestStore.preview)
         .environmentObject(LocalNotificationManager())
         .environmentObject(AppearanceManager())

@@ -12,8 +12,13 @@ struct QuoteOfTheDayView: View {
     // MARK: - Environment
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     
-    // MARK: - State object
-    @StateObject var quoteOfTheDayVM = QuoteViewModel(quoteService: NetworkClient())
+    // MARK: - State
+    @State private var quoteOfTheDayVM: QuoteOfTheDayViewModel
+    
+    // MARK: - Initialisation
+    init(networkClient: Networking) {
+        _quoteOfTheDayVM = State(initialValue: QuoteOfTheDayViewModel(networkClient: networkClient))
+    }
     
     // MARK: - Body
     var body: some View {
@@ -46,7 +51,7 @@ struct QuoteOfTheDayView: View {
     @ViewBuilder
     private var content: some View {
         switch quoteOfTheDayVM.state {
-        case .success(_):
+        case .success:
             quoteCardAndButtons
         case .loading:
             ProgressView()
@@ -80,5 +85,5 @@ struct QuoteOfTheDayView: View {
 }
 
 #Preview {
-    QuoteOfTheDayView(quoteOfTheDayVM: QuoteViewModel(quoteService: NetworkClient()))
+    QuoteOfTheDayView(networkClient: NetworkClient())
 }

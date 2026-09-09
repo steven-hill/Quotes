@@ -8,7 +8,7 @@
 import Foundation
 
 /// Model for network response.
-struct Quote: Codable, Equatable {
+nonisolated struct Quote: Codable, Equatable {
     let text: String
     let author: String
     let date: Date
@@ -20,14 +20,10 @@ struct Quote: Codable, Equatable {
     }
 }
 
-typealias QuoteNetworkResult = [Quote]
-
 extension Quote {
-    static let sample = [
-        Quote(
-            text: "However difficult life may seem, there is always something you can do and succeed at.",
-            author: "Stephen Hawking",
-            date: Date()
-        )
-    ]
+    static let sample = Quote(
+        text: "However difficult life may seem, there is always something you can do and succeed at.",
+        author: "Stephen Hawking",
+        date: Date()
+    )
 }
