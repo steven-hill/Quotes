@@ -23,10 +23,8 @@ struct QuoteCardView: View {
     var body: some View {
         VStack {
             if isPresented {
-                quoteContentView
-                    .transition(.move(edge: .top))
-                authorView
-                    .transition(.move(edge: .bottom))
+                quoteView
+                    .transition(.blurReplace)
             }
         }
         .accessibilityElement(children: .ignore)
@@ -43,8 +41,8 @@ struct QuoteCardView: View {
         }
     }
     
-    // MARK: - UI components
-    private var quoteContentView: some View {
+    // MARK: - UI component
+    private var quoteView: some View {
         VStack {
             HStack {
                 Image(systemName: "quote.opening")
@@ -60,12 +58,10 @@ struct QuoteCardView: View {
                 Image(systemName: "quote.closing")
             }
             .padding(.bottom)
+            
+            Text(quoteAuthor)
+                .font(.title2)
         }
-    }
-    
-    private var authorView: some View {
-        Text(quoteAuthor)
-            .font(.title2)
     }
 }
 
