@@ -13,8 +13,7 @@ struct QuoteCardView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     // MARK: - State
-    @State private var showCard = false
-    @State private var offset: CGFloat = -UIScreen.main.bounds.height
+    @State private var isPresented = false
     
     // MARK: - Constants
     let quoteContent: String
@@ -23,29 +22,27 @@ struct QuoteCardView: View {
     // MARK: - Body
     var body: some View {
         VStack {
-            quoteContentView
-            authorView
+            if isPresented {
+                quoteView
+                    .transition(.blurReplace)
+            }
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(quoteContent). End quote. \(quoteAuthor)")
         .padding()
         .cardBackgroundModifier()
         .padding()
-        .frame(maxWidth: .infinity)
-        .offset(y: offset)
-        .rotation3DEffect(.init(degrees: showCard ? 0 : 180), axis: (x: showCard ? 0 : 1.0, y: 0, z: 0))
-        .onAppear(perform: {
-            showCard.toggle()
-            offset = 0
-        })
-        .animation(.smooth(duration: 1), value: showCard)
-        .onDisappear(perform: {
-            showCard = false
-        })
+        .onAppear {
+            isPresented = true
+        }
+        .animation(.smooth(duration: 1), value: isPresented)
+        .onDisappear {
+            isPresented = false
+        }
     }
     
-    // MARK: - UI components
-    private var quoteContentView: some View {
+    // MARK: - UI component
+    private var quoteView: some View {
         VStack {
             HStack {
                 Image(systemName: "quote.opening")
@@ -61,12 +58,10 @@ struct QuoteCardView: View {
                 Image(systemName: "quote.closing")
             }
             .padding(.bottom)
+            
+            Text(quoteAuthor)
+                .font(.title2)
         }
-    }
-    
-    private var authorView: some View {
-        Text(quoteAuthor)
-            .font(.title2)
     }
 }
 
