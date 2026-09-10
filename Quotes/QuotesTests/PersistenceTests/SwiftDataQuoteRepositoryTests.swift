@@ -23,7 +23,7 @@ struct SwiftDataQuoteRepositoryTests {
     }
     
     @Test("When database contains persisted quotes, fetch returns array sorted by date with latest first")
-    func swiftDataQuoteRepository_loadAllQuotes_returnsArraySortedByDateDescending() throws {
+    func swiftDataQuoteRepository_loadAllQuotes_returnsAllQuotesSortedByDateDescending() throws {
         let container = try makeContainer()
         let older = PersistedQuote(
             text: "Older",
