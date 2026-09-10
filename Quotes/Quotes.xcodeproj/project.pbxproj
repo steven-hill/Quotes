@@ -46,6 +46,7 @@
 		5BDE29AB3052EAE7002F74F3 /* MockQuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AA3052EAE7002F74F3 /* MockQuoteRepository.swift */; };
 		5BDE29AD3052F697002F74F3 /* PersistedQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */; };
 		5BDE29AF30530173002F74F3 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AE30530173002F74F3 /* RepositoryError.swift */; };
+		5BDE29B13053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29B03053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift */; };
 		5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */; };
 		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
 /* End PBXBuildFile section */
@@ -110,6 +111,7 @@
 		5BDE29AA3052EAE7002F74F3 /* MockQuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockQuoteRepository.swift; sourceTree = "<group>"; };
 		5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedQuote.swift; sourceTree = "<group>"; };
 		5BDE29AE30530173002F74F3 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
+		5BDE29B03053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataQuoteRepositoryTests.swift; sourceTree = "<group>"; };
 		5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
 		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +156,7 @@
 			children = (
 				5B177CF52C5ADF4A00CCEC8B /* PersistenceControllerTests.swift */,
 				5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */,
+				5BDE29B03053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift */,
 			);
 			path = PersistenceTests;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				5BDE29AB3052EAE7002F74F3 /* MockQuoteRepository.swift in Sources */,
 				5B76E8973050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift in Sources */,
 				5B177CF62C5ADF4A00CCEC8B /* PersistenceControllerTests.swift in Sources */,
+				5BDE29B13053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift in Sources */,
 				5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */,
 				5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */,
 				5BDE29A33052BE26002F74F3 /* SavedViewModelTests.swift in Sources */,
