@@ -1,5 +1,5 @@
 //
-//  Quote.swift
+//  QuoteResponse.swift
 //  Quotes
 //
 //  Created by Steven Hill on 25/07/2024.
@@ -8,11 +8,10 @@
 import Foundation
 
 /// Model for network response.
-nonisolated struct Quote: Codable, Equatable {
+struct QuoteResponse: Codable, Equatable {
     let text: String
     let author: String
-    let date: Date
-    var reflection: String = ""
+    let date: String
     
     private enum CodingKeys: String, CodingKey {
         case text = "q"
@@ -21,10 +20,10 @@ nonisolated struct Quote: Codable, Equatable {
     }
 }
 
-extension Quote {
-    static let sample = Quote(
+extension QuoteResponse {
+    static let sample = QuoteResponse(
         text: "However difficult life may seem, there is always something you can do and succeed at.",
         author: "Stephen Hawking",
-        date: Date()
+        date: "2026-09-08"
     )
 }

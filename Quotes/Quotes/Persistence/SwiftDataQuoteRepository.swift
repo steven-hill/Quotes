@@ -26,6 +26,7 @@ final class SwiftDataQuoteRepository: QuoteRepository {
         do {
             return try context.fetch(descriptor).map { persistedQuote in
                 Quote(
+                    id: persistedQuote.id,
                     text: persistedQuote.text,
                     author: persistedQuote.author,
                     date: persistedQuote.date,
