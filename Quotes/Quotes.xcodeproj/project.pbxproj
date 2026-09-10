@@ -44,6 +44,7 @@
 		5BDE29A73052E955002F74F3 /* QuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A63052E955002F74F3 /* QuoteRepository.swift */; };
 		5BDE29A93052EA1C002F74F3 /* SwiftDataQuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A83052EA1C002F74F3 /* SwiftDataQuoteRepository.swift */; };
 		5BDE29AB3052EAE7002F74F3 /* MockQuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AA3052EAE7002F74F3 /* MockQuoteRepository.swift */; };
+		5BDE29AD3052F697002F74F3 /* PersistedQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */; };
 		5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */; };
 		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
 /* End PBXBuildFile section */
@@ -106,6 +107,7 @@
 		5BDE29A63052E955002F74F3 /* QuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteRepository.swift; sourceTree = "<group>"; };
 		5BDE29A83052EA1C002F74F3 /* SwiftDataQuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataQuoteRepository.swift; sourceTree = "<group>"; };
 		5BDE29AA3052EAE7002F74F3 /* MockQuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockQuoteRepository.swift; sourceTree = "<group>"; };
+		5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedQuote.swift; sourceTree = "<group>"; };
 		5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
 		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -286,6 +288,7 @@
 				5B3FB7FA2C52E9BC000994DC /* FetchRequestStore.swift */,
 				5BDE29A63052E955002F74F3 /* QuoteRepository.swift */,
 				5BDE29A83052EA1C002F74F3 /* SwiftDataQuoteRepository.swift */,
+				5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				5B3FB7D42C52E0ED000994DC /* QuoteOfTheDayViewModel.swift in Sources */,
 				5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */,
 				5B3FB7DE2C52E285000994DC /* QuoteCardView.swift in Sources */,
+				5BDE29AD3052F697002F74F3 /* PersistedQuote.swift in Sources */,
 				5B3FB7E62C52E3DC000994DC /* SavedView.swift in Sources */,
 				5B3FB7A22C52DE45000994DC /* QuotesApp.swift in Sources */,
 				5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */,
