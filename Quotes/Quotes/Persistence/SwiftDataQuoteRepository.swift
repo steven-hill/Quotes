@@ -21,7 +21,7 @@ final class SwiftDataQuoteRepository: QuoteRepository {
     //MARK: - Method
     func loadAllQuotes() throws -> [Quote] {
         let descriptor = FetchDescriptor<PersistedQuote>(
-            sortBy: [SortDescriptor(\.date, order: .forward)]
+            sortBy: [SortDescriptor(\.date, order: .reverse)]
         )
         do {
             return try context.fetch(descriptor).map { persistedQuote in
