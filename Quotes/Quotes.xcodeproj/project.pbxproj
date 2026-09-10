@@ -39,6 +39,8 @@
 		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
 		5B76E8973050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B76E8963050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift */; };
 		5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */; };
+		5BDE29A33052BE26002F74F3 /* SavedViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A23052BE26002F74F3 /* SavedViewModelTests.swift */; };
+		5BDE29A53052BE7D002F74F3 /* SavedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A43052BE7D002F74F3 /* SavedViewModel.swift */; };
 		5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */; };
 		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
 /* End PBXBuildFile section */
@@ -96,6 +98,8 @@
 		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
 		5B76E8963050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayViewModelTests.swift; sourceTree = "<group>"; };
 		5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStoreTests.swift; sourceTree = "<group>"; };
+		5BDE29A23052BE26002F74F3 /* SavedViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewModelTests.swift; sourceTree = "<group>"; };
+		5BDE29A43052BE7D002F74F3 /* SavedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewModel.swift; sourceTree = "<group>"; };
 		5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
 		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,7 +175,7 @@
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
 				5B3FB7A12C52DE45000994DC /* QuotesApp.swift */,
 				5B3FB7D02C52DFF9000994DC /* Constants.swift */,
-				5B3FB7D22C52E01F000994DC /* ViewModel */,
+				5B3FB7D22C52E01F000994DC /* ViewModels */,
 				5B3FB7D52C52E160000994DC /* Views */,
 				5B3FB7F72C52E744000994DC /* Persistence */,
 				5B3FB7FC2C52EA92000994DC /* LocalNotifications */,
@@ -211,12 +215,13 @@
 			path = QuotesUITests;
 			sourceTree = "<group>";
 		};
-		5B3FB7D22C52E01F000994DC /* ViewModel */ = {
+		5B3FB7D22C52E01F000994DC /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				5B3FB7D32C52E0ED000994DC /* QuoteOfTheDayViewModel.swift */,
+				5BDE29A43052BE7D002F74F3 /* SavedViewModel.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		5B3FB7D52C52E160000994DC /* Views */ = {
@@ -301,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				5B76E8963050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift */,
+				5BDE29A23052BE26002F74F3 /* SavedViewModelTests.swift */,
 			);
 			path = ViewModelTests;
 			sourceTree = "<group>";
@@ -466,6 +472,7 @@
 				5B3FB7F92C52E930000994DC /* PersistenceController.swift in Sources */,
 				5B3FB7E22C52E31E000994DC /* ReflectOnThisQuoteButton.swift in Sources */,
 				5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */,
+				5BDE29A53052BE7D002F74F3 /* SavedViewModel.swift in Sources */,
 				5B3FB7E42C52E3A6000994DC /* ReflectOnQuoteView.swift in Sources */,
 				5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */,
 				5B3FB7EA2C52E4BC000994DC /* SavedCardView.swift in Sources */,
@@ -483,6 +490,7 @@
 				5B177CF62C5ADF4A00CCEC8B /* PersistenceControllerTests.swift in Sources */,
 				5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */,
 				5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */,
+				5BDE29A33052BE26002F74F3 /* SavedViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
