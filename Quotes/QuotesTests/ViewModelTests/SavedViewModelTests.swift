@@ -10,9 +10,13 @@ import Testing
 
 struct SavedViewModelTests {
 
-    @MainActor @Test("VM can load quotes from the database")
-    func savedViewModel_loadAllQuotes_populatesQuotesCorrectly() {
+    @MainActor @Test("VM can fetch all quotes from the database")
+    func savedViewModel_fetchAllQuotes_populatesQuotesCorrectly() throws {
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
+        
+        try sut.fetchAllQuotes()
+        
+        #expect(sut.quotes.count == 1)
     }
 }
