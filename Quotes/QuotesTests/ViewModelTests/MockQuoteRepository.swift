@@ -9,7 +9,11 @@ import Foundation
 @testable import Quotes
 
 final class MockQuoteRepository: QuoteRepository {
+    var stubbedQuotes: [Quote] = []
+    var loadAllQuotesCallCount: Int = 0
+    
     func loadAllQuotes() throws -> [Quote] {
-        [Quote.sample]
+        loadAllQuotesCallCount += 1
+        return stubbedQuotes
     }
 }
