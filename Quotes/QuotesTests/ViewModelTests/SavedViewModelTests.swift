@@ -30,4 +30,18 @@ struct SavedViewModelTests {
         
         #expect(sut.quotes.count == 1, "Should load 1 quote from the database.")
     }
+    
+    @MainActor @Test("VM handles error if database fails to fetch all quotes from the database")
+    func savedViewModel_fetchAllQuotes_whenFetchFromDatabaseFails_handlesErrorCorrectly() throws {
+        let mockRepository = MockQuoteRepository()
+        mockRepository.stubbedQuotes = [Quote.sample]
+        mockRepository.fetchSucceeded = false
+        let sut = SavedViewModel(repository: mockRepository)
+        
+        try sut.fetchAllQuotes()
+        
+        #expect(sut.hasError, "Should be true.")
+        #expect(sut.errorMessage != nil, "Should not be nil.")
+        #expect(sut.quotes.isEmpty, "Should be empty.")
+    }
 }

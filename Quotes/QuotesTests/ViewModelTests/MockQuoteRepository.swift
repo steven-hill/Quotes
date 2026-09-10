@@ -10,10 +10,15 @@ import Foundation
 
 final class MockQuoteRepository: QuoteRepository {
     var stubbedQuotes: [Quote] = []
-    var loadAllQuotesCallCount: Int = 0
+    var fetchSucceeded: Bool = true
+    private(set) var loadAllQuotesCallCount: Int = 0
     
     func loadAllQuotes() throws -> [Quote] {
         loadAllQuotesCallCount += 1
-        return stubbedQuotes
+        if fetchSucceeded {
+            return stubbedQuotes
+        }
+        let error = NSError(domain: "FetchError", code: 1, userInfo: nil)
+        throw RepositoryError.fetchFailed(underlying: error)
     }
 }
