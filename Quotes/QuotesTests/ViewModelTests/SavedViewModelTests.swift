@@ -6,9 +6,13 @@
 //
 
 import Testing
+@testable import Quotes
 
 struct SavedViewModelTests {
 
-    @Test func doNothing() {
+    @MainActor @Test("VM can load quotes from the database")
+    func savedViewModel_loadAllQuotes_populatesQuotesCorrectly() {
+        let mockRepository = MockQuoteRepository()
+        let sut = SavedViewModel(repository: mockRepository)
     }
 }

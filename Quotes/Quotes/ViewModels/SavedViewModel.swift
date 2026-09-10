@@ -8,5 +8,9 @@
 import Foundation
 
 final class SavedViewModel {
+    private let repository: QuoteRepository
     
+    init(repository: QuoteRepository) {
+        self.repository = repository
+    }
 }
