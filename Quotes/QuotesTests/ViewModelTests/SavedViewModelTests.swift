@@ -8,19 +8,19 @@
 import Testing
 @testable import Quotes
 
+@MainActor
 struct SavedViewModelTests {
     
-    @MainActor @Test("VM receives no quotes if none have been saved yet")
+    @Test("VM receives no quotes if none have been saved yet")
     func savedViewModel_fetchAllQuotes_whenDatabaseIsEmpty_populatesQuotesCorrectly() throws {
-        let mockRepository = MockQuoteRepository()
-        let sut = SavedViewModel(repository: mockRepository)
+        let sut = SavedViewModel(repository: MockQuoteRepository())
         
         try sut.fetchAllQuotes()
         
         #expect(sut.quotes.isEmpty, "Should be empty.")
     }
 
-    @MainActor @Test("VM can fetch all quotes from the database if they exist")
+    @Test("VM can fetch all quotes from the database if they exist")
     func savedViewModel_fetchAllQuotes_whenQuotesExistInDatabase_populatesQuotesCorrectly() throws {
         let mockRepository = MockQuoteRepository()
         mockRepository.stubbedQuotes = [Quote.sample]
@@ -31,7 +31,7 @@ struct SavedViewModelTests {
         #expect(sut.quotes.count == 1, "Should load 1 quote from the database.")
     }
     
-    @MainActor @Test("VM handles error if database fails to fetch all quotes from the database")
+    @Test("VM handles error if database fails to fetch all quotes from the database")
     func savedViewModel_fetchAllQuotes_whenFetchFromDatabaseFails_handlesErrorCorrectly() throws {
         let mockRepository = MockQuoteRepository()
         mockRepository.stubbedQuotes = [Quote.sample]
