@@ -28,7 +28,8 @@ final class SwiftDataQuoteRepository: QuoteRepository {
                 Quote(
                     text: persistedQuote.text,
                     author: persistedQuote.author,
-                    date: persistedQuote.date
+                    date: persistedQuote.date,
+                    reflection: persistedQuote.reflection
                 )
             }
         } catch {

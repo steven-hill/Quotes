@@ -13,14 +13,17 @@ final class PersistedQuote {
     var text: String
     var author: String
     var date: Date
+    var reflection: String
     
     init(
         text: String,
         author: String,
-        date: Date
+        date: Date,
+        reflection: String
     ) {
         self.text = text
         self.author = author
         self.date = date
+        self.reflection = reflection
     }
 }

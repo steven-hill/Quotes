@@ -12,6 +12,7 @@ nonisolated struct Quote: Codable, Equatable {
     let text: String
     let author: String
     let date: Date
+    var reflection: String = ""
     
     private enum CodingKeys: String, CodingKey {
         case text = "q"

@@ -28,12 +28,14 @@ struct SwiftDataQuoteRepositoryTests {
         let older = PersistedQuote(
             text: "Older",
             author: "Older Author",
-            date: Date(timeIntervalSince1970: 100)
+            date: Date(timeIntervalSince1970: 100),
+            reflection: "Older Reflection"
         )
         let newer = PersistedQuote(
             text: "Newer",
             author: "Newer Author",
-            date: Date(timeIntervalSince1970: 200)
+            date: Date(timeIntervalSince1970: 200),
+            reflection: "Newer Reflection"
         )
         container.mainContext.insert(older)
         container.mainContext.insert(newer)
@@ -45,6 +47,7 @@ struct SwiftDataQuoteRepositoryTests {
         #expect(result.count == 2, "Should have two.")
         #expect(result.map(\.text) == ["\(newer.text)", "\(older.text)"], "Should have the latest first.")
         #expect(result.map(\.author) == ["\(newer.author)", "\(older.author)"], "Should have the latest first.")
+        #expect(result.map(\.reflection) == ["\(newer.reflection)", "\(older.reflection)"], "Should have the latest first.")
     }
     
     //MARK: - Helper
