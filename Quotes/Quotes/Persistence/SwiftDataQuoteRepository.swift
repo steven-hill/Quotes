@@ -18,7 +18,7 @@ final class SwiftDataQuoteRepository: QuoteRepository {
         self.context = ModelContext(container)
     }
     
-    //MARK: - Method
+    //MARK: - Methods
     func loadAllQuotes() throws -> [Quote] {
         let descriptor = FetchDescriptor<PersistedQuote>(
             sortBy: [SortDescriptor(\.date, order: .reverse)]
@@ -34,7 +34,29 @@ final class SwiftDataQuoteRepository: QuoteRepository {
                 )
             }
         } catch {
-            throw RepositoryError.fetchFailed(underlying: error)
+            throw RepositoryError.fetchFailed
+        }
+    }
+    
+    func updateReflection(
+        for quoteID: UUID,
+        reflection: String
+    ) throws {
+        let descriptor = FetchDescriptor<PersistedQuote>(
+            predicate: #Predicate {
+                $0.id == quoteID
+            }
+        )
+        do {
+            guard let persistedQuote = try context.fetch(descriptor).first else {
+                throw RepositoryError.quoteNotFound
+            }
+            persistedQuote.reflection = reflection
+            try context.save()
+        } catch let error as RepositoryError {
+            throw error
+        } catch {
+            throw RepositoryError.updateFailed
         }
     }
 }

@@ -13,7 +13,7 @@ struct Quote {
     let text: String
     let author: String
     let date: Date
-    let reflection: String?
+    var reflection: String = ""
 }
 
 extension Quote {

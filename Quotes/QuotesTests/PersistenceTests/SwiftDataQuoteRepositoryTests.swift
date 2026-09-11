@@ -50,6 +50,48 @@ struct SwiftDataQuoteRepositoryTests {
         #expect(result.map(\.reflection) == ["\(newer.reflection)", "\(older.reflection)"], "Should have the latest first.")
     }
     
+    @Test("When a reflection is edited, the changes are persisted")
+    func swiftDataQuoteRepository_updateReflection_persistsChange() throws {
+        let container = try makeContainer()
+        let persistedQuote = PersistedQuote(
+            text: Quote.sample.text,
+            author: Quote.sample.author,
+            date: Quote.sample.date,
+            reflection: "Original reflection"
+        )
+        container.mainContext.insert(persistedQuote)
+        try container.mainContext.save()
+        let sut = SwiftDataQuoteRepository(container: container)
+        
+        try sut.updateReflection(
+            for: persistedQuote.id,
+            reflection: "Updated reflection"
+        )
+        
+        let result = try sut.loadAllQuotes()        
+        #expect(result.first?.reflection == "Updated reflection")
+    }
+    
+    @Test("When a reflection is edited, but quote with id does not exist in database, correct error is thrown")
+    func swiftDataQuoteRepository_updateReflection_whenQuoteDoesNotExistInDatabase_throwsCorrectError() throws {
+        let container = try makeContainer()
+        let persistedQuote = PersistedQuote(
+            text: Quote.sample.text,
+            author: Quote.sample.author,
+            date: Quote.sample.date,
+            reflection: "Original reflection"
+        )
+        let sut = SwiftDataQuoteRepository(container: container)
+        
+        #expect(throws: RepositoryError.quoteNotFound, "Should be `.quoteNotFound`.") {
+            _ = try sut.updateReflection(
+                for: persistedQuote.id,
+                reflection: "Updated reflection"
+            )
+        }
+        #expect(persistedQuote.reflection == "Original reflection")
+    }
+    
     //MARK: - Helper
     private func makeContainer() throws -> ModelContainer {
         let configuration = ModelConfiguration(

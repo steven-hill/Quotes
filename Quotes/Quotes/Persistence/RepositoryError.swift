@@ -7,8 +7,10 @@
 
 import Foundation
 
-enum RepositoryError: Error {
-    case fetchFailed(underlying: Error)
+enum RepositoryError: Error, Equatable {
+    case fetchFailed
+    case quoteNotFound
+    case updateFailed
 }
 
 // MARK: - User Facing Descriptions
@@ -17,16 +19,10 @@ extension RepositoryError: LocalizedError {
         switch self {
         case .fetchFailed:
             return "Failed to fetch quotes from database."
-        }
-    }
-}
-
-// MARK: - Debugging Descriptions
-extension RepositoryError: CustomDebugStringConvertible {
-    var debugDescription: String {
-        switch self {
-        case .fetchFailed(let error):
-            return "RepositoryError.fetchFailed: \(error.localizedDescription)"
+        case .quoteNotFound:
+            return "Quote not found in database."
+        case .updateFailed:
+            return "Failed to update quote in database."
         }
     }
 }

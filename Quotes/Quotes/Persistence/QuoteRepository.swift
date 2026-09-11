@@ -9,4 +9,8 @@ import Foundation
 
 protocol QuoteRepository {
     func loadAllQuotes() throws -> [Quote]
+    func updateReflection(
+        for quoteID: UUID,
+        reflection: String
+    ) throws
 }
