@@ -59,4 +59,17 @@ final class SwiftDataQuoteRepository: QuoteRepository {
             throw RepositoryError.updateFailed(underlying: error)
         }
     }
+    
+    func delete(_ quoteID: UUID) throws {
+        let descriptor = FetchDescriptor<PersistedQuote>(
+            predicate: #Predicate {
+                $0.id == quoteID
+            }
+        )
+        guard let persistedQuote = try context.fetch(descriptor).first else {
+            throw RepositoryError.quoteNotFound
+        }
+        context.delete(persistedQuote)
+        try context.save()
+    }
 }

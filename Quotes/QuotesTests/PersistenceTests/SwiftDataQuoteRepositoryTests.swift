@@ -95,6 +95,44 @@ struct SwiftDataQuoteRepositoryTests {
         #expect(persistedQuote.reflection == "Original reflection")
     }
     
+    @Test("When a quote is deleted, the change is persisted")
+    func swiftDataQuoteRepository_delete_persistsChange() throws {
+        let container = try makeContainer()
+        let persistedQuote = PersistedQuote(
+            text: Quote.sample.text,
+            author: Quote.sample.author,
+            date: Quote.sample.date,
+            reflection: "Reflection"
+        )
+        container.mainContext.insert(persistedQuote)
+        try container.mainContext.save()
+        let sut = SwiftDataQuoteRepository(container: container)
+        
+        try sut.delete(persistedQuote.id)
+        
+        let result = try sut.loadAllQuotes()
+        #expect(result.isEmpty, "Should be empty.")
+    }
+    
+    @Test("When a persisted quote is to be deleted, but quote with id does not exist in database, correct error is thrown")
+    func swiftDataQuoteRepository_delete_whenQuoteDoesNotExistInDatabase_throwsCorrectError() throws {
+        let container = try makeContainer()
+        let persistedQuote = PersistedQuote(
+            text: Quote.sample.text,
+            author: Quote.sample.author,
+            date: Quote.sample.date,
+            reflection: "Reflection"
+        )
+        let sut = SwiftDataQuoteRepository(container: container)
+        
+        #expect(performing: {
+            try sut.delete(persistedQuote.id)
+        }, throws: { (error: any Error) -> Bool in
+            guard let repoError = error as? RepositoryError else { return false }
+            return repoError == .quoteNotFound
+        })
+    }
+    
     //MARK: - Helper
     private func makeContainer() throws -> ModelContainer {
         let configuration = ModelConfiguration(
