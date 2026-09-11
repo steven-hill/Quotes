@@ -24,10 +24,8 @@ struct SavedViewModelTests {
     @Test("VM can fetch all quotes from the database if they exist")
     func savedViewModel_fetchAllQuotes_whenQuotesExistInDatabase_populatesQuotesCorrectly() {
         let mockRepository = MockQuoteRepository()
-        let persistedQuote = PersistedQuote(
-            text: Quote.sample.text,
-            author: Quote.sample.author,
-            date: Quote.sample.date,
+        let persistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample,
             reflection: "Reflection"
         )
         mockRepository.persistedQuotes = [persistedQuote]
@@ -41,10 +39,8 @@ struct SavedViewModelTests {
     @Test("VM handles error if database fails to fetch all quotes from the database")
     func savedViewModel_fetchAllQuotes_whenFetchFromDatabaseFails_handlesErrorCorrectly() {
         let mockRepository = MockQuoteRepository()
-        let persistedQuote = PersistedQuote(
-            text: Quote.sample.text,
-            author: Quote.sample.author,
-            date: Quote.sample.date,
+        let persistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample,
             reflection: "Reflection"
         )
         mockRepository.persistedQuotes = [persistedQuote]
@@ -86,11 +82,9 @@ struct SavedViewModelTests {
     
     @Test("VM calls method on repository to update a quote if that quote has an id")
     func savedViewModel_update_callsMethodOnRepository() {
-        let persistedQuote = PersistedQuote(
-            text: Quote.sample.text,
-            author: Quote.sample.author,
-            date: Date(),
-            reflection: "Original reflection"
+        let persistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample,
+            reflection: "Origial reflection"
         )
         let quote = Quote(
             id: persistedQuote.id,
@@ -125,10 +119,8 @@ struct SavedViewModelTests {
     
     @Test("VM calls method on repository to delete a quote if that quote has an id")
     func savedViewModel_delete_callsMethodOnRepository() {
-        let persistedQuote = PersistedQuote(
-            text: Quote.sample.text,
-            author: Quote.sample.author,
-            date: Date(),
+        let persistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample,
             reflection: "Reflection"
         )
         let quote = Quote(
