@@ -32,6 +32,13 @@ Persistence:
 Accessibility:
 - There is support for VoiceOver and Dynamic Type.
 
+### 🚧 Undergoing changes
+- Migrate to Swift 6.
+- Migrate from `CoreData` to `SwiftData`.
+- Migrate from `ObservableObject` to `@Observable`.
+- Improve testability and test coverage, and add UI tests.
+- Other enhancements and quality of life improvements.
+
 ### 📲 Getting started
 1. Clone the repo.
 2. Open `Quotes.xcodeproj`.
