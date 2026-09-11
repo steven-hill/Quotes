@@ -50,6 +50,18 @@ struct SwiftDataQuoteRepositoryTests {
         #expect(result.map(\.reflection) == ["\(newer.reflection)", "\(older.reflection)"], "Should have the latest first.")
     }
     
+    @Test("When user requests a quote is saved, it is persisted")
+    func swiftDataQuoteRepository_add_persistsChange() throws {
+        let container = try makeContainer()
+        let sut = SwiftDataQuoteRepository(container: container)
+        let quote = Quote.sample
+        
+        try sut.add(quote)
+        
+        let result = try sut.loadAllQuotes()
+        #expect(result.count == 1, "Should have one in database")
+    }
+    
     @Test("When a reflection is edited, the changes are persisted")
     func swiftDataQuoteRepository_updateReflection_persistsChange() throws {
         let container = try makeContainer()

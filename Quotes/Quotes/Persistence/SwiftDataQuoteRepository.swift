@@ -38,6 +38,21 @@ final class SwiftDataQuoteRepository: QuoteRepository {
         }
     }
     
+    func add(_ quote: Quote) throws {
+        let quoteToBePersisted = PersistedQuote(
+            text: quote.text,
+            author: quote.author,
+            date: quote.date,
+            reflection: quote.reflection
+        )
+        context.insert(quoteToBePersisted)
+        do {
+            try context.save()
+        } catch {
+            throw RepositoryError.addFailed(underlying: error)
+        }
+    }
+    
     func updateReflection(
         for quoteID: UUID,
         reflection: String
@@ -70,6 +85,10 @@ final class SwiftDataQuoteRepository: QuoteRepository {
             throw RepositoryError.quoteNotFound
         }
         context.delete(persistedQuote)
-        try context.save()
+        do {
+            try context.save()
+        } catch {
+            throw RepositoryError.deleteFailed(underlying: error)
+        }
     }
 }
