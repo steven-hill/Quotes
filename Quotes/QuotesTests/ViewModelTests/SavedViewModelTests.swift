@@ -66,12 +66,11 @@ struct SavedViewModelTests {
     
     @Test("Updating a quote without an id, returns early and updates error properties")
     func savedViewModel_update_whenQuoteIdIsNil_resultsInError() {
-        let quote = Quote.sample
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
         
         sut.update(
-            quote: quote,
+            quote: Quote.sample,
             reflection: "Updated reflection"
         )
         
@@ -86,18 +85,11 @@ struct SavedViewModelTests {
             using: Quote.sample,
             reflection: "Origial reflection"
         )
-        let quote = Quote(
-            id: persistedQuote.id,
-            text: persistedQuote.text,
-            author: persistedQuote.author,
-            date: persistedQuote.date,
-            reflection: persistedQuote.reflection
-        )
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
         
         sut.update(
-            quote: quote,
+            quote: mapToQuote(persistedQuote),
             reflection: "Updated reflection"
         )
         
@@ -106,11 +98,10 @@ struct SavedViewModelTests {
     
     @Test("Deleting a quote without an id, returns early and updates error properties")
     func savedViewModel_delete_whenQuoteIdIsNil_resultsInError() {
-        let quote = Quote.sample
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
         
-        sut.delete(quote: quote)
+        sut.delete(quote: Quote.sample)
         
         #expect(mockRepository.deleteCallCount == 0, "Should not be called.")
         #expect(sut.hasError, "Should be true.")
@@ -123,18 +114,23 @@ struct SavedViewModelTests {
             using: Quote.sample,
             reflection: "Reflection"
         )
-        let quote = Quote(
-            id: persistedQuote.id,
-            text: persistedQuote.text,
-            author: persistedQuote.author,
-            date: persistedQuote.date,
-            reflection: persistedQuote.reflection
-        )
+        let quote = mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
         
         sut.delete(quote: quote)
         
         #expect(mockRepository.deleteCallCount == 1, "Should call the method once.")
+    }
+    
+    //MARK: - Mapper
+    private func mapToQuote(_ persistedQuote: PersistedQuote) -> Quote {
+        Quote(
+            id: persistedQuote.id,
+            text: persistedQuote.text,
+            author: persistedQuote.author,
+            date: persistedQuote.date,
+            reflection: persistedQuote.reflection
+        )
     }
 }
