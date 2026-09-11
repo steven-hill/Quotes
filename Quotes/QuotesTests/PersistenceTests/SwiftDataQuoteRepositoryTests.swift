@@ -83,12 +83,15 @@ struct SwiftDataQuoteRepositoryTests {
         )
         let sut = SwiftDataQuoteRepository(container: container)
         
-        #expect(throws: RepositoryError.quoteNotFound, "Should be `.quoteNotFound`.") {
-            _ = try sut.updateReflection(
-                for: persistedQuote.id,
-                reflection: "Updated reflection"
-            )
-        }
+        #expect(performing: {
+                try sut.updateReflection(
+                    for: persistedQuote.id,
+                    reflection: "Updated reflection"
+                )
+            }, throws: { (error: any Error) -> Bool in
+                guard let repoError = error as? RepositoryError else { return false }
+                return repoError == .quoteNotFound
+            })
         #expect(persistedQuote.reflection == "Original reflection")
     }
     

@@ -14,7 +14,7 @@ enum RepositoryError: Error, Sendable {
     case updateFailed(underlying: Error)
 }
 
-// MARK: - User Facing Descriptions
+// MARK: - User-Facing Descriptions
 extension RepositoryError: LocalizedError {
     var errorDescription: String? {
         switch self {
@@ -28,7 +28,7 @@ extension RepositoryError: LocalizedError {
     }
 }
 
-// MARK: - Developer Facing Diagnostics
+// MARK: - Developer-Facing Diagnostics
 extension RepositoryError: CustomDebugStringConvertible {
     var debugDescription: String {
         switch self {
@@ -44,6 +44,7 @@ extension RepositoryError: CustomDebugStringConvertible {
     }
 }
 
+//MARK: - Equatable Conformance
 extension RepositoryError: Equatable {
     static func == (lhs: RepositoryError, rhs: RepositoryError) -> Bool {
         switch (lhs, rhs) {

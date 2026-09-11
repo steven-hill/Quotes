@@ -23,7 +23,7 @@ final class SavedViewModel {
     }
     
     //MARK: - Method
-    func fetchAllQuotes() throws {
+    func fetchAllQuotes() {
         do {
             quotes = try repository.loadAllQuotes()
         } catch {
