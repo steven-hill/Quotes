@@ -9,7 +9,7 @@ import Foundation
 
 nonisolated
 protocol Networking {
-    func fetchQuoteOfTheDay() async throws -> Quote
+    func fetchQuoteOfTheDay() async throws -> QuoteResponse
 }
 
 nonisolated
@@ -43,7 +43,7 @@ final class NetworkClient: Networking {
     }
     
     //MARK: - Method
-    func fetchQuoteOfTheDay() async throws -> Quote {
+    func fetchQuoteOfTheDay() async throws -> QuoteResponse {
         guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
         }
@@ -80,16 +80,20 @@ final class NetworkClient: Networking {
     }
     
     //MARK: - Helpers
-    private func retrieveCacheResult(for request: URLRequest) -> Quote? {
+    private func retrieveCacheResult(for request: URLRequest) -> QuoteResponse? {
         guard let cachedResponse = cache.cachedResponse(for: request),
               let networkResult = try? decoder.decode(
-                [Quote].self,
+                [QuoteResponse].self,
                 from: cachedResponse.data
               ),
               let quote = networkResult.first else {
             return nil
         }
-        return Calendar.current.isDateInToday(quote.date) ? quote : nil
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        guard let date = formatter.date(from: quote.date) else { return nil }
+        return Calendar.current.isDateInToday(date) ? quote : nil
     }
     
     private func validate(_ response: URLResponse) throws {
@@ -106,9 +110,9 @@ final class NetworkClient: Networking {
         data: Data,
         response: URLResponse,
         request: URLRequest
-    ) throws -> Quote {
+    ) throws -> QuoteResponse {
         do {
-            let result = try decoder.decode([Quote].self, from: data)
+            let result = try decoder.decode([QuoteResponse].self, from: data)
             let cachedData = CachedURLResponse(response: response, data: data)
             cache.storeCachedResponse(cachedData, for: request)
             guard let quote = result.first else {

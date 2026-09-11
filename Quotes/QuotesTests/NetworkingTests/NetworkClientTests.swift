@@ -30,7 +30,6 @@ struct NetworkClientTests {
         
         let result = try await sut.fetchQuoteOfTheDay()
         
-        let dateInResult = dateFormatter.string(from: result.date)
         let lastRequest = await stubSession.lastRequest
         let data = await stubSession.data
         let response = await stubSession.response
@@ -39,7 +38,7 @@ struct NetworkClientTests {
         #expect(response == nil, "Should still be nil.")
         #expect(result.text == "A", "Should match data in the cached response.")
         #expect(result.author == "A", "Should match data in the cached response.")
-        #expect(dateInResult == today, "The date in the network result should match the date of the cached response.")
+        #expect(result.date == today, "The date in the network result should match the date of the cached response.")
     }
     
     @Test("When `URLCache` contains yesterday's data, `fetchQuoteOfTheDay` fetches today's data from the network and overwrites cache")
@@ -77,8 +76,7 @@ struct NetworkClientTests {
         #expect(result.text == "B", "Should match today's data, not the cache.")
         #expect(result.author == "B", "Should match today's data, not the cache.")
         
-        let dateInResult = dateFormatter.string(from: result.date)
-        #expect(dateInResult == todayString, "The date in the network result should not be yesterday because it should be overwritten with today's.")
+        #expect(result.date == todayString, "The date in the network result should not be yesterday because it should be overwritten with today's.")
     }
     
     @Test("When server returns invalid response, should throw correct error")
@@ -189,11 +187,4 @@ struct NetworkClientTests {
             ]
             """.data(using: .utf8)!
     }
-    
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter
-    }()
 }

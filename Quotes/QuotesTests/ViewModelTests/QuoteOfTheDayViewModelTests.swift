@@ -92,18 +92,18 @@ struct QuoteOfTheDayViewModelTests {
     //MARK: - Mock Network Client
     final class MockNetworkClient: Networking {
         var shouldSucceed: Bool = true
-        private var continuation: CheckedContinuation<Quote, Error>?
+        private var continuation: CheckedContinuation<QuoteResponse, Error>?
         var shouldPauseForLoadingStateTest = false
         var fetchQuoteOfTheDayCallCount = 0
         var error: Error?
         
-        func fetchQuoteOfTheDay() async throws -> Quote {
+        func fetchQuoteOfTheDay() async throws -> QuoteResponse {
             fetchQuoteOfTheDayCallCount += 1
             if shouldPauseForLoadingStateTest {
                 return try await withCheckedThrowingContinuation { self.continuation = $0 }
             }
             if shouldSucceed {
-                return Quote.sample
+                return QuoteResponse.sample
             } else {
                 let networkError = error ?? NetworkError.unknown
                 throw networkError
