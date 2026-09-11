@@ -8,7 +8,7 @@
 import Foundation
 
 /// Model for displaying data in the UI.
-/// A quote's `id` is nil until the quote is persisted locally.
+/// A quote's `id` is nil until the quote is persisted locally, and `PersistedQuote` provides the `id` via mapping.
 struct Quote {
     let id: UUID?
     let text: String
