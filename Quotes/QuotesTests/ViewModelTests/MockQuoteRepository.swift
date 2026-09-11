@@ -18,7 +18,8 @@ final class MockQuoteRepository: QuoteRepository {
         if fetchSucceeded {
             return stubbedQuotes
         }
-        throw RepositoryError.fetchFailed
+        let error = NSError(domain: "FetchError", code: 1, userInfo: nil)
+        throw RepositoryError.fetchFailed(underlying: error)
     }
     
     func updateReflection(

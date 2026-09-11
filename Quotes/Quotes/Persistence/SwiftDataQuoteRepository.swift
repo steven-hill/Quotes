@@ -34,7 +34,7 @@ final class SwiftDataQuoteRepository: QuoteRepository {
                 )
             }
         } catch {
-            throw RepositoryError.fetchFailed
+            throw RepositoryError.fetchFailed(underlying: error)
         }
     }
     
@@ -56,7 +56,7 @@ final class SwiftDataQuoteRepository: QuoteRepository {
         } catch let error as RepositoryError {
             throw error
         } catch {
-            throw RepositoryError.updateFailed
+            throw RepositoryError.updateFailed(underlying: error)
         }
     }
 }
