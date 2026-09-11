@@ -13,4 +13,5 @@ protocol QuoteRepository {
         for quoteID: UUID,
         reflection: String
     ) throws
+    func delete(_ quoteID: UUID) throws
 }

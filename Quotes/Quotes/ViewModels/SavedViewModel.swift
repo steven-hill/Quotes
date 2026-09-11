@@ -51,4 +51,18 @@ final class SavedViewModel {
             errorMessage = error.localizedDescription
         }
     }
+    
+    func delete(quote: Quote) {
+        guard let quoteID = quote.id else {
+            hasError = true
+            errorMessage = "Unable to delete quote."
+            return
+        }
+        do {
+            try repository.delete(quoteID)
+        } catch {
+            hasError = true
+            errorMessage = error.localizedDescription
+        }
+    }
 }

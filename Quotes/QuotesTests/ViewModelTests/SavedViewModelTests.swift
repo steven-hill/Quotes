@@ -87,4 +87,40 @@ struct SavedViewModelTests {
         
         #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
     }
+    
+    @Test("Deleting a quote without an id, returns early and updates error properties")
+    func savedViewModel_delete_whenQuoteIdIsNil_resultsInError() {
+        let quote = Quote.sample
+        let mockRepository = MockQuoteRepository()
+        let sut = SavedViewModel(repository: mockRepository)
+        
+        sut.delete(quote: quote)
+        
+        #expect(mockRepository.deleteCallCount == 0, "Should not be called.")
+        #expect(sut.hasError, "Should be true.")
+        #expect(sut.errorMessage != nil, "Should not be nil.")
+    }
+    
+    @Test("VM calls method on repository to delete a quote if that quote has an id")
+    func savedViewModel_delete_callsMethodOnRepository() {
+        let persistedQuote = PersistedQuote(
+            text: Quote.sample.text,
+            author: Quote.sample.author,
+            date: Date(),
+            reflection: "Reflection"
+        )
+        let quote = Quote(
+            id: persistedQuote.id,
+            text: persistedQuote.text,
+            author: persistedQuote.author,
+            date: persistedQuote.date,
+            reflection: persistedQuote.reflection
+        )
+        let mockRepository = MockQuoteRepository()
+        let sut = SavedViewModel(repository: mockRepository)
+        
+        sut.delete(quote: quote)
+        
+        #expect(mockRepository.deleteCallCount == 1, "Should call the method once.")
+    }
 }
