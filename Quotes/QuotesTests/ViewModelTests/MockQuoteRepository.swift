@@ -9,7 +9,7 @@ import Foundation
 @testable import Quotes
 
 final class MockQuoteRepository: QuoteRepository {
-    var stubbedQuotes: [Quote] = []
+    var persistedQuotes: [PersistedQuote] = []
     var fetchSucceeded: Bool = true
     private(set) var loadAllQuotesCallCount: Int = 0
     private(set) var addCallCount: Int = 0
@@ -19,7 +19,8 @@ final class MockQuoteRepository: QuoteRepository {
     func loadAllQuotes() throws -> [Quote] {
         loadAllQuotesCallCount += 1
         if fetchSucceeded {
-            return stubbedQuotes
+            let quotes = mapToQuoteArray(persistedQuotes)
+            return quotes
         }
         let error = NSError(domain: "FetchError", code: 1, userInfo: nil)
         throw RepositoryError.fetchFailed(underlying: error)
@@ -38,5 +39,18 @@ final class MockQuoteRepository: QuoteRepository {
     
     func delete(_ quoteID: UUID) throws {
         deleteCallCount += 1
+    }
+    
+    //MARK: - Mapper
+    private func mapToQuoteArray(_ persistedQuotes: [PersistedQuote]) -> [Quote] {
+        persistedQuotes.map { persistedQuote in
+            Quote(
+                id: persistedQuote.id,
+                text: persistedQuote.text,
+                author: persistedQuote.author,
+                date: persistedQuote.date,
+                reflection: persistedQuote.reflection
+            )
+        }
     }
 }

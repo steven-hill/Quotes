@@ -24,7 +24,13 @@ struct SavedViewModelTests {
     @Test("VM can fetch all quotes from the database if they exist")
     func savedViewModel_fetchAllQuotes_whenQuotesExistInDatabase_populatesQuotesCorrectly() {
         let mockRepository = MockQuoteRepository()
-        mockRepository.stubbedQuotes = [Quote.sample]
+        let persistedQuote = PersistedQuote(
+            text: Quote.sample.text,
+            author: Quote.sample.author,
+            date: Quote.sample.date,
+            reflection: "Reflection"
+        )
+        mockRepository.persistedQuotes = [persistedQuote]
         let sut = SavedViewModel(repository: mockRepository)
         
         sut.fetchAllQuotes()
@@ -35,7 +41,13 @@ struct SavedViewModelTests {
     @Test("VM handles error if database fails to fetch all quotes from the database")
     func savedViewModel_fetchAllQuotes_whenFetchFromDatabaseFails_handlesErrorCorrectly() {
         let mockRepository = MockQuoteRepository()
-        mockRepository.stubbedQuotes = [Quote.sample]
+        let persistedQuote = PersistedQuote(
+            text: Quote.sample.text,
+            author: Quote.sample.author,
+            date: Quote.sample.date,
+            reflection: "Reflection"
+        )
+        mockRepository.persistedQuotes = [persistedQuote]
         mockRepository.fetchSucceeded = false
         let sut = SavedViewModel(repository: mockRepository)
         
