@@ -8,6 +8,7 @@
 import Foundation
 
 /// Model for displaying data in the UI.
+/// A quote's `id` is nil until the quote is persisted locally.
 struct Quote {
     let id: UUID?
     let text: String
