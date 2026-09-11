@@ -22,10 +22,30 @@ final class SavedViewModel {
         self.repository = repository
     }
     
-    //MARK: - Method
+    //MARK: - Methods
     func fetchAllQuotes() {
         do {
             quotes = try repository.loadAllQuotes()
+        } catch {
+            hasError = true
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func update(
+        quote: Quote,
+        reflection: String
+    ) {
+        guard let quoteID = quote.id else {
+            hasError = true
+            errorMessage = "Unable to update quote."
+            return
+        }
+        do {
+            try repository.updateReflection(
+                for: quoteID,
+                reflection: reflection
+            )
         } catch {
             hasError = true
             errorMessage = error.localizedDescription

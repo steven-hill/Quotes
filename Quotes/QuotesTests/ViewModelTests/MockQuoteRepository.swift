@@ -12,6 +12,7 @@ final class MockQuoteRepository: QuoteRepository {
     var stubbedQuotes: [Quote] = []
     var fetchSucceeded: Bool = true
     private(set) var loadAllQuotesCallCount: Int = 0
+    private(set) var updateReflectionCallCount: Int = 0
     
     func loadAllQuotes() throws -> [Quote] {
         loadAllQuotesCallCount += 1
@@ -26,6 +27,6 @@ final class MockQuoteRepository: QuoteRepository {
         for quoteID: UUID,
         reflection: String
     ) throws {
-        
+        updateReflectionCallCount += 1
     }
 }

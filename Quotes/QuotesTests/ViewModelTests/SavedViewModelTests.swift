@@ -45,4 +45,46 @@ struct SavedViewModelTests {
         #expect(sut.errorMessage != nil, "Should not be nil.")
         #expect(sut.quotes.isEmpty, "Should be empty.")
     }
+    
+    @Test("Updating a quote without an id, returns early and updates error properties")
+    func savedViewModel_update_whenQuoteIdIsNil_resultsInError() {
+        let quote = Quote.sample
+        let mockRepository = MockQuoteRepository()
+        let sut = SavedViewModel(repository: mockRepository)
+        
+        sut.update(
+            quote: quote,
+            reflection: "Updated reflection"
+        )
+        
+        #expect(mockRepository.updateReflectionCallCount == 0, "Should not be called.")
+        #expect(sut.hasError, "Should be true.")
+        #expect(sut.errorMessage != nil, "Should not be nil.")
+    }
+    
+    @Test("VM calls method on repository to update a quote if that quote has an id")
+    func savedViewModel_update_callsMethodOnRepository() {
+        let persistedQuote = PersistedQuote(
+            text: Quote.sample.text,
+            author: Quote.sample.author,
+            date: Date(),
+            reflection: "Original reflection"
+        )
+        let quote = Quote(
+            id: persistedQuote.id,
+            text: persistedQuote.text,
+            author: persistedQuote.author,
+            date: persistedQuote.date,
+            reflection: persistedQuote.reflection
+        )
+        let mockRepository = MockQuoteRepository()
+        let sut = SavedViewModel(repository: mockRepository)
+        
+        sut.update(
+            quote: quote,
+            reflection: "Updated reflection"
+        )
+        
+        #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
+    }
 }
