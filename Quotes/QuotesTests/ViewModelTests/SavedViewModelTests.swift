@@ -23,17 +23,11 @@ struct SavedViewModelTests {
 
     @Test("VM can fetch all quotes from the database if they exist")
     func savedViewModel_fetchAllQuotes_whenQuotesExistInDatabase_populatesQuotesCorrectly() {
-        let mockRepository = MockQuoteRepository()
-        let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[0],
-            reflection: "Reflection"
-        )
-        mockRepository.persistedQuotes = [persistedQuote]
-        let sut = SavedViewModel(repository: mockRepository)
+        let sut = makeSUTAndTwoPersistedQuotesInRepository()
         
         sut.fetchAllQuotes()
         
-        #expect(sut.quotes.count == 1, "Should load 1 quote from the database.")
+        #expect(sut.quotes.count == 2, "Should load 2 quotes from the database.")
     }
     
     @Test("VM handles error if database fails to fetch all quotes from the database")
@@ -56,17 +50,7 @@ struct SavedViewModelTests {
     
     @Test("VM handles search queries (that match or don't), and quotes is updated correctly")
     func savedViewModel_fetchAllQuotes_whenSearching_populatesQuotesCorrectly() async throws {
-        let mockRepository = MockQuoteRepository()
-        let firstPersistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[0],
-            reflection: "Reflection"
-        )
-        let secondPersistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[1],
-            reflection: "Reflection"
-        )
-        mockRepository.persistedQuotes = [firstPersistedQuote, secondPersistedQuote]
-        let sut = SavedViewModel(repository: mockRepository)
+        let sut = makeSUTAndTwoPersistedQuotesInRepository()
         
         sut.searchText = "First"
         try await Task.sleep(for: .milliseconds(400))
@@ -81,17 +65,7 @@ struct SavedViewModelTests {
     
     @Test("VM cleans up text that contains spaces, tabs and new lines before searching")
     func savedViewModel_setupSearch_cleansUpRawText() async throws {
-        let mockRepository = MockQuoteRepository()
-        let firstPersistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[0],
-            reflection: "Reflection"
-        )
-        let secondPersistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[1],
-            reflection: "Reflection"
-        )
-        mockRepository.persistedQuotes = [firstPersistedQuote, secondPersistedQuote]
-        let sut = SavedViewModel(repository: mockRepository)
+        let sut = makeSUTAndTwoPersistedQuotesInRepository()
         
         sut.searchText = " First  "
         try await Task.sleep(for: .milliseconds(400))
@@ -139,7 +113,7 @@ struct SavedViewModelTests {
     func savedViewModel_update_callsMethodsOnRepository() {
         let persistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample[0],
-            reflection: "Origial reflection"
+            reflection: "Original reflection"
         )
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
@@ -179,6 +153,21 @@ struct SavedViewModelTests {
         
         #expect(mockRepository.deleteCallCount == 1, "Should call the method once.")
         #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
+    }
+    
+    //MARK: - Helper
+    private func makeSUTAndTwoPersistedQuotesInRepository() -> SavedViewModel {
+        let mockRepository = MockQuoteRepository()
+        let firstPersistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[0],
+            reflection: "Reflection"
+        )
+        let secondPersistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[1],
+            reflection: "Reflection"
+        )
+        mockRepository.persistedQuotes = [firstPersistedQuote, secondPersistedQuote]
+        return SavedViewModel(repository: mockRepository)
     }
     
     //MARK: - Mapper
