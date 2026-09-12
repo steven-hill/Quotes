@@ -54,7 +54,7 @@ struct SwiftDataQuoteRepositoryTests {
     func swiftDataQuoteRepository_add_persistsChange() throws {
         let container = try makeContainer()
         let sut = SwiftDataQuoteRepository(container: container)
-        let quote = Quote.sample
+        let quote = Quote.sample[0]
         
         try sut.add(quote)
         
@@ -66,7 +66,7 @@ struct SwiftDataQuoteRepositoryTests {
     func swiftDataQuoteRepository_updateReflection_persistsChange() throws {
         let container = try makeContainer()
         let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample,
+            using: Quote.sample[0],
             reflection: "Original reflection"
         )
         container.mainContext.insert(persistedQuote)
@@ -86,7 +86,7 @@ struct SwiftDataQuoteRepositoryTests {
     func swiftDataQuoteRepository_updateReflection_whenQuoteDoesNotExistInDatabase_throwsCorrectError() throws {
         let container = try makeContainer()
         let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample,
+            using: Quote.sample[0],
             reflection: "Original reflection"
         )
         let sut = SwiftDataQuoteRepository(container: container)
@@ -107,7 +107,7 @@ struct SwiftDataQuoteRepositoryTests {
     func swiftDataQuoteRepository_delete_persistsChange() throws {
         let container = try makeContainer()
         let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample,
+            using: Quote.sample[0],
             reflection: "Reflection"
         )
         container.mainContext.insert(persistedQuote)
@@ -124,7 +124,7 @@ struct SwiftDataQuoteRepositoryTests {
     func swiftDataQuoteRepository_delete_whenQuoteDoesNotExistInDatabase_throwsCorrectError() throws {
         let container = try makeContainer()
         let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample,
+            using: Quote.sample[0],
             reflection: "Reflection"
         )
         let sut = SwiftDataQuoteRepository(container: container)
