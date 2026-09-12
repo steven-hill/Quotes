@@ -159,14 +159,14 @@ struct SwiftDataQuoteRepositoryTests {
     func swiftDataQuoteRepository_loadAllQuotes_whenSearchReturnsResults_returnsFilteredResults() throws {
         let container = try makeContainer()
         let quoteA = PersistedQuote(
-            text: "A",
-            author: "A",
+            text: "Text A",
+            author: "Author A",
             date: Date(),
             reflection: "A"
         )
         let quoteB = PersistedQuote(
-            text: "B",
-            author: "B",
+            text: "Text B",
+            author: "Author B",
             date: Date(),
             reflection: "B"
         )
@@ -175,9 +175,11 @@ struct SwiftDataQuoteRepositoryTests {
         try container.mainContext.save()
         let sut = SwiftDataQuoteRepository(container: container)
         
-        let result = try sut.loadAllQuotes(matching: "B")
+        let textResult = try sut.loadAllQuotes(matching: "text b")
+        #expect(textResult.count == 1, "Should have one.")
         
-        #expect(result.count == 1, "Should have one.")
+        let authorResult = try sut.loadAllQuotes(matching: "author a")
+        #expect(authorResult.count == 1, "Should have one.")
     }
     
     //MARK: - Helper
