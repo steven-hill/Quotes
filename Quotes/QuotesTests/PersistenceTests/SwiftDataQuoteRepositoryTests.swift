@@ -17,7 +17,7 @@ struct SwiftDataQuoteRepositoryTests {
     func swiftDataQuoteRepository_loadAllQuotes_whenDatabaseIsEmpty_returnsEmptyArray() throws {
         let sut = try SwiftDataQuoteRepository(container: makeContainer())
         
-        let result = try sut.loadAllQuotes()
+        let result = try sut.loadAllQuotes(matching: nil)
         
         #expect(result.isEmpty, "Should be empty.")
     }
@@ -42,7 +42,7 @@ struct SwiftDataQuoteRepositoryTests {
         try container.mainContext.save()
         let sut = SwiftDataQuoteRepository(container: container)
         
-        let result = try sut.loadAllQuotes()
+        let result = try sut.loadAllQuotes(matching: nil)
         
         #expect(result.count == 2, "Should have two.")
         #expect(result.map(\.text) == ["\(newer.text)", "\(older.text)"], "Should have the latest first.")
@@ -58,7 +58,7 @@ struct SwiftDataQuoteRepositoryTests {
         
         try sut.add(quote)
         
-        let result = try sut.loadAllQuotes()
+        let result = try sut.loadAllQuotes(matching: nil)
         #expect(result.count == 1, "Should have one in database")
     }
     
@@ -78,7 +78,7 @@ struct SwiftDataQuoteRepositoryTests {
             reflection: "Updated reflection"
         )
         
-        let result = try sut.loadAllQuotes()        
+        let result = try sut.loadAllQuotes(matching: nil)
         #expect(result.first?.reflection == "Updated reflection")
     }
     
@@ -116,7 +116,7 @@ struct SwiftDataQuoteRepositoryTests {
         
         try sut.delete(persistedQuote.id)
         
-        let result = try sut.loadAllQuotes()
+        let result = try sut.loadAllQuotes(matching: nil)
         #expect(result.isEmpty, "Should be empty.")
     }
     
@@ -135,6 +135,49 @@ struct SwiftDataQuoteRepositoryTests {
             guard let repoError = error as? RepositoryError else { return false }
             return repoError == .quoteNotFound
         })
+    }
+    
+    @Test("When search query returns no results, no quotes are returned")
+    func swiftDataQuoteRepository_loadAllQuotes_whenSearchReturnsNoResults_returnsEmptyArray() throws {
+        let container = try makeContainer()
+        let quoteA = PersistedQuote(
+            text: "A",
+            author: "A",
+            date: Date(),
+            reflection: "A"
+        )
+        container.mainContext.insert(quoteA)
+        try container.mainContext.save()
+        let sut = SwiftDataQuoteRepository(container: container)
+        
+        let result = try sut.loadAllQuotes(matching: "B")
+        
+        #expect(result.isEmpty, "Should be empty.")
+    }
+    
+    @Test("When search query returns results, filtered quotes are returned")
+    func swiftDataQuoteRepository_loadAllQuotes_whenSearchReturnsResults_returnsFilteredResults() throws {
+        let container = try makeContainer()
+        let quoteA = PersistedQuote(
+            text: "A",
+            author: "A",
+            date: Date(),
+            reflection: "A"
+        )
+        let quoteB = PersistedQuote(
+            text: "B",
+            author: "B",
+            date: Date(),
+            reflection: "B"
+        )
+        container.mainContext.insert(quoteA)
+        container.mainContext.insert(quoteB)
+        try container.mainContext.save()
+        let sut = SwiftDataQuoteRepository(container: container)
+        
+        let result = try sut.loadAllQuotes(matching: "B")
+        
+        #expect(result.count == 1, "Should have one.")
     }
     
     //MARK: - Helper

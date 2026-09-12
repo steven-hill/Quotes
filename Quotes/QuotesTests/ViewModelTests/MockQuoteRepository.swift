@@ -16,7 +16,7 @@ final class MockQuoteRepository: QuoteRepository {
     private(set) var updateReflectionCallCount: Int = 0
     private(set) var deleteCallCount: Int = 0
     
-    func loadAllQuotes() throws -> [Quote] {
+    func loadAllQuotes(matching query: String?) throws -> [Quote] {
         loadAllQuotesCallCount += 1
         if fetchSucceeded {
             let quotes = mapToQuoteArray(persistedQuotes)

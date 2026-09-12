@@ -25,7 +25,7 @@ final class SavedViewModel {
     //MARK: - Methods
     func fetchAllQuotes() {
         do {
-            quotes = try repository.loadAllQuotes()
+            quotes = try repository.loadAllQuotes(matching: nil)
         } catch {
             hasError = true
             errorMessage = error.localizedDescription

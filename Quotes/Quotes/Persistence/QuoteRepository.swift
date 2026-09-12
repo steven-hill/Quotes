@@ -8,7 +8,8 @@
 import Foundation
 
 protocol QuoteRepository {
-    func loadAllQuotes() throws -> [Quote]
+    /// Passing nil returns all `PersistedQuote`; passing a string filters them using the query.
+    func loadAllQuotes(matching query: String?) throws -> [Quote]
     func add(_ quote: Quote) throws
     func updateReflection(
         for quoteID: UUID,
