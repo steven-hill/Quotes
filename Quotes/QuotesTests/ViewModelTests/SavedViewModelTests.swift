@@ -80,8 +80,8 @@ struct SavedViewModelTests {
         #expect(sut.errorMessage != nil, "Should not be nil.")
     }
     
-    @Test("VM calls method on repository to update a quote if that quote has an id")
-    func savedViewModel_update_callsMethodOnRepository() {
+    @Test("VM calls methods on repository to update a quote if that quote has an id, and refetch quotes")
+    func savedViewModel_update_callsMethodsOnRepository() {
         let persistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample,
             reflection: "Origial reflection"
@@ -95,6 +95,7 @@ struct SavedViewModelTests {
         )
         
         #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
+        #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
     
     @Test("Deleting a quote without an id, returns early and updates error properties")

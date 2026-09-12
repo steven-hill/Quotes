@@ -56,6 +56,7 @@ final class SavedViewModel {
                 for: quoteID,
                 reflection: reflection
             )
+            fetchAllQuotes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
