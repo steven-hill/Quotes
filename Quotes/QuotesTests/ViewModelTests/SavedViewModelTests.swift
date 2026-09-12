@@ -54,14 +54,15 @@ struct SavedViewModelTests {
         #expect(sut.quotes.isEmpty, "Should be empty.")
     }
     
-    @Test("VM can add a quote to the database")
-    func savedViewModel_add_callsMethodOnRepository() {
+    @Test("VM can add a quote to the database, and refreshes the quotes list")
+    func savedViewModel_add_callsMethodsOnRepository() {
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
         
         sut.add(quote: Quote.sample)
         
         #expect(mockRepository.addCallCount == 1, "Should call the method once.")
+        #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
     
     @Test("Updating a quote without an id, returns early and updates error properties")
@@ -79,8 +80,8 @@ struct SavedViewModelTests {
         #expect(sut.errorMessage != nil, "Should not be nil.")
     }
     
-    @Test("VM calls method on repository to update a quote if that quote has an id")
-    func savedViewModel_update_callsMethodOnRepository() {
+    @Test("VM calls methods on repository to update a quote if that quote has an id, and refetch quotes")
+    func savedViewModel_update_callsMethodsOnRepository() {
         let persistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample,
             reflection: "Origial reflection"
@@ -94,6 +95,7 @@ struct SavedViewModelTests {
         )
         
         #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
+        #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
     
     @Test("Deleting a quote without an id, returns early and updates error properties")
@@ -108,8 +110,8 @@ struct SavedViewModelTests {
         #expect(sut.errorMessage != nil, "Should not be nil.")
     }
     
-    @Test("VM calls method on repository to delete a quote if that quote has an id")
-    func savedViewModel_delete_callsMethodOnRepository() {
+    @Test("VM calls methods on repository to delete a quote if that quote has an id, and reload quotes")
+    func savedViewModel_delete_callsMethodsOnRepository() {
         let persistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample,
             reflection: "Reflection"
@@ -121,6 +123,7 @@ struct SavedViewModelTests {
         sut.delete(quote: quote)
         
         #expect(mockRepository.deleteCallCount == 1, "Should call the method once.")
+        #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
     
     //MARK: - Mapper

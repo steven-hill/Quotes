@@ -35,6 +35,7 @@ final class SavedViewModel {
     func add(quote: Quote) {
         do {
             try repository.add(quote)
+            fetchAllQuotes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
@@ -55,6 +56,7 @@ final class SavedViewModel {
                 for: quoteID,
                 reflection: reflection
             )
+            fetchAllQuotes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
@@ -69,6 +71,7 @@ final class SavedViewModel {
         }
         do {
             try repository.delete(quoteID)
+            fetchAllQuotes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
