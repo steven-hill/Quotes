@@ -54,7 +54,7 @@ struct SavedViewModelTests {
         #expect(sut.quotes.isEmpty, "Should be empty.")
     }
     
-    @Test("VM handles search query and filters quotes")
+    @Test("VM handles search queries (that match or don't), and quotes is updated correctly")
     func savedViewModel_fetchAllQuotes_whenSearching_populatesQuotesCorrectly() {
         let mockRepository = MockQuoteRepository()
         let firstPersistedQuote = PersistenceHelper.makePersistedQuote(
@@ -71,6 +71,10 @@ struct SavedViewModelTests {
         sut.fetchAllQuotes(matching: "First")
         
         #expect(sut.quotes.count == 1, "Should have one.")
+        
+        sut.fetchAllQuotes(matching: "No matches")
+        
+        #expect(sut.quotes.isEmpty, "Should be empty.")
     }
     
     @Test("VM can add a quote to the database, and refreshes the quotes list")
