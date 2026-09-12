@@ -23,7 +23,7 @@ struct SavedViewModelTests {
 
     @Test("VM can fetch all quotes from the database if they exist")
     func savedViewModel_fetchAllQuotes_whenQuotesExistInDatabase_populatesQuotesCorrectly() {
-        let sut = makeSUTAndTwoPersistedQuotesInRepository()
+        let (sut, _) = makeSUTAndTwoPersistedQuotesInRepository()
         
         sut.fetchAllQuotes()
         
@@ -50,7 +50,7 @@ struct SavedViewModelTests {
     
     @Test("VM handles search queries (that match or don't), and quotes is updated correctly")
     func savedViewModel_fetchAllQuotes_whenSearching_populatesQuotesCorrectly() async throws {
-        let sut = makeSUTAndTwoPersistedQuotesInRepository()
+        let (sut, _) = makeSUTAndTwoPersistedQuotesInRepository()
         
         sut.searchText = "First"
         try await Task.sleep(for: .milliseconds(400))
@@ -65,7 +65,7 @@ struct SavedViewModelTests {
     
     @Test("VM cleans up text that contains spaces, tabs and new lines before searching")
     func savedViewModel_setupSearch_cleansUpRawText() async throws {
-        let sut = makeSUTAndTwoPersistedQuotesInRepository()
+        let (sut, _) = makeSUTAndTwoPersistedQuotesInRepository()
         
         sut.searchText = " First  "
         try await Task.sleep(for: .milliseconds(400))
@@ -81,6 +81,23 @@ struct SavedViewModelTests {
         try await Task.sleep(for: .milliseconds(400))
         
         #expect(sut.quotes.count == 1, "Should have one.")
+    }
+    
+    @Test("When identical search terms are typed sequentially, the duplicate request is removed")
+    func savedViewModel_setupSearch_sequentialDuplicateSearch_callsRepositoryOnlyOnce() async throws {
+        let (sut, mockRepository) = makeSUTAndTwoPersistedQuotesInRepository()
+        
+        sut.searchText = "First"
+        try await Task.sleep(for: .milliseconds(400))
+        
+        sut.searchText = "First "
+        try await Task.sleep(for: .milliseconds(100))
+        
+        sut.searchText = "First"
+        try await Task.sleep(for: .milliseconds(400))
+        
+        #expect(mockRepository.loadAllQuotesCallCount == 1, "Repository should only be queried once for duplicate values.")
+        #expect(sut.quotes.count == 1, "Should have one quote after filtering.")
     }
     
     @Test("VM can add a quote to the database, and refreshes the quotes list")
@@ -155,8 +172,11 @@ struct SavedViewModelTests {
         #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
     
-    //MARK: - Helper
-    private func makeSUTAndTwoPersistedQuotesInRepository() -> SavedViewModel {
+    //MARK: - SUT Helper
+    private func makeSUTAndTwoPersistedQuotesInRepository() -> (
+        sut: SavedViewModel,
+        mockRepository: MockQuoteRepository
+    ) {
         let mockRepository = MockQuoteRepository()
         let firstPersistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample[0],
@@ -167,7 +187,8 @@ struct SavedViewModelTests {
             reflection: "Reflection"
         )
         mockRepository.persistedQuotes = [firstPersistedQuote, secondPersistedQuote]
-        return SavedViewModel(repository: mockRepository)
+        let sut = SavedViewModel(repository: mockRepository)
+        return (sut, mockRepository)
     }
     
     //MARK: - Mapper
