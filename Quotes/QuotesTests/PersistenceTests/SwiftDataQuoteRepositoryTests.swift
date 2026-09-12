@@ -158,16 +158,12 @@ struct SwiftDataQuoteRepositoryTests {
     @Test("When search query returns results for text or author, filtered quotes are returned")
     func swiftDataQuoteRepository_loadAllQuotes_whenSearchReturnsResults_returnsFilteredResults() throws {
         let container = try makeContainer()
-        let quoteA = PersistedQuote(
-            text: "Text A",
-            author: "Author A",
-            date: Date(),
+        let quoteA = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[0],
             reflection: "A"
         )
-        let quoteB = PersistedQuote(
-            text: "Text B",
-            author: "Author B",
-            date: Date(),
+        let quoteB = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[1],
             reflection: "B"
         )
         container.mainContext.insert(quoteA)
@@ -175,10 +171,10 @@ struct SwiftDataQuoteRepositoryTests {
         try container.mainContext.save()
         let sut = SwiftDataQuoteRepository(container: container)
         
-        let textResult = try sut.loadAllQuotes(matching: "text b")
+        let textResult = try sut.loadAllQuotes(matching: "first")
         #expect(textResult.count == 1, "Should have one.")
         
-        let authorResult = try sut.loadAllQuotes(matching: "author a")
+        let authorResult = try sut.loadAllQuotes(matching: "Writer")
         #expect(authorResult.count == 1, "Should have one.")
         
         let result = try sut.loadAllQuotes(matching: "text")

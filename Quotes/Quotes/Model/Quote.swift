@@ -21,13 +21,13 @@ extension Quote {
     static let sample = [
         Quote(
             id: nil,
-            text: "A quote",
+            text: "First text",
             author: "An author",
             date: Date()
         ),
         Quote(
             id: nil,
-            text: "Second",
+            text: "Second text",
             author: "Writer",
             date: Date()
         ),
