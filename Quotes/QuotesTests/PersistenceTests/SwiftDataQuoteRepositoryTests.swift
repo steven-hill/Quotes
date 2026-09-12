@@ -180,6 +180,9 @@ struct SwiftDataQuoteRepositoryTests {
         
         let authorResult = try sut.loadAllQuotes(matching: "author a")
         #expect(authorResult.count == 1, "Should have one.")
+        
+        let result = try sut.loadAllQuotes(matching: "text")
+        #expect(result.count == 2, "Should have two.")
     }
     
     //MARK: - Helper
