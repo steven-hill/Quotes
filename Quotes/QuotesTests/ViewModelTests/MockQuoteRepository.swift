@@ -20,7 +20,12 @@ final class MockQuoteRepository: QuoteRepository {
         loadAllQuotesCallCount += 1
         if fetchSucceeded {
             let quotes = mapToQuoteArray(persistedQuotes)
-            return quotes
+            guard let query, !query.isEmpty else {
+                return quotes
+            }
+            return quotes.filter { quote in
+                quote.text.localizedStandardContains(query) || quote.author.localizedStandardContains(query)
+            }
         }
         let error = NSError(domain: "FetchError", code: 1, userInfo: nil)
         throw RepositoryError.fetchFailed(underlying: error)

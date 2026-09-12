@@ -68,7 +68,9 @@ struct SavedViewModelTests {
         mockRepository.persistedQuotes = [firstPersistedQuote, secondPersistedQuote]
         let sut = SavedViewModel(repository: mockRepository)
         
-        sut.fetchAllQuotes()
+        sut.fetchAllQuotes(matching: "First")
+        
+        #expect(sut.quotes.count == 1, "Should have one.")
     }
     
     @Test("VM can add a quote to the database, and refreshes the quotes list")

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 final class SavedViewModel {
     
@@ -16,16 +17,34 @@ final class SavedViewModel {
     private(set) var quotes: [Quote] = []
     private(set) var hasError: Bool = false
     private(set) var errorMessage: String?
+    private let searchSubject = PassthroughSubject<String, Never>()
+    private var cancellables = Set<AnyCancellable>()
+    var searchText: String = "" {
+        didSet {
+            searchSubject.send(searchText)
+        }
+    }
     
     //MARK: - Initialisation
     init(repository: QuoteRepository) {
         self.repository = repository
+        setupSearch()
     }
     
     //MARK: - Methods
-    func fetchAllQuotes() {
+    private func setupSearch() {
+        searchSubject
+            .debounce(for: .seconds(0.3), scheduler: RunLoop.main)
+            .removeDuplicates()
+            .sink { [weak self] query in
+                self?.fetchAllQuotes(matching: query)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func fetchAllQuotes(matching query: String? = nil) {
         do {
-            quotes = try repository.loadAllQuotes(matching: nil)
+            quotes = try repository.loadAllQuotes(matching: query ?? searchText)
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
