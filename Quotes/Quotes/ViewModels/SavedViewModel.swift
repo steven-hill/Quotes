@@ -71,6 +71,7 @@ final class SavedViewModel {
         }
         do {
             try repository.delete(quoteID)
+            fetchAllQuotes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription

@@ -110,8 +110,8 @@ struct SavedViewModelTests {
         #expect(sut.errorMessage != nil, "Should not be nil.")
     }
     
-    @Test("VM calls method on repository to delete a quote if that quote has an id")
-    func savedViewModel_delete_callsMethodOnRepository() {
+    @Test("VM calls methods on repository to delete a quote if that quote has an id, and reload quotes")
+    func savedViewModel_delete_callsMethodsOnRepository() {
         let persistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample,
             reflection: "Reflection"
@@ -123,6 +123,7 @@ struct SavedViewModelTests {
         sut.delete(quote: quote)
         
         #expect(mockRepository.deleteCallCount == 1, "Should call the method once.")
+        #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
     
     //MARK: - Mapper
