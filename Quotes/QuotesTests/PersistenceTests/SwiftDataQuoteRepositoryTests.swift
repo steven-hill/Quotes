@@ -155,7 +155,7 @@ struct SwiftDataQuoteRepositoryTests {
         #expect(result.isEmpty, "Should be empty.")
     }
     
-    @Test("When search query returns results, filtered quotes are returned")
+    @Test("When search query returns results for text or author, filtered quotes are returned")
     func swiftDataQuoteRepository_loadAllQuotes_whenSearchReturnsResults_returnsFilteredResults() throws {
         let container = try makeContainer()
         let quoteA = PersistedQuote(
