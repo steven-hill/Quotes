@@ -54,14 +54,15 @@ struct SavedViewModelTests {
         #expect(sut.quotes.isEmpty, "Should be empty.")
     }
     
-    @Test("VM can add a quote to the database")
-    func savedViewModel_add_callsMethodOnRepository() {
+    @Test("VM can add a quote to the database, and refreshes the quotes list")
+    func savedViewModel_add_callsMethodsOnRepository() {
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
         
         sut.add(quote: Quote.sample)
         
         #expect(mockRepository.addCallCount == 1, "Should call the method once.")
+        #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
     
     @Test("Updating a quote without an id, returns early and updates error properties")

@@ -35,6 +35,7 @@ final class SavedViewModel {
     func add(quote: Quote) {
         do {
             try repository.add(quote)
+            fetchAllQuotes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
