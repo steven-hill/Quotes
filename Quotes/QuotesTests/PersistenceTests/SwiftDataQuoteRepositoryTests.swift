@@ -140,17 +140,15 @@ struct SwiftDataQuoteRepositoryTests {
     @Test("When search query returns no results, no quotes are returned")
     func swiftDataQuoteRepository_loadAllQuotes_whenSearchReturnsNoResults_returnsEmptyArray() throws {
         let container = try makeContainer()
-        let quoteA = PersistedQuote(
-            text: "A",
-            author: "A",
-            date: Date(),
+        let quoteA = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[0],
             reflection: "A"
         )
         container.mainContext.insert(quoteA)
         try container.mainContext.save()
         let sut = SwiftDataQuoteRepository(container: container)
         
-        let result = try sut.loadAllQuotes(matching: "B")
+        let result = try sut.loadAllQuotes(matching: "Not found")
         
         #expect(result.isEmpty, "Should be empty.")
     }
