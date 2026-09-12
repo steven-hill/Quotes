@@ -55,7 +55,7 @@ struct SavedViewModelTests {
     }
     
     @Test("VM handles search queries (that match or don't), and quotes is updated correctly")
-    func savedViewModel_fetchAllQuotes_whenSearching_populatesQuotesCorrectly() {
+    func savedViewModel_fetchAllQuotes_whenSearching_populatesQuotesCorrectly() async throws {
         let mockRepository = MockQuoteRepository()
         let firstPersistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample[0],
@@ -68,13 +68,45 @@ struct SavedViewModelTests {
         mockRepository.persistedQuotes = [firstPersistedQuote, secondPersistedQuote]
         let sut = SavedViewModel(repository: mockRepository)
         
-        sut.fetchAllQuotes(matching: "First")
+        sut.searchText = "First"
+        try await Task.sleep(for: .milliseconds(400))
         
         #expect(sut.quotes.count == 1, "Should have one.")
         
-        sut.fetchAllQuotes(matching: "No matches")
+        sut.searchText = "No matches"
+        try await Task.sleep(for: .milliseconds(400))
         
         #expect(sut.quotes.isEmpty, "Should be empty.")
+    }
+    
+    @Test("VM cleans up text that contains spaces, tabs and new lines before searching")
+    func savedViewModel_setupSearch_cleansUpRawText() async throws {
+        let mockRepository = MockQuoteRepository()
+        let firstPersistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[0],
+            reflection: "Reflection"
+        )
+        let secondPersistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[1],
+            reflection: "Reflection"
+        )
+        mockRepository.persistedQuotes = [firstPersistedQuote, secondPersistedQuote]
+        let sut = SavedViewModel(repository: mockRepository)
+        
+        sut.searchText = " First  "
+        try await Task.sleep(for: .milliseconds(400))
+        
+        #expect(sut.quotes.count == 1, "Should have one.")
+        
+        sut.searchText = "  First   "
+        try await Task.sleep(for: .milliseconds(400))
+        
+        #expect(sut.quotes.count == 1, "Should have one.")
+        
+        sut.searchText = "\n   First   \n"
+        try await Task.sleep(for: .milliseconds(400))
+        
+        #expect(sut.quotes.count == 1, "Should have one.")
     }
     
     @Test("VM can add a quote to the database, and refreshes the quotes list")

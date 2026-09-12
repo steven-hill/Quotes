@@ -35,11 +35,18 @@ final class SavedViewModel {
     private func setupSearch() {
         searchSubject
             .debounce(for: .seconds(0.3), scheduler: RunLoop.main)
+            .map { [weak self] rawText in
+                self?.cleanSearchText(rawText) ?? ""
+            }
             .removeDuplicates()
             .sink { [weak self] query in
                 self?.fetchAllQuotes(matching: query)
             }
             .store(in: &cancellables)
+    }
+    
+    private func cleanSearchText(_ text: String) -> String {
+        text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     func fetchAllQuotes(matching query: String? = nil) {
