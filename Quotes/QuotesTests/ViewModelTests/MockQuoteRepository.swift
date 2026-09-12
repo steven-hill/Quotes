@@ -16,14 +16,18 @@ final class MockQuoteRepository: QuoteRepository {
     private(set) var updateReflectionCallCount: Int = 0
     private(set) var deleteCallCount: Int = 0
     
-    func loadAllQuotes() throws -> [Quote] {
+    func loadAllQuotes(matching query: String?) throws -> [Quote] {
         loadAllQuotesCallCount += 1
-        if fetchSucceeded {
-            let quotes = mapToQuoteArray(persistedQuotes)
-            return quotes
+        guard fetchSucceeded else {
+            let error = NSError(domain: "FetchError", code: 1, userInfo: nil)
+            throw RepositoryError.fetchFailed(underlying: error)
         }
-        let error = NSError(domain: "FetchError", code: 1, userInfo: nil)
-        throw RepositoryError.fetchFailed(underlying: error)
+        let allQuotes = mapToQuoteArray(persistedQuotes)
+        guard let query, !query.isEmpty else { return allQuotes }
+        return allQuotes.filter { quote in
+            quote.text.localizedStandardContains(query) ||
+            quote.author.localizedStandardContains(query)
+        }
     }
     
     func add(_ quote: Quote) throws {

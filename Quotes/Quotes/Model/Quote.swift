@@ -18,11 +18,24 @@ struct Quote {
 }
 
 extension Quote {
-    static let sample = Quote(
-        id: nil,
-        text: "A quote",
-        author: "An author",
-        date: Date(),
-        reflection: "A reflection"
-    )
+    static let sample = [
+        Quote(
+            id: nil,
+            text: "First text",
+            author: "An author",
+            date: Date()
+        ),
+        Quote(
+            id: nil,
+            text: "Second text",
+            author: "Writer",
+            date: Date()
+        ),
+        Quote(
+            id: nil,
+            text: "Third",
+            author: "Scribe",
+            date: Date()
+        )
+    ]
 }

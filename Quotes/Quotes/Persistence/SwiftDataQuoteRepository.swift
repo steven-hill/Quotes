@@ -19,10 +19,22 @@ final class SwiftDataQuoteRepository: QuoteRepository {
     }
     
     //MARK: - Methods
-    func loadAllQuotes() throws -> [Quote] {
-        let descriptor = FetchDescriptor<PersistedQuote>(
-            sortBy: [SortDescriptor(\.date, order: .reverse)]
-        )
+    func loadAllQuotes(matching query: String?) throws -> [Quote] {
+        let descriptor: FetchDescriptor<PersistedQuote>
+        if let query, !query.isEmpty {
+            descriptor = FetchDescriptor<PersistedQuote>(
+                predicate: #Predicate { quote in
+                    quote.text.localizedStandardContains(query) ||
+                    quote.author.localizedStandardContains(query)
+                },
+                sortBy: [SortDescriptor(\.date, order: .reverse)]
+            )
+        } else {
+            descriptor = FetchDescriptor<PersistedQuote>(
+                sortBy: [SortDescriptor(\.date, order: .reverse)]
+            )
+        }
+        
         do {
             return try context.fetch(descriptor).map { persistedQuote in
                 Quote(
