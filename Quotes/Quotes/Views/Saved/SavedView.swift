@@ -158,13 +158,7 @@ extension SavedView {
 }
 
 #Preview {
-    let configuration = ModelConfiguration(
-        isStoredInMemoryOnly: true
-    )
-    let modelContainer = try! ModelContainer(
-        for: PersistedQuote.self,
-        configurations: configuration
-    )
-    SavedView(quoteRepository: SwiftDataQuoteRepository(container: modelContainer))
+    let previewContainer = AppContainer.makePreviewContainer(withSampleData: true)
+    SavedView(quoteRepository: SwiftDataQuoteRepository(container: previewContainer))
         .environmentObject(FetchRequestStore.preview)
 }

@@ -37,7 +37,7 @@ final class AppContainer {
     }
     
     //MARK: - In-memory Model Container
-    static func makePreviewContainer(withSampleData: Bool = true) -> AppContainer {
+    static func makePreviewContainer(withSampleData: Bool = true) -> ModelContainer {
         let container = AppContainer(isInMemoryOnly: true)
         if withSampleData {
             let sampleQuotes = [
@@ -58,6 +58,6 @@ final class AppContainer {
                 try? container.swiftDataQuoteRepository.add(quote)
             }
         }
-        return container
+        return container.modelContainer
     }
 }
