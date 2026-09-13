@@ -18,9 +18,7 @@ struct TabBar: View {
     
     // MARK: - State
     @State private var selectedTab: Tab = .home
-    
-    //MARK: - Dependency
-    let networkClient: NetworkClient
+    @State private var showLocalDatabaseFailureAlert = false
 
     // MARK: - Tab Definition
     private enum Tab {
@@ -29,10 +27,18 @@ struct TabBar: View {
         case settings
     }
     
+    //MARK: - Dependency
+    private let appContainer: AppContainer
+    
+    //MARK: - Initialisation
+    init(appContainer: AppContainer) {
+        self.appContainer = appContainer
+    }
+    
     // MARK: - Body
     var body: some View {
         TabView(selection: $selectedTab) {
-            QuoteOfTheDayView(networkClient: networkClient)
+            QuoteOfTheDayView(networkClient: appContainer.networkClient)
                 .tabItem {
                     Label("Home", systemImage: selectedTab == .home ? "house.fill" : "house")
                         .environment(\.symbolVariants, selectedTab == .home ? .fill : .none)
@@ -40,7 +46,7 @@ struct TabBar: View {
                 .onAppear { selectedTab = .home }
                 .tag(Tab.home)
             
-            SavedView()
+            SavedView(quoteRepository: appContainer.swiftDataQuoteRepository)
                 .tabItem {
                     Label("Saved", systemImage: selectedTab == .saved ? "bookmark.fill" : "bookmark")
                         .environment(\.symbolVariants, selectedTab == .saved ? .fill : .none)
@@ -73,11 +79,25 @@ struct TabBar: View {
                 selectedTab = .home
             }
         }
+        .onAppear {
+            if appContainer.isRunningInDegradedMode {
+                showLocalDatabaseFailureAlert = true
+            }
+        }
+        .alert(
+            "Failed to create app's database",
+            isPresented: $showLocalDatabaseFailureAlert
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Some features may not work. If device storage is low, try to free up some space and restart the app. If problem persists, try reinstalling the app.")
+        }
+
     }
 }
 
 #Preview {
-    TabBar(networkClient: NetworkClient())
+    TabBar(appContainer: AppContainer())
         .environmentObject(FetchRequestStore.preview)
         .environmentObject(LocalNotificationManager())
         .environmentObject(AppearanceManager())

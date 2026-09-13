@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SavedView: View {
     
@@ -21,10 +22,20 @@ struct SavedView: View {
     @State private var alertMessage = ""
     @State private var showDeleteQuoteAlert: Bool = false
     @State private var quoteToDelete: SavedQuote?
+    @State private var savedVM: SavedViewModel
     
     // MARK: - Constants
     let deleteQuoteAlertMessage = "This action can't be undone."
     
+    // MARK: - Dependency
+    private let quoteRepository: QuoteRepository
+    
+    // MARK: - Initialisation
+    init(quoteRepository: QuoteRepository) {
+        self.quoteRepository = quoteRepository
+        _savedVM = State(initialValue: SavedViewModel(repository: quoteRepository))
+    }
+        
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -147,6 +158,7 @@ extension SavedView {
 }
 
 #Preview {
-    SavedView()
+    let previewContainer = AppContainer.makePreviewContainer(withSampleData: true)
+    SavedView(quoteRepository: SwiftDataQuoteRepository(container: previewContainer))
         .environmentObject(FetchRequestStore.preview)
 }

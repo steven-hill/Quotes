@@ -18,7 +18,7 @@ struct QuotesApp: App {
     @StateObject var tabRouter = TabRouter()
     
     //MARK: - Dependencies
-    private let networkClient = NetworkClient()
+    private let appContainer = AppContainer()
     private let persistenceController = PersistenceController.shared
     
     // MARK: - Initialisation
@@ -32,7 +32,7 @@ struct QuotesApp: App {
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
-            TabBar(networkClient: networkClient)
+            TabBar(appContainer: appContainer)
                 .environmentObject(fetchRequestStore)
                 .environmentObject(localNotificationManager)
                 .environmentObject(appearanceManager)
