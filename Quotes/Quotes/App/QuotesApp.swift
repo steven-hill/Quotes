@@ -32,7 +32,7 @@ struct QuotesApp: App {
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
-            TabBar(networkClient: networkClient)
+            TabBar(appContainer: appContainer)
                 .environmentObject(fetchRequestStore)
                 .environmentObject(localNotificationManager)
                 .environmentObject(appearanceManager)
