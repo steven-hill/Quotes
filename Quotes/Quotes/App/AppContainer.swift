@@ -16,7 +16,6 @@ final class AppContainer {
     let swiftDataQuoteRepository: QuoteRepository
     let networkClient: Networking
     private(set) var isRunningInDegradedMode = false
-    private(set) var databaseErrorReason: String?
     
     // MARK: - Initialisation
     init(isInMemoryOnly: Bool = false) {
@@ -26,7 +25,6 @@ final class AppContainer {
             self.swiftDataQuoteRepository = SwiftDataQuoteRepository(container: modelContainer)
         } catch {
             self.isRunningInDegradedMode = true
-            self.databaseErrorReason = error.localizedDescription
             do {
                 let fallbackConfig = ModelConfiguration(isStoredInMemoryOnly: true)
                 self.modelContainer = try ModelContainer(for: schema, configurations: [fallbackConfig])
