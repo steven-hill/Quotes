@@ -18,7 +18,7 @@ struct QuotesApp: App {
     @StateObject var tabRouter = TabRouter()
     
     //MARK: - Dependencies
-    private let networkClient = NetworkClient()
+    private let appContainer = AppContainer()
     private let persistenceController = PersistenceController.shared
     
     // MARK: - Initialisation
