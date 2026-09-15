@@ -103,7 +103,7 @@ struct QuoteOfTheDayViewModelTests {
                 return try await withCheckedThrowingContinuation { self.continuation = $0 }
             }
             if shouldSucceed {
-                return QuoteResponse.sample
+                return await QuoteResponse.sample
             } else {
                 let networkError = error ?? NetworkError.unknown
                 throw networkError
