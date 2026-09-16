@@ -8,6 +8,26 @@
 import Foundation
 import SwiftData
 
+
+protocol ModelContainerCreating {
+    func makeContainer(
+        schema: Schema,
+        configuration: ModelConfiguration
+    ) throws -> ModelContainer
+}
+
+struct ModelContainerFactory: ModelContainerCreating {
+    func makeContainer(
+        schema: Schema,
+        configuration: ModelConfiguration
+    ) throws -> ModelContainer {
+        try ModelContainer(
+            for: schema,
+            configurations: [configuration]
+        )
+    }
+}
+
 final class AppContainer {
     
     // MARK: - Properties
@@ -18,11 +38,14 @@ final class AppContainer {
     private(set) var isRunningInDegradedMode = false
     
     // MARK: - Initialisation
-    init(isInMemoryOnly: Bool = false) throws {
+    init(
+        isInMemoryOnly: Bool = false,
+        modelContainerFactory: ModelContainerCreating = ModelContainerFactory()
+    ) throws {
         self.networkClient = NetworkClient()
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: isInMemoryOnly)
-            self.modelContainer = try ModelContainer(for: schema, configurations: [config])
+            self.modelContainer = try modelContainerFactory.makeContainer(schema: schema, configuration: config)
             self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
         } catch {
             #if DEBUG
@@ -30,7 +53,7 @@ final class AppContainer {
             #endif
             do {
                 let fallbackConfig = ModelConfiguration(isStoredInMemoryOnly: true)
-                self.modelContainer = try ModelContainer(for: schema, configurations: [fallbackConfig])
+                self.modelContainer = try modelContainerFactory.makeContainer(schema: schema, configuration: fallbackConfig)
                 self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
                 self.isRunningInDegradedMode = true
             } catch {
