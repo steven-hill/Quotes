@@ -17,4 +17,16 @@ struct AppContainerTests {
         
         #expect(sut.isRunningInDegradedMode == false, "Should be false.")
     }
+    
+    @Test("Integration test to check a working repository is created")
+    func appContainer_quoteRepository_isCreatedAndWorks() throws {
+        let sut = try AppContainer(isInMemoryOnly: true)
+        let quote = Quote.sample[0]
+        try sut.quoteRepository.add(quote)
+
+        let quotes = try sut.quoteRepository.loadAllQuotes(matching: nil)
+
+        #expect(quotes.count == 1, "Should be one.")
+        #expect(sut.isRunningInDegradedMode == false, "Should be false.")
+    }
 }
