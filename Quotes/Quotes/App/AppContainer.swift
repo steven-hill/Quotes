@@ -8,26 +8,6 @@
 import Foundation
 import SwiftData
 
-
-protocol ModelContainerCreating {
-    func makeContainer(
-        schema: Schema,
-        configuration: ModelConfiguration
-    ) throws -> ModelContainer
-}
-
-struct ModelContainerFactory: ModelContainerCreating {
-    func makeContainer(
-        schema: Schema,
-        configuration: ModelConfiguration
-    ) throws -> ModelContainer {
-        try ModelContainer(
-            for: schema,
-            configurations: [configuration]
-        )
-    }
-}
-
 final class AppContainer {
     
     // MARK: - Properties
