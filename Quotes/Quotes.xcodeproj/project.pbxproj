@@ -36,6 +36,7 @@
 		5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */; };
 		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
 		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
+		5B5CB65F305B148900262E01 /* AppLaunchErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */; };
 		5B76E8973050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B76E8963050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift */; };
 		5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */; };
 		5BDE29A33052BE26002F74F3 /* SavedViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A23052BE26002F74F3 /* SavedViewModelTests.swift */; };
@@ -100,6 +101,7 @@
 		5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubNetworkSession.swift; sourceTree = "<group>"; };
 		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
 		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
+		5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchErrorView.swift; sourceTree = "<group>"; };
 		5B76E8963050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayViewModelTests.swift; sourceTree = "<group>"; };
 		5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStoreTests.swift; sourceTree = "<group>"; };
 		5BDE29A23052BE26002F74F3 /* SavedViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewModelTests.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				5B3FB7D82C52E1D1000994DC /* Home */,
 				5B3FB7D92C52E1D7000994DC /* Saved */,
 				5B3FB7DA2C52E1DF000994DC /* Settings */,
+				5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				5B3FB7F42C52E686000994DC /* AuthorizationNotGrantedView.swift in Sources */,
 				5B3FB7E02C52E2D8000994DC /* QuoteOfTheDayShareLink.swift in Sources */,
 				5B3FB7F02C52E57D000994DC /* SettingsView.swift in Sources */,
+				5B5CB65F305B148900262E01 /* AppLaunchErrorView.swift in Sources */,
 				5B3FB7F62C52E6D2000994DC /* ZenQuotesAttributionView.swift in Sources */,
 				5B3FB7EE2C52E537000994DC /* EditReflectionView.swift in Sources */,
 				5B3FB7E82C52E47B000994DC /* NoSearchResultsFoundView.swift in Sources */,

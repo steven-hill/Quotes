@@ -11,14 +11,22 @@ import CoreData
 @main
 struct QuotesApp: App {
     
-    // MARK: - State objects
+    // MARK: - State Objects
     @StateObject var localNotificationManager = LocalNotificationManager()
     @StateObject var fetchRequestStore: FetchRequestStore
     @StateObject private var appearanceManager = AppearanceManager()
     @StateObject var tabRouter = TabRouter()
     
+    // MARK: - State
+    @State private var appState: AppState
+    
+    //MARK: - AppState Definition
+    private enum AppState {
+        case ready(AppContainer)
+        case failed(AppContainerError)
+    }
+    
     //MARK: - Dependencies
-    private let appContainer = AppContainer()
     private let persistenceController = PersistenceController.shared
     
     // MARK: - Initialisation
@@ -27,18 +35,31 @@ struct QuotesApp: App {
         let savedQuotesController = NSFetchedResultsController(fetchRequest: persistenceController.savedQuotesFetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         let store = FetchRequestStore(savedQuotesController: savedQuotesController, context: managedObjectContext)
         self._fetchRequestStore = StateObject(wrappedValue: store)
+        do {
+            let container = try AppContainer()
+            _appState = State(initialValue: .ready(container))
+        } catch let error as AppContainerError {
+            _appState = State(initialValue: .failed(error))
+        } catch {
+            _appState = State(initialValue: .failed(.failedToInitialiseStorage(error: error)))
+        }
     }
     
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
-            TabBar(appContainer: appContainer)
-                .environmentObject(fetchRequestStore)
-                .environmentObject(localNotificationManager)
-                .environmentObject(appearanceManager)
-                .environmentObject(tabRouter)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
+            switch appState {
+            case .ready(let container):
+                TabBar(appContainer: container)
+                    .environmentObject(fetchRequestStore)
+                    .environmentObject(localNotificationManager)
+                    .environmentObject(appearanceManager)
+                    .environmentObject(tabRouter)
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
+            case .failed(let error):
+                AppLaunchErrorView(error: error)
+            }
         }
     }
 }

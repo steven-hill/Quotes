@@ -85,19 +85,18 @@ struct TabBar: View {
             }
         }
         .alert(
-            "Failed to create app's database",
+            "Database failure",
             isPresented: $showLocalDatabaseFailureAlert
         ) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("Some features may not work. If device storage is low, try to free up some space and restart the app. If problem persists, try reinstalling the app.")
+            Text("You can continue to use the app but your changes will not be saved between app launches. If device storage is low, try to free up some space and restart the app. If the problem persists, try reinstalling the app.")
         }
-
     }
 }
 
 #Preview {
-    TabBar(appContainer: AppContainer())
+    TabBar(appContainer: try! AppContainer())
         .environmentObject(FetchRequestStore.preview)
         .environmentObject(LocalNotificationManager())
         .environmentObject(AppearanceManager())

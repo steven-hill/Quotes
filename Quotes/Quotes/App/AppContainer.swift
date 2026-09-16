@@ -18,13 +18,13 @@ final class AppContainer {
     private(set) var isRunningInDegradedMode = false
     
     // MARK: - Initialisation
-    init(isInMemoryOnly: Bool = false) {
+    init(isInMemoryOnly: Bool = false) throws {
+        self.networkClient = NetworkClient()
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: isInMemoryOnly)
             self.modelContainer = try ModelContainer(for: schema, configurations: [config])
             self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
         } catch {
-            self.isRunningInDegradedMode = true
             #if DEBUG
             print("Persistent SwiftData store failed:", error)
             #endif
@@ -32,16 +32,19 @@ final class AppContainer {
                 let fallbackConfig = ModelConfiguration(isStoredInMemoryOnly: true)
                 self.modelContainer = try ModelContainer(for: schema, configurations: [fallbackConfig])
                 self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
+                self.isRunningInDegradedMode = true
             } catch {
-                fatalError("Failed to initialise SwiftData ModelContainer in degraded mode: \(error.localizedDescription)")
+                #if DEBUG
+                print("In-memory SwiftData store also failed:", error)
+                #endif
+                throw AppContainerError.failedToInitialiseStorage(error: error)
             }
         }
-        self.networkClient = NetworkClient()
     }
     
     //MARK: - In-memory Model Container
     static func makePreviewContainer(withSampleData: Bool = true) -> ModelContainer {
-        let container = AppContainer(isInMemoryOnly: true)
+        let container = try! AppContainer(isInMemoryOnly: true)
         if withSampleData {
             let sampleQuotes = [
                 Quote(
