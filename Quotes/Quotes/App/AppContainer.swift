@@ -13,7 +13,7 @@ final class AppContainer {
     // MARK: - Properties
     private let modelContainer: ModelContainer
     private let schema = Schema(PersistedQuote.self)
-    let swiftDataQuoteRepository: QuoteRepository
+    let quoteRepository: QuoteRepository
     let networkClient: Networking
     private(set) var isRunningInDegradedMode = false
     
@@ -22,13 +22,13 @@ final class AppContainer {
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: isInMemoryOnly)
             self.modelContainer = try ModelContainer(for: schema, configurations: [config])
-            self.swiftDataQuoteRepository = SwiftDataQuoteRepository(container: modelContainer)
+            self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
         } catch {
             self.isRunningInDegradedMode = true
             do {
                 let fallbackConfig = ModelConfiguration(isStoredInMemoryOnly: true)
                 self.modelContainer = try ModelContainer(for: schema, configurations: [fallbackConfig])
-                self.swiftDataQuoteRepository = SwiftDataQuoteRepository(container: modelContainer)
+                self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
             } catch {
                 fatalError("Failed to initialise SwiftData ModelContainer in degraded mode: \(error.localizedDescription)")
             }
@@ -55,7 +55,7 @@ final class AppContainer {
                 )
             ]
             for quote in sampleQuotes {
-                try? container.swiftDataQuoteRepository.add(quote)
+                try? container.quoteRepository.add(quote)
             }
         }
         return container.modelContainer

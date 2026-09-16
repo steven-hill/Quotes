@@ -46,7 +46,7 @@ struct TabBar: View {
                 .onAppear { selectedTab = .home }
                 .tag(Tab.home)
             
-            SavedView(quoteRepository: appContainer.swiftDataQuoteRepository)
+            SavedView(quoteRepository: appContainer.quoteRepository)
                 .tabItem {
                     Label("Saved", systemImage: selectedTab == .saved ? "bookmark.fill" : "bookmark")
                         .environment(\.symbolVariants, selectedTab == .saved ? .fill : .none)
