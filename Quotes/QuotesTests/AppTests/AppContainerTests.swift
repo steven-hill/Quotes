@@ -6,11 +6,15 @@
 //
 
 import Testing
+@testable import Quotes
 
+@MainActor
 struct AppContainerTests {
 
-    @Test func <#test function name#>() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    @Test("Initialisation succeeds and initialises dependencies")
+    func appContainer_init_succeeds() throws {
+        let sut = try AppContainer(isInMemoryOnly: true)
+        
+        #expect(sut.isRunningInDegradedMode == false, "Should be false.")
     }
-
 }
