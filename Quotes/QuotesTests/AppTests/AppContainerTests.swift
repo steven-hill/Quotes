@@ -57,6 +57,26 @@ struct AppContainerTests {
         #expect(factory.callCount == 2, "Should have tried to make a model container twice.")
     }
     
+    @Test("Preview container can be created with sample data")
+    func appContainer_makePreviewContainer_makesContainerWithSampleData() throws {
+        let container = AppContainer.makePreviewContainer(withSampleData: true)
+        let repository = SwiftDataQuoteRepository(container: container)
+
+        let quotes = try repository.loadAllQuotes(matching: nil)
+
+        #expect(quotes.count == 2, "Should have two.")
+    }
+
+    @Test("Preview container can be created without sample data")
+    func appContainer_makePreviewContainer_makesContainerWithoutSampleData() throws {
+        let container = AppContainer.makePreviewContainer(withSampleData: false)
+        let repository = SwiftDataQuoteRepository(container: container)
+
+        let quotes = try repository.loadAllQuotes(matching: nil)
+
+        #expect(quotes.isEmpty, "Should be empty.")
+    }
+    
     //MARK: - Mock Model Container Factory
     final class MockModelContainerFactory: ModelContainerCreating {
         var failureCount = 0
