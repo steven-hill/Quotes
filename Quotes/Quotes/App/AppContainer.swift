@@ -25,6 +25,9 @@ final class AppContainer {
             self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
         } catch {
             self.isRunningInDegradedMode = true
+            #if DEBUG
+            print("Persistent SwiftData store failed:", error)
+            #endif
             do {
                 let fallbackConfig = ModelConfiguration(isStoredInMemoryOnly: true)
                 self.modelContainer = try ModelContainer(for: schema, configurations: [fallbackConfig])
