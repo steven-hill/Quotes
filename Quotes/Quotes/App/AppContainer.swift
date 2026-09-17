@@ -13,32 +13,41 @@ final class AppContainer {
     // MARK: - Properties
     private let modelContainer: ModelContainer
     private let schema = Schema(PersistedQuote.self)
-    let swiftDataQuoteRepository: QuoteRepository
+    let quoteRepository: QuoteRepository
     let networkClient: Networking
     private(set) var isRunningInDegradedMode = false
     
     // MARK: - Initialisation
-    init(isInMemoryOnly: Bool = false) {
+    init(
+        isInMemoryOnly: Bool = false,
+        modelContainerFactory: ModelContainerCreating = ModelContainerFactory()
+    ) throws {
+        self.networkClient = NetworkClient()
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: isInMemoryOnly)
-            self.modelContainer = try ModelContainer(for: schema, configurations: [config])
-            self.swiftDataQuoteRepository = SwiftDataQuoteRepository(container: modelContainer)
+            self.modelContainer = try modelContainerFactory.makeContainer(schema: schema, configuration: config)
+            self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
         } catch {
-            self.isRunningInDegradedMode = true
+            #if DEBUG
+            print("Persistent SwiftData store failed:", error)
+            #endif
             do {
                 let fallbackConfig = ModelConfiguration(isStoredInMemoryOnly: true)
-                self.modelContainer = try ModelContainer(for: schema, configurations: [fallbackConfig])
-                self.swiftDataQuoteRepository = SwiftDataQuoteRepository(container: modelContainer)
+                self.modelContainer = try modelContainerFactory.makeContainer(schema: schema, configuration: fallbackConfig)
+                self.quoteRepository = SwiftDataQuoteRepository(container: modelContainer)
+                self.isRunningInDegradedMode = true
             } catch {
-                fatalError("Failed to initialise SwiftData ModelContainer in degraded mode: \(error.localizedDescription)")
+                #if DEBUG
+                print("In-memory SwiftData store also failed:", error)
+                #endif
+                throw AppContainerError.failedToInitialiseStorage(error: error)
             }
         }
-        self.networkClient = NetworkClient()
     }
     
     //MARK: - In-memory Model Container
     static func makePreviewContainer(withSampleData: Bool = true) -> ModelContainer {
-        let container = AppContainer(isInMemoryOnly: true)
+        let container = try! AppContainer(isInMemoryOnly: true)
         if withSampleData {
             let sampleQuotes = [
                 Quote(
@@ -55,7 +64,7 @@ final class AppContainer {
                 )
             ]
             for quote in sampleQuotes {
-                try? container.swiftDataQuoteRepository.add(quote)
+                try? container.quoteRepository.add(quote)
             }
         }
         return container.modelContainer
