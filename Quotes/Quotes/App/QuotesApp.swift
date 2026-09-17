@@ -12,10 +12,10 @@ import CoreData
 struct QuotesApp: App {
     
     // MARK: - State Objects
-    @StateObject var localNotificationManager = LocalNotificationManager()
-    @StateObject var fetchRequestStore: FetchRequestStore
+    @StateObject private var localNotificationManager = LocalNotificationManager()
+    @StateObject private var fetchRequestStore: FetchRequestStore
     @StateObject private var appearanceManager = AppearanceManager()
-    @StateObject var tabRouter = TabRouter()
+    @StateObject private var tabRouter = TabRouter()
     
     // MARK: - State
     @State private var appState: AppState
