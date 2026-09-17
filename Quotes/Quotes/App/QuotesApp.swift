@@ -45,7 +45,7 @@ struct QuotesApp: App {
             switch appState {
             case .loading:
                 ProgressView()
-                    .task { initialiseAppContainer() }
+                    .task { await triggerAppContainerInitialisation() }
             case .ready(let container):
                 TabBar(appContainer: container)
                     .environmentObject(fetchRequestStore)
@@ -60,17 +60,27 @@ struct QuotesApp: App {
         }
     }
     
-    //MARK: - Helper Method
-    private func initialiseAppContainer() {
+    //MARK: - Helper Methods
+    private func triggerAppContainerInitialisation() async {
         guard !hasInitialisedAppContainer else { return }
         hasInitialisedAppContainer = true
+        await initialiseAppContainer()
+    }
+    
+    nonisolated private func initialiseAppContainer() async {
         do {
-            let container = try AppContainer()
-            appState = .ready(container)
+            let container = try await AppContainer()
+            await MainActor.run {
+                appState = .ready(container)
+            }
         } catch let error as AppContainerError {
-            appState = .failed(error)
+            await MainActor.run {
+                appState = .failed(error)
+            }
         } catch {
-            appState = .failed(.failedToInitialiseStorage(error: error))
+            await MainActor.run {
+                appState = .failed(.failedToInitialiseStorage(error: error))
+            }
         }
     }
 }
