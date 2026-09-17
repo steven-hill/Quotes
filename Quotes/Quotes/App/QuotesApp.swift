@@ -44,7 +44,7 @@ struct QuotesApp: App {
             switch appState {
             case .loading:
                 ProgressView()
-                    .task { initialiseContainer() }
+                    .task { initialiseAppContainer() }
             case .ready(let container):
                 TabBar(appContainer: container)
                     .environmentObject(fetchRequestStore)
@@ -60,7 +60,7 @@ struct QuotesApp: App {
     }
     
     //MARK: - Helper Method
-    private func initialiseContainer() {
+    private func initialiseAppContainer() {
         do {
             let container = try AppContainer()
             appState = .ready(container)
