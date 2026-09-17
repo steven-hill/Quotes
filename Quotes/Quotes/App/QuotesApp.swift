@@ -36,20 +36,15 @@ struct QuotesApp: App {
         let savedQuotesController = NSFetchedResultsController(fetchRequest: persistenceController.savedQuotesFetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         let store = FetchRequestStore(savedQuotesController: savedQuotesController, context: managedObjectContext)
         self._fetchRequestStore = StateObject(wrappedValue: store)
-        do {
-            let container = try AppContainer()
-            _appState = State(initialValue: .ready(container))
-        } catch let error as AppContainerError {
-            _appState = State(initialValue: .failed(error))
-        } catch {
-            _appState = State(initialValue: .failed(.failedToInitialiseStorage(error: error)))
-        }
     }
     
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
             switch appState {
+            case .loading:
+                ProgressView()
+                    .task { initialiseContainer() }
             case .ready(let container):
                 TabBar(appContainer: container)
                     .environmentObject(fetchRequestStore)
@@ -61,6 +56,18 @@ struct QuotesApp: App {
             case .failed(let error):
                 AppLaunchErrorView(error: error)
             }
+        }
+    }
+    
+    //MARK: - Helper Method
+    private func initialiseContainer() {
+        do {
+            let container = try AppContainer()
+            appState = .ready(container)
+        } catch let error as AppContainerError {
+            appState = .failed(error)
+        } catch {
+            appState = .failed(.failedToInitialiseStorage(error: error))
         }
     }
 }
