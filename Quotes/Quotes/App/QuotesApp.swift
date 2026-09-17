@@ -18,10 +18,11 @@ struct QuotesApp: App {
     @StateObject private var tabRouter = TabRouter()
     
     // MARK: - State
-    @State private var appState: AppState
+    @State private var appState: AppState = .loading
     
     //MARK: - AppState Definition
     private enum AppState {
+        case loading
         case ready(AppContainer)
         case failed(AppContainerError)
     }
