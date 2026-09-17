@@ -19,6 +19,7 @@ struct QuotesApp: App {
     
     // MARK: - State
     @State private var appState: AppState = .loading
+    @State private var hasInitialisedAppContainer = false
     
     //MARK: - AppState Definition
     private enum AppState {
@@ -61,6 +62,8 @@ struct QuotesApp: App {
     
     //MARK: - Helper Method
     private func initialiseAppContainer() {
+        guard !hasInitialisedAppContainer else { return }
+        hasInitialisedAppContainer = true
         do {
             let container = try AppContainer()
             appState = .ready(container)
