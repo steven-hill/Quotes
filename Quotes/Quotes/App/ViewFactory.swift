@@ -20,7 +20,10 @@ final class ViewFactory {
     
     //MARK: - View Creation Methods
     func makeQuoteOfTheDayView() -> some View {
-        QuoteOfTheDayView(networkClient: dependencies.networkClient)
+        QuoteOfTheDayView(
+            networkClient: dependencies.networkClient,
+            factory: self
+        )
     }
     
     func makeReflectOnQuoteView(

@@ -15,9 +15,16 @@ struct QuoteOfTheDayView: View {
     // MARK: - State
     @State private var quoteOfTheDayVM: QuoteOfTheDayViewModel
     
+    //MARK: - Dependency
+    private let factory: ViewFactory
+    
     // MARK: - Initialisation
-    init(networkClient: Networking) {
+    init(
+        networkClient: Networking,
+        factory: ViewFactory
+    ) {
         _quoteOfTheDayVM = State(initialValue: QuoteOfTheDayViewModel(networkClient: networkClient))
+        self.factory = factory
     }
     
     // MARK: - Body
@@ -78,12 +85,21 @@ struct QuoteOfTheDayView: View {
     
     private var buttons: some View {
         Group {
-            ReflectOnThisQuoteButton(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
+            ReflectOnThisQuoteButton(
+                factory: factory,
+                quoteContent: quoteOfTheDayVM.quoteContent,
+                quoteAuthor: quoteOfTheDayVM.quoteAuthor
+            )
             QuoteOfTheDayShareLink(item: quoteOfTheDayVM.quoteToShare)
         }
     }
 }
 
 #Preview {
-    QuoteOfTheDayView(networkClient: NetworkClient())
+    let appContainer = try! AppContainer(isInMemoryOnly: true)
+    let viewFactory = ViewFactory(dependencies: appContainer)
+    QuoteOfTheDayView(
+        networkClient: appContainer.networkClient,
+        factory: viewFactory
+    )
 }
