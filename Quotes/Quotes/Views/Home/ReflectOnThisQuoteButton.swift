@@ -22,7 +22,6 @@ struct ReflectOnThisQuoteButton: View {
     // MARK: - Properties
     let quoteContent: String
     let quoteAuthor: String
-    let userThoughts: String = ""
         
     // MARK: - Initialisation
     init(
