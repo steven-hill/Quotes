@@ -14,7 +14,6 @@
 		5B3FB7C22C52DE47000994DC /* QuotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */; };
 		5B3FB7C42C52DE47000994DC /* QuotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */; };
 		5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
-		5B3FB7D42C52E0ED000994DC /* QuoteOfTheDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D32C52E0ED000994DC /* QuoteOfTheDayViewModel.swift */; };
 		5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D62C52E194000994DC /* TabBar.swift */; };
 		5B3FB7DC2C52E243000994DC /* QuoteOfTheDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7DB2C52E243000994DC /* QuoteOfTheDayView.swift */; };
 		5B3FB7DE2C52E285000994DC /* QuoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7DD2C52E285000994DC /* QuoteCardView.swift */; };
@@ -37,13 +36,9 @@
 		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
 		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
 		5B5CB65F305B148900262E01 /* AppLaunchErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */; };
-		5B76E8973050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B76E8963050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift */; };
 		5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */; };
-		5BDE29A33052BE26002F74F3 /* SavedViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A23052BE26002F74F3 /* SavedViewModelTests.swift */; };
-		5BDE29A53052BE7D002F74F3 /* SavedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A43052BE7D002F74F3 /* SavedViewModel.swift */; };
 		5BDE29A73052E955002F74F3 /* QuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A63052E955002F74F3 /* QuoteRepository.swift */; };
 		5BDE29A93052EA1C002F74F3 /* SwiftDataQuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A83052EA1C002F74F3 /* SwiftDataQuoteRepository.swift */; };
-		5BDE29AB3052EAE7002F74F3 /* MockQuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AA3052EAE7002F74F3 /* MockQuoteRepository.swift */; };
 		5BDE29AD3052F697002F74F3 /* PersistedQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */; };
 		5BDE29AF30530173002F74F3 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AE30530173002F74F3 /* RepositoryError.swift */; };
 		5BDE29B13053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29B03053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift */; };
@@ -79,7 +74,6 @@
 		5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITests.swift; sourceTree = "<group>"; };
 		5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B3FB7D02C52DFF9000994DC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5B3FB7D32C52E0ED000994DC /* QuoteOfTheDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayViewModel.swift; sourceTree = "<group>"; };
 		5B3FB7D62C52E194000994DC /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		5B3FB7DB2C52E243000994DC /* QuoteOfTheDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayView.swift; sourceTree = "<group>"; };
 		5B3FB7DD2C52E285000994DC /* QuoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCardView.swift; sourceTree = "<group>"; };
@@ -102,13 +96,9 @@
 		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
 		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
 		5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchErrorView.swift; sourceTree = "<group>"; };
-		5B76E8963050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayViewModelTests.swift; sourceTree = "<group>"; };
 		5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStoreTests.swift; sourceTree = "<group>"; };
-		5BDE29A23052BE26002F74F3 /* SavedViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewModelTests.swift; sourceTree = "<group>"; };
-		5BDE29A43052BE7D002F74F3 /* SavedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewModel.swift; sourceTree = "<group>"; };
 		5BDE29A63052E955002F74F3 /* QuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteRepository.swift; sourceTree = "<group>"; };
 		5BDE29A83052EA1C002F74F3 /* SwiftDataQuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataQuoteRepository.swift; sourceTree = "<group>"; };
-		5BDE29AA3052EAE7002F74F3 /* MockQuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockQuoteRepository.swift; sourceTree = "<group>"; };
 		5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedQuote.swift; sourceTree = "<group>"; };
 		5BDE29AE30530173002F74F3 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
 		5BDE29B03053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataQuoteRepositoryTests.swift; sourceTree = "<group>"; };
@@ -117,6 +107,8 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5B1BA72C305DDD8100E2DBE3 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+		5B1BA732305DDD8700E2DBE3 /* ViewModelTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModelTests; sourceTree = "<group>"; };
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
 		5B3F9D782D10C8EC009151CB /* AppearanceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppearanceTests; sourceTree = "<group>"; };
 		5B5A2910304C893100E5D1FC /* Networking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Networking; sourceTree = "<group>"; };
@@ -193,7 +185,7 @@
 				5BAC3E1C2E1EC47200D185C0 /* Router */,
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
 				5B3FB7D02C52DFF9000994DC /* Constants.swift */,
-				5B3FB7D22C52E01F000994DC /* ViewModels */,
+				5B1BA72C305DDD8100E2DBE3 /* ViewModels */,
 				5B3FB7D52C52E160000994DC /* Views */,
 				5B3FB7F72C52E744000994DC /* Persistence */,
 				5B3FB7FC2C52EA92000994DC /* LocalNotifications */,
@@ -220,7 +212,7 @@
 				5BDFEDBE2DC29DDF0065ACCC /* LocalNotificationsTests */,
 				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
 				5B177CF42C5ADF0F00CCEC8B /* PersistenceTests */,
-				5B812CEE2C599AEB00B12213 /* ViewModelTests */,
+				5B1BA732305DDD8700E2DBE3 /* ViewModelTests */,
 				5B812CE82C5992B900B12213 /* NetworkingTests */,
 			);
 			path = QuotesTests;
@@ -233,15 +225,6 @@
 				5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */,
 			);
 			path = QuotesUITests;
-			sourceTree = "<group>";
-		};
-		5B3FB7D22C52E01F000994DC /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				5B3FB7D32C52E0ED000994DC /* QuoteOfTheDayViewModel.swift */,
-				5BDE29A43052BE7D002F74F3 /* SavedViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		5B3FB7D52C52E160000994DC /* Views */ = {
@@ -327,16 +310,6 @@
 			path = NetworkingTests;
 			sourceTree = "<group>";
 		};
-		5B812CEE2C599AEB00B12213 /* ViewModelTests */ = {
-			isa = PBXGroup;
-			children = (
-				5B76E8963050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift */,
-				5BDE29A23052BE26002F74F3 /* SavedViewModelTests.swift */,
-				5BDE29AA3052EAE7002F74F3 /* MockQuoteRepository.swift */,
-			);
-			path = ViewModelTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -353,6 +326,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				5B1BA72C305DDD8100E2DBE3 /* ViewModels */,
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
 				5B5A2910304C893100E5D1FC /* Networking */,
 				5B73D74B2D287F2F0076159F /* ReusableComponents */,
@@ -380,6 +354,7 @@
 				5B3FB7B52C52DE47000994DC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				5B1BA732305DDD8700E2DBE3 /* ViewModelTests */,
 				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
 				5B5CB660305B471A00262E01 /* AppTests */,
 				5BDE29B73054714A002F74F3 /* UnitTestUtilities */,
@@ -495,7 +470,6 @@
 				5B3FB7EE2C52E537000994DC /* EditReflectionView.swift in Sources */,
 				5B3FB7E82C52E47B000994DC /* NoSearchResultsFoundView.swift in Sources */,
 				5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */,
-				5B3FB7D42C52E0ED000994DC /* QuoteOfTheDayViewModel.swift in Sources */,
 				5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */,
 				5B3FB7DE2C52E285000994DC /* QuoteCardView.swift in Sources */,
 				5BDE29AD3052F697002F74F3 /* PersistedQuote.swift in Sources */,
@@ -504,7 +478,6 @@
 				5B3FB7F92C52E930000994DC /* PersistenceController.swift in Sources */,
 				5B3FB7E22C52E31E000994DC /* ReflectOnThisQuoteButton.swift in Sources */,
 				5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */,
-				5BDE29A53052BE7D002F74F3 /* SavedViewModel.swift in Sources */,
 				5B3FB7E42C52E3A6000994DC /* ReflectOnQuoteView.swift in Sources */,
 				5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */,
 				5B3FB7EA2C52E4BC000994DC /* SavedCardView.swift in Sources */,
@@ -520,13 +493,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */,
-				5BDE29AB3052EAE7002F74F3 /* MockQuoteRepository.swift in Sources */,
-				5B76E8973050A6A7007C60ED /* QuoteOfTheDayViewModelTests.swift in Sources */,
 				5B177CF62C5ADF4A00CCEC8B /* PersistenceControllerTests.swift in Sources */,
 				5BDE29B13053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift in Sources */,
 				5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */,
 				5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */,
-				5BDE29A33052BE26002F74F3 /* SavedViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

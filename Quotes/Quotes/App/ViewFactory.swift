@@ -20,7 +20,23 @@ final class ViewFactory {
     
     //MARK: - View Creation Methods
     func makeQuoteOfTheDayView() -> some View {
-        QuoteOfTheDayView(networkClient: dependencies.networkClient)
+        QuoteOfTheDayView(
+            networkClient: dependencies.networkClient,
+            factory: self
+        )
+    }
+    
+    func makeReflectOnQuoteView(
+        quoteContent: String,
+        quoteAuthor: String,
+        successfulSave: @escaping () -> Void
+    ) -> ReflectOnQuoteView {
+        return ReflectOnQuoteView(
+            quoteContent: quoteContent,
+            quoteAuthor: quoteAuthor,
+            quoteRepository: dependencies.quoteRepository,
+            successfulSave: successfulSave
+        )
     }
     
     func makeSavedView() -> some View {
