@@ -13,11 +13,11 @@ struct ReflectOnQuoteView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    // MARK: - State
-    @State var userThoughts: String = ""
+    @State private var userThoughts: String = ""
     @State private var showConfirmationDialog = false
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var viewModel: ReflectOnQuoteViewModel
     
     // MARK: - Constants
     let quoteContent: String
@@ -25,6 +25,19 @@ struct ReflectOnQuoteView: View {
     
     // MARK: - Action
     let successfulSave: () -> Void
+    
+    // MARK: - Dependency
+    private let quoteRepository: QuoteRepository
+    
+    // MARK: - Initialisation
+    init(
+        quoteRepository: QuoteRepository,
+        successfulSave: @escaping () -> Void
+    ) {
+        self.quoteRepository = quoteRepository
+        _viewModel = State(initialValue: ReflectOnQuoteViewModel(repository: quoteRepository))
+        self.successfulSave = successfulSave
+    }
     
     // MARK: - Body
     var body: some View {
@@ -76,5 +89,9 @@ struct ReflectOnQuoteView: View {
 }
 
 #Preview {
-    ReflectOnQuoteView(userThoughts: "", quoteContent: "A man is great not because he hasn't failed; a man is great because failure hasn't stopped him.", quoteAuthor: "Confucius", successfulSave: {})
+    let appContainer = AppContainer(isInMemoryOnly: true)
+    ReflectOnQuoteView(
+        quoteRepository: appContainer.quoteRepository,
+        successfulSave: {}
+    )
 }
