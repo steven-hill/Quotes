@@ -71,7 +71,7 @@ struct ReflectOnQuoteView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
+                    Button("Save") {
                         viewModel.saveQuoteWithReflection(
                             quoteContent: quoteContent,
                             quoteAuthor: quoteAuthor,
@@ -81,12 +81,6 @@ struct ReflectOnQuoteView: View {
                             successfulSave()
                             dismiss()
                         }
-                    }) {
-                        Text("Save")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
                     }
                     .confirmationDialog(
                         "Tapped save button without text in editor.",
