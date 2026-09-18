@@ -15,4 +15,12 @@ final class ReflectOnQuoteViewModel {
     var hasError: Bool = false
     var errorMessage: String = ""
     var showConfirmationDialog: Bool = false
+    
+    //MARK: - Dependency
+    private let repository: QuoteRepository
+    
+    //MARK: - Initialisation
+    init(repository: QuoteRepository) {
+        self.repository = repository
+    }
 }
