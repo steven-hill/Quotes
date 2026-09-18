@@ -56,13 +56,47 @@ struct ReflectOnQuoteView: View {
             .navigationTitle("Reflection")
             .purpleGradientBackgroundModifier()
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel reflection and don't save.") }
-                ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveNewQuoteWithReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
-                    [
-                        IdentifiableButton(button: Button(role: .destructive, action: { dismiss() }, label: { Text("Discard reflection") })),
-                        IdentifiableButton(button: Button(role: .cancel, action: {}, label: { Text("Continue reflecting") }))
-                    ]
-                }, confirmationDialogMessage: "This quote won't be saved if no reflection is added.", showAlert: $showAlert, alertMessage: alertMessage) }
+                ToolbarItem(placement: .topBarLeading) {
+                    CancelButton(accessibilityLabel: "Cancel reflection and don't save.")
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        let quote = Quote(
+                            id: nil,
+                            text: quoteContent,
+                            author: quoteAuthor,
+                            date: Date(),
+                            reflection: userThoughts
+                        )
+                        viewModel.saveQuoteWithReflection(quote: quote)
+                        if viewModel.isQuoteSaved {
+                            successfulSave()
+                            dismiss()
+                        }
+                    }) {
+                        Text("Save")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .confirmationDialog(
+                        "Tapped save button without text in editor.",
+                        isPresented: $viewModel.showConfirmationDialog,
+                        titleVisibility: .hidden
+                    ) {
+                        Button("Discard reflection", role: .destructive) { dismiss() }
+                        Button("Continue reflecting") {}
+                    } message: {
+                        Text("This quote won't be saved if no reflection is added.")
+                    }
+                    .alert("Save failed", isPresented: $viewModel.hasError, presenting: $viewModel.errorMessage) { detail in
+                        Button("Ok") {}
+                    } message: { detail in
+                        Text("\(detail) Please try again.")
+                    }
+                }
             }
         }
     }
@@ -89,7 +123,7 @@ struct ReflectOnQuoteView: View {
 }
 
 #Preview {
-    let appContainer = AppContainer(isInMemoryOnly: true)
+    let appContainer = try! AppContainer(isInMemoryOnly: true)
     ReflectOnQuoteView(
         quoteRepository: appContainer.quoteRepository,
         successfulSave: {}

@@ -26,18 +26,15 @@ final class ReflectOnQuoteViewModel {
     
     //MARK: - Method
     func saveQuoteWithReflection(
-        quote: Quote,
-        reflection: String
+        quote: Quote
     ) {
-        if reflection.isEmpty {
+        if quote.reflection.isEmpty {
             showConfirmationDialog = true
             return
         }
-        var quoteToSave = quote
-        quoteToSave.reflection = reflection
         isQuoteSaved = false
         do {
-            try repository.add(quoteToSave)
+            try repository.add(quote)
             isQuoteSaved = true
         } catch {
             hasError = true
