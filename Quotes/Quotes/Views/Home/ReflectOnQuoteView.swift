@@ -100,26 +100,6 @@ struct ReflectOnQuoteView: View {
             }
         }
     }
-    
-    // MARK: - Save method
-    private func saveNewQuoteWithReflection() {
-        if userThoughts.isEmpty {
-            showConfirmationDialog.toggle()
-        } else {
-            let quoteToSave = SavedQuote(context: managedObjectContext)
-            quoteToSave.quoteContent = quoteContent
-            quoteToSave.quoteAuthor = quoteAuthor
-            quoteToSave.reflection = userThoughts
-            do {
-                try PersistenceController.shared.save()
-                dismiss()
-                successfulSave()
-            } catch {
-                showAlert.toggle()
-                alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-            }
-        }
-    }
 }
 
 #Preview {
