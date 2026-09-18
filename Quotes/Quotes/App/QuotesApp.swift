@@ -24,7 +24,10 @@ struct QuotesApp: App {
     //MARK: - AppState Definition
     private enum AppState {
         case loading
-        case ready(AppContainer)
+        case ready(
+            factory: ViewFactory,
+            isStorageDegraded: Bool
+        )
         case failed(AppContainerError)
     }
     
@@ -46,8 +49,11 @@ struct QuotesApp: App {
             case .loading:
                 ProgressView()
                     .task { await triggerAppContainerInitialisation() }
-            case .ready(let container):
-                TabBar(appContainer: container)
+            case .ready(let factory, let isStorageDegraded):
+                TabBar(
+                    factory: factory,
+                    isStorageDegraded: isStorageDegraded,
+                )
                     .environmentObject(fetchRequestStore)
                     .environmentObject(localNotificationManager)
                     .environmentObject(appearanceManager)
@@ -71,7 +77,11 @@ struct QuotesApp: App {
         do {
             let container = try await AppContainer()
             await MainActor.run {
-                appState = .ready(container)
+                let factory = ViewFactory(dependencies: container)
+                appState = .ready(
+                    factory: factory,
+                    isStorageDegraded: container.isRunningInDegradedMode
+                )
             }
         } catch let error as AppContainerError {
             await MainActor.run {

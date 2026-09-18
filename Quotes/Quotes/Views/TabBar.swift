@@ -19,6 +19,10 @@ struct TabBar: View {
     // MARK: - State
     @State private var selectedTab: Tab = .home
     @State private var showLocalDatabaseFailureAlert = false
+    
+    //MARK: - Property
+    /// Flags persistent storage issue.
+    let isStorageDegraded: Bool
 
     // MARK: - Tab Definition
     private enum Tab {
@@ -28,17 +32,21 @@ struct TabBar: View {
     }
     
     //MARK: - Dependency
-    private let appContainer: AppContainer
+    private let factory: ViewFactory
     
     //MARK: - Initialisation
-    init(appContainer: AppContainer) {
-        self.appContainer = appContainer
+    init(
+        factory: ViewFactory,
+        isStorageDegraded: Bool
+    ) {
+        self.factory = factory
+        self.isStorageDegraded = isStorageDegraded
     }
     
     // MARK: - Body
     var body: some View {
         TabView(selection: $selectedTab) {
-            QuoteOfTheDayView(networkClient: appContainer.networkClient)
+            factory.makeQuoteOfTheDayView()
                 .tabItem {
                     Label("Home", systemImage: selectedTab == .home ? "house.fill" : "house")
                         .environment(\.symbolVariants, selectedTab == .home ? .fill : .none)
@@ -46,7 +54,7 @@ struct TabBar: View {
                 .onAppear { selectedTab = .home }
                 .tag(Tab.home)
             
-            SavedView(quoteRepository: appContainer.quoteRepository)
+            factory.makeSavedView()
                 .tabItem {
                     Label("Saved", systemImage: selectedTab == .saved ? "bookmark.fill" : "bookmark")
                         .environment(\.symbolVariants, selectedTab == .saved ? .fill : .none)
@@ -80,7 +88,7 @@ struct TabBar: View {
             }
         }
         .onAppear {
-            if appContainer.isRunningInDegradedMode {
+            if isStorageDegraded {
                 showLocalDatabaseFailureAlert = true
             }
         }
@@ -96,7 +104,12 @@ struct TabBar: View {
 }
 
 #Preview {
-    TabBar(appContainer: try! AppContainer())
+    TabBar(
+        factory: ViewFactory(
+            dependencies: try! AppContainer(isInMemoryOnly: true)
+        ),
+        isStorageDegraded: false
+    )
         .environmentObject(FetchRequestStore.preview)
         .environmentObject(LocalNotificationManager())
         .environmentObject(AppearanceManager())
