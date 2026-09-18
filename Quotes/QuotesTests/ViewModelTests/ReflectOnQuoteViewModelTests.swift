@@ -21,11 +21,31 @@ struct ReflectOnQuoteViewModelTests {
         #expect(sut.showConfirmationDialog == false, "Should be false.")
     }
     
-    @Test("VM calls method on repository to save a quote with reflection")
-    func savedViewModel_saveQuoteWithReflection_callsMethodOnRepository() {
+    @Test("VM calls method on repository to save a quote with reflection, and updates boolean flag")
+    func savedViewModel_saveQuoteWithReflection_whenUserHasAddedAReflection_callsMethodOnRepositoryAndUpdatesBoolean() {
         let mockRepository = MockQuoteRepository()
         let sut = ReflectOnQuoteViewModel(repository: mockRepository)
         
+        sut.saveQuoteWithReflection(
+            quote: Quote.sample[0],
+            reflection: "Reflection"
+        )
         
+        #expect(mockRepository.addCallCount == 1, "Should call the method once.")
+        #expect(sut.isQuoteSaved, "Should have changed to true.")
+    }
+    
+    @Test("If reflection text is empty, VM returns early, and updates boolean flag")
+    func savedViewModel_saveQuoteWithReflection_whenReflectionIsEmpty_returnsEarlyAndUpdatesBoolean() {
+        let mockRepository = MockQuoteRepository()
+        let sut = ReflectOnQuoteViewModel(repository: mockRepository)
+        
+        sut.saveQuoteWithReflection(
+            quote: Quote.sample[0],
+            reflection: ""
+        )
+        
+        #expect(mockRepository.addCallCount == 0, "Should not call the method.")
+        #expect(sut.showConfirmationDialog, "Should have changed to true.")
     }
 }
