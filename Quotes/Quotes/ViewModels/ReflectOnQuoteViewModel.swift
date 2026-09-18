@@ -10,4 +10,9 @@ import Foundation
 @Observable
 final class ReflectOnQuoteViewModel {
     
+    //MARK: - Properties
+    private(set) var isQuoteSaved: Bool = false
+    var hasError: Bool = false
+    var errorMessage: String = ""
+    var showConfirmationDialog: Bool = false
 }
