@@ -31,9 +31,13 @@ struct ReflectOnQuoteView: View {
     
     // MARK: - Initialisation
     init(
+        quoteContent: String,
+        quoteAuthor: String,
         quoteRepository: QuoteRepository,
         successfulSave: @escaping () -> Void
     ) {
+        self.quoteContent = quoteContent
+        self.quoteAuthor = quoteAuthor
         self.quoteRepository = quoteRepository
         _viewModel = State(initialValue: ReflectOnQuoteViewModel(repository: quoteRepository))
         self.successfulSave = successfulSave
@@ -105,6 +109,8 @@ struct ReflectOnQuoteView: View {
 #Preview {
     let appContainer = try! AppContainer(isInMemoryOnly: true)
     ReflectOnQuoteView(
+        quoteContent: Quote.sample[0].text,
+        quoteAuthor: Quote.sample[0].author,
         quoteRepository: appContainer.quoteRepository,
         successfulSave: {}
     )
