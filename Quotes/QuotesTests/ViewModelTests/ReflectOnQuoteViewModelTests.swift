@@ -22,7 +22,7 @@ struct ReflectOnQuoteViewModelTests {
     }
     
     @Test("VM calls method on repository to save a quote with reflection, and updates boolean flag")
-    func savedViewModel_saveQuoteWithReflection_whenUserHasAddedAReflection_callsMethodOnRepositoryAndUpdatesBoolean() {
+    func reflectOnQuoteViewModel_saveQuoteWithReflection_whenUserHasAddedAReflection_callsMethodOnRepositoryAndUpdatesBoolean() {
         let mockRepository = MockQuoteRepository()
         let sut = ReflectOnQuoteViewModel(repository: mockRepository)
         
@@ -36,7 +36,7 @@ struct ReflectOnQuoteViewModelTests {
     }
     
     @Test("If reflection text is empty, VM returns early, and updates boolean flag")
-    func savedViewModel_saveQuoteWithReflection_whenReflectionIsEmpty_returnsEarlyAndUpdatesBoolean() {
+    func reflectOnQuoteViewModel_saveQuoteWithReflection_whenReflectionIsEmpty_returnsEarlyAndUpdatesBoolean() {
         let mockRepository = MockQuoteRepository()
         let sut = ReflectOnQuoteViewModel(repository: mockRepository)
         

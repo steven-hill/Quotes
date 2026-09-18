@@ -26,9 +26,10 @@ final class ReflectOnQuoteViewModel {
     
     //MARK: - Method
     func saveQuoteWithReflection(
-        quote: Quote
+        quote: Quote,
+        reflection: String
     ) {
-        if quote.reflection.isEmpty {
+        if reflection.isEmpty {
             showConfirmationDialog = true
             return
         }

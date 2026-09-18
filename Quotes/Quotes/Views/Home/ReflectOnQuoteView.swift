@@ -16,9 +16,8 @@ struct ReflectOnQuoteView: View {
     @State private var userThoughts: String = ""
     @State private var viewModel: ReflectOnQuoteViewModel
     
-    // MARK: - Properties
-    let quoteContent: String
-    let quoteAuthor: String
+    // MARK: - Property
+    let quote: Quote
     
     // MARK: - Action
     let successfulSave: () -> Void
@@ -28,13 +27,11 @@ struct ReflectOnQuoteView: View {
     
     // MARK: - Initialisation
     init(
-        quoteContent: String,
-        quoteAuthor: String,
+        quote: Quote,
         quoteRepository: QuoteRepository,
         successfulSave: @escaping () -> Void
     ) {
-        self.quoteContent = quoteContent
-        self.quoteAuthor = quoteAuthor
+        self.quote = quote
         self.quoteRepository = quoteRepository
         _viewModel = State(initialValue: ReflectOnQuoteViewModel(repository: quoteRepository))
         self.successfulSave = successfulSave
@@ -45,10 +42,16 @@ struct ReflectOnQuoteView: View {
         NavigationStack {
             VStack {
                 if UIDevice.current.userInterfaceIdiom == .phone {
-                    QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                    QuoteContentAndAuthorView(
+                        quoteContent: quote.text,
+                        quoteAuthor: quote.author
+                    )
                         .dynamicTypeSizeModifier()
                 } else {
-                    QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                    QuoteContentAndAuthorView(
+                        quoteContent: quote.text,
+                        quoteAuthor: quote.author
+                    )
                 }
                 ReflectionEditor(text: $userThoughts, accessibilityLabel: "Enter your reflection.")
             }
@@ -65,12 +68,15 @@ struct ReflectOnQuoteView: View {
                     Button(action: {
                         let quote = Quote(
                             id: nil,
-                            text: quoteContent,
-                            author: quoteAuthor,
+                            text: quote.text,
+                            author: quote.author,
                             date: Date(),
                             reflection: userThoughts
                         )
-                        viewModel.saveQuoteWithReflection(quote: quote)
+                        viewModel.saveQuoteWithReflection(
+                            quote: quote,
+                            reflection: userThoughts
+                        )
                         if viewModel.isQuoteSaved {
                             successfulSave()
                             dismiss()
@@ -106,8 +112,7 @@ struct ReflectOnQuoteView: View {
 #Preview {
     let appContainer = try! AppContainer(isInMemoryOnly: true)
     ReflectOnQuoteView(
-        quoteContent: Quote.sample[0].text,
-        quoteAuthor: Quote.sample[0].author,
+        quote: Quote.sample[0],
         quoteRepository: appContainer.quoteRepository,
         successfulSave: {}
     )

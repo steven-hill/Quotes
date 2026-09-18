@@ -34,12 +34,16 @@ struct ReflectOnThisQuoteButton: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(.horizontal)
         .sheet(isPresented: $reflectionSheetIsPresented) {
-            ReflectOnQuoteView(userThoughts: userThoughts, quoteContent: quoteContent, quoteAuthor: quoteAuthor, successfulSave: {
-                withAnimation(.spring().delay(0.25)) {
-                    saveIsSuccessful.toggle()
-                }
-            })
-            .presentationDragIndicator(.visible)
+//            ReflectOnQuoteView(
+//                quoteContent: quoteContent,
+//                quoteAuthor: quoteAuthor,
+//                quoteRepository: <#T##any QuoteRepository#>,
+//                successfulSave: {
+//                    withAnimation(.spring().delay(0.25)) {
+//                        saveIsSuccessful.toggle()
+//                    }
+//                })
+//            .presentationDragIndicator(.visible)
         }
         .overlay {
             if saveIsSuccessful {

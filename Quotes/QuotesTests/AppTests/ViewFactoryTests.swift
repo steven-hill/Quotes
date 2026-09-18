@@ -22,6 +22,19 @@ struct ViewFactoryTests {
         #expect(mockDependencyContainer.didAccessNetworkClient == true, "Should have got the network client instance from the dependencies.")
     }
     
+    @Test("View factory successfully accesses quote repository for `ReflectOnQuoteView`")
+    func viewFactory_makeReflectOnQuoteView_pullsCorrectDependencyFromAppDependencies() {
+        let mockDependencyContainer = MockDependencyContainer()
+        let sut = ViewFactory(dependencies: mockDependencyContainer)
+        
+        _ = sut.makeReflectOnQuoteView(
+            quote: Quote.sample[0],
+            successfulSave: {}
+        )
+        
+        #expect(mockDependencyContainer.didAccessQuoteRepository == true, "Should have got the quote repository instance from the dependencies.")
+    }
+    
     @Test("View factory successfully accesses quote repository for `SavedView`")
     func viewFactory_makeSavedView_pullsCorrectDependencyFromAppDependencies() {
         let mockContainer = MockDependencyContainer()
