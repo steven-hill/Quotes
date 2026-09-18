@@ -52,7 +52,7 @@ struct ReflectOnThisQuoteButton: View {
                 quoteAuthor: quoteAuthor,
                 successfulSave: {
                     withAnimation(.spring().delay(0.25)) {
-                        saveIsSuccessful.toggle()
+                        saveIsSuccessful = true
                     }
                 }
             )
@@ -65,7 +65,7 @@ struct ReflectOnThisQuoteButton: View {
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.spring()) {
-                                saveIsSuccessful.toggle()
+                                saveIsSuccessful = false
                             }
                         }
                     }
