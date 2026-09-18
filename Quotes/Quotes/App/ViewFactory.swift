@@ -18,8 +18,12 @@ final class ViewFactory {
         self.dependencies = dependencies
     }
     
-    //MARK: - View Creation Method
+    //MARK: - View Creation Methods
     func makeQuoteOfTheDayView() -> some View {
         QuoteOfTheDayView(networkClient: dependencies.networkClient)
+    }
+    
+    func makeSavedView() -> some View {
+        SavedView(quoteRepository: dependencies.quoteRepository)
     }
 }
