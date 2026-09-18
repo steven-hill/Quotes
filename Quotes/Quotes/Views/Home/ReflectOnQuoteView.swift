@@ -11,15 +11,12 @@ struct ReflectOnQuoteView: View {
     
     // MARK: - Environment
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.managedObjectContext) var managedObjectContext
     
+    // MARK: - State
     @State private var userThoughts: String = ""
-    @State private var showConfirmationDialog = false
-    @State private var showAlert = false
-    @State private var alertMessage = ""
     @State private var viewModel: ReflectOnQuoteViewModel
     
-    // MARK: - Constants
+    // MARK: - Properties
     let quoteContent: String
     let quoteAuthor: String
     
