@@ -6,9 +6,12 @@
 //
 
 import Testing
+@testable import Quotes
 
 struct ViewFactoryTests {
 
-    @Test func doNothing() {
+    @Test("View factory successfully accesses network client for QuoteOfTheDayView")
+    func viewFactory_makeQuoteOfTheDayView_pullsCorrectDependencyFromAppContainer() {
+        let sut = ViewFactory()
     }
 }
