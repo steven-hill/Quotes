@@ -8,7 +8,13 @@
 import Foundation
 import SwiftData
 
-final class AppContainer {
+protocol AppDependencyContaining {
+    var quoteRepository: QuoteRepository { get }
+    var networkClient: Networking { get }
+}
+
+/// Manages business logic dependencies.
+final class AppContainer: AppDependencyContaining {
     
     // MARK: - Properties
     private let modelContainer: ModelContainer

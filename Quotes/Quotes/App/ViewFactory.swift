@@ -9,5 +9,9 @@ import Foundation
 
 /// Manages `SwiftUI` presentation dependencies.
 final class ViewFactory {
+    private let dependencies: AppDependencyContaining
     
+    init(dependencies: AppDependencyContaining) {
+        self.dependencies = dependencies
+    }
 }
