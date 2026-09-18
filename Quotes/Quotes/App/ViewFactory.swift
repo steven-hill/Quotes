@@ -24,11 +24,13 @@ final class ViewFactory {
     }
     
     func makeReflectOnQuoteView(
-        quote: Quote,
+        quoteContent: String,
+        quoteAuthor: String,
         successfulSave: @escaping () -> Void
     ) -> ReflectOnQuoteView {
         return ReflectOnQuoteView(
-            quote: quote,
+            quoteContent: quoteContent,
+            quoteAuthor: quoteAuthor,
             quoteRepository: dependencies.quoteRepository,
             successfulSave: successfulSave
         )

@@ -26,7 +26,8 @@ final class ReflectOnQuoteViewModel {
     
     //MARK: - Method
     func saveQuoteWithReflection(
-        quote: Quote,
+        quoteContent: String,
+        quoteAuthor: String,
         reflection: String
     ) {
         if reflection.isEmpty {
@@ -35,6 +36,13 @@ final class ReflectOnQuoteViewModel {
         }
         isQuoteSaved = false
         do {
+            let quote = Quote(
+                id: nil,
+                text: quoteContent,
+                author: quoteAuthor,
+                date: Date(),
+                reflection: reflection
+            )
             try repository.add(quote)
             isQuoteSaved = true
         } catch {

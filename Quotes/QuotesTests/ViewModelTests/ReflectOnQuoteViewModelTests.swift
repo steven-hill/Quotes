@@ -10,7 +10,7 @@ import Testing
 
 @MainActor
 struct ReflectOnQuoteViewModelTests {
-
+    
     @Test("VM's properties are set correctly on init")
     func reflectOnQuoteViewModel_onInit_propertiesAreSetCorrectly() {
         let sut = ReflectOnQuoteViewModel(repository: MockQuoteRepository())
@@ -27,7 +27,8 @@ struct ReflectOnQuoteViewModelTests {
         let sut = ReflectOnQuoteViewModel(repository: mockRepository)
         
         sut.saveQuoteWithReflection(
-            quote: Quote.sample[0],
+            quoteContent: Quote.sample[0].text,
+            quoteAuthor: Quote.sample[0].author,
             reflection: "Reflection"
         )
         
@@ -41,7 +42,8 @@ struct ReflectOnQuoteViewModelTests {
         let sut = ReflectOnQuoteViewModel(repository: mockRepository)
         
         sut.saveQuoteWithReflection(
-            quote: Quote.sample[0],
+            quoteContent: Quote.sample[0].text,
+            quoteAuthor: Quote.sample[0].author,
             reflection: ""
         )
         

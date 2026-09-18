@@ -28,7 +28,8 @@ struct ViewFactoryTests {
         let sut = ViewFactory(dependencies: mockDependencyContainer)
         
         _ = sut.makeReflectOnQuoteView(
-            quote: Quote.sample[0],
+            quoteContent: Quote.sample[0].text,
+            quoteAuthor: Quote.sample[0].author,
             successfulSave: {}
         )
         
