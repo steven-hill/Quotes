@@ -15,7 +15,7 @@ struct SavedView: View {
     
     // MARK: - State
     @State private var showDeleteQuoteAlert: Bool = false
-    @State private var quoteToDelete: SavedQuote?
+    @State private var quoteToDelete: Quote?
     @State private var savedVM: SavedViewModel
     
     // MARK: - Constants
@@ -111,7 +111,7 @@ struct SavedView: View {
                     }
             }
             .alert("Error",
-                   isPresented: savedVM.hasError,
+                   isPresented: $savedVM.hasError,
                    presenting: savedVM.errorMessage
             ) { _ in
                 Button("Please try again") {}
