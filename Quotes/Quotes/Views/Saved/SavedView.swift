@@ -44,6 +44,9 @@ struct SavedView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .pinkBluePurpleBackgroundModifier()
         }
+        .task {
+            savedVM.fetchAllQuotes()
+        }
         .alert("Error", isPresented: $fetched.fetchRequestHasError, presenting: fetched.fetchState) { detail in
             Button("Retry") {
                 fetched.tryFetch()
