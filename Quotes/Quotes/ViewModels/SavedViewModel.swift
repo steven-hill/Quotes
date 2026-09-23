@@ -11,6 +11,13 @@ import Combine
 @Observable
 final class SavedViewModel {
     
+    // MARK: - Content State Definition
+    enum ContentState {
+        case noSavedQuotes
+        case savedQuotesList
+        case noSearchResults
+    }
+    
     //MARK: - Dependency
     private let repository: QuoteRepository
     
@@ -27,6 +34,15 @@ final class SavedViewModel {
     }
     var isSearchDisabled: Bool {
         quotes.isEmpty && searchText.isEmpty
+    }
+    var contentState: ContentState {
+        if !searchText.isEmpty && quotes.isEmpty {
+            return .noSearchResults
+        } else if searchText.isEmpty && quotes.isEmpty {
+            return .noSavedQuotes
+        } else {
+            return .savedQuotesList
+        }
     }
     
     //MARK: - Initialisation

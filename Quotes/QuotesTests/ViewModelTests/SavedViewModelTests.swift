@@ -126,6 +126,33 @@ struct SavedViewModelTests {
         #expect(sut.isSearchDisabled == false, "Should be false.")
     }
     
+    @Test("`contentState` returns correct value when search text and quotes are both empty")
+    func savedViewModel_contentState_whenSearchTextAndQuotesAreEmpty_returnsCorrectValue() {
+        let sut = SavedViewModel(repository: MockQuoteRepository())
+        
+        #expect(sut.contentState == .noSavedQuotes, "Should be `.noSavedQuotes`.")
+    }
+    
+    @Test("`contentState` returns correct value when search text is not empty but quotes is empty")
+    func savedViewModel_contentState_whenUserSearchFindsNoResults_returnsCorrectValue() async throws {
+        let (sut, _) = makeSUTAndTwoPersistedQuotesInRepository()
+        sut.fetchAllQuotes()
+        
+        sut.searchText = "No results"
+        try await Task.sleep(for: .milliseconds(400))
+        
+        #expect(sut.contentState == .noSearchResults, "Should be `.noSearchResults`.")
+    }
+    
+    @Test("`contentState` returns correct value when quotes array is not empty")
+    func savedViewModel_contentState_whenThereAreSavedQuotes_returnsCorrectValue() {
+        let (sut, _) = makeSUTAndTwoPersistedQuotesInRepository()
+        
+        sut.fetchAllQuotes()
+        
+        #expect(sut.contentState == .savedQuotesList, "Should be `.savedQuotesList`.")
+    }
+    
     @Test("Updating a quote without an id, returns early and updates error properties")
     func savedViewModel_update_whenQuoteIdIsNil_resultsInError() {
         let mockRepository = MockQuoteRepository()

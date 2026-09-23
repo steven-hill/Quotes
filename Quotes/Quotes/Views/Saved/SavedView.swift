@@ -60,28 +60,10 @@ struct SavedView: View {
         .disabled(savedVM.isSearchDisabled)
     }
     
-    // MARK: - Enum for Content States
-    private enum ContentState {
-        case noSearchResults
-        case noSavedQuotes
-        case savedQuotesList
-    }
-    
-    // MARK: - Computed Property for Content State
-    private var contentState: ContentState {
-        if !savedVM.searchText.isEmpty && savedVM.quotes.isEmpty {
-            return .noSearchResults
-        } else if savedVM.quotes.isEmpty && !isSearching {
-            return .noSavedQuotes
-        } else {
-            return .savedQuotesList
-        }
-    }
-    
     // MARK: - UI Components
     @ViewBuilder
     private var content: some View {
-        switch contentState {
+        switch savedVM.contentState {
         case .noSearchResults:
             NoSearchResultsFoundView(searchQuery: $savedVM.searchText)
         case .noSavedQuotes:
