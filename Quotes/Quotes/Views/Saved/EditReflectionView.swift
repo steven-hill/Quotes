@@ -13,7 +13,7 @@ struct EditReflectionView: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: - Constants
-    let savedQuote: SavedQuote
+    let savedQuote: Quote
     let quoteContent: String
     let quoteAuthor: String
     
@@ -56,28 +56,31 @@ struct EditReflectionView: View {
     }
     
     // MARK: - Save method
+    // TODO: - Move to VM?
     private func saveEditedReflection() {
-        if userThoughts.isEmpty {
-            showConfirmationDialog.toggle()
-        } else {
-            savedQuote.reflection = userThoughts
-            do {
-                try PersistenceController.shared.save()
-                dismiss()
-                successfulSave()
-            } catch {
-                showAlert.toggle()
-                alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-            }
-        }
+//        if userThoughts.isEmpty {
+//            showConfirmationDialog.toggle()
+//        } else {
+//            savedQuote.reflection = userThoughts
+//            do {
+//                try PersistenceController.shared.save()
+//                dismiss()
+//                successfulSave()
+//            } catch {
+//                showAlert.toggle()
+//                alertMessage = PersistenceController.shared.persistenceError.localizedDescription
+//            }
+//        }
     }
 }
 
 #Preview {
-    let previewSavedQuote = SavedQuote()
+    let previewSavedQuote = Quote.sample[0]
     EditReflectionView(
         savedQuote: previewSavedQuote,
-        quoteContent: "Never allow someone to be your priority while allowing yourself to be their option.",
-        quoteAuthor: "Mark Twain",
-        userThoughts: "User's reflection goes here.", successfulSave: {})
+        quoteContent: previewSavedQuote.text,
+        quoteAuthor: previewSavedQuote.author,
+        userThoughts: "User's reflection goes here.",
+        successfulSave: {}
+    )
 }

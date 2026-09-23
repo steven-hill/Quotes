@@ -21,9 +21,8 @@ struct SavedCardView: View {
     @State private var showDeleteQuoteAlert = false
     @State private var saveIsSuccessful = false
     
-    // MARK: - Constants
-    let deleteQuoteAlertMessage = "This action can't be undone."
-    let savedQuote: SavedQuote
+    // MARK: - Constant
+    let savedQuote: Quote
     
     // MARK: - Body
     var body: some View {
@@ -35,29 +34,34 @@ struct SavedCardView: View {
                             Spacer()
                             menuButton
                                 .sheet(isPresented: $isEditReflectionSheetPresented) {
-                                    EditReflectionView(savedQuote: savedQuote, quoteContent: savedQuote.quoteContent ?? "Content unavailable", quoteAuthor: savedQuote.quoteAuthor ?? "Author name unavailable", userThoughts: savedQuote.reflection ?? "Reflection unavailable", successfulSave: {
+                                    EditReflectionView(
+                                        savedQuote: savedQuote,
+                                        quoteContent: savedQuote.text,
+                                        quoteAuthor: savedQuote.author,
+                                        userThoughts: savedQuote.reflection,
+                                        successfulSave: {
                                         withAnimation(.spring().delay(0.25)) {
                                             saveIsSuccessful.toggle()
                                         }
                                     })
                                         .presentationDragIndicator(.visible)
                                 }
-                                .alert("Error", isPresented: $showAlert, presenting: alertMessage) { detail in
+                                .alert("Error",
+                                       isPresented: $showAlert,
+                                       presenting: alertMessage
+                                ) { detail in
                                     Button("Please try again") {}
-                                } message: { detail in
+                                } message: { _ in
                                     Text(alertMessage)
                                 }
-                                .alert("Are you sure?", isPresented: $showDeleteQuoteAlert, presenting: deleteQuoteAlertMessage) { detail in
+                                .alert("Are you sure?",
+                                       isPresented: $showDeleteQuoteAlert
+                                ) {
                                     Button("Delete", role: .destructive) {
-                                        do {
-                                            try PersistenceController.shared.delete(savedQuote: savedQuote)
-                                        } catch {
-                                            showAlert.toggle()
-                                            alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-                                        }
+                                    // TODO: - Add method to delete the saved quote.
                                     }
-                                } message: { detail in
-                                    Text(deleteQuoteAlertMessage)
+                                } message: {
+                                    Text(Constants.AlertMessage.deleteQuoteAlertMessage)
                                 }
                         }
                     }
@@ -90,18 +94,30 @@ struct SavedCardView: View {
                 isPopoverPresented.toggle()
                 presentActivityController()
             } label: {
-                Label("Share this quote", systemImage: "square.and.arrow.up")
+                Label(
+                    "Share this quote",
+                    systemImage: "square.and.arrow.up"
+                )
             }
-            Button("Edit your reflection", systemImage: "square.and.pencil") {
+            Button(
+                "Edit your reflection",
+                systemImage: "square.and.pencil"
+            ) {
                 isEditReflectionSheetPresented.toggle()
             }
             Button(role: .destructive) {
                 showDeleteQuoteAlert.toggle()
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label(
+                    "Delete",
+                    systemImage: "trash"
+                )
             }
         } label: {
-            Label("", systemImage: "ellipsis.circle.fill")
+            Label(
+                "",
+                systemImage: "ellipsis.circle.fill"
+            )
         }
         .accessibilityLabel("Menu")
     }
@@ -123,7 +139,7 @@ struct SavedCardView: View {
     private var quoteContentView: some View {
         VStack {
             QuoteSymbol(isOpen: true)
-            Text(savedQuote.quoteContent ?? "Quote unavailable")
+            Text(savedQuote.text)
                 .minimumScaleFactor(0.5)
                 .padding([.leading, .trailing])
                 .font(.callout)
@@ -132,7 +148,7 @@ struct SavedCardView: View {
     }
 
     private var quoteAuthorView: some View {
-        Text(savedQuote.quoteAuthor ?? "Author name unavailable")
+        Text(savedQuote.author)
             .font(.callout)
     }
 }
@@ -141,7 +157,7 @@ struct SavedCardView: View {
 extension SavedCardView {
     private func presentActivityController() {
         var quoteToShare: String = ""
-        quoteToShare = "\(savedQuote.quoteContent ?? "Content unavailable")" + " - " + "\(savedQuote.quoteAuthor ?? "Author name unavailable")"
+        quoteToShare = "\(savedQuote.text)" + " - " + "\(savedQuote.author)"
         let activityController = UIActivityViewController(activityItems: [quoteToShare], applicationActivities: nil)
         
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -161,6 +177,6 @@ extension SavedCardView {
 }
 
 #Preview {
-    SavedCardView(savedQuote: FetchRequestStore.preview.savedQuotes[0])
+    SavedCardView(savedQuote: Quote.sample[0])
         .padding()
 }

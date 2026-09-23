@@ -8,20 +8,40 @@
 import Foundation
 import Combine
 
+@Observable
 final class SavedViewModel {
+    
+    // MARK: - Content State Definition
+    enum ContentState {
+        case noSavedQuotes
+        case savedQuotesList
+        case noSearchResults
+    }
     
     //MARK: - Dependency
     private let repository: QuoteRepository
     
     //MARK: - Properties
     private(set) var quotes: [Quote] = []
-    private(set) var hasError: Bool = false
+    var hasError: Bool = false
     private(set) var errorMessage: String?
     private let searchSubject = PassthroughSubject<String, Never>()
     private var cancellables = Set<AnyCancellable>()
     var searchText: String = "" {
         didSet {
             searchSubject.send(searchText)
+        }
+    }
+    var isSearchDisabled: Bool {
+        quotes.isEmpty && searchText.isEmpty
+    }
+    var contentState: ContentState {
+        if !searchText.isEmpty && quotes.isEmpty {
+            return .noSearchResults
+        } else if searchText.isEmpty && quotes.isEmpty {
+            return .noSavedQuotes
+        } else {
+            return .savedQuotesList
         }
     }
     
@@ -31,7 +51,7 @@ final class SavedViewModel {
         setupSearch()
     }
     
-    //MARK: - Methods
+    //MARK: - Search-related Methods
     private func setupSearch() {
         searchSubject
             .debounce(for: .seconds(0.3), scheduler: RunLoop.main)
@@ -49,6 +69,7 @@ final class SavedViewModel {
         text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
+    //MARK: - Persistence-related Methods
     func fetchAllQuotes(matching query: String? = nil) {
         do {
             quotes = try repository.loadAllQuotes(matching: query ?? searchText)

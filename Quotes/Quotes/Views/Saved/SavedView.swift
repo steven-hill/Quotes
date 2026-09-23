@@ -13,19 +13,10 @@ struct SavedView: View {
     // MARK: - Environment
     @Environment(\.isSearching) private var isSearching
     
-    // MARK: - Environment object
-    @EnvironmentObject var fetched: FetchRequestStore
-    
     // MARK: - State
-    @State private var searchText: FetchRequestStore.Search = .init()
-    @State private var showAlert = false
-    @State private var alertMessage = ""
     @State private var showDeleteQuoteAlert: Bool = false
-    @State private var quoteToDelete: SavedQuote?
+    @State private var quoteToDelete: Quote?
     @State private var savedVM: SavedViewModel
-    
-    // MARK: - Constants
-    let deleteQuoteAlertMessage = "This action can't be undone."
     
     // MARK: - Dependency
     private let quoteRepository: QuoteRepository
@@ -35,7 +26,7 @@ struct SavedView: View {
         self.quoteRepository = quoteRepository
         _savedVM = State(initialValue: SavedViewModel(repository: quoteRepository))
     }
-        
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -44,48 +35,34 @@ struct SavedView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .pinkBluePurpleBackgroundModifier()
         }
-        .alert("Error", isPresented: $fetched.fetchRequestHasError, presenting: fetched.fetchState) { detail in
+        .task {
+            savedVM.fetchAllQuotes()
+        }
+        .alert("Error",
+               isPresented: $savedVM.hasError,
+               presenting: savedVM.errorMessage
+        ) { _ in
             Button("Retry") {
-                fetched.tryFetch()
+                savedVM.fetchAllQuotes()
             }
-        } message: { detail in
-            if case let .failure(error) = detail {
-                Text(error.localizedDescription)
+        } message: { _ in
+            if let message = savedVM.errorMessage {
+                Text(message)
             }
         }
-        .searchable(text: $searchText.query, prompt: "Search by author or quote")
-        .disabled(isSearchDisabled)
-        .onChange(of: searchText) { _, newValue in
-            updateSearchResults(newValue)
-        }
-    }
-    
-    // MARK: - Enum for Content States
-    private enum ContentState {
-        case noSearchResults
-        case noSavedQuotes
-        case savedQuotesList
-    }
-    
-    // MARK: - Computed Property for Content State
-    private var contentState: ContentState {
-        if !searchText.query.isEmpty && fetched.filteredResults.isEmpty {
-            return .noSearchResults
-        } else if !searchText.query.isEmpty && fetched.savedQuotes.isEmpty {
-            return .noSearchResults
-        } else if fetched.savedQuotes.isEmpty && !isSearching {
-            return .noSavedQuotes
-        } else {
-            return .savedQuotesList
-        }
+        .searchable(
+            text: $savedVM.searchText,
+            prompt: "Search by author or quote"
+        )
+        .disabled(savedVM.isSearchDisabled)
     }
     
     // MARK: - UI Components
     @ViewBuilder
     private var content: some View {
-        switch contentState {
+        switch savedVM.contentState {
         case .noSearchResults:
-            NoSearchResultsFoundView(searchQuery: $searchText.query)
+            NoSearchResultsFoundView(searchQuery: $savedVM.searchText)
         case .noSavedQuotes:
             NoSavedQuotesView()
         case .savedQuotesList:
@@ -95,13 +72,16 @@ struct SavedView: View {
     
     private var savedQuotesList: some View {
         List {
-            ForEach(fetched.savedQuotes, id: \.objectID) { savedQuote in
+            ForEach(savedVM.quotes, id: \.id) { savedQuote in
                 SavedCardView(savedQuote: savedQuote)
                     .listRowSeparator(.hidden)
                     .listRowClearBackgroundModifier()
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    .swipeActions(
+                        edge: .trailing,
+                        allowsFullSwipe: false
+                    ) {
                         Button(role: .destructive) {
-                            showDeleteQuoteAlert.toggle()
+                            showDeleteQuoteAlert = true
                             quoteToDelete = savedQuote
                         } label: {
                             Label("Delete", systemImage: "trash")
@@ -109,56 +89,34 @@ struct SavedView: View {
                         .tint(.red)
                     }
             }
-            .onDelete(perform: removeQuote)
-            .alert("Error", isPresented: $showAlert, presenting: alertMessage) { detail in
+            .alert("Error",
+                   isPresented: $savedVM.hasError,
+                   presenting: savedVM.errorMessage
+            ) { _ in
                 Button("Please try again") {}
-            } message: { detail in
-                Text(alertMessage)
-            }
-        }
-        .listStyle(PlainListStyle())
-        .frame(maxWidth: .infinity)
-        .alert("Are you sure?", isPresented: $showDeleteQuoteAlert, presenting: quoteToDelete) { quoteToDelete in
-            Button("Delete", role: .destructive) {
-                do {
-                    try PersistenceController.shared.delete(savedQuote: quoteToDelete)
-                } catch {
-                    showAlert.toggle()
-                    alertMessage = PersistenceController.shared.persistenceError.localizedDescription
+            } message: { _ in
+                if let message = savedVM.errorMessage {
+                    Text(message)
                 }
             }
-        } message: { _ in
-            Text(deleteQuoteAlertMessage)
         }
-    }
-    
-    // MARK: - Disable search bar based on content state
-    private var isSearchDisabled: Bool {
-        if case .noSavedQuotes = contentState {
-            return true
+        .listStyle(.plain)
+        .frame(maxWidth: .infinity)
+        .alert("Are you sure?",
+               isPresented: $showDeleteQuoteAlert
+        ) { 
+            Button("Delete", role: .destructive) {
+                if let quote = quoteToDelete {
+                    savedVM.delete(quote: quote)
+                }
+            }
+        } message: { 
+            Text(Constants.AlertMessage.deleteQuoteAlertMessage)
         }
-        return false
-    }
-    
-    // MARK: - Update search results method
-    private func updateSearchResults(_ newValue: FetchRequestStore.Search) {
-        if newValue.query.isEmpty && !isSearching {
-            fetched.reFetchAll()
-        } else {
-            fetched.filterListByAuthorOrQuote(with: newValue.query)
-        }
-    }
-}
-
-// MARK: - Remove quote method
-extension SavedView {
-    func removeQuote(at offsets: IndexSet) {
-        fetched.deleteQuote(atOffsets: offsets)
     }
 }
 
 #Preview {
     let previewContainer = AppContainer.makePreviewContainer(withSampleData: true)
     SavedView(quoteRepository: SwiftDataQuoteRepository(container: previewContainer))
-        .environmentObject(FetchRequestStore.preview)
 }
