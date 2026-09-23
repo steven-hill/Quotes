@@ -51,7 +51,7 @@ final class SavedViewModel {
         setupSearch()
     }
     
-    //MARK: - Methods
+    //MARK: - Search-related Methods
     private func setupSearch() {
         searchSubject
             .debounce(for: .seconds(0.3), scheduler: RunLoop.main)
@@ -69,6 +69,7 @@ final class SavedViewModel {
         text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
+    //MARK: - Persistence-related Methods
     func fetchAllQuotes(matching query: String? = nil) {
         do {
             quotes = try repository.loadAllQuotes(matching: query ?? searchText)
