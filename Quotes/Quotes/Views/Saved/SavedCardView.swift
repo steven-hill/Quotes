@@ -55,14 +55,13 @@ struct SavedCardView: View {
                                     Text(alertMessage)
                                 }
                                 .alert("Are you sure?",
-                                       isPresented: $showDeleteQuoteAlert,
-                                       presenting: Constants.AlertMessage.deleteQuoteAlertMessage
-                                ) { _ in
+                                       isPresented: $showDeleteQuoteAlert
+                                ) {
                                     Button("Delete", role: .destructive) {
                                     // TODO: - Add method to delete the saved quote.
                                     }
-                                } message: { _ in
-                                    Text("Delete failed")
+                                } message: {
+                                    Text(Constants.AlertMessage.deleteQuoteAlertMessage)
                                 }
                         }
                     }
