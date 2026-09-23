@@ -100,6 +100,32 @@ struct SavedViewModelTests {
         #expect(sut.quotes.count == 1, "Should have one quote after filtering.")
     }
     
+    @Test("`isSearchDisabled` returns true when the array of saved quotes and the search text are both empty")
+    func savedViewModel_isSearchDisabled_whenThereAreNoSavedQuotesAndSearchTextIsEmpty_returnsTrue() {
+        let sut = SavedViewModel(repository: MockQuoteRepository())
+        
+        #expect(sut.isSearchDisabled, "Should be true.")
+    }
+    
+    @Test("`isSearchDisabled` returns false when the array of saved quotes is not empty")
+    func savedViewModel_isSearchDisabled_whenQuotesIsNotEmpty_returnsFalse() {
+        let (sut, _) = makeSUTAndTwoPersistedQuotesInRepository()
+        
+        sut.fetchAllQuotes()
+        
+        #expect(sut.isSearchDisabled == false, "Should be false.")
+    }
+    
+    @Test("`isSearchDisabled` returns false when search text is not empty")
+    func savedViewModel_isSearchDisabled_whenSearchTextIsNotEmpty_returnsFalse() {
+        let (sut, _) = makeSUTAndTwoPersistedQuotesInRepository()
+        sut.fetchAllQuotes()
+        
+        sut.searchText = "First"
+        
+        #expect(sut.isSearchDisabled == false, "Should be false.")
+    }
+    
     @Test("Updating a quote without an id, returns early and updates error properties")
     func savedViewModel_update_whenQuoteIdIsNil_resultsInError() {
         let mockRepository = MockQuoteRepository()

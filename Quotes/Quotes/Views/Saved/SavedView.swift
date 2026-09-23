@@ -29,7 +29,7 @@ struct SavedView: View {
         self.quoteRepository = quoteRepository
         _savedVM = State(initialValue: SavedViewModel(repository: quoteRepository))
     }
-        
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -57,7 +57,7 @@ struct SavedView: View {
             text: $savedVM.searchText,
             prompt: "Search by author or quote"
         )
-        .disabled(isSearchDisabled)
+        .disabled(savedVM.isSearchDisabled)
     }
     
     // MARK: - Enum for Content States
@@ -138,16 +138,9 @@ struct SavedView: View {
             }
         }
     }
+}
     
-    // MARK: - Disable search bar based on content state
-    private var isSearchDisabled: Bool {
-        if case .noSavedQuotes = contentState {
-            return true
-        }
-        return false
-    }
-    
-    // MARK: - Update search results method
+//    // MARK: - Update search results method
 //    private func updateSearchResults(_ newValue: FetchRequestStore.Search) {
 //        if newValue.query.isEmpty && !isSearching {
 //            fetched.reFetchAll()
@@ -155,9 +148,9 @@ struct SavedView: View {
 //            fetched.filterListByAuthorOrQuote(with: newValue.query)
 //        }
 //    }
-}
-
-// MARK: - Remove quote method
+//}
+//
+//// MARK: - Remove quote method
 //extension SavedView {
 //    func removeQuote(at offsets: IndexSet) {
 //        fetched.deleteQuote(atOffsets: offsets)

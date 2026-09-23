@@ -25,6 +25,9 @@ final class SavedViewModel {
             searchSubject.send(searchText)
         }
     }
+    var isSearchDisabled: Bool {
+        quotes.isEmpty && searchText.isEmpty
+    }
     
     //MARK: - Initialisation
     init(repository: QuoteRepository) {
