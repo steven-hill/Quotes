@@ -18,9 +18,6 @@ struct SavedView: View {
     @State private var quoteToDelete: Quote?
     @State private var savedVM: SavedViewModel
     
-    // MARK: - Constants
-    let deleteQuoteAlertMessage = "This action can't be undone."
-    
     // MARK: - Dependency
     private let quoteRepository: QuoteRepository
     
@@ -84,7 +81,7 @@ struct SavedView: View {
                         allowsFullSwipe: false
                     ) {
                         Button(role: .destructive) {
-                            showDeleteQuoteAlert.toggle()
+                            showDeleteQuoteAlert = true
                             quoteToDelete = savedQuote
                         } label: {
                             Label("Delete", systemImage: "trash")
@@ -106,18 +103,14 @@ struct SavedView: View {
         .listStyle(.plain)
         .frame(maxWidth: .infinity)
         .alert("Are you sure?",
-               isPresented: $savedVM.hasError,
-               presenting: savedVM.errorMessage
+               isPresented: $showDeleteQuoteAlert,
+               presenting: Constants.AlertMessage.deleteQuoteAlertMessage
         ) { _ in
             Button("Delete", role: .destructive) {
-                if let quote = quoteToDelete {
-                    savedVM.delete(quote: quote)
-                }
+            // TODO: - Add method to delete the saved quote.
             }
         } message: { _ in
-            if let message = savedVM.errorMessage {
-                Text(message)
-            }
+            Text("Delete failed")
         }
     }
 }

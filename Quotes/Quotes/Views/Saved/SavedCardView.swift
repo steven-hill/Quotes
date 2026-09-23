@@ -21,8 +21,7 @@ struct SavedCardView: View {
     @State private var showDeleteQuoteAlert = false
     @State private var saveIsSuccessful = false
     
-    // MARK: - Constants
-    private let deleteQuoteAlertMessage = "This action can't be undone."
+    // MARK: - Constant
     let savedQuote: Quote
     
     // MARK: - Body
@@ -57,13 +56,13 @@ struct SavedCardView: View {
                                 }
                                 .alert("Are you sure?",
                                        isPresented: $showDeleteQuoteAlert,
-                                       presenting: deleteQuoteAlertMessage
+                                       presenting: Constants.AlertMessage.deleteQuoteAlertMessage
                                 ) { _ in
                                     Button("Delete", role: .destructive) {
                                     // TODO: - Add method to delete the saved quote.
                                     }
                                 } message: { _ in
-                                    Text(deleteQuoteAlertMessage)
+                                    Text("Delete failed")
                                 }
                         }
                     }
