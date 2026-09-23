@@ -121,23 +121,6 @@ struct SavedView: View {
         }
     }
 }
-    
-//    // MARK: - Update search results method
-//    private func updateSearchResults(_ newValue: FetchRequestStore.Search) {
-//        if newValue.query.isEmpty && !isSearching {
-//            fetched.reFetchAll()
-//        } else {
-//            fetched.filterListByAuthorOrQuote(with: newValue.query)
-//        }
-//    }
-//}
-//
-//// MARK: - Remove quote method
-//extension SavedView {
-//    func removeQuote(at offsets: IndexSet) {
-//        fetched.deleteQuote(atOffsets: offsets)
-//    }
-//}
 
 #Preview {
     let previewContainer = AppContainer.makePreviewContainer(withSampleData: true)
