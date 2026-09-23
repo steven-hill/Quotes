@@ -16,7 +16,7 @@ final class SavedViewModel {
     
     //MARK: - Properties
     private(set) var quotes: [Quote] = []
-    private(set) var hasError: Bool = false
+    var hasError: Bool = false
     private(set) var errorMessage: String?
     private let searchSubject = PassthroughSubject<String, Never>()
     private var cancellables = Set<AnyCancellable>()
