@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B177CF62C5ADF4A00CCEC8B /* PersistenceControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B177CF52C5ADF4A00CCEC8B /* PersistenceControllerTests.swift */; };
 		5B3FB7A62C52DE46000994DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3FB7A52C52DE46000994DC /* Assets.xcassets */; };
 		5B3FB7A92C52DE46000994DC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3FB7A82C52DE46000994DC /* Preview Assets.xcassets */; };
 		5B3FB7C22C52DE47000994DC /* QuotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */; };
@@ -33,7 +32,6 @@
 		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
 		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
 		5B5CB65F305B148900262E01 /* AppLaunchErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */; };
-		5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */; };
 		5BDE29A73052E955002F74F3 /* QuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A63052E955002F74F3 /* QuoteRepository.swift */; };
 		5BDE29A93052EA1C002F74F3 /* SwiftDataQuoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29A83052EA1C002F74F3 /* SwiftDataQuoteRepository.swift */; };
 		5BDE29AD3052F697002F74F3 /* PersistedQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */; };
@@ -61,7 +59,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5B177CF52C5ADF4A00CCEC8B /* PersistenceControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceControllerTests.swift; sourceTree = "<group>"; };
 		5B3FB79E2C52DE45000994DC /* Quotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3FB7A52C52DE46000994DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B3FB7A82C52DE46000994DC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -90,7 +87,6 @@
 		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
 		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
 		5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchErrorView.swift; sourceTree = "<group>"; };
-		5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStoreTests.swift; sourceTree = "<group>"; };
 		5BDE29A63052E955002F74F3 /* QuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteRepository.swift; sourceTree = "<group>"; };
 		5BDE29A83052EA1C002F74F3 /* SwiftDataQuoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataQuoteRepository.swift; sourceTree = "<group>"; };
 		5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedQuote.swift; sourceTree = "<group>"; };
@@ -144,8 +140,6 @@
 		5B177CF42C5ADF0F00CCEC8B /* PersistenceTests */ = {
 			isa = PBXGroup;
 			children = (
-				5B177CF52C5ADF4A00CCEC8B /* PersistenceControllerTests.swift */,
-				5BCF66892C98CDDA00FFEAAA /* FetchRequestStoreTests.swift */,
 				5BDE29B03053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift */,
 			);
 			path = PersistenceTests;
@@ -480,8 +474,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BCF668A2C98CDDA00FFEAAA /* FetchRequestStoreTests.swift in Sources */,
-				5B177CF62C5ADF4A00CCEC8B /* PersistenceControllerTests.swift in Sources */,
 				5BDE29B13053360B002F74F3 /* SwiftDataQuoteRepositoryTests.swift in Sources */,
 				5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */,
 				5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */,
