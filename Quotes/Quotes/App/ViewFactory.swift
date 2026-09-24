@@ -19,7 +19,7 @@ final class ViewFactory {
     }
     
     //MARK: - View Creation Methods
-    func makeQuoteOfTheDayView() -> some View {
+    func makeQuoteOfTheDayView() -> QuoteOfTheDayView {
         QuoteOfTheDayView(
             networkClient: dependencies.networkClient,
             factory: self
@@ -39,7 +39,29 @@ final class ViewFactory {
         )
     }
     
-    func makeSavedView() -> some View {
-        SavedView(quoteRepository: dependencies.quoteRepository)
+    func makeSavedView() -> SavedView {
+        SavedView(
+            quoteRepository: dependencies.quoteRepository,
+            factory: self
+        )
+    }
+    
+    func makeSavedCardView(savedQuote: Quote) -> SavedCardView {
+        SavedCardView(
+            savedQuote: savedQuote,
+            factory: self
+        )
+    }
+    
+    func makeEditReflectionView(
+        savedQuote: Quote,
+        userThoughts: String,
+        successfulSave: @escaping () -> Void
+    ) -> EditReflectionView {
+        EditReflectionView(
+            savedQuote: savedQuote,
+            userThoughts: userThoughts,
+            successfulSave: successfulSave
+        )
     }
 }
