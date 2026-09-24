@@ -12,30 +12,43 @@ struct EditReflectionView: View {
     // MARK: - Environment
     @Environment(\.dismiss) private var dismiss
     
-    // MARK: - Constants
-    let savedQuote: Quote
-    let quoteContent: String
-    let quoteAuthor: String
-    
     // MARK: - State
-    @State var userThoughts: String
+    @State var userThoughts: String = ""
     @State private var showConfirmationDialog = false
     @State private var showAlert = false
     @State private var alertMessage = ""
     
-    // MARK: - Action
-    let successfulSave: () -> Void
+    // MARK: - Dependencies
+    private let savedQuote: Quote
+    private let successfulSave: () -> Void
+    
+    // MARK: - Initialisation
+    init(
+        savedQuote: Quote,
+        userThoughts: String,
+        successfulSave: @escaping () -> Void
+    ) {
+        self.savedQuote = savedQuote
+        self.userThoughts = userThoughts
+        self.successfulSave = successfulSave
+    }
     
     // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
                 if UIDevice.current.userInterfaceIdiom == .phone {
-                    QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
-                        .minimumScaleFactor(0.75)
-                        .dynamicTypeSizeModifier()
+                    QuoteContentAndAuthorView(
+                        quoteContent: savedQuote.text,
+                        quoteAuthor: savedQuote.author
+                    )
+                    .minimumScaleFactor(0.75)
+                    .dynamicTypeSizeModifier()
                 } else {
-                    QuoteContentAndAuthorView(quoteContent: quoteContent, quoteAuthor: quoteAuthor)
+                    QuoteContentAndAuthorView(
+                        quoteContent: savedQuote.text,
+                        quoteAuthor: savedQuote.author
+                    )
                 }
                 ReflectionEditor(text: $userThoughts, accessibilityLabel: "Edit your reflection.")
             }
@@ -75,11 +88,8 @@ struct EditReflectionView: View {
 }
 
 #Preview {
-    let previewSavedQuote = Quote.sample[0]
     EditReflectionView(
-        savedQuote: previewSavedQuote,
-        quoteContent: previewSavedQuote.text,
-        quoteAuthor: previewSavedQuote.author,
+        savedQuote: Quote.sample[0],
         userThoughts: "User's reflection goes here.",
         successfulSave: {}
     )

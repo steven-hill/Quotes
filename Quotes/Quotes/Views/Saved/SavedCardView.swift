@@ -86,10 +86,8 @@ struct SavedCardView: View {
             .cardBackgroundModifier()
         }
         .sheet(isPresented: $isEditReflectionSheetPresented) {
-            EditReflectionView(
+            factory.makeEditReflectionView(
                 savedQuote: savedQuote,
-                quoteContent: savedQuote.text,
-                quoteAuthor: savedQuote.author,
                 userThoughts: savedQuote.reflection,
                 successfulSave: {
                     withAnimation(.spring().delay(0.25)) {

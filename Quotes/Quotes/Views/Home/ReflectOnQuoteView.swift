@@ -16,15 +16,11 @@ struct ReflectOnQuoteView: View {
     @State private var userThoughts: String = ""
     @State private var viewModel: ReflectOnQuoteViewModel
     
-    // MARK: - Properties
-    let quoteContent: String
-    let quoteAuthor: String
-    
-    // MARK: - Dependency
+    // MARK: - Dependencies
+    private let quoteContent: String
+    private let quoteAuthor: String
     private let quoteRepository: QuoteRepository
-    
-    // MARK: - Action
-    let successfulSave: () -> Void
+    private let successfulSave: () -> Void
     
     // MARK: - Initialisation
     init(
