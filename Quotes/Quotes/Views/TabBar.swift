@@ -22,7 +22,7 @@ struct TabBar: View {
     
     //MARK: - Property
     /// Flags persistent storage issue.
-    let isStorageDegraded: Bool
+    private let isStorageDegraded: Bool
 
     // MARK: - Tab Definition
     private enum Tab {
@@ -110,7 +110,6 @@ struct TabBar: View {
         ),
         isStorageDegraded: false
     )
-        .environmentObject(FetchRequestStore.preview)
         .environmentObject(LocalNotificationManager())
         .environmentObject(AppearanceManager())
         .environmentObject(TabRouter())
