@@ -45,4 +45,11 @@ final class ViewFactory {
             factory: self
         )
     }
+    
+    func makeSavedCardView(savedQuote: Quote) -> SavedCardView {
+        SavedCardView(
+            savedQuote: savedQuote,
+            factory: self
+        )
+    }
 }

@@ -21,8 +21,18 @@ struct SavedCardView: View {
     @State private var showDeleteQuoteAlert = false
     @State private var saveIsSuccessful = false
     
-    // MARK: - Constant
-    let savedQuote: Quote
+    // MARK: - Dependencies
+    private let savedQuote: Quote
+    private let factory: ViewFactory
+    
+    // MARK: - Initialisation
+    init(
+        savedQuote: Quote,
+        factory: ViewFactory
+    ) {
+        self.savedQuote = savedQuote
+        self.factory = factory
+    }
     
     // MARK: - Body
     var body: some View {
@@ -177,6 +187,11 @@ extension SavedCardView {
 }
 
 #Preview {
-    SavedCardView(savedQuote: Quote.sample[0])
-        .padding()
+    let appContainer = try! AppContainer(isInMemoryOnly: true)
+    let viewFactory = ViewFactory(dependencies: appContainer)
+    SavedCardView(
+        savedQuote: Quote.sample[0],
+        factory: viewFactory
+    )
+    .padding()
 }

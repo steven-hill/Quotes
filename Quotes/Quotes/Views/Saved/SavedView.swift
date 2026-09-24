@@ -78,7 +78,7 @@ struct SavedView: View {
     private var savedQuotesList: some View {
         List {
             ForEach(savedVM.quotes, id: \.id) { savedQuote in
-                SavedCardView(savedQuote: savedQuote)
+                factory.makeSavedCardView(savedQuote: savedQuote)
                     .listRowSeparator(.hidden)
                     .listRowClearBackgroundModifier()
                     .swipeActions(
