@@ -40,6 +40,9 @@ final class ViewFactory {
     }
     
     func makeSavedView() -> SavedView {
-        SavedView(quoteRepository: dependencies.quoteRepository)
+        SavedView(
+            quoteRepository: dependencies.quoteRepository,
+            factory: self
+        )
     }
 }

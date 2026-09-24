@@ -18,13 +18,18 @@ struct SavedView: View {
     @State private var quoteToDelete: Quote?
     @State private var savedVM: SavedViewModel
     
-    // MARK: - Dependency
+    // MARK: - Dependencies
     private let quoteRepository: QuoteRepository
+    private let factory: ViewFactory
     
     // MARK: - Initialisation
-    init(quoteRepository: QuoteRepository) {
+    init(
+        quoteRepository: QuoteRepository,
+        factory: ViewFactory
+    ) {
         self.quoteRepository = quoteRepository
         _savedVM = State(initialValue: SavedViewModel(repository: quoteRepository))
+        self.factory = factory
     }
     
     // MARK: - Body
@@ -117,6 +122,10 @@ struct SavedView: View {
 }
 
 #Preview {
-    let previewContainer = AppContainer.makePreviewContainer(withSampleData: true)
-    SavedView(quoteRepository: SwiftDataQuoteRepository(container: previewContainer))
+    let appContainer = try! AppContainer(isInMemoryOnly: true)
+    let viewFactory = ViewFactory(dependencies: appContainer)
+    SavedView(
+        quoteRepository: appContainer.quoteRepository,
+        factory: viewFactory
+    )
 }
