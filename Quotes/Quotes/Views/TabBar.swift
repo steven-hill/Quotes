@@ -110,7 +110,6 @@ struct TabBar: View {
         ),
         isStorageDegraded: false
     )
-        .environmentObject(FetchRequestStore.preview)
         .environmentObject(LocalNotificationManager())
         .environmentObject(AppearanceManager())
         .environmentObject(TabRouter())
