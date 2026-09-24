@@ -6,14 +6,12 @@
 //
 
 import SwiftUI
-import CoreData
 
 @main
 struct QuotesApp: App {
     
     // MARK: - State Objects
     @StateObject private var localNotificationManager = LocalNotificationManager()
-    @StateObject private var fetchRequestStore: FetchRequestStore
     @StateObject private var appearanceManager = AppearanceManager()
     @StateObject private var tabRouter = TabRouter()
     
@@ -31,17 +29,6 @@ struct QuotesApp: App {
         case failed(AppContainerError)
     }
     
-    //MARK: - Dependencies
-    private let persistenceController = PersistenceController.shared
-    
-    // MARK: - Initialisation
-    init() {
-        let managedObjectContext = persistenceController.container.viewContext
-        let savedQuotesController = NSFetchedResultsController(fetchRequest: persistenceController.savedQuotesFetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        let store = FetchRequestStore(savedQuotesController: savedQuotesController, context: managedObjectContext)
-        self._fetchRequestStore = StateObject(wrappedValue: store)
-    }
-    
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
@@ -54,11 +41,9 @@ struct QuotesApp: App {
                     factory: factory,
                     isStorageDegraded: isStorageDegraded,
                 )
-                    .environmentObject(fetchRequestStore)
                     .environmentObject(localNotificationManager)
                     .environmentObject(appearanceManager)
                     .environmentObject(tabRouter)
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
             case .failed(let error):
                 AppLaunchErrorView(error: error)
