@@ -12,32 +12,31 @@ Overview:
   - This app is almost entirely SwiftUI. UIKit was used for the `UIActivityViewController` on iPad.
   - The minimum deployment target is iOS 27.0 and iPadOS 27.0.
   - Swift language version is Swift 6.
-  - MVVM, Core Data and Swift concurrency.
+  - MVVM, SwiftData and Swift concurrency.
   - iPhone and iPad are both supported.
-  - The app supports different size classes, portrait and landscape orientation, and light, dark or system appearance.
+  - The app also supports different size classes, portrait and landscape orientation, and light, dark or system appearance.
   - XCTest and Swift Testing are used for testing.
 
 Networking:   
   - The network code uses async/await with `URLSession`, and there is dependency injection for loose coupling and testability.
   - The network response is cached using `URLCache`.
   - The caching strategy avoids exceeding the rate limit of 5 requests per 30 second period, and the cached data is overwritten when new data is available (daily).
-  - I looked at various caching solutions such as `NSCache`, `URLCache`, and in-memory caching and persistent caching. `NSCache` is emptied when the app is terminated / the current session ends, so this doesn't stop the rate limit being exceeded. The caching strategy now uses `URLCache` which may persist data across app launches, and the data's date is used to determine if a new network request is needed.
+  - I looked at various caching solutions such as `NSCache`, `URLCache`, and in-memory caching and persistent caching. `NSCache` is emptied when the app is terminated / the current session ends, so this doesn't stop the rate limit being exceeded. The caching strategy uses `URLCache` which may persist data across app launches, and the data's date is used to determine if a new network request is needed.
 
 Persistence:
-- Persistence of saved quotes is achieved via `CoreData`.
-- I was looking for an approach which separated `CoreData` from the rest of the app as much as possible, which ruled out using `@FetchRequest` in my app's views. For this purpose I wanted to try out Donny Wals' approach of using `ObservableObject`, the `@Published` property wrapper and `NSFetchedResultsController`. You can read his article on it [here](https://www.donnywals.com/fetching-objects-from-core-data-in-a-swiftui-project/).
+- Persistence of saved quotes is achieved via `SwiftData`.
+- My approach is to separate `SwiftData` from the rest of the app as much as possible, which ruled out using `@Query` in my app's views.
 - The user's appearance setting is persisted by `UserDefaults`, and the user can change the appearance in the app's settings.
 - If the user sets a new time for notifications that time will be saved to `UserDefaults`. 
   
 Accessibility:
 - There is support for VoiceOver and Dynamic Type.
 
-### 🚧 Undergoing changes
+### 🚧 Currently undergoing changes
 - Migrate to Swift 6.
-- Migrate from `CoreData` to `SwiftData`.
+- Replace `Core Data` with `SwiftData`.
 - Migrate from `ObservableObject` to `@Observable`.
 - Improve testability and test coverage, and add UI tests.
-- Other enhancements and quality of life improvements.
 
 ### 📲 Getting started
 1. Clone the repo.
