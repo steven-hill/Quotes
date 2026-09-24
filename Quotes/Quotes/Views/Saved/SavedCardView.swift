@@ -43,19 +43,6 @@ struct SavedCardView: View {
                         HStack {
                             Spacer()
                             menuButton
-                                .sheet(isPresented: $isEditReflectionSheetPresented) {
-                                    EditReflectionView(
-                                        savedQuote: savedQuote,
-                                        quoteContent: savedQuote.text,
-                                        quoteAuthor: savedQuote.author,
-                                        userThoughts: savedQuote.reflection,
-                                        successfulSave: {
-                                        withAnimation(.spring().delay(0.25)) {
-                                            saveIsSuccessful.toggle()
-                                        }
-                                    })
-                                        .presentationDragIndicator(.visible)
-                                }
                                 .alert("Error",
                                        isPresented: $showAlert,
                                        presenting: alertMessage
@@ -92,8 +79,24 @@ struct SavedCardView: View {
                     }
                 quoteAuthorView
             }
+            .onTapGesture {
+                isEditReflectionSheetPresented = true
+            }
             .padding()
             .cardBackgroundModifier()
+        }
+        .sheet(isPresented: $isEditReflectionSheetPresented) {
+            EditReflectionView(
+                savedQuote: savedQuote,
+                quoteContent: savedQuote.text,
+                quoteAuthor: savedQuote.author,
+                userThoughts: savedQuote.reflection,
+                successfulSave: {
+                    withAnimation(.spring().delay(0.25)) {
+                        saveIsSuccessful.toggle()
+                    }
+                })
+            .presentationDragIndicator(.visible)
         }
     }
     
@@ -113,7 +116,7 @@ struct SavedCardView: View {
                 "Edit your reflection",
                 systemImage: "square.and.pencil"
             ) {
-                isEditReflectionSheetPresented.toggle()
+                isEditReflectionSheetPresented = true
             }
             Button(role: .destructive) {
                 showDeleteQuoteAlert.toggle()
