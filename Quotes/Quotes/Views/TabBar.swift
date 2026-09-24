@@ -22,7 +22,7 @@ struct TabBar: View {
     
     //MARK: - Property
     /// Flags persistent storage issue.
-    let isStorageDegraded: Bool
+    private let isStorageDegraded: Bool
 
     // MARK: - Tab Definition
     private enum Tab {
