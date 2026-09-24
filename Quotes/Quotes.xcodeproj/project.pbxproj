@@ -28,8 +28,6 @@
 		5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F12C52E642000994DC /* AuthorizationGrantedView.swift */; };
 		5B3FB7F42C52E686000994DC /* AuthorizationNotGrantedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F32C52E686000994DC /* AuthorizationNotGrantedView.swift */; };
 		5B3FB7F62C52E6D2000994DC /* ZenQuotesAttributionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F52C52E6D2000994DC /* ZenQuotesAttributionView.swift */; };
-		5B3FB7F92C52E930000994DC /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F82C52E930000994DC /* PersistenceController.swift */; };
-		5B3FB7FB2C52E9BC000994DC /* FetchRequestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FA2C52E9BC000994DC /* FetchRequestStore.swift */; };
 		5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */; };
 		5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */; };
 		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
@@ -87,8 +85,6 @@
 		5B3FB7F12C52E642000994DC /* AuthorizationGrantedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationGrantedView.swift; sourceTree = "<group>"; };
 		5B3FB7F32C52E686000994DC /* AuthorizationNotGrantedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationNotGrantedView.swift; sourceTree = "<group>"; };
 		5B3FB7F52C52E6D2000994DC /* ZenQuotesAttributionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenQuotesAttributionView.swift; sourceTree = "<group>"; };
-		5B3FB7F82C52E930000994DC /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
-		5B3FB7FA2C52E9BC000994DC /* FetchRequestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRequestStore.swift; sourceTree = "<group>"; };
 		5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubNetworkSession.swift; sourceTree = "<group>"; };
 		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
@@ -277,8 +273,6 @@
 		5B3FB7F72C52E744000994DC /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				5B3FB7F82C52E930000994DC /* PersistenceController.swift */,
-				5B3FB7FA2C52E9BC000994DC /* FetchRequestStore.swift */,
 				5BDE29A63052E955002F74F3 /* QuoteRepository.swift */,
 				5BDE29A83052EA1C002F74F3 /* SwiftDataQuoteRepository.swift */,
 				5BDE29AC3052F697002F74F3 /* PersistedQuote.swift */,
@@ -455,7 +449,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BDE29A73052E955002F74F3 /* QuoteRepository.swift in Sources */,
-				5B3FB7FB2C52E9BC000994DC /* FetchRequestStore.swift in Sources */,
 				5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */,
 				5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */,
 				5B3FB7F42C52E686000994DC /* AuthorizationNotGrantedView.swift in Sources */,
@@ -471,7 +464,6 @@
 				5BDE29AD3052F697002F74F3 /* PersistedQuote.swift in Sources */,
 				5B3FB7E62C52E3DC000994DC /* SavedView.swift in Sources */,
 				5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */,
-				5B3FB7F92C52E930000994DC /* PersistenceController.swift in Sources */,
 				5B3FB7E22C52E31E000994DC /* ReflectOnThisQuoteButton.swift in Sources */,
 				5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */,
 				5B3FB7E42C52E3A6000994DC /* ReflectOnQuoteView.swift in Sources */,
