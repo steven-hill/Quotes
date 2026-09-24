@@ -10,7 +10,6 @@
 		5B177CF62C5ADF4A00CCEC8B /* PersistenceControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B177CF52C5ADF4A00CCEC8B /* PersistenceControllerTests.swift */; };
 		5B3FB7A62C52DE46000994DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3FB7A52C52DE46000994DC /* Assets.xcassets */; };
 		5B3FB7A92C52DE46000994DC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3FB7A82C52DE46000994DC /* Preview Assets.xcassets */; };
-		5B3FB7AE2C52DE46000994DC /* Quotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7AC2C52DE46000994DC /* Quotes.xcdatamodeld */; };
 		5B3FB7C22C52DE47000994DC /* QuotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */; };
 		5B3FB7C42C52DE47000994DC /* QuotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */; };
 		5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
@@ -68,7 +67,6 @@
 		5B3FB79E2C52DE45000994DC /* Quotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3FB7A52C52DE46000994DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B3FB7A82C52DE46000994DC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5B3FB7AD2C52DE46000994DC /* Quotes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Quotes.xcdatamodel; sourceTree = "<group>"; };
 		5B3FB7B32C52DE47000994DC /* QuotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3FB7BD2C52DE47000994DC /* QuotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITests.swift; sourceTree = "<group>"; };
@@ -279,7 +277,6 @@
 		5B3FB7F72C52E744000994DC /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				5B3FB7AC2C52DE46000994DC /* Quotes.xcdatamodeld */,
 				5B3FB7F82C52E930000994DC /* PersistenceController.swift */,
 				5B3FB7FA2C52E9BC000994DC /* FetchRequestStore.swift */,
 				5BDE29A63052E955002F74F3 /* QuoteRepository.swift */,
@@ -461,7 +458,6 @@
 				5B3FB7FB2C52E9BC000994DC /* FetchRequestStore.swift in Sources */,
 				5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */,
 				5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */,
-				5B3FB7AE2C52DE46000994DC /* Quotes.xcdatamodeld in Sources */,
 				5B3FB7F42C52E686000994DC /* AuthorizationNotGrantedView.swift in Sources */,
 				5B3FB7E02C52E2D8000994DC /* QuoteOfTheDayShareLink.swift in Sources */,
 				5B3FB7F02C52E57D000994DC /* SettingsView.swift in Sources */,
@@ -826,19 +822,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		5B3FB7AC2C52DE46000994DC /* Quotes.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				5B3FB7AD2C52DE46000994DC /* Quotes.xcdatamodel */,
-			);
-			currentVersion = 5B3FB7AD2C52DE46000994DC /* Quotes.xcdatamodel */;
-			path = Quotes.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 5B3FB7962C52DE45000994DC /* Project object */;
 }
