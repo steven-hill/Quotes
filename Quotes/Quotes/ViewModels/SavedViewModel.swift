@@ -106,6 +106,7 @@ final class SavedViewModel {
     }
     
     func delete(quote: Quote) {
+        guard let quote = quoteToDelete else { return }
         guard let quoteID = quote.id else {
             hasError = true
             errorMessage = "Unable to delete quote."

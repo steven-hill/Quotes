@@ -200,6 +200,7 @@ struct SavedViewModelTests {
     func savedViewModel_delete_whenQuoteIdIsNil_resultsInError() {
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
+        sut.requestDelete(quote: Quote.sample[0])
         
         sut.delete(quote: Quote.sample[0])
         
@@ -217,7 +218,8 @@ struct SavedViewModelTests {
         let quote = mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
-        
+        sut.requestDelete(quote: quote)
+
         sut.delete(quote: quote)
         
         #expect(mockRepository.deleteCallCount == 1, "Should call the method once.")
