@@ -54,16 +54,20 @@ struct SavedView: View {
         } message: { _ in
             Text(Constants.AlertMessage.deleteQuoteAlertMessage)
         }
-        .alert("Error",
-               isPresented: $savedVM.hasError,
-               presenting: savedVM.errorMessage
-        ) { _ in
-            Button("Retry") {
-                savedVM.fetchAllQuotes()
-            }
-        } message: { _ in
-            if let message = savedVM.errorMessage {
-                Text(message)
+        .alert(item: $savedVM.alert) { alert in
+            switch alert {
+            case .loadingError(let message):
+                Alert(
+                    title: Text("Loading Error"),
+                    message: Text(message),
+                    dismissButton: .default(Text("OK"))
+                )
+            case .deleteError(let message):
+                Alert(
+                    title: Text("Delete Error"),
+                    message: Text(message),
+                    dismissButton: .default(Text("OK"))
+                )
             }
         }
         .searchable(
