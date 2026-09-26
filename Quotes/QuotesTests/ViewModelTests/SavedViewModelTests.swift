@@ -43,8 +43,7 @@ struct SavedViewModelTests {
         
         sut.fetchAllQuotes()
         
-        #expect(sut.hasError, "Should be true.")
-        #expect(sut.errorMessage != nil, "Should not be nil.")
+        #expect(sut.alert == .loadingError("Failed to fetch quotes from database."), "Should be `.loadingError`")
         #expect(sut.quotes.isEmpty, "Should be empty.")
     }
     

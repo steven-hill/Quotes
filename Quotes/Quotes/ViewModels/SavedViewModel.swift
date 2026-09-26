@@ -45,6 +45,18 @@ final class SavedViewModel {
         }
     }
     var quoteToDelete: Quote?
+    var alert: AlertState?
+    
+    enum AlertState: Identifiable, Equatable {
+        case loadingError(String)
+        
+        var id: String {
+            switch self {
+            case .loadingError:
+                return "Loading error"
+            }
+        }
+    }
     
     //MARK: - Initialisation
     init(repository: QuoteRepository) {
@@ -75,8 +87,7 @@ final class SavedViewModel {
         do {
             quotes = try repository.loadAllQuotes(matching: query ?? searchText)
         } catch {
-            hasError = true
-            errorMessage = error.localizedDescription
+            alert = .loadingError(error.localizedDescription)
         }
     }
     
