@@ -43,6 +43,17 @@ struct SavedView: View {
         .task {
             savedVM.fetchAllQuotes()
         }
+        .confirmationDialog(
+            "Are you sure?",
+            item: $savedVM.quoteToDelete
+        ) { quote in
+            Button("Delete", role: .destructive) {
+                savedVM.delete(quote: quote)
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: { _ in
+            Text(Constants.AlertMessage.deleteQuoteAlertMessage)
+        }
         .alert("Error",
                isPresented: $savedVM.hasError,
                presenting: savedVM.errorMessage
