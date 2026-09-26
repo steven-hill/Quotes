@@ -41,7 +41,10 @@ struct QuoteOfTheDayView: View {
         .task {
             await quoteOfTheDayVM.getQuoteOfTheDay()
         }
-        .alert("Error", isPresented: $quoteOfTheDayVM.hasError, presenting: quoteOfTheDayVM.state) { detail in
+        .alert("Error",
+               isPresented: $quoteOfTheDayVM.hasError,
+               presenting: quoteOfTheDayVM.state
+        ) { detail in
             Button("Retry") {
                 Task {
                     await quoteOfTheDayVM.getQuoteOfTheDay()
@@ -70,7 +73,10 @@ struct QuoteOfTheDayView: View {
     
     private var quoteCardAndButtons: some View {
         VStack {
-            QuoteCardView(quoteContent: quoteOfTheDayVM.quoteContent, quoteAuthor: quoteOfTheDayVM.quoteAuthor)
+            QuoteCardView(
+                quoteContent: quoteOfTheDayVM.quoteContent,
+                quoteAuthor: quoteOfTheDayVM.quoteAuthor
+            )
             if verticalSizeClass == .compact {
                 HStack {
                     buttons

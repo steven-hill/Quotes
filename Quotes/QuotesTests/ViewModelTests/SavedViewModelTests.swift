@@ -184,32 +184,11 @@ struct SavedViewModelTests {
         #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
         #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
-    
-    @Test("When a delete is requested, `quoteToDelete` is set")
-    func savedViewModel_requestDelete_setsQuoteToDelete() {
-        let sut = SavedViewModel(repository: MockQuoteRepository())
-        let quote = Quote.sample[0]
-        
-        sut.requestDelete(quote: quote)
-        
-        #expect(sut.quoteToDelete == quote, "Should match the quote passed in.")
-    }
-    
-    @Test("Deleting a quote when `quoteToDelete` is nil, returns early")
-    func savedViewModel_delete_whenQuoteToDeleteIsNil_returnsEarly() {
-        let mockRepository = MockQuoteRepository()
-        let sut = SavedViewModel(repository: mockRepository)
-        
-        sut.delete(quote: Quote.sample[0])
-        
-        #expect(mockRepository.deleteCallCount == 0, "Should not be called.")
-    }
 
     @Test("Deleting a quote without an id, returns early")
     func savedViewModel_delete_whenQuoteIdIsNil_returnsEarly() {
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
-        sut.requestDelete(quote: Quote.sample[0])
         
         sut.delete(quote: Quote.sample[0])
         
@@ -227,7 +206,6 @@ struct SavedViewModelTests {
         mockRepository.persistedQuotes = [persistedQuote]
         mockRepository.deleteSucceeded = false
         let sut = SavedViewModel(repository: mockRepository)
-        sut.requestDelete(quote: quote)
 
         sut.delete(quote: quote)
         
@@ -245,7 +223,6 @@ struct SavedViewModelTests {
         let quote = mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
-        sut.requestDelete(quote: quote)
 
         sut.delete(quote: quote)
         
