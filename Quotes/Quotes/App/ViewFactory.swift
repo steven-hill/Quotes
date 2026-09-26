@@ -46,10 +46,14 @@ final class ViewFactory {
         )
     }
     
-    func makeSavedCardView(savedQuote: Quote) -> SavedCardView {
+    func makeSavedCardView(
+        savedQuote: Quote,
+        onDelete: @escaping () -> Void
+    ) -> SavedCardView {
         SavedCardView(
             savedQuote: savedQuote,
-            factory: self
+            factory: self,
+            onDelete: onDelete
         )
     }
     

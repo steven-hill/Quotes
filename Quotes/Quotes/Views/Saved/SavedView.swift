@@ -14,8 +14,6 @@ struct SavedView: View {
     @Environment(\.isSearching) private var isSearching
     
     // MARK: - State
-    @State private var showDeleteQuoteAlert: Bool = false
-    @State private var quoteToDelete: Quote?
     @State private var savedVM: SavedViewModel
     
     // MARK: - Dependencies
@@ -93,46 +91,36 @@ struct SavedView: View {
     private var savedQuotesList: some View {
         List {
             ForEach(savedVM.quotes, id: \.id) { savedQuote in
-                factory.makeSavedCardView(savedQuote: savedQuote)
-                    .listRowSeparator(.hidden)
-                    .listRowClearBackgroundModifier()
-                    .swipeActions(
-                        edge: .trailing,
-                        allowsFullSwipe: false
-                    ) {
-                        Button(role: .destructive) {
-                            showDeleteQuoteAlert = true
-                            quoteToDelete = savedQuote
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        .tint(.red)
+                factory.makeSavedCardView(
+                    savedQuote: savedQuote,
+                    onDelete: { savedVM.requestDelete(quote: savedQuote) }
+                )
+                .listRowSeparator(.hidden)
+                .listRowClearBackgroundModifier()
+                .swipeActions(
+                    edge: .trailing,
+                    allowsFullSwipe: false
+                ) {
+                    Button(role: .destructive) {
+                        savedVM.requestDelete(quote: savedQuote)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
                     }
-            }
-            .alert("Error",
-                   isPresented: $savedVM.hasError,
-                   presenting: savedVM.errorMessage
-            ) { _ in
-                Button("Please try again") {}
-            } message: { _ in
-                if let message = savedVM.errorMessage {
-                    Text(message)
+                    .tint(.red)
+                    ShareLink(
+                        item: "\(savedQuote.text) - \(savedQuote.author)"
+                    ) {
+                        Label(
+                            "Share",
+                            systemImage: "square.and.arrow.up"
+                        )
+                    }
+                    .tint(.yellow.opacity(0.9))
                 }
             }
         }
         .listStyle(.plain)
         .frame(maxWidth: .infinity)
-        .alert("Are you sure?",
-               isPresented: $showDeleteQuoteAlert
-        ) { 
-            Button("Delete", role: .destructive) {
-                if let quote = quoteToDelete {
-                    savedVM.delete(quote: quote)
-                }
-            }
-        } message: { 
-            Text(Constants.AlertMessage.deleteQuoteAlertMessage)
-        }
     }
 }
 
