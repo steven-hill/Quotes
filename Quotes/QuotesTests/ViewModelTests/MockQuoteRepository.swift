@@ -11,6 +11,7 @@ import Foundation
 final class MockQuoteRepository: QuoteRepository {
     var persistedQuotes: [PersistedQuote] = []
     var fetchSucceeded: Bool = true
+    var addSucceeded: Bool = true
     var deleteSucceeded: Bool = true
     private(set) var loadAllQuotesCallCount: Int = 0
     private(set) var addCallCount: Int = 0
@@ -33,6 +34,10 @@ final class MockQuoteRepository: QuoteRepository {
     
     func add(_ quote: Quote) throws {
         addCallCount += 1
+        guard addSucceeded else {
+            let error = NSError(domain: "AddError", code: 1, userInfo: nil)
+            throw RepositoryError.addFailed(underlying: error)
+        }
     }
     
     func updateReflection(

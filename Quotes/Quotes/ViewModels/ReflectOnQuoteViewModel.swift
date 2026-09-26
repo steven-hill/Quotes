@@ -15,6 +15,19 @@ final class ReflectOnQuoteViewModel {
     var hasError: Bool = false
     var errorMessage: String = ""
     var showConfirmationDialog: Bool = false
+    var alert: AlertState?
+    
+    //MARK: - AlertState Definition
+    enum AlertState: Identifiable, Equatable {
+        case addError(String)
+        
+        var id: String {
+            switch self {
+            case .addError:
+                return "add Error"
+            }
+        }
+    }
     
     //MARK: - Dependency
     private let repository: QuoteRepository
@@ -46,8 +59,7 @@ final class ReflectOnQuoteViewModel {
             try repository.add(quote)
             isQuoteSaved = true
         } catch {
-            hasError = true
-            errorMessage = error.localizedDescription
+            alert = .addError(error.localizedDescription)
         }
     }
 }

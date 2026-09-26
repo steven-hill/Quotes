@@ -50,4 +50,21 @@ struct ReflectOnQuoteViewModelTests {
         #expect(mockRepository.addCallCount == 0, "Should not call the method.")
         #expect(sut.showConfirmationDialog, "Should have changed to true.")
     }
+    
+    @Test("VM handles error if add fails on the database")
+    func reflectOnQuoteViewModel_saveQuoteWithReflection_whenAddFailsOnDatabase_handlesErrorCorrectly() {
+        let mockRepository = MockQuoteRepository()
+        mockRepository.addSucceeded = false
+        let sut = ReflectOnQuoteViewModel(repository: mockRepository)
+        
+        sut.saveQuoteWithReflection(
+            quoteContent: Quote.sample[0].text,
+            quoteAuthor: Quote.sample[0].author,
+            reflection: "Reflection"
+        )
+        
+        #expect(mockRepository.addCallCount == 1, "Should call the method once.")
+        #expect(sut.alert == .addError("Failed to add quote to database."), "Should be `.addError`")
+        #expect(sut.isQuoteSaved == false, "Should be false.")
+    }
 }
