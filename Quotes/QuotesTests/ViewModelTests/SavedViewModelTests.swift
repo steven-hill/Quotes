@@ -196,7 +196,7 @@ struct SavedViewModelTests {
     }
     
     @Test("VM handles error if delete fails on the database")
-    func savedViewModel_fetchAllQuotes_whenDeleteOnDatabaseFails_handlesErrorCorrectly() {
+    func savedViewModel_delete_whenDeleteOnDatabaseFails_handlesErrorCorrectly() {
         let mockRepository = MockQuoteRepository()
         let persistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample[0],

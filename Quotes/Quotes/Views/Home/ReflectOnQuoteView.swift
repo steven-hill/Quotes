@@ -65,7 +65,6 @@ struct ReflectOnQuoteView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     CancelButton(accessibilityLabel: "Cancel reflection and don't save.")
                 }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         viewModel.saveQuoteWithReflection(
@@ -88,10 +87,15 @@ struct ReflectOnQuoteView: View {
                     } message: {
                         Text("This quote won't be saved if no reflection is added.")
                     }
-                    .alert("Save failed", isPresented: $viewModel.hasError, presenting: $viewModel.errorMessage) { detail in
-                        Button("Ok") {}
-                    } message: { detail in
-                        Text("\(detail) Please try again.")
+                    .alert(item: $viewModel.alert) { alert in
+                        switch alert {
+                        case .addError(let message):
+                            Alert(
+                                title: Text("Error"),
+                                message: Text(message),
+                                dismissButton: .default(Text("Ok"))
+                            )
+                        }
                     }
                 }
             }
