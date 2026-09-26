@@ -44,6 +44,7 @@ final class SavedViewModel {
             return .savedQuotesList
         }
     }
+    var quoteToDelete: Quote?
     
     //MARK: - Initialisation
     init(repository: QuoteRepository) {
@@ -98,6 +99,10 @@ final class SavedViewModel {
             hasError = true
             errorMessage = error.localizedDescription
         }
+    }
+    
+    func requestDelete(quote: Quote) {
+        quoteToDelete = quote
     }
     
     func delete(quote: Quote) {

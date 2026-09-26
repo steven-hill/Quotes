@@ -186,6 +186,16 @@ struct SavedViewModelTests {
         #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
     }
     
+    @Test("When a delete is requested, `quoteToDelete` is set")
+    func savedViewModel_requestDelete_setsQuoteToDelete() {
+        let sut = SavedViewModel(repository: MockQuoteRepository())
+        let quote = Quote.sample[0]
+        
+        sut.requestDelete(quote: quote)
+        
+        #expect(sut.quoteToDelete == quote, "Should match the quote passed in.")
+    }
+
     @Test("Deleting a quote without an id, returns early and updates error properties")
     func savedViewModel_delete_whenQuoteIdIsNil_resultsInError() {
         let mockRepository = MockQuoteRepository()
