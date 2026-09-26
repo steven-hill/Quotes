@@ -9,7 +9,7 @@ import Foundation
 
 /// Model for displaying data in the UI.
 /// A quote's `id` is nil until the quote is persisted locally, and `PersistedQuote` provides the `id` via mapping.
-struct Quote {
+struct Quote: Equatable {
     let id: UUID?
     let text: String
     let author: String

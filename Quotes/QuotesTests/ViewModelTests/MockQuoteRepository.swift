@@ -11,6 +11,7 @@ import Foundation
 final class MockQuoteRepository: QuoteRepository {
     var persistedQuotes: [PersistedQuote] = []
     var fetchSucceeded: Bool = true
+    var deleteSucceeded: Bool = true
     private(set) var loadAllQuotesCallCount: Int = 0
     private(set) var addCallCount: Int = 0
     private(set) var updateReflectionCallCount: Int = 0
@@ -43,6 +44,10 @@ final class MockQuoteRepository: QuoteRepository {
     
     func delete(_ quoteID: UUID) throws {
         deleteCallCount += 1
+        guard deleteSucceeded else {
+            let error = NSError(domain: "DeleteError", code: 1, userInfo: nil)
+            throw RepositoryError.deleteFailed(underlying: error)
+        }
     }
     
     //MARK: - Mapper

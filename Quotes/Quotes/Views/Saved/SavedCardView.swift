@@ -14,24 +14,23 @@ struct SavedCardView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     // MARK: - State
-    @State private var isPopoverPresented = false
     @State private var isEditReflectionSheetPresented = false
-    @State private var showAlert = false
-    @State private var alertMessage = ""
-    @State private var showDeleteQuoteAlert = false
     @State private var saveIsSuccessful = false
     
     // MARK: - Dependencies
     private let savedQuote: Quote
     private let factory: ViewFactory
+    private let onDelete: () -> Void
     
     // MARK: - Initialisation
     init(
         savedQuote: Quote,
-        factory: ViewFactory
+        factory: ViewFactory,
+        onDelete: @escaping () -> Void
     ) {
         self.savedQuote = savedQuote
         self.factory = factory
+        self.onDelete = onDelete
     }
     
     // MARK: - Body
@@ -43,23 +42,6 @@ struct SavedCardView: View {
                         HStack {
                             Spacer()
                             menuButton
-                                .alert("Error",
-                                       isPresented: $showAlert,
-                                       presenting: alertMessage
-                                ) { detail in
-                                    Button("Please try again") {}
-                                } message: { _ in
-                                    Text(alertMessage)
-                                }
-                                .alert("Are you sure?",
-                                       isPresented: $showDeleteQuoteAlert
-                                ) {
-                                    Button("Delete", role: .destructive) {
-                                    // TODO: - Add method to delete the saved quote.
-                                    }
-                                } message: {
-                                    Text(Constants.AlertMessage.deleteQuoteAlertMessage)
-                                }
                         }
                     }
                 }
@@ -101,10 +83,9 @@ struct SavedCardView: View {
     // MARK: - UI Components
     private var menuButton: some View {
         Menu {
-            Button {
-                isPopoverPresented.toggle()
-                presentActivityController()
-            } label: {
+            ShareLink(
+                item: "\(savedQuote.text) - \(savedQuote.author)"
+            ) {
                 Label(
                     "Share this quote",
                     systemImage: "square.and.arrow.up"
@@ -117,7 +98,7 @@ struct SavedCardView: View {
                 isEditReflectionSheetPresented = true
             }
             Button(role: .destructive) {
-                showDeleteQuoteAlert.toggle()
+                onDelete()
             } label: {
                 Label(
                     "Delete",
@@ -164,35 +145,13 @@ struct SavedCardView: View {
     }
 }
 
-// MARK: - Activity controller methods
-extension SavedCardView {
-    private func presentActivityController() {
-        var quoteToShare: String = ""
-        quoteToShare = "\(savedQuote.text)" + " - " + "\(savedQuote.author)"
-        let activityController = UIActivityViewController(activityItems: [quoteToShare], applicationActivities: nil)
-        
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                configurePopoverForIPad(activityController, in: window)
-            }
-            window.rootViewController?.present(activityController, animated: true, completion: nil)
-        }
-    }
-    
-    private func configurePopoverForIPad(_ activityController: UIActivityViewController, in window: UIWindow) {
-        activityController.popoverPresentationController?.sourceView = window
-        activityController.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0)
-        activityController.popoverPresentationController?.permittedArrowDirections = []
-    }
-}
-
 #Preview {
     let appContainer = try! AppContainer(isInMemoryOnly: true)
     let viewFactory = ViewFactory(dependencies: appContainer)
     SavedCardView(
         savedQuote: Quote.sample[0],
-        factory: viewFactory
+        factory: viewFactory,
+        onDelete: {}
     )
     .padding()
 }

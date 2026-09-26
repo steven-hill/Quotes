@@ -44,6 +44,22 @@ final class SavedViewModel {
             return .savedQuotesList
         }
     }
+    var quoteToDelete: Quote?
+    var alert: AlertState?
+    
+    enum AlertState: Identifiable, Equatable {
+        case loadingError(String)
+        case deleteError(String)
+        
+        var id: String {
+            switch self {
+            case .loadingError:
+                return "Loading error"
+            case .deleteError:
+                return "Delete error"
+            }
+        }
+    }
     
     //MARK: - Initialisation
     init(repository: QuoteRepository) {
@@ -74,8 +90,7 @@ final class SavedViewModel {
         do {
             quotes = try repository.loadAllQuotes(matching: query ?? searchText)
         } catch {
-            hasError = true
-            errorMessage = error.localizedDescription
+            alert = .loadingError(error.localizedDescription)
         }
     }
     
@@ -100,18 +115,18 @@ final class SavedViewModel {
         }
     }
     
+    func requestDelete(quote: Quote) {
+        quoteToDelete = quote
+    }
+    
     func delete(quote: Quote) {
-        guard let quoteID = quote.id else {
-            hasError = true
-            errorMessage = "Unable to delete quote."
-            return
-        }
+        guard let quote = quoteToDelete else { return }
+        guard let quoteID = quote.id else { return }
         do {
             try repository.delete(quoteID)
             fetchAllQuotes()
         } catch {
-            hasError = true
-            errorMessage = error.localizedDescription
+            alert = .deleteError(error.localizedDescription)
         }
     }
 }
