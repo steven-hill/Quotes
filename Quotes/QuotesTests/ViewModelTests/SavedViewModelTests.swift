@@ -194,9 +194,19 @@ struct SavedViewModelTests {
         
         #expect(sut.quoteToDelete == quote, "Should match the quote passed in.")
     }
+    
+    @Test("Deleting a quote when `quoteToDelete` is nil, returns early")
+    func savedViewModel_delete_whenQuoteToDeleteIsNil_returnsEarly() {
+        let mockRepository = MockQuoteRepository()
+        let sut = SavedViewModel(repository: mockRepository)
+        
+        sut.delete(quote: Quote.sample[0])
+        
+        #expect(mockRepository.deleteCallCount == 0, "Should not be called.")
+    }
 
-    @Test("Deleting a quote without an id, returns early and updates error properties")
-    func savedViewModel_delete_whenQuoteIdIsNil_resultsInError() {
+    @Test("Deleting a quote without an id, returns early")
+    func savedViewModel_delete_whenQuoteIdIsNil_returnsEarly() {
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
         sut.requestDelete(quote: Quote.sample[0])
@@ -204,11 +214,29 @@ struct SavedViewModelTests {
         sut.delete(quote: Quote.sample[0])
         
         #expect(mockRepository.deleteCallCount == 0, "Should not be called.")
-        #expect(sut.hasError, "Should be true.")
-        #expect(sut.errorMessage != nil, "Should not be nil.")
     }
     
-    @Test("VM calls methods on repository to delete a quote if that quote has an id, and reload quotes")
+    @Test("VM handles error if delete fails on the database")
+    func savedViewModel_fetchAllQuotes_whenDeleteOnDatabaseFails_handlesErrorCorrectly() {
+        let mockRepository = MockQuoteRepository()
+        let persistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[0],
+            reflection: "Reflection"
+        )
+        let quote = mapToQuote(persistedQuote)
+        mockRepository.persistedQuotes = [persistedQuote]
+        mockRepository.deleteSucceeded = false
+        let sut = SavedViewModel(repository: mockRepository)
+        sut.requestDelete(quote: quote)
+
+        sut.delete(quote: quote)
+        
+        #expect(sut.alert == .deleteError("Failed to delete quote from database."), "Should be `.deleteError`")
+        #expect(mockRepository.deleteCallCount == 1, "Should be called once.")
+        #expect(mockRepository.persistedQuotes.isEmpty == false, "Should not be empty because quote wasn't deleted.")
+    }
+    
+    @Test("VM calls methods on repository to delete a quote if that quote has an id and `quoteToDelete` is not nil, and reload quotes")
     func savedViewModel_delete_callsMethodsOnRepository() {
         let persistedQuote = PersistenceHelper.makePersistedQuote(
             using: Quote.sample[0],
