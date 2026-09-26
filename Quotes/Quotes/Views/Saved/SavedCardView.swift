@@ -14,6 +14,7 @@ struct SavedCardView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     // MARK: - State
+    @State private var showDeleteConfirmation = false
     @State private var isEditReflectionSheetPresented = false
     @State private var saveIsSuccessful = false
     
@@ -35,7 +36,6 @@ struct SavedCardView: View {
     
     // MARK: - Body
     var body: some View {
-        NavigationStack {
             VStack {
                 ZStack {
                     VStack {
@@ -66,7 +66,17 @@ struct SavedCardView: View {
             }
             .padding()
             .cardBackgroundModifier()
-        }
+            .confirmationDialog(
+                "Are you sure?",
+                isPresented: $showDeleteConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Delete", role: .destructive) {
+                    onDelete()
+                }
+            } message: {
+                Text(Constants.AlertMessage.deleteQuoteAlertMessage)
+            }
         .sheet(isPresented: $isEditReflectionSheetPresented) {
             factory.makeEditReflectionView(
                 savedQuote: savedQuote,
@@ -98,12 +108,13 @@ struct SavedCardView: View {
                 isEditReflectionSheetPresented = true
             }
             Button(role: .destructive) {
-                onDelete()
+                showDeleteConfirmation = true
             } label: {
                 Label(
                     "Delete",
                     systemImage: "trash"
                 )
+                .tint(.red)
             }
         } label: {
             Label(

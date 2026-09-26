@@ -44,9 +44,9 @@ final class SavedViewModel {
             return .savedQuotesList
         }
     }
-    var quoteToDelete: Quote?
     var alert: AlertState?
     
+    //MARK: - AlertState Definition
     enum AlertState: Identifiable, Equatable {
         case loadingError(String)
         case deleteError(String)
@@ -115,12 +115,7 @@ final class SavedViewModel {
         }
     }
     
-    func requestDelete(quote: Quote) {
-        quoteToDelete = quote
-    }
-    
     func delete(quote: Quote) {
-        guard let quote = quoteToDelete else { return }
         guard let quoteID = quote.id else { return }
         do {
             try repository.delete(quoteID)

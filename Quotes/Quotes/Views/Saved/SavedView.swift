@@ -41,17 +41,6 @@ struct SavedView: View {
         .task {
             savedVM.fetchAllQuotes()
         }
-        .confirmationDialog(
-            "Are you sure?",
-            item: $savedVM.quoteToDelete
-        ) { quote in
-            Button("Delete", role: .destructive) {
-                savedVM.delete(quote: quote)
-            }
-            Button("Cancel", role: .cancel) {}
-        } message: { _ in
-            Text(Constants.AlertMessage.deleteQuoteAlertMessage)
-        }
         .alert(item: $savedVM.alert) { alert in
             switch alert {
             case .loadingError(let message):
@@ -93,30 +82,10 @@ struct SavedView: View {
             ForEach(savedVM.quotes, id: \.id) { savedQuote in
                 factory.makeSavedCardView(
                     savedQuote: savedQuote,
-                    onDelete: { savedVM.requestDelete(quote: savedQuote) }
+                    onDelete: { savedVM.delete(quote: savedQuote) }
                 )
                 .listRowSeparator(.hidden)
                 .listRowClearBackgroundModifier()
-                .swipeActions(
-                    edge: .trailing,
-                    allowsFullSwipe: false
-                ) {
-                    Button(role: .destructive) {
-                        savedVM.requestDelete(quote: savedQuote)
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                    }
-                    .tint(.red)
-                    ShareLink(
-                        item: "\(savedQuote.text) - \(savedQuote.author)"
-                    ) {
-                        Label(
-                            "Share",
-                            systemImage: "square.and.arrow.up"
-                        )
-                    }
-                    .tint(.yellow.opacity(0.9))
-                }
             }
         }
         .listStyle(.plain)
