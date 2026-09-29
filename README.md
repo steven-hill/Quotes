@@ -9,7 +9,6 @@
 
 ### 🔍 Technical details
 Overview:
-  - SwiftUI app.
   - The minimum deployment target is iOS 27.0 and iPadOS 27.0.
   - Swift language version is Swift 6.
   - MVVM, SwiftData and Swift concurrency.
