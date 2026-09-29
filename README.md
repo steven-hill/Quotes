@@ -9,7 +9,7 @@
 
 ### 🔍 Technical details
 Overview:
-  - This app is almost entirely SwiftUI. UIKit was used for the `UIActivityViewController` on iPad.
+  - SwiftUI app.
   - The minimum deployment target is iOS 27.0 and iPadOS 27.0.
   - Swift language version is Swift 6.
   - MVVM, SwiftData and Swift concurrency.
@@ -33,7 +33,6 @@ Accessibility:
 - There is support for VoiceOver and Dynamic Type.
 
 ### 🚧 Currently undergoing changes
-- Migrate to Swift 6.
 - Replace `Core Data` with `SwiftData`.
 - Migrate from `ObservableObject` to `@Observable`.
 - Improve testability and test coverage, and add UI tests.
