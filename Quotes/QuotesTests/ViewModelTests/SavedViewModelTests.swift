@@ -151,39 +151,6 @@ struct SavedViewModelTests {
         
         #expect(sut.contentState == .savedQuotesList, "Should be `.savedQuotesList`.")
     }
-    
-    @Test("Updating a quote without an id, returns early and updates error properties")
-    func savedViewModel_update_whenQuoteIdIsNil_resultsInError() {
-        let mockRepository = MockQuoteRepository()
-        let sut = SavedViewModel(repository: mockRepository)
-        
-        sut.update(
-            quote: Quote.sample[0],
-            reflection: "Updated reflection"
-        )
-        
-        #expect(mockRepository.updateReflectionCallCount == 0, "Should not be called.")
-        #expect(sut.hasError, "Should be true.")
-        #expect(sut.errorMessage != nil, "Should not be nil.")
-    }
-    
-    @Test("VM calls methods on repository to update a quote if that quote has an id, and refetch quotes")
-    func savedViewModel_update_callsMethodsOnRepository() {
-        let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[0],
-            reflection: "Original reflection"
-        )
-        let mockRepository = MockQuoteRepository()
-        let sut = SavedViewModel(repository: mockRepository)
-        
-        sut.update(
-            quote: PersistenceHelper.mapToQuote(persistedQuote),
-            reflection: "Updated reflection"
-        )
-        
-        #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
-        #expect(mockRepository.loadAllQuotesCallCount == 1, "Should call the method once.")
-    }
 
     @Test("Deleting a quote without an id, returns early")
     func savedViewModel_delete_whenQuoteIdIsNil_returnsEarly() {

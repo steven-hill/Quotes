@@ -94,27 +94,6 @@ final class SavedViewModel {
         }
     }
     
-    func update(
-        quote: Quote,
-        reflection: String
-    ) {
-        guard let quoteID = quote.id else {
-            hasError = true
-            errorMessage = "Unable to update quote."
-            return
-        }
-        do {
-            try repository.updateReflection(
-                for: quoteID,
-                reflection: reflection
-            )
-            fetchAllQuotes()
-        } catch {
-            hasError = true
-            errorMessage = error.localizedDescription
-        }
-    }
-    
     func delete(quote: Quote) {
         guard let quoteID = quote.id else { return }
         do {
