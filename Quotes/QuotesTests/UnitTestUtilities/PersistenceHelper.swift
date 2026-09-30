@@ -20,4 +20,14 @@ struct PersistenceHelper {
             reflection: reflection
         )
     }
+    
+    static func mapToQuote(_ persistedQuote: PersistedQuote) -> Quote {
+        Quote(
+            id: persistedQuote.id,
+            text: persistedQuote.text,
+            author: persistedQuote.author,
+            date: persistedQuote.date,
+            reflection: persistedQuote.reflection
+        )
+    }
 }

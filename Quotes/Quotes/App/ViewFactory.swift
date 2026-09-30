@@ -48,24 +48,27 @@ final class ViewFactory {
     
     func makeSavedCardView(
         savedQuote: Quote,
-        onDelete: @escaping () -> Void
+        savedVM: SavedViewModel
     ) -> SavedCardView {
         SavedCardView(
             savedQuote: savedQuote,
             factory: self,
-            onDelete: onDelete
+            savedVM: savedVM
         )
     }
     
     func makeEditReflectionView(
         savedQuote: Quote,
         userThoughts: String,
-        successfulSave: @escaping () -> Void
+        successfulSave: @escaping () -> Void,
+        refreshList: @escaping () -> Void
     ) -> EditReflectionView {
         EditReflectionView(
             savedQuote: savedQuote,
+            quoteRepository: dependencies.quoteRepository,
             userThoughts: userThoughts,
-            successfulSave: successfulSave
+            successfulSave: successfulSave,
+            refreshList: refreshList
         )
     }
 }

@@ -23,8 +23,6 @@ final class SavedViewModel {
     
     //MARK: - Properties
     private(set) var quotes: [Quote] = []
-    var hasError: Bool = false
-    private(set) var errorMessage: String?
     private let searchSubject = PassthroughSubject<String, Never>()
     private var cancellables = Set<AnyCancellable>()
     var searchText: String = "" {
@@ -91,27 +89,6 @@ final class SavedViewModel {
             quotes = try repository.loadAllQuotes(matching: query ?? searchText)
         } catch {
             alert = .loadingError(error.localizedDescription)
-        }
-    }
-    
-    func update(
-        quote: Quote,
-        reflection: String
-    ) {
-        guard let quoteID = quote.id else {
-            hasError = true
-            errorMessage = "Unable to update quote."
-            return
-        }
-        do {
-            try repository.updateReflection(
-                for: quoteID,
-                reflection: reflection
-            )
-            fetchAllQuotes()
-        } catch {
-            hasError = true
-            errorMessage = error.localizedDescription
         }
     }
     

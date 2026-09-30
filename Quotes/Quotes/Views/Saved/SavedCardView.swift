@@ -10,28 +10,25 @@ import UIKit
 
 struct SavedCardView: View {
     
-    // MARK: - Environment
-    @Environment(\.colorScheme) private var colorScheme
-    
     // MARK: - State
     @State private var showDeleteConfirmation = false
     @State private var isEditReflectionSheetPresented = false
     @State private var saveIsSuccessful = false
+    @State private var savedVM: SavedViewModel
     
     // MARK: - Dependencies
     private let savedQuote: Quote
     private let factory: ViewFactory
-    private let onDelete: () -> Void
     
     // MARK: - Initialisation
     init(
         savedQuote: Quote,
         factory: ViewFactory,
-        onDelete: @escaping () -> Void
+        savedVM: SavedViewModel
     ) {
         self.savedQuote = savedQuote
         self.factory = factory
-        self.onDelete = onDelete
+        _savedVM = State(initialValue: savedVM)
     }
     
     // MARK: - Body
@@ -71,9 +68,10 @@ struct SavedCardView: View {
                 isPresented: $showDeleteConfirmation,
                 titleVisibility: .visible
             ) {
-                Button("Delete", role: .destructive) {
-                    onDelete()
-                }
+                Button(
+                    "Delete",
+                    role: .destructive
+                ) { savedVM.delete(quote: savedQuote) }
             } message: {
                 Text(Constants.AlertMessage.deleteQuoteAlertMessage)
             }
@@ -85,7 +83,9 @@ struct SavedCardView: View {
                     withAnimation(.spring().delay(0.25)) {
                         saveIsSuccessful.toggle()
                     }
-                })
+                },
+                refreshList: { savedVM.fetchAllQuotes() }
+            )
             .presentationDragIndicator(.visible)
         }
     }
@@ -162,7 +162,7 @@ struct SavedCardView: View {
     SavedCardView(
         savedQuote: Quote.sample[0],
         factory: viewFactory,
-        onDelete: {}
+        savedVM: SavedViewModel(repository: appContainer.quoteRepository)
     )
     .padding()
 }

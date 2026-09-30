@@ -9,9 +9,6 @@ import SwiftUI
 
 struct QuoteOfTheDayShareLink: View {
     
-    // MARK: - Environment
-    @Environment(\.colorScheme) private var colorScheme
-    
     // MARK: - Constant
     let item: String
     
