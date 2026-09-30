@@ -27,16 +27,11 @@ struct EditReflectionViewModelTests {
     
     @Test("If reflection text is empty, VM returns early, and updates confirmation dialog boolean flag")
     func editReflectionViewModel_updateReflection_whenReflectionIsEmpty_returnsEarlyAndUpdatesBoolean() {
-        let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[0],
-            reflection: "Reflection"
-        )
-        let quote = PersistenceHelper.mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         let sut = EditReflectionViewModel(repository: mockRepository)
         
         sut.updateReflection(
-            quote: quote,
+            quote: makeQuote(),
             reflection: ""
         )
         
@@ -46,16 +41,11 @@ struct EditReflectionViewModelTests {
     
     @Test("VM calls method on repository to update reflection, and updates boolean flag")
     func editReflectionViewModel_updateReflection_withEditedReflection_callsMethodOnRepositoryAndUpdatesBoolean() {
-        let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[0],
-            reflection: "Reflection"
-        )
-        let quote = PersistenceHelper.mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         let sut = EditReflectionViewModel(repository: mockRepository)
         
         sut.updateReflection(
-            quote: quote,
+            quote: makeQuote(),
             reflection: "Updated reflection"
         )
         
@@ -65,22 +55,26 @@ struct EditReflectionViewModelTests {
     
     @Test("VM handles error if update fails on the database")
     func editReflectionViewModel_updateReflection_whenUpdateFailsOnDatabase_handlesErrorCorrectly() {
-        let persistedQuote = PersistenceHelper.makePersistedQuote(
-            using: Quote.sample[0],
-            reflection: "Reflection"
-        )
-        let quote = PersistenceHelper.mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         mockRepository.updateSucceeded = false
         let sut = EditReflectionViewModel(repository: mockRepository)
         
         sut.updateReflection(
-            quote: quote,
+            quote: makeQuote(),
             reflection: "Updated reflection"
         )
         
         #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
         #expect(sut.reflectionAlert == .updateError("Failed to update quote in database."), "Should be `.updateError`.")
         #expect(sut.isReflectionUpdated == false, "Should not update reflection.")
+    }
+    
+    //MARK: - Helper method
+    private func makeQuote() -> Quote {
+        let persistedQuote = PersistenceHelper.makePersistedQuote(
+            using: Quote.sample[0],
+            reflection: "Reflection"
+        )
+        return PersistenceHelper.mapToQuote(persistedQuote)
     }
 }
