@@ -32,7 +32,6 @@ Accessibility:
 - There is support for VoiceOver and Dynamic Type.
 
 ### 🚧 Currently undergoing changes
-- Replace `Core Data` with `SwiftData`.
 - Migrate from `ObservableObject` to `@Observable`.
 - Improve testability and test coverage, and add UI tests.
 
