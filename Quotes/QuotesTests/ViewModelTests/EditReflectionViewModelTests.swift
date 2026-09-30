@@ -25,4 +25,18 @@ struct EditReflectionViewModelTests {
         #expect(mockRepository.updateReflectionCallCount == 0, "Should not call the method.")
         #expect(sut.showConfirmationDialog, "Should have changed to true.")
     }
+    
+    @Test("VM calls method on repository to update reflection, and updates boolean flag")
+    func editReflectionViewModel_updateReflection_withEditedReflection_callsMethodOnRepositoryAndUpdatesBoolean() {
+        let mockRepository = MockQuoteRepository()
+        let sut = EditReflectionViewModel(repository: mockRepository)
+        
+        sut.updateReflection(
+            quoteID: Quote.sample[0].id ?? UUID(),
+            reflection: "Updated reflection"
+        )
+        
+        #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
+        #expect(sut.isReflectionUpdated, "Should have changed to true.")
+    }
 }

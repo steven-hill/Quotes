@@ -11,6 +11,7 @@ import Foundation
 final class EditReflectionViewModel {
     
     //MARK: - Properties
+    private(set) var isReflectionUpdated: Bool = false
     var showConfirmationDialog: Bool = false
     
     //MARK: - Dependency
@@ -29,6 +30,16 @@ final class EditReflectionViewModel {
         if reflection.isEmpty {
             showConfirmationDialog = true
             return
+        }
+        isReflectionUpdated = false
+        do {
+            try repository.updateReflection(
+                for: quoteID,
+                reflection: reflection
+            )
+            isReflectionUpdated = true
+        } catch {
+        
         }
     }
 }
