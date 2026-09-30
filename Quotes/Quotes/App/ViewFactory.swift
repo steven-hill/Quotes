@@ -60,12 +60,15 @@ final class ViewFactory {
     func makeEditReflectionView(
         savedQuote: Quote,
         userThoughts: String,
-        successfulSave: @escaping () -> Void
+        successfulSave: @escaping () -> Void,
+        refreshList: @escaping () -> Void
     ) -> EditReflectionView {
         EditReflectionView(
             savedQuote: savedQuote,
+            quoteRepository: dependencies.quoteRepository,
             userThoughts: userThoughts,
-            successfulSave: successfulSave
+            successfulSave: successfulSave,
+            refreshList: refreshList
         )
     }
 }

@@ -13,24 +13,31 @@ struct EditReflectionView: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: - State
+    @State private var editReflectionVM: EditReflectionViewModel
     @State var userThoughts: String = ""
-    @State private var showConfirmationDialog = false
     @State private var showAlert = false
     @State private var alertMessage = ""
     
     // MARK: - Dependencies
     private let savedQuote: Quote
+    private let quoteRepository: QuoteRepository
     private let successfulSave: () -> Void
+    private let refreshList: () -> Void
     
     // MARK: - Initialisation
     init(
         savedQuote: Quote,
+        quoteRepository: QuoteRepository,
         userThoughts: String,
-        successfulSave: @escaping () -> Void
+        successfulSave: @escaping () -> Void,
+        refreshList: @escaping () -> Void
     ) {
         self.savedQuote = savedQuote
+        self.quoteRepository = quoteRepository
+        _editReflectionVM = State(initialValue: EditReflectionViewModel(repository: quoteRepository))
         self.userThoughts = userThoughts
         self.successfulSave = successfulSave
+        self.refreshList = refreshList
     }
     
     // MARK: - Body
@@ -58,39 +65,52 @@ struct EditReflectionView: View {
             .purpleGradientBackgroundModifier()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel editing and don't save.") }
-                ToolbarItem(placement: .topBarTrailing) { SaveButton(saveAction: saveEditedReflection, showConfirmationDialog: $showConfirmationDialog, confirmationDialogActions: {
-                    [
-                        IdentifiableButton(button: Button(role: .destructive, action: { dismiss() }, label: { Text("Discard changes") })),
-                        IdentifiableButton(button: Button(role: .cancel, action: {}, label: { Text("Continue editing") }))
-                    ]
-                }, confirmationDialogMessage: "Please add some text so your reflection can be updated.", showAlert: $showAlert, alertMessage: alertMessage) }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Save") {
+                        editReflectionVM.updateReflection(
+                            //TODO: - Remove `!`
+                            quoteID: savedQuote.id!,
+                            reflection: userThoughts
+                        )
+                        if editReflectionVM.isReflectionUpdated {
+                            successfulSave()
+                            dismiss()
+                            refreshList()
+                        }
+                    }
+                    .alert(item: $editReflectionVM.reflectionAlert) { alert in
+                        switch alert {
+                        case .updateError(let message):
+                            Alert(
+                                title: Text("Update Error"),
+                                message: Text(message),
+                                dismissButton: .default(Text("Ok"))
+                            )
+                        }
+                    }
+                    .confirmationDialog(
+                        "Tapped save button without text in editor.",
+                        isPresented: $editReflectionVM.showConfirmationDialog,
+                        titleVisibility: .hidden
+                    ) {
+                        Button("Discard reflection", role: .destructive) { dismiss() }
+                        Button("Continue reflecting") {}
+                    } message: {
+                        Text("This quote won't be saved without a reflection.")
+                    }
+                }
             }
         }
-    }
-    
-    // MARK: - Save method
-    // TODO: - Move to VM?
-    private func saveEditedReflection() {
-//        if userThoughts.isEmpty {
-//            showConfirmationDialog.toggle()
-//        } else {
-//            savedQuote.reflection = userThoughts
-//            do {
-//                try PersistenceController.shared.save()
-//                dismiss()
-//                successfulSave()
-//            } catch {
-//                showAlert.toggle()
-//                alertMessage = PersistenceController.shared.persistenceError.localizedDescription
-//            }
-//        }
     }
 }
 
 #Preview {
+    let appContainer = try! AppContainer(isInMemoryOnly: true)
     EditReflectionView(
         savedQuote: Quote.sample[0],
+        quoteRepository: appContainer.quoteRepository,
         userThoughts: "User's reflection goes here.",
-        successfulSave: {}
+        successfulSave: {},
+        refreshList: {}
     )
 }

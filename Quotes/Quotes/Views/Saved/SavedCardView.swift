@@ -83,7 +83,8 @@ struct SavedCardView: View {
                     withAnimation(.spring().delay(0.25)) {
                         saveIsSuccessful.toggle()
                     }
-                }
+                },
+                refreshList: { savedVM.fetchAllQuotes() }
             )
             .presentationDragIndicator(.visible)
         }
