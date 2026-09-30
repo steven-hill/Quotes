@@ -15,8 +15,6 @@ struct EditReflectionView: View {
     // MARK: - State
     @State private var editReflectionVM: EditReflectionViewModel
     @State var userThoughts: String = ""
-    @State private var showAlert = false
-    @State private var alertMessage = ""
     
     // MARK: - Dependencies
     private let savedQuote: Quote
