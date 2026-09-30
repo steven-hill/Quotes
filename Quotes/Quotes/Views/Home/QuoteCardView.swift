@@ -9,9 +9,6 @@ import SwiftUI
 
 struct QuoteCardView: View {
     
-    // MARK: - Environment
-    @Environment(\.colorScheme) private var colorScheme
-    
     // MARK: - State
     @State private var isPresented = false
     
@@ -35,10 +32,11 @@ struct QuoteCardView: View {
         .onAppear {
             isPresented = true
         }
-        .animation(.smooth(duration: 1), value: isPresented)
-        .onDisappear {
-            isPresented = false
-        }
+        .animation(
+            .smooth(duration: 1),
+            value: isPresented
+        )
+        .onDisappear { isPresented = false }
     }
     
     // MARK: - UI component
@@ -66,5 +64,8 @@ struct QuoteCardView: View {
 }
 
 #Preview {
-    QuoteCardView(quoteContent: "A man is great not because he hasn't failed; a man is great because failure hasn't stopped him.", quoteAuthor: "Confucius")
+    QuoteCardView(
+        quoteContent: "A man is great not because he hasn't failed; a man is great because failure hasn't stopped him.",
+        quoteAuthor: "Confucius"
+    )
 }

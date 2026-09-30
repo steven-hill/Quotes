@@ -57,7 +57,10 @@ struct EditReflectionView: View {
                         quoteAuthor: savedQuote.author
                     )
                 }
-                ReflectionEditor(text: $userThoughts, accessibilityLabel: "Edit your reflection.")
+                ReflectionEditor(
+                    text: $userThoughts,
+                    accessibilityLabel: "Edit your reflection."
+                )
             }
             .padding()
             .navigationBarTitleDisplayMode(.inline)

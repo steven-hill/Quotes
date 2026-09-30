@@ -13,11 +13,6 @@
 		5B3FB7C42C52DE47000994DC /* QuotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */; };
 		5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
 		5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D62C52E194000994DC /* TabBar.swift */; };
-		5B3FB7DC2C52E243000994DC /* QuoteOfTheDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7DB2C52E243000994DC /* QuoteOfTheDayView.swift */; };
-		5B3FB7DE2C52E285000994DC /* QuoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7DD2C52E285000994DC /* QuoteCardView.swift */; };
-		5B3FB7E02C52E2D8000994DC /* QuoteOfTheDayShareLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7DF2C52E2D8000994DC /* QuoteOfTheDayShareLink.swift */; };
-		5B3FB7E22C52E31E000994DC /* ReflectOnThisQuoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7E12C52E31E000994DC /* ReflectOnThisQuoteButton.swift */; };
-		5B3FB7E42C52E3A6000994DC /* ReflectOnQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7E32C52E3A6000994DC /* ReflectOnQuoteView.swift */; };
 		5B3FB7F02C52E57D000994DC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7EF2C52E57D000994DC /* SettingsView.swift */; };
 		5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F12C52E642000994DC /* AuthorizationGrantedView.swift */; };
 		5B3FB7F42C52E686000994DC /* AuthorizationNotGrantedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F32C52E686000994DC /* AuthorizationNotGrantedView.swift */; };
@@ -58,11 +53,6 @@
 		5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B3FB7D02C52DFF9000994DC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5B3FB7D62C52E194000994DC /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
-		5B3FB7DB2C52E243000994DC /* QuoteOfTheDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayView.swift; sourceTree = "<group>"; };
-		5B3FB7DD2C52E285000994DC /* QuoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCardView.swift; sourceTree = "<group>"; };
-		5B3FB7DF2C52E2D8000994DC /* QuoteOfTheDayShareLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteOfTheDayShareLink.swift; sourceTree = "<group>"; };
-		5B3FB7E12C52E31E000994DC /* ReflectOnThisQuoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectOnThisQuoteButton.swift; sourceTree = "<group>"; };
-		5B3FB7E32C52E3A6000994DC /* ReflectOnQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectOnQuoteView.swift; sourceTree = "<group>"; };
 		5B3FB7EF2C52E57D000994DC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5B3FB7F12C52E642000994DC /* AuthorizationGrantedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationGrantedView.swift; sourceTree = "<group>"; };
 		5B3FB7F32C52E686000994DC /* AuthorizationNotGrantedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationNotGrantedView.swift; sourceTree = "<group>"; };
@@ -82,6 +72,7 @@
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
 		5B3F9D782D10C8EC009151CB /* AppearanceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppearanceTests; sourceTree = "<group>"; };
 		5B414F00306D78E400E312D3 /* Saved */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Saved; sourceTree = "<group>"; };
+		5B414F0B306D7A1300E312D3 /* Home */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Home; sourceTree = "<group>"; };
 		5B5A2910304C893100E5D1FC /* Networking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Networking; sourceTree = "<group>"; };
 		5B5CB660305B471A00262E01 /* AppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppTests; sourceTree = "<group>"; };
 		5B73D74B2D287F2F0076159F /* ReusableComponents */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReusableComponents; sourceTree = "<group>"; };
@@ -196,24 +187,12 @@
 				5B73D74B2D287F2F0076159F /* ReusableComponents */,
 				5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */,
 				5B3FB7D62C52E194000994DC /* TabBar.swift */,
-				5B3FB7D82C52E1D1000994DC /* Home */,
+				5B414F0B306D7A1300E312D3 /* Home */,
 				5B414F00306D78E400E312D3 /* Saved */,
 				5B3FB7DA2C52E1DF000994DC /* Settings */,
 				5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		5B3FB7D82C52E1D1000994DC /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				5B3FB7DB2C52E243000994DC /* QuoteOfTheDayView.swift */,
-				5B3FB7DD2C52E285000994DC /* QuoteCardView.swift */,
-				5B3FB7DF2C52E2D8000994DC /* QuoteOfTheDayShareLink.swift */,
-				5B3FB7E12C52E31E000994DC /* ReflectOnThisQuoteButton.swift */,
-				5B3FB7E32C52E3A6000994DC /* ReflectOnQuoteView.swift */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		5B3FB7DA2C52E1DF000994DC /* Settings */ = {
@@ -266,6 +245,7 @@
 				5B1BA72C305DDD8100E2DBE3 /* ViewModels */,
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
 				5B414F00306D78E400E312D3 /* Saved */,
+				5B414F0B306D7A1300E312D3 /* Home */,
 				5B5A2910304C893100E5D1FC /* Networking */,
 				5B73D74B2D287F2F0076159F /* ReusableComponents */,
 				5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */,
@@ -400,19 +380,14 @@
 				5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */,
 				5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */,
 				5B3FB7F42C52E686000994DC /* AuthorizationNotGrantedView.swift in Sources */,
-				5B3FB7E02C52E2D8000994DC /* QuoteOfTheDayShareLink.swift in Sources */,
 				5B3FB7F02C52E57D000994DC /* SettingsView.swift in Sources */,
 				5B5CB65F305B148900262E01 /* AppLaunchErrorView.swift in Sources */,
 				5B3FB7F62C52E6D2000994DC /* ZenQuotesAttributionView.swift in Sources */,
 				5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */,
 				5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */,
-				5B3FB7DE2C52E285000994DC /* QuoteCardView.swift in Sources */,
 				5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */,
-				5B3FB7E22C52E31E000994DC /* ReflectOnThisQuoteButton.swift in Sources */,
 				5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */,
-				5B3FB7E42C52E3A6000994DC /* ReflectOnQuoteView.swift in Sources */,
 				5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */,
-				5B3FB7DC2C52E243000994DC /* QuoteOfTheDayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
