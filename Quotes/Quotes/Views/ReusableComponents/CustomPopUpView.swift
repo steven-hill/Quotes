@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct CustomPopUpView: View {
+    
+    // MARK: - Environment
+    @Environment(\.colorScheme) private var colorScheme
+    
+    // MARK: - Dependencies
     let message: String
     
+    // MARK: - Body
     var body: some View {
         HStack {
             Image(systemName: "checkmark.circle")
@@ -17,8 +23,8 @@ struct CustomPopUpView: View {
         }
         .font(.headline)
         .padding()
-        .background(Color.green)
-        .foregroundColor(.white)
+        .background(colorScheme == .light ? .white : .black)
+        .foregroundColor(.green)
         .cornerRadius(10)
     }
 }
