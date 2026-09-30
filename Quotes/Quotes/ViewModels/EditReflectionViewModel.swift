@@ -37,9 +37,10 @@ final class EditReflectionViewModel {
     
     //MARK: - Method
     func updateReflection(
-        quoteID: UUID,
+        quote: Quote,
         reflection: String
     ) {
+        guard let quoteID = quote.id else { return }
         if reflection.isEmpty {
             showConfirmationDialog = true
             return

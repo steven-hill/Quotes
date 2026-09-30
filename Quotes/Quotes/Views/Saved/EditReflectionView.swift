@@ -68,8 +68,7 @@ struct EditReflectionView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         editReflectionVM.updateReflection(
-                            //TODO: - Remove `!`
-                            quoteID: savedQuote.id!,
+                            quote: savedQuote,
                             reflection: userThoughts
                         )
                         if editReflectionVM.isReflectionUpdated {
