@@ -177,7 +177,7 @@ struct SavedViewModelTests {
         let sut = SavedViewModel(repository: mockRepository)
         
         sut.update(
-            quote: mapToQuote(persistedQuote),
+            quote: PersistenceHelper.mapToQuote(persistedQuote),
             reflection: "Updated reflection"
         )
         
@@ -202,7 +202,7 @@ struct SavedViewModelTests {
             using: Quote.sample[0],
             reflection: "Reflection"
         )
-        let quote = mapToQuote(persistedQuote)
+        let quote = PersistenceHelper.mapToQuote(persistedQuote)
         mockRepository.persistedQuotes = [persistedQuote]
         mockRepository.deleteSucceeded = false
         let sut = SavedViewModel(repository: mockRepository)
@@ -220,7 +220,7 @@ struct SavedViewModelTests {
             using: Quote.sample[0],
             reflection: "Reflection"
         )
-        let quote = mapToQuote(persistedQuote)
+        let quote = PersistenceHelper.mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         let sut = SavedViewModel(repository: mockRepository)
 
@@ -247,16 +247,5 @@ struct SavedViewModelTests {
         mockRepository.persistedQuotes = [firstPersistedQuote, secondPersistedQuote]
         let sut = SavedViewModel(repository: mockRepository)
         return (sut, mockRepository)
-    }
-    
-    //MARK: - Mapper
-    private func mapToQuote(_ persistedQuote: PersistedQuote) -> Quote {
-        Quote(
-            id: persistedQuote.id,
-            text: persistedQuote.text,
-            author: persistedQuote.author,
-            date: persistedQuote.date,
-            reflection: persistedQuote.reflection
-        )
     }
 }

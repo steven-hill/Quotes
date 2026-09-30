@@ -31,7 +31,7 @@ struct EditReflectionViewModelTests {
             using: Quote.sample[0],
             reflection: "Reflection"
         )
-        let quote = mapToQuote(persistedQuote)
+        let quote = PersistenceHelper.mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         let sut = EditReflectionViewModel(repository: mockRepository)
         
@@ -50,7 +50,7 @@ struct EditReflectionViewModelTests {
             using: Quote.sample[0],
             reflection: "Reflection"
         )
-        let quote = mapToQuote(persistedQuote)
+        let quote = PersistenceHelper.mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         let sut = EditReflectionViewModel(repository: mockRepository)
         
@@ -69,7 +69,7 @@ struct EditReflectionViewModelTests {
             using: Quote.sample[0],
             reflection: "Reflection"
         )
-        let quote = mapToQuote(persistedQuote)
+        let quote = PersistenceHelper.mapToQuote(persistedQuote)
         let mockRepository = MockQuoteRepository()
         mockRepository.updateSucceeded = false
         let sut = EditReflectionViewModel(repository: mockRepository)
@@ -82,17 +82,5 @@ struct EditReflectionViewModelTests {
         #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
         #expect(sut.reflectionAlert == .updateError("Failed to update quote in database."), "Should be `.updateError`.")
         #expect(sut.isReflectionUpdated == false, "Should not update reflection.")
-    }
-    
-    //MARK: - Mapper
-    //TODO: - Move to test utilities
-    private func mapToQuote(_ persistedQuote: PersistedQuote) -> Quote {
-        Quote(
-            id: persistedQuote.id,
-            text: persistedQuote.text,
-            author: persistedQuote.author,
-            date: persistedQuote.date,
-            reflection: persistedQuote.reflection
-        )
     }
 }
