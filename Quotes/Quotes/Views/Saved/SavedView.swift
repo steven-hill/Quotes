@@ -79,10 +79,13 @@ struct SavedView: View {
     
     private var savedQuotesList: some View {
         List {
-            ForEach(savedVM.quotes, id: \.id) { savedQuote in
+            ForEach(
+                savedVM.quotes,
+                id: \.id
+            ) { savedQuote in
                 factory.makeSavedCardView(
                     savedQuote: savedQuote,
-                    onDelete: { savedVM.delete(quote: savedQuote) }
+                    savedVM: savedVM
                 )
                 .listRowSeparator(.hidden)
                 .listRowClearBackgroundModifier()
