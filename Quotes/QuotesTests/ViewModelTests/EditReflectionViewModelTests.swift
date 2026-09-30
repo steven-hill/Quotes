@@ -39,4 +39,20 @@ struct EditReflectionViewModelTests {
         #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
         #expect(sut.isReflectionUpdated, "Should have changed to true.")
     }
+    
+    @Test("VM handles error if update fails on the database")
+    func editReflectionViewModel_updateReflection_whenUpdateFailsOnDatabase_handlesErrorCorrectly() {
+        let mockRepository = MockQuoteRepository()
+        mockRepository.updateSucceeded = false
+        let sut = EditReflectionViewModel(repository: mockRepository)
+        
+        sut.updateReflection(
+            quoteID: Quote.sample[0].id ?? UUID(),
+            reflection: "Updated reflection"
+        )
+        
+        #expect(mockRepository.updateReflectionCallCount == 1, "Should call the method once.")
+        #expect(sut.reflectionAlert == .updateError("Failed to update quote in database."), "Should be `.updateError`.")
+        #expect(sut.isReflectionUpdated == false, "Should not update reflection.")
+    }
 }

@@ -13,6 +13,19 @@ final class EditReflectionViewModel {
     //MARK: - Properties
     private(set) var isReflectionUpdated: Bool = false
     var showConfirmationDialog: Bool = false
+    var reflectionAlert: EditReflectionAlertState?
+    
+    //MARK: - Edit Reflection Alert State Definition
+    enum EditReflectionAlertState: Identifiable, Equatable {
+        case updateError(String)
+        
+        var id: String {
+            switch self {
+            case .updateError:
+                return "Update error"
+            }
+        }
+    }
     
     //MARK: - Dependency
     private let repository: QuoteRepository
@@ -39,7 +52,7 @@ final class EditReflectionViewModel {
             )
             isReflectionUpdated = true
         } catch {
-        
+            reflectionAlert = .updateError(error.localizedDescription)
         }
     }
 }
