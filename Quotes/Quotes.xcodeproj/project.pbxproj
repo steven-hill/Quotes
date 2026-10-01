@@ -12,16 +12,10 @@
 		5B3FB7C22C52DE47000994DC /* QuotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */; };
 		5B3FB7C42C52DE47000994DC /* QuotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */; };
 		5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
-		5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D62C52E194000994DC /* TabBar.swift */; };
-		5B3FB7F02C52E57D000994DC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7EF2C52E57D000994DC /* SettingsView.swift */; };
-		5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F12C52E642000994DC /* AuthorizationGrantedView.swift */; };
-		5B3FB7F42C52E686000994DC /* AuthorizationNotGrantedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F32C52E686000994DC /* AuthorizationNotGrantedView.swift */; };
-		5B3FB7F62C52E6D2000994DC /* ZenQuotesAttributionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7F52C52E6D2000994DC /* ZenQuotesAttributionView.swift */; };
 		5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */; };
 		5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */; };
 		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
 		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
-		5B5CB65F305B148900262E01 /* AppLaunchErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */; };
 		5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */; };
 		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
 /* End PBXBuildFile section */
@@ -52,16 +46,10 @@
 		5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITests.swift; sourceTree = "<group>"; };
 		5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B3FB7D02C52DFF9000994DC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5B3FB7D62C52E194000994DC /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
-		5B3FB7EF2C52E57D000994DC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		5B3FB7F12C52E642000994DC /* AuthorizationGrantedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationGrantedView.swift; sourceTree = "<group>"; };
-		5B3FB7F32C52E686000994DC /* AuthorizationNotGrantedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationNotGrantedView.swift; sourceTree = "<group>"; };
-		5B3FB7F52C52E6D2000994DC /* ZenQuotesAttributionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenQuotesAttributionView.swift; sourceTree = "<group>"; };
 		5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubNetworkSession.swift; sourceTree = "<group>"; };
 		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
 		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
-		5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchErrorView.swift; sourceTree = "<group>"; };
 		5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
 		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,16 +59,13 @@
 		5B1BA732305DDD8700E2DBE3 /* ViewModelTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModelTests; sourceTree = "<group>"; };
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
 		5B3F9D782D10C8EC009151CB /* AppearanceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppearanceTests; sourceTree = "<group>"; };
-		5B414F00306D78E400E312D3 /* Saved */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Saved; sourceTree = "<group>"; };
-		5B414F0B306D7A1300E312D3 /* Home */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Home; sourceTree = "<group>"; };
 		5B5A2910304C893100E5D1FC /* Networking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Networking; sourceTree = "<group>"; };
 		5B5CB660305B471A00262E01 /* AppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppTests; sourceTree = "<group>"; };
-		5B73D74B2D287F2F0076159F /* ReusableComponents */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReusableComponents; sourceTree = "<group>"; };
-		5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomViewModifiers; sourceTree = "<group>"; };
 		5B8B89DB3057034200819809 /* App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = App; sourceTree = "<group>"; };
 		5BAC3E1C2E1EC47200D185C0 /* Router */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Router; sourceTree = "<group>"; };
 		5BB40EC330658748007F3A28 /* PersistenceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PersistenceTests; sourceTree = "<group>"; };
 		5BB40EC930658773007F3A28 /* Persistence */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Persistence; sourceTree = "<group>"; };
+		5BD2DF96306E73E00000FF34 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
 		5BDE29B430535EE6002F74F3 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 		5BDE29B73054714A002F74F3 /* UnitTestUtilities */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UnitTestUtilities; sourceTree = "<group>"; };
 		5BDFEDBE2DC29DDF0065ACCC /* LocalNotificationsTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalNotificationsTests; sourceTree = "<group>"; };
@@ -140,7 +125,7 @@
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
 				5B3FB7D02C52DFF9000994DC /* Constants.swift */,
 				5B1BA72C305DDD8100E2DBE3 /* ViewModels */,
-				5B3FB7D52C52E160000994DC /* Views */,
+				5BD2DF96306E73E00000FF34 /* Views */,
 				5BB40EC930658773007F3A28 /* Persistence */,
 				5B3FB7FC2C52EA92000994DC /* LocalNotifications */,
 				5B5A2910304C893100E5D1FC /* Networking */,
@@ -181,31 +166,6 @@
 			path = QuotesUITests;
 			sourceTree = "<group>";
 		};
-		5B3FB7D52C52E160000994DC /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5B73D74B2D287F2F0076159F /* ReusableComponents */,
-				5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */,
-				5B3FB7D62C52E194000994DC /* TabBar.swift */,
-				5B414F0B306D7A1300E312D3 /* Home */,
-				5B414F00306D78E400E312D3 /* Saved */,
-				5B3FB7DA2C52E1DF000994DC /* Settings */,
-				5B5CB65E305B148900262E01 /* AppLaunchErrorView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		5B3FB7DA2C52E1DF000994DC /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				5B3FB7EF2C52E57D000994DC /* SettingsView.swift */,
-				5B3FB7F12C52E642000994DC /* AuthorizationGrantedView.swift */,
-				5B3FB7F32C52E686000994DC /* AuthorizationNotGrantedView.swift */,
-				5B3FB7F52C52E6D2000994DC /* ZenQuotesAttributionView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		5B3FB7FC2C52EA92000994DC /* LocalNotifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,14 +204,11 @@
 			fileSystemSynchronizedGroups = (
 				5B1BA72C305DDD8100E2DBE3 /* ViewModels */,
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
-				5B414F00306D78E400E312D3 /* Saved */,
-				5B414F0B306D7A1300E312D3 /* Home */,
 				5B5A2910304C893100E5D1FC /* Networking */,
-				5B73D74B2D287F2F0076159F /* ReusableComponents */,
-				5B7A24DC2D177B10003A81D5 /* CustomViewModifiers */,
 				5B8B89DB3057034200819809 /* App */,
 				5BAC3E1C2E1EC47200D185C0 /* Router */,
 				5BB40EC930658773007F3A28 /* Persistence */,
+				5BD2DF96306E73E00000FF34 /* Views */,
 				5BDE29B430535EE6002F74F3 /* Model */,
 			);
 			name = Quotes;
@@ -379,13 +336,7 @@
 			files = (
 				5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */,
 				5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */,
-				5B3FB7F42C52E686000994DC /* AuthorizationNotGrantedView.swift in Sources */,
-				5B3FB7F02C52E57D000994DC /* SettingsView.swift in Sources */,
-				5B5CB65F305B148900262E01 /* AppLaunchErrorView.swift in Sources */,
-				5B3FB7F62C52E6D2000994DC /* ZenQuotesAttributionView.swift in Sources */,
-				5B3FB7F22C52E642000994DC /* AuthorizationGrantedView.swift in Sources */,
 				5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */,
-				5B3FB7D72C52E194000994DC /* TabBar.swift in Sources */,
 				5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */,
 				5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */,
 			);
