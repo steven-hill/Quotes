@@ -100,7 +100,7 @@ struct ViewFactoryTests {
         init(
             quoteRepository: QuoteRepository = MockQuoteRepository(),
             networkClient: Networking = NetworkClient(session: MockNetworkSession()),
-            appearanceManager: AppearanceManager = AppearanceManager(store: makeUserDefaults())
+            appearanceManager: AppearanceManager = AppearanceManager(store: UserDefaultsHelper.makeUserDefaults(for: "ViewFactoryTests"))
         ) {
             self.mockQuoteRepository = quoteRepository
             self.mockNetworkClient = networkClient
@@ -113,11 +113,5 @@ struct ViewFactoryTests {
         func data(for request: URLRequest) async throws -> (Data, URLResponse) {
             return (Data(), URLResponse())
         }
-    }
-    
-    //MARK: - Helper Method
-    private static func makeUserDefaults() -> UserDefaults {
-        let suiteName = "ViewFactoryTests.\(UUID().uuidString)"
-        return UserDefaults(suiteName: suiteName)!
     }
 }
