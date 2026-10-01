@@ -80,16 +80,7 @@ struct ReflectOnQuoteView: View {
                         successfulSave()
                         dismiss()
                     }
-                    .confirmationDialog(
-                        "Tapped save button without text in editor.",
-                        isPresented: $viewModel.showConfirmationDialog,
-                        titleVisibility: .hidden
-                    ) {
-                        Button("Discard reflection", role: .destructive) { dismiss() }
-                        Button("Continue reflecting") {}
-                    } message: {
-                        Text("This quote won't be saved if no reflection is added.")
-                    }
+                    .discardReflectionDialog(isPresented: $viewModel.showConfirmationDialog) { dismiss() }
                     .alert(item: $viewModel.alert) { alert in
                         switch alert {
                         case .addError(let message):
