@@ -91,16 +91,10 @@ struct EditReflectionView: View {
                             )
                         }
                     }
-                    .confirmationDialog(
-                        "Tapped save button without text in editor.",
+                    .discardReflectionDialog(
                         isPresented: $editReflectionVM.showConfirmationDialog,
-                        titleVisibility: .hidden
-                    ) {
-                        Button("Discard reflection", role: .destructive) { dismiss() }
-                        Button("Continue reflecting") {}
-                    } message: {
-                        Text("This quote won't be saved without a reflection.")
-                    }
+                        message: "Enter a reflection to save."
+                    ) { dismiss() }
                 }
             }
         }
