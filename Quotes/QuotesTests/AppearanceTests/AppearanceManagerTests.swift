@@ -22,7 +22,7 @@ struct AppearanceManagerTests {
     @Test("Load the user's preference from `UserDefaults`")
     func appearanceManager_loadsSavedAppearance() {
         let defaults = UserDefaultsHelper.makeUserDefaults(for: "AppearanceManagerTests")
-        defaults.set(Appearance.dark.rawValue, forKey: "selectedAppearance")
+        defaults.set(Appearance.dark.rawValue, forKey: Constants.UserDefaultsAppearanceKey.key)
 
         let sut = AppearanceManager(store: defaults)
 
@@ -36,14 +36,14 @@ struct AppearanceManagerTests {
 
         sut.selectedAppearance = .light
 
-        #expect(defaults.string(forKey: "selectedAppearance") == Appearance.light.rawValue)
+        #expect(defaults.string(forKey: Constants.UserDefaultsAppearanceKey.key) == Appearance.light.rawValue)
         
         sut.selectedAppearance = .dark
 
-        #expect(defaults.string(forKey: "selectedAppearance") == Appearance.dark.rawValue)
+        #expect(defaults.string(forKey: Constants.UserDefaultsAppearanceKey.key) == Appearance.dark.rawValue)
         
         sut.selectedAppearance = .system
 
-        #expect(defaults.string(forKey: "selectedAppearance") == Appearance.system.rawValue)
+        #expect(defaults.string(forKey: Constants.UserDefaultsAppearanceKey.key) == Appearance.system.rawValue)
     }
 }

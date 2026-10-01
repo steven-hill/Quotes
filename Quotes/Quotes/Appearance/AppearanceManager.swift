@@ -10,7 +10,7 @@ import SwiftUI
 @Observable
 final class AppearanceManager {
     private let store: UserDefaults
-    private let key = "selectedAppearance"
+    private let key = Constants.UserDefaultsAppearanceKey.key
     
     var selectedAppearance: Appearance {
         didSet {
