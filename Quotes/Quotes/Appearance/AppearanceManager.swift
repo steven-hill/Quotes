@@ -12,7 +12,11 @@ final class AppearanceManager {
     private let store: UserDefaults
     private let key = "selectedAppearance"
     
-    var selectedAppearance: Appearance = .light
+    var selectedAppearance: Appearance {
+        didSet {
+            store.set(selectedAppearance.rawValue, forKey: key)
+        }
+    }
     
     init(store: UserDefaults = .standard) {
         self.store = store

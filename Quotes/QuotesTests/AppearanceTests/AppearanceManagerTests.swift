@@ -19,6 +19,24 @@ struct AppearanceManagerTests {
         #expect(sut.selectedAppearance == .system)
     }
     
+    @Test("When user changes appearance, the change is saved")
+    func appearanceManager_savesAppearanceToUserDefaults() {
+        let defaults = makeUserDefaults()
+        let sut = AppearanceManager(store: defaults)
+
+        sut.selectedAppearance = .light
+
+        #expect(defaults.string(forKey: "selectedAppearance") == Appearance.light.rawValue)
+        
+        sut.selectedAppearance = .dark
+
+        #expect(defaults.string(forKey: "selectedAppearance") == Appearance.dark.rawValue)
+        
+        sut.selectedAppearance = .system
+
+        #expect(defaults.string(forKey: "selectedAppearance") == Appearance.system.rawValue)
+    }
+    
     //MARK: - Helper Method
     private func makeUserDefaults() -> UserDefaults {
         let suiteName = "AppearanceManagerTests.\(UUID().uuidString)"
