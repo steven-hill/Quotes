@@ -11,6 +11,7 @@ struct SaveButton: View {
     
     //MARK: - Dependencies
     let accessibilityLabel: String
+    let accessibilityHint: String
     let saveAction: () -> Bool
     let onCompletion: () -> Void
     
@@ -23,12 +24,14 @@ struct SaveButton: View {
             }
         }
         .accessibilityLabel(accessibilityLabel)
+        .accessibilityHint(accessibilityHint)
     }
 }
 
 #Preview {
     SaveButton(
         accessibilityLabel: "Save quote with your reflection",
+        accessibilityHint: "Saves your thoughts and returns to the previous screen.",
         saveAction: { true },
         onCompletion: {}
     )

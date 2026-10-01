@@ -67,7 +67,8 @@ struct ReflectOnQuoteView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     SaveButton(
-                        accessibilityLabel: "Save quote with your reflection"
+                        accessibilityLabel: "Save quote with your reflection",
+                        accessibilityHint: "Saves your thoughts and returns to the previous screen."
                     ) {
                         viewModel.saveQuoteWithReflection(
                             quoteContent: quoteContent,
