@@ -66,16 +66,18 @@ struct ReflectOnQuoteView: View {
                     CancelButton(accessibilityLabel: "Cancel reflection and don't save.")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
+                    SaveButton(
+                        accessibilityLabel: "Save quote with your reflection"
+                    ) {
                         viewModel.saveQuoteWithReflection(
                             quoteContent: quoteContent,
                             quoteAuthor: quoteAuthor,
                             reflection: userThoughts
                         )
-                        if viewModel.isQuoteSaved {
-                            successfulSave()
-                            dismiss()
-                        }
+                        return viewModel.isQuoteSaved
+                    } onCompletion: {
+                        successfulSave()
+                        dismiss()
                     }
                     .confirmationDialog(
                         "Tapped save button without text in editor.",
