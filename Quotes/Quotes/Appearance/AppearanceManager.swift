@@ -7,14 +7,7 @@
 
 import SwiftUI
 
-final class AppearanceManager: ObservableObject {
-    @AppStorage var selectedAppearance: Appearance
-    
-    init(store: UserDefaults = .standard) {
-        _selectedAppearance = AppStorage(
-            wrappedValue: .system,
-            "selectedAppearance",
-            store: store
-        )
-    }
+@Observable
+final class AppearanceManager {
+    var selectedAppearance: Appearance = .system
 }

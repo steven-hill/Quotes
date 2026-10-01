@@ -61,16 +61,29 @@ struct ViewFactoryTests {
         #expect(mockDependencyContainer.didAccessQuoteRepository == true, "Should have got the quote repository instance from the dependencies.")
     }
     
+    @Test("View factory successfully accesses appearance manager for `SettingsView`")
+    func viewFactory_makeSettingsView_accessesAppearanceManager()  {
+        let mockDependencyContainer = MockDependencyContainer()
+        let sut = ViewFactory(dependencies: mockDependencyContainer)
+        
+        _ = sut.makeSettingsView()
+        
+        #expect(mockDependencyContainer.didAccessAppearanceManager, "Should have got the appearance manager instance from the dependencies.")
+    }
+    
     //MARK: - Mocks
     private final class MockDependencyContainer: AppDependencyContaining {
         
         // MARK: - Properties
         private let mockQuoteRepository: QuoteRepository
         private let mockNetworkClient: Networking
+        private let mockAppearanceManager: AppearanceManager
         
         // MARK: - Tracking States
         var didAccessQuoteRepository = false
         var didAccessNetworkClient = false
+        var didAccessAppearanceManager = false
+        
         var quoteRepository: QuoteRepository {
             didAccessQuoteRepository = true
             return mockQuoteRepository
@@ -79,14 +92,20 @@ struct ViewFactoryTests {
             didAccessNetworkClient = true
             return mockNetworkClient
         }
+        var appearanceManager: AppearanceManager {
+            didAccessAppearanceManager = true
+            return mockAppearanceManager
+        }
         
         // MARK: - Initialisation
         init(
             quoteRepository: QuoteRepository = MockQuoteRepository(),
-            networkClient: Networking = NetworkClient(session: MockNetworkSession())
+            networkClient: Networking = NetworkClient(session: MockNetworkSession()),
+            appearanceManager: AppearanceManager = AppearanceManager()
         ) {
             self.mockQuoteRepository = quoteRepository
             self.mockNetworkClient = networkClient
+            self.mockAppearanceManager = appearanceManager
         }
     }
 

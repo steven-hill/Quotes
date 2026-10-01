@@ -12,7 +12,6 @@ struct QuotesApp: App {
     
     // MARK: - State Objects
     @StateObject private var localNotificationManager = LocalNotificationManager()
-    @StateObject private var appearanceManager = AppearanceManager()
     @StateObject private var tabRouter = TabRouter()
     
     // MARK: - State
@@ -42,9 +41,7 @@ struct QuotesApp: App {
                     isStorageDegraded: isStorageDegraded,
                 )
                     .environmentObject(localNotificationManager)
-                    .environmentObject(appearanceManager)
                     .environmentObject(tabRouter)
-                    .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
             case .failed(let error):
                 AppLaunchErrorView(error: error)
             }

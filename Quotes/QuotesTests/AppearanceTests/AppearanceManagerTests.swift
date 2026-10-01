@@ -19,7 +19,7 @@ final class AppearanceManagerTests: XCTestCase {
         try await super.setUp()
         suiteName = "AppearanceManagerTests.\(UUID().uuidString)"
         mockUD = UserDefaults(suiteName: suiteName)
-        sut = AppearanceManager(store: mockUD)
+        sut = AppearanceManager()
     }
     
     override func tearDown() async throws {
@@ -39,7 +39,7 @@ final class AppearanceManagerTests: XCTestCase {
         )
 
         /// Initialise a different sut so it can read from the already persisted value.
-        let secondarySut = AppearanceManager(store: mockUD)
+        let secondarySut = AppearanceManager()
         
         XCTAssertEqual(secondarySut.selectedAppearance, .light, "Should be the saved value.")
     }
@@ -51,7 +51,7 @@ final class AppearanceManagerTests: XCTestCase {
         )
 
         /// Initialise a different sut so it can read from the already persisted value.
-        let secondarySut = AppearanceManager(store: mockUD)
+        let secondarySut = AppearanceManager()
         
         XCTAssertEqual(secondarySut.selectedAppearance, .dark, "Should be the saved value.")
     }

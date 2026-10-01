@@ -11,6 +11,7 @@ import SwiftData
 protocol AppDependencyContaining {
     var quoteRepository: QuoteRepository { get }
     var networkClient: Networking { get }
+    var appearanceManager: AppearanceManager { get }
 }
 
 /// Manages business logic dependencies.
@@ -21,6 +22,7 @@ final class AppContainer: AppDependencyContaining {
     private let schema = Schema(PersistedQuote.self)
     let quoteRepository: QuoteRepository
     let networkClient: Networking
+    let appearanceManager: AppearanceManager
     private(set) var isRunningInDegradedMode = false
     
     // MARK: - Initialisation
@@ -29,6 +31,7 @@ final class AppContainer: AppDependencyContaining {
         modelContainerFactory: ModelContainerCreating = ModelContainerFactory()
     ) throws {
         self.networkClient = NetworkClient()
+        self.appearanceManager = AppearanceManager()
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: isInMemoryOnly)
             self.modelContainer = try modelContainerFactory.makeContainer(schema: schema, configuration: config)

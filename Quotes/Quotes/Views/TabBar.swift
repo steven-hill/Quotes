@@ -62,7 +62,7 @@ struct TabBar: View {
                 .onAppear { selectedTab = .saved }
                 .tag(Tab.saved)
             
-            SettingsView()
+            factory.makeSettingsView()
                 .tabItem {
                     Label("Settings", systemImage: selectedTab == .settings ? "gearshape.circle.fill" : "gearshape.circle")
                         .environment(\.symbolVariants, selectedTab == .settings ? .fill : .none)
@@ -111,6 +111,5 @@ struct TabBar: View {
         isStorageDegraded: false
     )
         .environmentObject(LocalNotificationManager())
-        .environmentObject(AppearanceManager())
         .environmentObject(TabRouter())
 }

@@ -71,4 +71,8 @@ final class ViewFactory {
             refreshList: refreshList
         )
     }
+    
+    func makeSettingsView() -> SettingsView {
+        SettingsView(appearanceManager: dependencies.appearanceManager)
+    }
 }
