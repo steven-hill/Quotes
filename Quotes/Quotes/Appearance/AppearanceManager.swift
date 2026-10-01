@@ -7,14 +7,25 @@
 
 import SwiftUI
 
-final class AppearanceManager: ObservableObject {
-    @AppStorage var selectedAppearance: Appearance
+@Observable
+final class AppearanceManager {
+    private let store: UserDefaults
+    private let key = Constants.UserDefaultsAppearanceKey.key
+    
+    var selectedAppearance: Appearance {
+        didSet {
+            store.set(selectedAppearance.rawValue, forKey: key)
+        }
+    }
     
     init(store: UserDefaults = .standard) {
-        _selectedAppearance = AppStorage(
-            wrappedValue: .system,
-            "selectedAppearance",
-            store: store
-        )
+        self.store = store
+        
+        if let rawValue = store.string(forKey: key),
+           let savedAppearance = Appearance(rawValue: rawValue) {
+            self.selectedAppearance = savedAppearance
+        } else {
+            self.selectedAppearance = .system
+        }
     }
 }

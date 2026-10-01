@@ -20,10 +20,6 @@ struct TabBar: View {
     @State private var selectedTab: Tab = .home
     @State private var showLocalDatabaseFailureAlert = false
     
-    //MARK: - Property
-    /// Flags persistent storage issue.
-    private let isStorageDegraded: Bool
-
     // MARK: - Tab Definition
     private enum Tab {
         case home
@@ -33,6 +29,8 @@ struct TabBar: View {
     
     //MARK: - Dependency
     private let factory: ViewFactory
+    /// Flags persistent storage issue.
+    private let isStorageDegraded: Bool
     
     //MARK: - Initialisation
     init(
@@ -62,7 +60,7 @@ struct TabBar: View {
                 .onAppear { selectedTab = .saved }
                 .tag(Tab.saved)
             
-            SettingsView()
+            factory.makeSettingsView()
                 .tabItem {
                     Label("Settings", systemImage: selectedTab == .settings ? "gearshape.circle.fill" : "gearshape.circle")
                         .environment(\.symbolVariants, selectedTab == .settings ? .fill : .none)
@@ -110,7 +108,6 @@ struct TabBar: View {
         ),
         isStorageDegraded: false
     )
-        .environmentObject(LocalNotificationManager())
-        .environmentObject(AppearanceManager())
-        .environmentObject(TabRouter())
+    .environmentObject(LocalNotificationManager())
+    .environmentObject(TabRouter())
 }

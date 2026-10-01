@@ -15,4 +15,8 @@ struct Constants {
     struct AlertMessage {
         static let deleteQuoteAlertMessage = "This action can't be undone."
     }
+    
+    struct UserDefaultsAppearanceKey {
+        static let key = "selectedAppearance"
+    }
 }

@@ -9,15 +9,22 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    // MARK: - Environment Objects
+    // MARK: - Environment Object
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
-    @EnvironmentObject private var appearanceManager: AppearanceManager
     
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
     
     // MARK: - State
     @State private var scheduleNotificationIsSuccessful = false
+    
+    // MARK: - Bindable
+    @Bindable private var appearanceManager: AppearanceManager
+    
+    // MARK: - Initialisation
+    init(appearanceManager: AppearanceManager) {
+        self.appearanceManager = appearanceManager
+    }
     
     // MARK: - Body
     var body: some View {
@@ -44,7 +51,11 @@ struct SettingsView: View {
         .onChange(of: scenePhase) { _, newValue in
             handleScenePhaseChange(newValue)
         }
-        .alert("Error", isPresented: $localNotificationManager.hasError, presenting: localNotificationManager.notificationError) { _ in
+        .alert(
+            "Error",
+            isPresented: $localNotificationManager.hasError,
+            presenting: localNotificationManager.notificationError
+        ) { _ in
             Button("Ok") {}
         } message: { detail in
             Text(detail.errorDescription)
@@ -86,7 +97,10 @@ struct SettingsView: View {
     }
     
     private var appearanceContent: some View {
-        Picker("Set to:", selection: $appearanceManager.selectedAppearance) {
+        Picker(
+            "Set to:",
+            selection: $appearanceManager.selectedAppearance
+        ) {
             ForEach(Appearance.allCases) { appearance in
                 Text(appearance.title).tag(appearance)
             }
@@ -109,7 +123,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    let appContainer = try! AppContainer(isInMemoryOnly: true)
+    SettingsView(appearanceManager: appContainer.appearanceManager)
         .environmentObject(LocalNotificationManager())
-        .environmentObject(AppearanceManager())
 }

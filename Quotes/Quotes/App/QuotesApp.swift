@@ -12,7 +12,6 @@ struct QuotesApp: App {
     
     // MARK: - State Objects
     @StateObject private var localNotificationManager = LocalNotificationManager()
-    @StateObject private var appearanceManager = AppearanceManager()
     @StateObject private var tabRouter = TabRouter()
     
     // MARK: - State
@@ -24,6 +23,7 @@ struct QuotesApp: App {
         case loading
         case ready(
             factory: ViewFactory,
+            appearanceManager: AppearanceManager,
             isStorageDegraded: Bool
         )
         case failed(AppContainerError)
@@ -36,15 +36,18 @@ struct QuotesApp: App {
             case .loading:
                 ProgressView()
                     .task { await triggerAppContainerInitialisation() }
-            case .ready(let factory, let isStorageDegraded):
+            case .ready(
+                let factory,
+                let appearanceManager,
+                let isStorageDegraded
+            ):
                 TabBar(
                     factory: factory,
                     isStorageDegraded: isStorageDegraded,
                 )
-                    .environmentObject(localNotificationManager)
-                    .environmentObject(appearanceManager)
-                    .environmentObject(tabRouter)
-                    .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
+                .environmentObject(localNotificationManager)
+                .environmentObject(tabRouter)
+                .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
             case .failed(let error):
                 AppLaunchErrorView(error: error)
             }
@@ -65,6 +68,7 @@ struct QuotesApp: App {
                 let factory = ViewFactory(dependencies: container)
                 appState = .ready(
                     factory: factory,
+                    appearanceManager: container.appearanceManager,
                     isStorageDegraded: container.isRunningInDegradedMode
                 )
             }
