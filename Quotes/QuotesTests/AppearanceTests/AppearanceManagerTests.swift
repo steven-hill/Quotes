@@ -19,6 +19,16 @@ struct AppearanceManagerTests {
         #expect(sut.selectedAppearance == .system)
     }
     
+    @Test("Load the user's preference from `UserDefaults`")
+    func appearanceManager_loadsSavedAppearance() {
+        let defaults = makeUserDefaults()
+        defaults.set(Appearance.dark.rawValue, forKey: "selectedAppearance")
+
+        let sut = AppearanceManager(store: defaults)
+
+        #expect(sut.selectedAppearance == .dark)
+    }
+    
     @Test("When user changes appearance, the change is saved")
     func appearanceManager_savesAppearanceToUserDefaults() {
         let defaults = makeUserDefaults()
