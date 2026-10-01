@@ -108,7 +108,7 @@ struct ViewFactoryTests {
         }
     }
 
-    //MARK: Mock Network Session
+    //MARK: - Mock Network Session
     private struct MockNetworkSession: NetworkSession {
         func data(for request: URLRequest) async throws -> (Data, URLResponse) {
             return (Data(), URLResponse())

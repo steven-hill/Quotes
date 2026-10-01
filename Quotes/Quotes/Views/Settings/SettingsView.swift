@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    // MARK: - Environment Objects
+    // MARK: - Environment Object
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     
     // MARK: - Environment
@@ -51,7 +51,11 @@ struct SettingsView: View {
         .onChange(of: scenePhase) { _, newValue in
             handleScenePhaseChange(newValue)
         }
-        .alert("Error", isPresented: $localNotificationManager.hasError, presenting: localNotificationManager.notificationError) { _ in
+        .alert(
+            "Error",
+            isPresented: $localNotificationManager.hasError,
+            presenting: localNotificationManager.notificationError
+        ) { _ in
             Button("Ok") {}
         } message: { detail in
             Text(detail.errorDescription)
@@ -93,7 +97,10 @@ struct SettingsView: View {
     }
     
     private var appearanceContent: some View {
-        Picker("Set to:", selection: $appearanceManager.selectedAppearance) {
+        Picker(
+            "Set to:",
+            selection: $appearanceManager.selectedAppearance
+        ) {
             ForEach(Appearance.allCases) { appearance in
                 Text(appearance.title).tag(appearance)
             }
