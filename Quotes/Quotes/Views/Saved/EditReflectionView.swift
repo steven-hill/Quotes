@@ -67,16 +67,19 @@ struct EditReflectionView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { CancelButton(accessibilityLabel: "Cancel editing and don't save.") }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
+                    SaveButton(
+                        accessibilityLabel: "Save edited reflection",
+                        accessibilityHint: "Saves your reflection and returns to the list of saved quotes."
+                    ) {
                         editReflectionVM.updateReflection(
                             quote: savedQuote,
                             reflection: userThoughts
                         )
-                        if editReflectionVM.isReflectionUpdated {
-                            successfulSave()
-                            dismiss()
-                            refreshList()
-                        }
+                        return editReflectionVM.isReflectionUpdated
+                    } onCompletion: {
+                        successfulSave()
+                        dismiss()
+                        refreshList()
                     }
                     .alert(item: $editReflectionVM.reflectionAlert) { alert in
                         switch alert {
