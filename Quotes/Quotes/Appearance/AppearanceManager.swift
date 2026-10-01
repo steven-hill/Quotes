@@ -9,5 +9,19 @@ import SwiftUI
 
 @Observable
 final class AppearanceManager {
-    var selectedAppearance: Appearance = .system
+    private let store: UserDefaults
+    private let key = "selectedAppearance"
+    
+    var selectedAppearance: Appearance = .light
+    
+    init(store: UserDefaults = .standard) {
+        self.store = store
+        
+        if let rawValue = store.string(forKey: key),
+           let savedAppearance = Appearance(rawValue: rawValue) {
+            self.selectedAppearance = savedAppearance
+        } else {
+            self.selectedAppearance = .system
+        }
+    }
 }
