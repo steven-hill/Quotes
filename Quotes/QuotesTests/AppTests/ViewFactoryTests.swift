@@ -79,9 +79,9 @@ struct ViewFactoryTests {
         private let mockAppearanceManager: AppearanceManager
         
         // MARK: - Tracking States
-        var didAccessQuoteRepository = false
-        var didAccessNetworkClient = false
-        var didAccessAppearanceManager = false
+        private(set) var didAccessQuoteRepository = false
+        private(set) var didAccessNetworkClient = false
+        private(set) var didAccessAppearanceManager = false
         
         var quoteRepository: QuoteRepository {
             didAccessQuoteRepository = true
