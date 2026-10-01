@@ -91,9 +91,7 @@ struct EditReflectionView: View {
                             )
                         }
                     }
-                    .discardReflectionDialog(
-                        isPresented: $editReflectionVM.showConfirmationDialog
-                    ) { dismiss() }
+                    .discardReflectionDialog(isPresented: $editReflectionVM.showConfirmationDialog) { dismiss() }
                 }
             }
         }

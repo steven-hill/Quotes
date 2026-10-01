@@ -80,9 +80,7 @@ struct ReflectOnQuoteView: View {
                         successfulSave()
                         dismiss()
                     }
-                    .discardReflectionDialog(
-                        isPresented: $viewModel.showConfirmationDialog
-                    ) { dismiss() }
+                    .discardReflectionDialog(isPresented: $viewModel.showConfirmationDialog) { dismiss() }
                     .alert(item: $viewModel.alert) { alert in
                         switch alert {
                         case .addError(let message):
