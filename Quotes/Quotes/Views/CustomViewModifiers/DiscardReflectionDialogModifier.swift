@@ -9,7 +9,6 @@ import SwiftUI
 
 struct DiscardReflectionDialogModifier: ViewModifier {
     @Binding var isPresented: Bool
-    let messageText: String
     let onDiscard: () -> Void
     
     func body(content: Content) -> some View {
@@ -25,7 +24,7 @@ struct DiscardReflectionDialogModifier: ViewModifier {
                 ) { onDiscard() }
                 Button("Continue reflecting") {}
             } message: {
-                Text(messageText)
+                Text("Enter a reflection to save.")
             }
     }
 }
@@ -33,13 +32,11 @@ struct DiscardReflectionDialogModifier: ViewModifier {
 extension View {
     func discardReflectionDialog(
         isPresented: Binding<Bool>,
-        message: String,
         onDiscard: @escaping () -> Void
     ) -> some View {
         self.modifier(
             DiscardReflectionDialogModifier(
                 isPresented: isPresented,
-                messageText: message,
                 onDiscard: onDiscard
             )
         )
@@ -55,8 +52,7 @@ extension View {
                 isShowingDialog = true
             }
             .discardReflectionDialog(
-                isPresented: $isShowingDialog,
-                message: "This quote won't be saved if no reflection is added."
+                isPresented: $isShowingDialog
             ) {}
         }
     }

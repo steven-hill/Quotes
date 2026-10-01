@@ -92,8 +92,7 @@ struct EditReflectionView: View {
                         }
                     }
                     .discardReflectionDialog(
-                        isPresented: $editReflectionVM.showConfirmationDialog,
-                        message: "Enter a reflection to save."
+                        isPresented: $editReflectionVM.showConfirmationDialog
                     ) { dismiss() }
                 }
             }

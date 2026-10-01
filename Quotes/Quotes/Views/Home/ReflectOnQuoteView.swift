@@ -81,8 +81,7 @@ struct ReflectOnQuoteView: View {
                         dismiss()
                     }
                     .discardReflectionDialog(
-                        isPresented: $viewModel.showConfirmationDialog,
-                        message: "This quote won't be saved without a reflection.",
+                        isPresented: $viewModel.showConfirmationDialog
                     ) { dismiss() }
                     .alert(item: $viewModel.alert) { alert in
                         switch alert {
