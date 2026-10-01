@@ -29,7 +29,7 @@ struct AppearanceManagerTests {
         #expect(sut.selectedAppearance == .dark)
     }
     
-    @Test("When user changes appearance, the change is saved")
+    @Test("When the user changes the device's appearance, the change is saved")
     func appearanceManager_savesAppearanceToUserDefaults() {
         let defaults = makeUserDefaults()
         let sut = AppearanceManager(store: defaults)
