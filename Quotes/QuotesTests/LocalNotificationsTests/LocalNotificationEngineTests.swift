@@ -15,8 +15,7 @@ struct LocalNotificationEngineTests {
     // MARK: - Authorisation Tests
     @Test("Requests authorisation from `UNUserNotificationCenter` singleton and gets backs success")
     func localNotificationEngine_requestAuthorisation_callsUnderlyingCenter_andReturnsSuccess() async throws {
-        let mockRawNotificationCentre = MockRawNotificationCentre()
-        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
+        let (sut, mockRawNotificationCentre) = makeSUT(throwsError: false)
         mockRawNotificationCentre.stubbedAuthorisationResult = true
         
         let result = try await sut.requestAuthorization(options: [.alert, .badge, .sound, .provisional])
@@ -27,9 +26,7 @@ struct LocalNotificationEngineTests {
     
     @Test("Requests authorisation from `UNUserNotificationCenter` singleton but gets an error")
     func localNotificationEngine_requestAuthorisation_callsUnderlyingCenter_whenSystemFails_returnsError() async throws {
-        let mockRawNotificationCentre = MockRawNotificationCentre()
-        mockRawNotificationCentre.shouldThrowError = true
-        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
+        let (sut, mockRawNotificationCentre) = makeSUT(throwsError: true)
         
         do {
             _ = try await sut.requestAuthorization(options: [.alert, .badge, .sound, .provisional])
@@ -52,9 +49,8 @@ struct LocalNotificationEngineTests {
         systemStatus: NotificationPermissionStatus,
         expectedDomainStatus: NotificationPermissionStatus
     ) async throws {
-        let mockRawNotificationCentre = MockRawNotificationCentre()
+        let (sut, mockRawNotificationCentre) = makeSUT(throwsError: false)
         mockRawNotificationCentre.stubbedPermissionStatus = systemStatus
-        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
         
         let config = await sut.fetchStatus()
         
@@ -75,8 +71,7 @@ struct LocalNotificationEngineTests {
             content: content,
             trigger: trigger
         )
-        let mockRawNotificationCentre = MockRawNotificationCentre()
-        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
+        let (sut, mockRawNotificationCentre) = makeSUT(throwsError: false)
         
         try await sut.schedule(request)
         
@@ -89,9 +84,7 @@ struct LocalNotificationEngineTests {
     
     @Test("Propagates error if system fails to schedule the request")
     func localNotificationEngine_schedule_whenSystemFails_propagatesSystemSchedulingFailure() async {
-        let mockRawNotificationCentre = MockRawNotificationCentre()
-        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
-        mockRawNotificationCentre.shouldThrowError = true
+        let (sut, mockRawNotificationCentre) = makeSUT(throwsError: true)
         let content = UNMutableNotificationContent()
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false)
         let request = UNNotificationRequest(
@@ -110,8 +103,7 @@ struct LocalNotificationEngineTests {
     
     @Test("Removes all pending requests")
     func localNotificationEngine_cancelAllPendingRequests_triggersRemoval() {
-        let mockRawNotificationCentre = MockRawNotificationCentre()
-        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
+        let (sut, mockRawNotificationCentre) = makeSUT(throwsError: false)
         
         sut.cancelAllPendingRequests()
         
@@ -120,8 +112,7 @@ struct LocalNotificationEngineTests {
     
     @Test("Reset the notification badge count to zero successfully")
     func localNotificationEngine_resetBadge_updatesBadgeCountToZero() async throws {
-        let mockRawNotificationCentre = MockRawNotificationCentre()
-        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
+        let (sut, mockRawNotificationCentre) = makeSUT(throwsError: false)
         
         try await sut.resetBadge()
         
@@ -130,9 +121,7 @@ struct LocalNotificationEngineTests {
     
     @Test("Propagates error if reset the notification badge count to zero fails")
     func localNotificationEngine_resetBadge_whenSystemFails_propogatesFailure() async throws {
-        let mockRawNotificationCentre = MockRawNotificationCentre()
-        mockRawNotificationCentre.shouldThrowError = true
-        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
+        let (sut, mockRawNotificationCentre) = makeSUT(throwsError: true)
         
         do {
             try await sut.resetBadge()
@@ -140,5 +129,16 @@ struct LocalNotificationEngineTests {
         } catch {
             #expect(mockRawNotificationCentre.badgeCountSetTo == nil, "Badge count reset should not happen on system failure.")
         }
+    }
+    
+    //MARK: - SUT Helper
+    private func makeSUT(throwsError: Bool) -> (
+        sut: LocalNotificationEngine,
+        mockRawNotificationCentre: MockRawNotificationCentre
+    ) {
+        let mockRawNotificationCentre = MockRawNotificationCentre()
+        mockRawNotificationCentre.shouldThrowError = throwsError
+        let sut = LocalNotificationEngine(centre: mockRawNotificationCentre)
+        return (sut, mockRawNotificationCentre)
     }
 }
