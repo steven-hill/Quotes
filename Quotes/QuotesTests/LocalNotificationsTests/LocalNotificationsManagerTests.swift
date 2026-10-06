@@ -15,13 +15,7 @@ struct LocalNotificationsManagerTests {
     // MARK: - Initialisation Tests
     @Test("On init, uses default time for local notification if user hasn't selected a different time")
     func localNotificationsManager_whenStorageIsEmpty_usesDefaultTime() {
-        let mockEngine = MockNotificationEngine()
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
+        let (sut, _, _) = makeSUT(engineThrowsError: false)
         
         #expect(sut.scheduledTimeString == "10:00", "Manager failed to fallback to default time option.")
     }
@@ -47,12 +41,7 @@ struct LocalNotificationsManagerTests {
     // MARK: - Permission And Related State Tracking Tests
     @Test("If requesting permission succeeds, update state correctly.")
     func localNotificationsManager_requestPermission_onSystemSuccess_updatesStateCorrectly() async {
-        let mockEngine = MockNotificationEngine()
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
+        let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
         mockEngine.stubbedPermissionResult = true
         
         await sut.requestPermission()
@@ -63,12 +52,7 @@ struct LocalNotificationsManagerTests {
     
     @Test("If user denies permission, alert message is set")
     func localNotificationsManager_requestPermission_ifUserDenies_updatesAlertMessage() async {
-        let mockEngine = MockNotificationEngine()
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
+        let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
         mockEngine.stubbedPermissionResult = false
         
         await sut.requestPermission()
@@ -79,13 +63,7 @@ struct LocalNotificationsManagerTests {
     
     @Test("If system fails to execute permission request successfully, alert message is set")
     func localNotificationsManager_requestPermission_ifSystemFails_updatesAlertMessage() async {
-        let mockEngine = MockNotificationEngine()
-        mockEngine.shouldThrowError = true
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
+        let (sut, mockEngine, _) = makeSUT(engineThrowsError: true)
         mockEngine.stubbedPermissionResult = false
         
         await sut.requestPermission()
@@ -100,13 +78,8 @@ struct LocalNotificationsManagerTests {
             NotificationPermissionStatus.provisional
           ])
     func localNotificationsManager_updatePermissionState_evaluatesProvisionalAndAuthorisedAsGrantedPermission(permissionStatus: NotificationPermissionStatus) async {
-        let mockEngine = MockNotificationEngine()
+        let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
         mockEngine.stubbedConfig = NotificationConfig(status: permissionStatus)
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
         
         await sut.updatePermissionState()
         
@@ -119,13 +92,8 @@ struct LocalNotificationsManagerTests {
             NotificationPermissionStatus.notDetermined
           ])
     func localNotificationsManager_updatePermissionState_evaluatesDeniedAndNotDeterminedAsPermissionNotGranted(permissionStatus: NotificationPermissionStatus) async {
-        let mockEngine = MockNotificationEngine()
+        let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
         mockEngine.stubbedConfig = NotificationConfig(status: permissionStatus)
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
         
         await sut.updatePermissionState()
         
@@ -135,12 +103,7 @@ struct LocalNotificationsManagerTests {
     // MARK: - Notification Scheduling And Persistence Tests
     @Test("Scheduling a notification exits early without mutating state if time input is invalid")
     func localNotificationsManager_scheduleDailyNotification_ifInputIsInvalid_exitsEarly() async throws {
-        let mockEngine = MockNotificationEngine()
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
+        let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
         let invalidInput = (hour: 25, minute: 64)
         let originalTime = sut.scheduledTimeString
         
@@ -155,12 +118,7 @@ struct LocalNotificationsManagerTests {
     
     @Test("When scheduling notifications for user's chosen time, any previous requests are cancelled, and time is saved to `UserDefaults`")
     func localNotificationsManager_scheduleDailyNotification_clearsPreviousRequests_andPeristsUserChosenTime() async throws {
-        let mockEngine = MockNotificationEngine()
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
+        let (sut, mockEngine, mockStorage) = makeSUT(engineThrowsError: false)
         let targetTime = (hour: 08, minute: 15)
         let targetTimeString = "08:15"
         
@@ -185,12 +143,7 @@ struct LocalNotificationsManagerTests {
     // MARK: - Badge Clearing Tests
     @Test("Clears the app badge via the engine method")
     func localNotificationsManager_clearAppBadge_successfullyInvokesEngineReset() async throws {
-        let mockEngine = MockNotificationEngine()
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
+        let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
         
         try await sut.clearAppBadge()
         
@@ -199,13 +152,7 @@ struct LocalNotificationsManagerTests {
         
     @Test("If clearing the app badge fails, propagate error")
     func localNotificationsManager_clearAppBadge_whenEngineFails_propagatesError() async throws {
-        let mockEngine = MockNotificationEngine()
-        mockEngine.shouldThrowError = true
-        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
-        let sut = LocalNotificationsManager(
-            engine: mockEngine,
-            storage: mockStorage
-        )
+        let (sut, mockEngine, _) = makeSUT(engineThrowsError: true)
                 
         do {
             try await sut.clearAppBadge()
@@ -213,5 +160,21 @@ struct LocalNotificationsManagerTests {
         } catch {
             #expect(mockEngine.resetBadgeCount == 0, "Should be zero on system failure.")
         }
+    }
+    
+    //MARK: - SUT Helper
+    private func makeSUT(engineThrowsError: Bool) -> (
+        sut: LocalNotificationsManager,
+        mockEngine: MockNotificationEngine,
+        mockStorage: UserDefaults
+    ) {
+        let mockEngine = MockNotificationEngine()
+        mockEngine.shouldThrowError = engineThrowsError
+        let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "LocalNotificationsManagerTests")
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        return (sut, mockEngine, mockStorage)
     }
 }
