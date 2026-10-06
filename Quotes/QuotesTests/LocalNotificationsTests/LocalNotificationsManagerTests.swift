@@ -17,7 +17,6 @@ struct LocalNotificationsManagerTests {
     func localNotificationsManager_whenStorageIsEmpty_usesDefaultTime() {
         let mockEngine = MockNotificationEngine()
         let mockStorage = MockPreferencesStorage()
-        mockStorage.storage["notificationTime"] = nil
         
         let sut = LocalNotificationsManager(
             engine: mockEngine,
@@ -40,6 +39,56 @@ struct LocalNotificationsManagerTests {
         )
         
         #expect(sut.scheduledTimeString == storedTime, "Manager failed to retrieve the stored time from storage.")
+    }
+    
+    // MARK: - Permission And Related State Tracking Tests
+    @Test("If requesting permission succeeds, update state correctly.")
+    func localNotificationsManager_requestPermission_onSystemSuccess_updatesStateCorrectly() async {
+        let mockEngine = MockNotificationEngine()
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        mockEngine.stubbedPermissionResult = true
+        
+        await sut.requestPermission()
+        
+        #expect(sut.isPermissionGranted, "Should be true.")
+        #expect(sut.alertMessage == nil, "Should be nil.")
+    }
+    
+    @Test("If user denies permission, alert message is set")
+    func localNotificationsManager_requestPermission_ifUserDenies_updatesAlertMessage() async {
+        let mockEngine = MockNotificationEngine()
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        mockEngine.stubbedPermissionResult = false
+        
+        await sut.requestPermission()
+        
+        #expect(sut.isPermissionGranted == false, "Should be false.")
+        #expect(sut.alertMessage != nil, "Should not be nil.")
+    }
+    
+    @Test("If system fails to execute permission request successfully, alert message is set")
+    func localNotificationsManager_requestPermission_ifSystemFails_updatesAlertMessage() async {
+        let mockEngine = MockNotificationEngine()
+        mockEngine.shouldThrowError = true
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        mockEngine.stubbedPermissionResult = false
+        
+        await sut.requestPermission()
+        
+        #expect(sut.isPermissionGranted == false, "Should be false.")
+        #expect(sut.alertMessage != nil, "Should not be nil.")
     }
 }
 

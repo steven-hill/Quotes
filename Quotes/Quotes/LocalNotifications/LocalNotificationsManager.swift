@@ -42,6 +42,8 @@ final class LocalNotificationsManager {
     private static let defaultNotificationTime = "10:00"
     
     // MARK: - Observable State
+    var isPermissionGranted = false
+    var alertMessage: String?
     var scheduledTimeString = defaultNotificationTime
     
     // MARK: - Initialisation
@@ -53,5 +55,19 @@ final class LocalNotificationsManager {
         self.engine = engine
         self.storage = storage
         self.scheduledTimeString = storage.string(forKey: LocalNotificationsManager.timeStorageKey) ?? LocalNotificationsManager.defaultNotificationTime
+    }
+    
+    // MARK: - Methods
+    /// Requests authorisation permissions from the user via the underlying engine wrapper.
+    func requestPermission() async {
+        do {
+            let success = try await engine.requestAuthorization(options: [.alert, .badge, .sound, .provisional])
+            self.isPermissionGranted = success
+            if !success {
+                self.alertMessage = "Notification permissions were denied. Please enable them in the Settings app."
+            }
+        } catch {
+            self.alertMessage = "An error occurred while requesting permission. Please try again."
+        }
     }
 }
