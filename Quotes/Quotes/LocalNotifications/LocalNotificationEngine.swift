@@ -47,9 +47,11 @@ extension UNUserNotificationCenter {
     func fetchCurrentStatus() async -> NotificationPermissionStatus {
         let settings = await self.notificationSettings()
         switch settings.authorizationStatus {
+        case .notDetermined: return .notDetermined
         case .authorized: return .authorized
         case .provisional: return .provisional
         case .denied: return .denied
+        case .ephemeral: return .ephemeral
         default: return .notDetermined
         }
     }

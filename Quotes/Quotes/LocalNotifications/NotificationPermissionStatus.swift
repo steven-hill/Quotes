@@ -13,6 +13,7 @@ enum NotificationPermissionStatus: String {
     case denied
     case authorized
     case provisional
+    case ephemeral
 }
 
 /// Lightweight container representing current notification preferences.

@@ -43,7 +43,8 @@ struct LocalNotificationEngineTests {
             (NotificationPermissionStatus.authorized, NotificationPermissionStatus.authorized),
             (.provisional, .provisional),
             (.denied, .denied),
-            (.notDetermined, .notDetermined)
+            (.notDetermined, .notDetermined),
+            (.ephemeral, .ephemeral)
         ])
     func localNotificationEngine_fetchSettings_correctlyMapsAllPermissionStatuses(
         systemStatus: NotificationPermissionStatus,
