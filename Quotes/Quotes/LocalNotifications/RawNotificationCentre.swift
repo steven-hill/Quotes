@@ -11,6 +11,7 @@ import UserNotifications
 /// Wraps Apple’s concrete `UNUserNotificationCenter.current()`.
 protocol RawNotificationCentre {
     func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool
+    func fetchCurrentStatus() async -> NotificationPermissionStatus
 }
 
 // Make Apple's concrete class conform to it.
