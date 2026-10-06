@@ -23,7 +23,7 @@ final class LocalNotificationEngine {
         try await centre.requestAuthorization(options: options)
     }
     
-    func fetchSettings() async -> NotificationConfig {
+    func fetchStatus() async -> NotificationConfig {
         let status = await centre.fetchCurrentStatus()
         return NotificationConfig(status: status)
     }

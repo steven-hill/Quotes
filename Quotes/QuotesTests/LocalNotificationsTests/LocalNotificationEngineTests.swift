@@ -56,7 +56,7 @@ struct LocalNotificationEngineTests {
         mockRawNotificationCenter.stubbedPermissionStatus = systemStatus
         let sut = LocalNotificationEngine(centre: mockRawNotificationCenter)
         
-        let config = await sut.fetchSettings()
+        let config = await sut.fetchStatus()
         
         #expect(mockRawNotificationCenter.fetchCurrentStatusCount == 1, "Should have been called once.")
         #expect(config.status == expectedDomainStatus, "Should return the current permission status.")
