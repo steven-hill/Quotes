@@ -1,0 +1,57 @@
+//
+//  LocalNotificationsManager.swift
+//  Quotes
+//
+//  Created by Steven Hill on 06/10/2026.
+//
+
+import UserNotifications
+
+/// Responsible for interacting with the iOS notification subsystem
+protocol NotificationCentreEngine {
+    func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool
+    func fetchStatus() async -> NotificationConfig
+    func schedule(_ request: UNNotificationRequest) async throws
+    func cancelAllPendingRequests()
+    func resetBadge() async throws
+}
+
+/// Responsible for simple local state storage
+protocol AppPreferencesStorage: Sendable {
+    func string(forKey key: String) -> String?
+    func setString(_ value: String, forKey key: String)
+}
+
+/// Storage engine using `UserDefaults.standard`.
+struct PreferencesEngine: AppPreferencesStorage {
+    func string(forKey key: String) -> String? { UserDefaults.standard.string(forKey: key) }
+    func setString(
+        _ value: String,
+        forKey key: String
+    ) { UserDefaults.standard.set(value, forKey: key) }
+}
+
+@Observable
+final class LocalNotificationsManager {
+    // MARK: - Dependencies
+    private let engine: NotificationCentreEngine
+    private let storage: AppPreferencesStorage
+    
+    // MARK: - Constants
+    private static let timeStorageKey = "notificationTime"
+    private static let defaultNotificationTime = "10:00"
+    
+    // MARK: - Observable State
+    var scheduledTimeString = defaultNotificationTime
+    
+    // MARK: - Initialisation
+    /// Initializes the manager, auto-loading any previously saved reminder configuration.
+    init(
+        engine: NotificationCentreEngine = LocalNotificationEngine(),
+        storage: AppPreferencesStorage = PreferencesEngine()
+    ) {
+        self.engine = engine
+        self.storage = storage
+        self.scheduledTimeString = storage.string(forKey: LocalNotificationsManager.timeStorageKey) ?? LocalNotificationsManager.defaultNotificationTime
+    }
+}
