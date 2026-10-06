@@ -90,6 +90,44 @@ struct LocalNotificationsManagerTests {
         #expect(sut.isPermissionGranted == false, "Should be false.")
         #expect(sut.alertMessage != nil, "Should not be nil.")
     }
+    
+    @Test("Provisional and authorised are considered as permission granted",
+          arguments: [
+            NotificationPermissionStatus.authorized,
+            NotificationPermissionStatus.provisional
+          ])
+    func localNotificationsManager_updatePermissionState_evaluatesProvisionalAndAuthorisedAsGrantedPermission(permissionStatus: NotificationPermissionStatus) async {
+        let mockEngine = MockNotificationEngine()
+        mockEngine.stubbedConfig = NotificationConfig(status: permissionStatus)
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        
+        await sut.updatePermissionState()
+        
+        #expect(sut.isPermissionGranted, "Status \(permissionStatus) should have resolved to a granted permission state.")
+    }
+    
+    @Test("Denied and not determined are considered as permission has not been granted",
+          arguments: [
+            NotificationPermissionStatus.denied,
+            NotificationPermissionStatus.notDetermined
+          ])
+    func localNotificationsManager_updatePermissionState_evaluatesDeniedAndNotDeterminedAsPermissionNotGranted(permissionStatus: NotificationPermissionStatus) async {
+        let mockEngine = MockNotificationEngine()
+        mockEngine.stubbedConfig = NotificationConfig(status: permissionStatus)
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        
+        await sut.updatePermissionState()
+        
+        #expect(sut.isPermissionGranted == false, "Status \(permissionStatus) should have resolved to a state where user hasn't granted permission.")
+    }
 }
 
 // MARK: - Mock Preferences Storage
@@ -113,7 +151,7 @@ final class MockNotificationEngine: NotificationCentreEngine {
     
     //MARK: - Stub Properties
     var stubbedPermissionResult = true
-    var stubbedConfig = NotificationConfig(status: .authorized)
+    var stubbedConfig = NotificationConfig(status: .notDetermined)
     var shouldThrowError = false
     
     //MARK: - Spy Variables

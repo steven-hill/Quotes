@@ -70,4 +70,11 @@ final class LocalNotificationsManager {
             self.alertMessage = "An error occurred while requesting permission. Please try again."
         }
     }
+    
+    /// Refreshes the local observable state by fetching current settings.
+    func updatePermissionState() async {
+        let config = await engine.fetchStatus()
+        // Captures both explicit approval and silent provisional.
+        self.isPermissionGranted = (config.status == .authorized || config.status == .provisional)
+    }
 }
