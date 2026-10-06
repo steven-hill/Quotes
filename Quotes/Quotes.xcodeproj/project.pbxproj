@@ -12,13 +12,9 @@
 		5B3FB7C22C52DE47000994DC /* QuotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */; };
 		5B3FB7C42C52DE47000994DC /* QuotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */; };
 		5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
-		5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */; };
 		5B416D7D306EE83000E1885B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
 		5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */; };
 		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
-		5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */; };
-		5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */; };
-		5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,15 +43,12 @@
 		5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITests.swift; sourceTree = "<group>"; };
 		5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B3FB7D02C52DFF9000994DC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubNetworkSession.swift; sourceTree = "<group>"; };
 		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
-		5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationWrapper.swift; sourceTree = "<group>"; };
-		5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
-		5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5B13026430752622008F7BDD /* LocalNotifications */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalNotifications; sourceTree = "<group>"; };
 		5B1BA72C305DDD8100E2DBE3 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
 		5B1BA732305DDD8700E2DBE3 /* ViewModelTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModelTests; sourceTree = "<group>"; };
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
@@ -128,7 +121,7 @@
 				5B1BA72C305DDD8100E2DBE3 /* ViewModels */,
 				5BD2DF96306E73E00000FF34 /* Views */,
 				5BB40EC930658773007F3A28 /* Persistence */,
-				5B3FB7FC2C52EA92000994DC /* LocalNotifications */,
+				5B13026430752622008F7BDD /* LocalNotifications */,
 				5B5A2910304C893100E5D1FC /* Networking */,
 				5B3FB7A52C52DE46000994DC /* Assets.xcassets */,
 				5B3FB7A72C52DE46000994DC /* Preview Content */,
@@ -167,17 +160,6 @@
 			path = QuotesUITests;
 			sourceTree = "<group>";
 		};
-		5B3FB7FC2C52EA92000994DC /* LocalNotifications */ = {
-			isa = PBXGroup;
-			children = (
-				5B3FB7FD2C52EAC6000994DC /* LocalNotificationManager.swift */,
-				5BE59A0C2D1F53C500D85BBB /* NotificationCenterWrapper.swift */,
-				5B5ABBE12D20A3FC00EBEDB1 /* UIApplicationWrapper.swift */,
-				5BDFEDC92DC2A07F0065ACCC /* NotificationSettings.swift */,
-			);
-			path = LocalNotifications;
-			sourceTree = "<group>";
-		};
 		5B812CE82C5992B900B12213 /* NetworkingTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +185,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				5B13026430752622008F7BDD /* LocalNotifications */,
 				5B1BA72C305DDD8100E2DBE3 /* ViewModels */,
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
 				5B5A2910304C893100E5D1FC /* Networking */,
@@ -336,10 +319,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */,
-				5B3FB7FE2C52EAC6000994DC /* LocalNotificationManager.swift in Sources */,
-				5BE59A0D2D1F53C500D85BBB /* NotificationCenterWrapper.swift in Sources */,
-				5BDFEDCA2DC2A07F0065ACCC /* NotificationSettings.swift in Sources */,
-				5B5ABBE22D20A3FC00EBEDB1 /* UIApplicationWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
