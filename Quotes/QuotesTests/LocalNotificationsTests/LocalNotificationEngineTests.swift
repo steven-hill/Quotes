@@ -41,7 +41,7 @@ struct LocalNotificationEngineTests {
 }
 
 
-final class MockRawNotificationCenter: RawNotificationCenter {
+final class MockRawNotificationCenter: RawNotificationCentre {
     var stubbedAuthorisationResult = true
     var shouldThrowError = false
     
