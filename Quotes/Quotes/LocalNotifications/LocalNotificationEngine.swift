@@ -35,9 +35,14 @@ final class LocalNotificationEngine {
     func cancelAllPendingRequests() {
         centre.removeAllPendingNotificationRequests()
     }
+    
+    func resetBadge() async throws {
+        try await centre.setBadgeCount(0)
+    }
 }
 
 // MARK: - `UNUserNotificationCenter` Extension
+/// Maps system status to `NotificationPermissionStatus`.
 extension UNUserNotificationCenter {
     func fetchCurrentStatus() async -> NotificationPermissionStatus {
         let settings = await self.notificationSettings()

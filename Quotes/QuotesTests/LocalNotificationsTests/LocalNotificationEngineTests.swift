@@ -117,6 +117,30 @@ struct LocalNotificationEngineTests {
         
         #expect(mockRawNotificationCenter.removeAllPendingRequestsCount == 1, "Should have been called once.")
     }
+    
+    @Test("Reset the notification badge count to zero successfully")
+    func localNotificationEngine_resetBadge_updatesBadgeCountToZero() async throws {
+        let mockRawNotificationCenter = MockRawNotificationCenter()
+        let sut = LocalNotificationEngine(centre: mockRawNotificationCenter)
+        
+        try await sut.resetBadge()
+        
+        #expect(mockRawNotificationCenter.badgeCountSetTo == 0, "Should have been set to 0.")
+    }
+    
+    @Test("Propagates error if reset the notification badge count to zero fails")
+    func localNotificationEngine_resetBadge_whenSystemFails_propogatesFailure() async throws {
+        let mockRawNotificationCenter = MockRawNotificationCenter()
+        mockRawNotificationCenter.shouldThrowError = true
+        let sut = LocalNotificationEngine(centre: mockRawNotificationCenter)
+        
+        do {
+            try await sut.resetBadge()
+            Issue.record("Engine should have thrown an error but reported success instead.")
+        } catch {
+            #expect(mockRawNotificationCenter.badgeCountSetTo == nil, "Badge count reset should not happen on system failure.")
+        }
+    }
 }
 
 
@@ -132,6 +156,7 @@ final class MockRawNotificationCenter: RawNotificationCentre {
     private(set) var fetchCurrentStatusCount = 0
     private(set) var scheduledRequests: [UNNotificationRequest] = []
     private(set) var removeAllPendingRequestsCount = 0
+    private(set) var badgeCountSetTo: Int?
     
     func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
         requestAuthorisationCount += 1
@@ -153,7 +178,7 @@ final class MockRawNotificationCenter: RawNotificationCentre {
     func add(_ request: UNNotificationRequest) async throws {
         if shouldThrowError {
             throw NSError(
-                domain: "addTest",
+                domain: "addNotificationRequestTest",
                 code: -1,
                 userInfo: nil
             )
@@ -163,5 +188,16 @@ final class MockRawNotificationCenter: RawNotificationCentre {
     
     func removeAllPendingNotificationRequests() {
         removeAllPendingRequestsCount += 1
+    }
+    
+    func setBadgeCount(_ count: Int) async throws {
+        if shouldThrowError {
+            throw NSError(
+                domain: "resetBadgeCountTest",
+                code: -1,
+                userInfo: nil
+            )
+        }
+        badgeCountSetTo = count
     }
 }

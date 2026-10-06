@@ -14,6 +14,7 @@ protocol RawNotificationCentre {
     func fetchCurrentStatus() async -> NotificationPermissionStatus
     func add(_ request: UNNotificationRequest) async throws
     func removeAllPendingNotificationRequests()
+    func setBadgeCount(_ count: Int) async throws
 }
 
 // Make Apple's concrete class conform to it.
