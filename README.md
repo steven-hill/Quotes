@@ -32,7 +32,7 @@ Accessibility:
 - There is support for VoiceOver and Dynamic Type.
 
 ### 🚧 Currently undergoing changes
-- Migrate from `ObservableObject` to `@Observable`.
+- Overhaul the local notifications implementation.
 - Improve testability and test coverage, and add UI tests.
 
 ### 📲 Getting started
