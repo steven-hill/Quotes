@@ -61,6 +61,17 @@ struct LocalNotificationEngineTests {
         #expect(mockRawNotificationCenter.fetchCurrentStatusCount == 1, "Should have been called once.")
         #expect(config.status == expectedDomainStatus, "Should return the current permission status.")
     }
+    
+    // MARK: - Functional Execution Tests
+    @Test("Removes all pending requests")
+    func localNotificationEngine_cancelAllPendingRequests_triggersRemoval() {
+        let mockRawNotificationCenter = MockRawNotificationCenter()
+        let sut = LocalNotificationEngine(centre: mockRawNotificationCenter)
+        
+        sut.cancelAllPendingRequests()
+        
+        #expect(mockRawNotificationCenter.removeAllPendingRequestsCount == 1, "Should have been called once.")
+    }
 }
 
 
@@ -74,6 +85,7 @@ final class MockRawNotificationCenter: RawNotificationCentre {
     //MARK: - Spy Variables
     private(set) var requestAuthorisationCount = 0
     private(set) var fetchCurrentStatusCount = 0
+    private(set) var removeAllPendingRequestsCount = 0
     
     func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
         requestAuthorisationCount += 1
@@ -90,5 +102,9 @@ final class MockRawNotificationCenter: RawNotificationCentre {
     func fetchCurrentStatus() async -> NotificationPermissionStatus {
         fetchCurrentStatusCount += 1
         return stubbedPermissionStatus
+    }
+    
+    func removeAllPendingNotificationRequests() {
+        removeAllPendingRequestsCount += 1
     }
 }

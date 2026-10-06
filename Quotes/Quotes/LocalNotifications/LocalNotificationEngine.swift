@@ -27,6 +27,10 @@ final class LocalNotificationEngine {
         let status = await centre.fetchCurrentStatus()
         return NotificationConfig(status: status)
     }
+    
+    func cancelAllPendingRequests() {
+        centre.removeAllPendingNotificationRequests()
+    }
 }
 
 // MARK: - `UNUserNotificationCenter` Extension

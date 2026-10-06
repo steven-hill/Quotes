@@ -12,6 +12,7 @@ import UserNotifications
 protocol RawNotificationCentre {
     func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool
     func fetchCurrentStatus() async -> NotificationPermissionStatus
+    func removeAllPendingNotificationRequests()
 }
 
 // Make Apple's concrete class conform to it.
