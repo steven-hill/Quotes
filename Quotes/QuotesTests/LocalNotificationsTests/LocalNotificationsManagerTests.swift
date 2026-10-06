@@ -128,6 +128,56 @@ struct LocalNotificationsManagerTests {
         
         #expect(sut.isPermissionGranted == false, "Status \(permissionStatus) should have resolved to a state where user hasn't granted permission.")
     }
+    
+    // MARK: - Notification Scheduling And Persistence Tests
+    @Test("Scheduling a notification exits early without mutating state if time input is invalid")
+    func localNotificationsManager_scheduleDailyNotification_ifInputIsInvalid_exitsEarly() async throws {
+        let mockEngine = MockNotificationEngine()
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        let invalidInput = (hour: 25, minute: 64)
+        let originalTime = sut.scheduledTimeString
+        
+        try await sut.scheduleDailyNotification(
+            hour: invalidInput.hour,
+            minute: invalidInput.minute
+        )
+        
+        #expect(mockEngine.scheduledRequests.count == 0, "Should not have scheduled the request.")
+        #expect(sut.scheduledTimeString == originalTime, "The time should not have changed.")
+    }
+    
+    @Test("When scheduling notifications for user's chosen time, any previous requests are cancelled, and time is saved to `UserDefaults`")
+    func localNotificationsManager_scheduleDailyNotification_clearsPreviousRequests_andPeristsUserChosenTime() async throws {
+        let mockEngine = MockNotificationEngine()
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        let targetTime = (hour: 08, minute: 15)
+        let targetTimeString = "08:15"
+        
+        try await sut.scheduleDailyNotification(
+            hour: targetTime.hour,
+            minute: targetTime.minute
+        )
+        
+        #expect(mockEngine.cancelRequestsCount == 1, "Should call method once to wipe existing stale entries before scheduling.")
+        #expect(mockEngine.scheduledRequests.count == 1, "Should queue up exactly one request.")
+        #expect(sut.scheduledTimeString == targetTimeString, "Should have updated this state from default.")
+        
+        #expect(mockStorage.storage["notificationTime"] == targetTimeString, "The manager failed to save the configuration string to key-value disk memory.")
+        
+        let request = mockEngine.scheduledRequests.first
+        let trigger = request?.trigger as? UNCalendarNotificationTrigger
+        #expect(trigger?.dateComponents.hour == targetTime.hour, "Should be the hour passed in as a parameter.")
+        #expect(trigger?.dateComponents.minute == targetTime.minute, "Should be the hour passed in as a parameter.")
+        #expect(trigger?.repeats == true, "Should be true.")
+    }
 }
 
 // MARK: - Mock Preferences Storage

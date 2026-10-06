@@ -40,6 +40,7 @@ final class LocalNotificationsManager {
     // MARK: - Constants
     private static let timeStorageKey = "notificationTime"
     private static let defaultNotificationTime = "10:00"
+    private static let staticReminderID = "daily_quote_notification"
     
     // MARK: - Observable State
     var isPermissionGranted = false
@@ -54,7 +55,7 @@ final class LocalNotificationsManager {
     ) {
         self.engine = engine
         self.storage = storage
-        self.scheduledTimeString = storage.string(forKey: LocalNotificationsManager.timeStorageKey) ?? LocalNotificationsManager.defaultNotificationTime
+        self.scheduledTimeString = storage.string(forKey: Self.timeStorageKey) ?? Self.defaultNotificationTime
     }
     
     // MARK: - Methods
@@ -76,5 +77,51 @@ final class LocalNotificationsManager {
         let config = await engine.fetchStatus()
         // Captures both explicit approval and silent provisional.
         self.isPermissionGranted = (config.status == .authorized || config.status == .provisional)
+    }
+    
+    /// Constructs, formats, and overwrites a repeating daily notification request.
+    func scheduleDailyNotification(
+        hour: Int,
+        minute: Int
+    ) async throws {
+        guard (0...23).contains(hour), (0...59).contains(minute) else { return }
+        engine.cancelAllPendingRequests()
+        
+        /// Payload details.
+        let content = UNMutableNotificationContent()
+        content.title = "Quotes"
+        content.body = "Today's quote is ready for you!"
+        content.sound = .default
+        
+        /// Define target daily delivery time.
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: dateComponents,
+            repeats: true
+        )
+        
+        /// Create request overwriting the ID.
+        let request = UNNotificationRequest(
+            identifier: Self.staticReminderID,
+            content: content,
+            trigger: trigger
+        )
+        
+        try await engine.schedule(request)
+        
+        /// Update state, and persist to `UserDefaults`.
+        let formattedTime = String(
+            format: "%02d:%02d",
+            hour,
+            minute
+        )
+        self.scheduledTimeString = formattedTime
+        storage.setString(
+            formattedTime,
+            forKey: Self.timeStorageKey
+        )
     }
 }
