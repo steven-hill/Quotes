@@ -22,7 +22,10 @@ struct AppearanceManagerTests {
     @Test("Load the user's preference from `UserDefaults`")
     func appearanceManager_loadsSavedAppearance() {
         let defaults = UserDefaultsHelper.makeUserDefaults(for: "AppearanceManagerTests")
-        defaults.set(Appearance.dark.rawValue, forKey: Constants.UserDefaultsAppearanceKey.key)
+        defaults.set(
+            Appearance.dark.rawValue,
+            forKey: Constants.UserDefaultsAppearanceKey.key
+        )
 
         let sut = AppearanceManager(store: defaults)
 

@@ -8,7 +8,7 @@
 import Foundation
 import UserNotifications
 
-final class LocalNotificationEngine {
+final class LocalNotificationEngine: NotificationCentreEngine {
     
     //MARK: - Dependency
     private let centre: RawNotificationCentre
