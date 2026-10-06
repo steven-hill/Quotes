@@ -63,6 +63,51 @@ struct LocalNotificationEngineTests {
     }
     
     // MARK: - Functional Execution Tests
+    @Test("Schedules a request successfully with notification payload")
+    func localNotificationEngine_schedule_addsARequestSuccessfully() async throws {
+        let expectedID = "test_reminder_id"
+        let content = UNMutableNotificationContent()
+        content.title = "Test Title"
+        content.body = "Test Body"
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: expectedID,
+            content: content,
+            trigger: trigger
+        )
+        let mockRawNotificationCenter = MockRawNotificationCenter()
+        let sut = LocalNotificationEngine(centre: mockRawNotificationCenter)
+        
+        try await sut.schedule(request)
+        
+        let interceptedRequest = mockRawNotificationCenter.scheduledRequests.first
+        #expect(mockRawNotificationCenter.scheduledRequests.count == 1, "Should forward one request.")
+        #expect(interceptedRequest?.identifier == expectedID, "The notification identifier was mutated or lost.")
+        #expect(interceptedRequest?.content.title == "Test Title", "The payload title was altered.")
+        #expect(interceptedRequest?.content.body == "Test Body", "The payload body was altered.")
+    }
+    
+    @Test("Propagates error if system fails to schedule the request")
+    func localNotificationEngine_schedule_whenSystemFails_propagatesSystemSchedulingFailure() async {
+        let mockRawNotificationCenter = MockRawNotificationCenter()
+        let sut = LocalNotificationEngine(centre: mockRawNotificationCenter)
+        mockRawNotificationCenter.shouldThrowError = true
+        let content = UNMutableNotificationContent()
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: "failing_id",
+            content: content,
+            trigger: trigger
+        )
+        
+        do {
+            try await sut.schedule(request)
+            Issue.record("Engine should have thrown an error but reported success instead.")
+        } catch {
+            #expect(mockRawNotificationCenter.scheduledRequests.count == 0, "No requests should be recorded on system failure.")
+        }
+    }
+    
     @Test("Removes all pending requests")
     func localNotificationEngine_cancelAllPendingRequests_triggersRemoval() {
         let mockRawNotificationCenter = MockRawNotificationCenter()
@@ -85,6 +130,7 @@ final class MockRawNotificationCenter: RawNotificationCentre {
     //MARK: - Spy Variables
     private(set) var requestAuthorisationCount = 0
     private(set) var fetchCurrentStatusCount = 0
+    private(set) var scheduledRequests: [UNNotificationRequest] = []
     private(set) var removeAllPendingRequestsCount = 0
     
     func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
@@ -102,6 +148,17 @@ final class MockRawNotificationCenter: RawNotificationCentre {
     func fetchCurrentStatus() async -> NotificationPermissionStatus {
         fetchCurrentStatusCount += 1
         return stubbedPermissionStatus
+    }
+    
+    func add(_ request: UNNotificationRequest) async throws {
+        if shouldThrowError {
+            throw NSError(
+                domain: "addTest",
+                code: -1,
+                userInfo: nil
+            )
+        }
+        scheduledRequests.append(request)
     }
     
     func removeAllPendingNotificationRequests() {

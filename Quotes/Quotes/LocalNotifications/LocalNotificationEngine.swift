@@ -28,6 +28,10 @@ final class LocalNotificationEngine {
         return NotificationConfig(status: status)
     }
     
+    func schedule(_ request: UNNotificationRequest) async throws {
+        try await centre.add(request)
+    }
+    
     func cancelAllPendingRequests() {
         centre.removeAllPendingNotificationRequests()
     }
