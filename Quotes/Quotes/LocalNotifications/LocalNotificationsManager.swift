@@ -124,4 +124,9 @@ final class LocalNotificationsManager {
             forKey: Self.timeStorageKey
         )
     }
+    
+    /// Clears the app icon's notification badge count.
+    func clearAppBadge() async throws {
+        try await engine.resetBadge()
+    }
 }

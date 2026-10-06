@@ -178,6 +178,39 @@ struct LocalNotificationsManagerTests {
         #expect(trigger?.dateComponents.minute == targetTime.minute, "Should be the hour passed in as a parameter.")
         #expect(trigger?.repeats == true, "Should be true.")
     }
+    
+    // MARK: - Badge Clearing Tests
+    @Test("Clears the app badge via the engine method")
+    func localNotificationsManager_clearAppBadge_successfullyInvokesEngineReset() async throws {
+        let mockEngine = MockNotificationEngine()
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+        
+        try await sut.clearAppBadge()
+        
+        #expect(mockEngine.resetBadgeCount == 1, "The manager failed to call the badge reset function on the engine.")
+    }
+        
+    @Test("If clearing the app badge fails, propagate error")
+    func localNotificationsManager_clearAppBadge_whenEngineFails_propagatesError() async throws {
+        let mockEngine = MockNotificationEngine()
+        mockEngine.shouldThrowError = true
+        let mockStorage = MockPreferencesStorage()
+        let sut = LocalNotificationsManager(
+            engine: mockEngine,
+            storage: mockStorage
+        )
+                
+        do {
+            try await sut.clearAppBadge()
+            Issue.record("Manager should have thrown an execution error on badge clearing failure, but reported success instead.")
+        } catch {
+            #expect(mockEngine.resetBadgeCount == 0, "Should be zero on system failure.")
+        }
+    }
 }
 
 // MARK: - Mock Preferences Storage
@@ -206,6 +239,7 @@ final class MockNotificationEngine: NotificationCentreEngine {
     
     //MARK: - Spy Variables
     private(set) var cancelRequestsCount = 0
+    private(set) var resetBadgeCount = 0
     private(set) var scheduledRequests: [UNNotificationRequest] = []
     
     //MARK: - Methods
@@ -227,5 +261,8 @@ final class MockNotificationEngine: NotificationCentreEngine {
         cancelRequestsCount += 1
     }
     
-    func resetBadge() async throws {}
+    func resetBadge() async throws {
+        if shouldThrowError { throw NSError(domain: "Test", code: -1) }
+        resetBadgeCount += 1
+    }
 }
