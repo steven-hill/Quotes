@@ -7,30 +7,31 @@
 
 import UserNotifications
 
-/// Responsible for interacting with the iOS notification subsystem
-protocol NotificationCentreEngine {
-    func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool
-    func fetchStatus() async -> NotificationConfig
-    func schedule(_ request: UNNotificationRequest) async throws
-    func cancelAllPendingRequests()
-    func resetBadge() async throws
+protocol NotificationService {
+    var isPermissionGranted: Bool { get }
+    var alertMessage: String? { get set }
+    var scheduledTimeString: String { get }
+    
+    func requestPermission() async
+    func updatePermissionState() async
+    func scheduleDailyNotification(hour: Int, minute: Int) async throws
+    func clearAppBadge() async throws
 }
 
 @Observable
-final class LocalNotificationsManager {
+final class LocalNotificationsManager: NotificationService  {
     // MARK: - Dependencies
     private let engine: NotificationCentreEngine
     private let storage: UserDefaults
     
     // MARK: - Constants
     private static let timeStorageKey = "notificationTime"
-    private static let defaultNotificationTime = "10:00"
     private static let staticReminderID = "daily_quote_notification"
     
     // MARK: - Observable State
     var isPermissionGranted = false
     var alertMessage: String?
-    var scheduledTimeString = defaultNotificationTime
+    var scheduledTimeString = "10:00"
     
     // MARK: - Initialisation
     /// Initializes the manager, auto-loading any previously saved reminder configuration.
@@ -40,7 +41,9 @@ final class LocalNotificationsManager {
     ) {
         self.engine = engine
         self.storage = storage
-        self.scheduledTimeString = storage.string(forKey: Self.timeStorageKey) ?? Self.defaultNotificationTime
+        if let storedTime = storage.string(forKey: Self.timeStorageKey) {
+            self.scheduledTimeString = storedTime
+        }
     }
     
     // MARK: - Methods
