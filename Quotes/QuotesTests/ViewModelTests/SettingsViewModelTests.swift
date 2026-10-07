@@ -12,7 +12,7 @@ import Foundation
 @MainActor
 struct SettingsViewModelTests {
 
-    // MARK: - Initialization Tests
+    // MARK: - Initialisation Tests
     @Test("On init synchronise its time property with manager's scheduled time string")
     func settingsViewModel_onInit_syncsItsTimePropertyWithScheduledTime() {
         let mockStorage = UserDefaultsHelper.makeUserDefaults(for: "SettingsViewModelTests")
@@ -63,16 +63,16 @@ struct SettingsViewModelTests {
         await sut.requestPermissionAndSchedule()
         
         #expect(spy.requestPermissionCallCount == 1, "Should have called method once.")
-        #expect(spy.scheduleReminderCalledWith != nil, "VM failed to auto-schedule default time upon granting permission.")
-        #expect(spy.scheduleReminderCalledWith?.hour == 10)
-        #expect(spy.scheduleReminderCalledWith?.minute == 00)
+        #expect(spy.scheduleReminderCalledWith != nil, "Should auto-schedule default time upon permission being granted.")
+        #expect(spy.scheduleReminderCalledWith?.hour == 10, "Should match the default notification time.")
+        #expect(spy.scheduleReminderCalledWith?.minute == 00, "Should match the default notification time.")
         #expect(sut.isShowingAlert == false, "An alert was shown despite permission being granted successfully.")
     }
     
     @Test("VM triggers service permission prompt, and, if denied, handles service's alert message and updates state")
     func settingsViewModel_requestPermissionAndSchedule_whenPermissionIsDenied_handlesAlertMessageAndState() async {
         let spy = NotificationServiceSpy()
-        spy.alertMessage = "" // Makes it not nil to simulate messsage provided by service.
+        spy.alertMessage = "" // Makes it not nil to simulate message provided by service.
         let sut = SettingsViewModel(localNotificationsManager: spy)
         
         await sut.requestPermissionAndSchedule()
@@ -132,7 +132,7 @@ struct SettingsViewModelTests {
     
     // MARK: - Notification Service Spy
     final class NotificationServiceSpy: NotificationService {
-        // Requirements
+        // Required properties
         var isPermissionGranted = false
         var alertMessage: String?
         var scheduledTimeString = "10:00"
@@ -142,17 +142,14 @@ struct SettingsViewModelTests {
         
         // Spies
         private(set) var requestPermissionCallCount = 0
-        private(set) var updatePermissionStateCount = 0
         private(set) var scheduleReminderCalledWith: (hour: Int, minute: Int)?
-        private(set) var clearAppBadgeCount = 0
 
+        // Methods
         func requestPermission() async {
             requestPermissionCallCount += 1
         }
         
-        func updatePermissionState() async {
-            updatePermissionStateCount += 1
-        }
+        func updatePermissionState() async {}
         
         func scheduleDailyNotification(
             hour: Int,
@@ -168,9 +165,7 @@ struct SettingsViewModelTests {
             scheduleReminderCalledWith = (hour, minute)
         }
         
-        func clearAppBadge() async throws {
-            clearAppBadgeCount += 1
-        }
+        func clearAppBadge() async throws {}
     }
     
     //MARK: - Helpers

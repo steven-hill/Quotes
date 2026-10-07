@@ -50,6 +50,7 @@ final class SettingsViewModel {
         await commitNotificationTime()
     }
     
+    //MARK: - Helper to set notification time
     private func commitNotificationTime() async {
         let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
         guard let hour = components.hour, let minute = components.minute else { return }
