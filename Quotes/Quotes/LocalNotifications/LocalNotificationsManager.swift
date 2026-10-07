@@ -24,13 +24,12 @@ final class LocalNotificationsManager {
     
     // MARK: - Constants
     private static let timeStorageKey = "notificationTime"
-    private static let defaultNotificationTime = "10:00"
     private static let staticReminderID = "daily_quote_notification"
     
     // MARK: - Observable State
     var isPermissionGranted = false
     var alertMessage: String?
-    var scheduledTimeString = defaultNotificationTime
+    var scheduledTimeString = "10:00"
     
     // MARK: - Initialisation
     /// Initializes the manager, auto-loading any previously saved reminder configuration.
@@ -40,7 +39,9 @@ final class LocalNotificationsManager {
     ) {
         self.engine = engine
         self.storage = storage
-        self.scheduledTimeString = storage.string(forKey: Self.timeStorageKey) ?? Self.defaultNotificationTime
+        if let storedTime = storage.string(forKey: Self.timeStorageKey) {
+            self.scheduledTimeString = storedTime
+        }
     }
     
     // MARK: - Methods
