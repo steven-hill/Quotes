@@ -23,9 +23,7 @@ struct SettingsViewModelTests {
         let localNotificationsManager = LocalNotificationsManager(storage: mockStorage)
         let sut = SettingsViewModel(localNotificationsManager: localNotificationsManager)
         
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: sut.notificationTime)
-        let minute = calendar.component(.minute, from: sut.notificationTime)
+        let (hour, minute) = getHourAndMinute(from: sut.notificationTime)
         #expect(hour == 8, "Should match what was stored by user.")
         #expect(minute == 30, "Should match what was stored by user.")
     }
@@ -35,9 +33,7 @@ struct SettingsViewModelTests {
         let localNotificationsManager = LocalNotificationsManager(storage: UserDefaultsHelper.makeUserDefaults(for: "SettingsViewModelTests"))
         let sut = SettingsViewModel(localNotificationsManager: localNotificationsManager)
         
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: sut.notificationTime)
-        let minute = calendar.component(.minute, from: sut.notificationTime)
+        let (hour, minute) = getHourAndMinute(from: sut.notificationTime)
         #expect(hour == 10, "Should match the default time.")
         #expect(minute == 00, "Should match the default time.")
     }
@@ -52,10 +48,19 @@ struct SettingsViewModelTests {
         let localNotificationsManager = LocalNotificationsManager(storage: mockStorage)
         let sut = SettingsViewModel(localNotificationsManager: localNotificationsManager)
         
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: sut.notificationTime)
-        let minute = calendar.component(.minute, from: sut.notificationTime)
+        let (hour, minute) = getHourAndMinute(from: sut.notificationTime)
         #expect(hour == 10, "Should match the default time.")
         #expect(minute == 00, "Should match the default time.")
+    }
+    
+    //MARK: - Helper
+    private func getHourAndMinute(from time: Date) -> (
+        hour: Int,
+        minute: Int
+    ) {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: time)
+        let minute = calendar.component(.minute, from: time)
+        return (hour, minute)
     }
 }
