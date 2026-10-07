@@ -45,6 +45,11 @@ final class SettingsViewModel {
         }
     }
     
+    // MARK: - User changes notification time
+    func setNewNotificationTime() async {
+        await commitNotificationTime()
+    }
+    
     private func commitNotificationTime() async {
         let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
         guard let hour = components.hour, let minute = components.minute else { return }
@@ -61,7 +66,7 @@ final class SettingsViewModel {
     }
     
     // MARK: - Helper Method
-    /// Formats an 24-hour time string ("HH:mm") into a concrete Date instance to drive the SwiftUI DatePicker.
+    /// Formats an 24-hour time string ("HH:mm") into a concrete `Date` instance to drive the `DatePicker`.
     private func parseTime(_ timeString: String) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"

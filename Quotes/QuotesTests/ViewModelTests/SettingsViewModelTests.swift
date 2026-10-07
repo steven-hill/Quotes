@@ -80,7 +80,7 @@ struct SettingsViewModelTests {
         #expect(spy.requestPermissionCallCount == 1, "Should have called method once.")
         #expect(spy.scheduleReminderCalledWith == nil, "VM should never attempt to schedule notifications if permission is denied.")
         #expect(sut.isShowingAlert, "An alert should be shown.")
-        #expect(sut.alertMessage != nil, "Should not be nil.")
+        #expect(sut.alertMessage != nil, "Should show the alert message from the service.")
     }
 
     @Test("VM triggers service permission prompt, and, if denied, shows fallback alert message if service doesn't provide one, and updates state")
@@ -93,8 +93,41 @@ struct SettingsViewModelTests {
         #expect(spy.requestPermissionCallCount == 1, "Should have called method once.")
         #expect(spy.scheduleReminderCalledWith == nil, "VM should never attempt to schedule notifications if permission is denied.")
         #expect(sut.isShowingAlert, "An alert should be shown.")
-        #expect(sut.alertMessage != nil, "Should not be nil.")
         #expect(sut.alertMessage != nil, "Should show the fallback message because service didn't provide one.")
+    }
+    
+    // MARK: - Set New Notification Time Tests
+    @Test("When user chooses a new notification delivery time, VM extracts time components and calls service")
+    func settingsViewModel_setNewNotificationTime_correctlyExtractsUIComponents_andInvokesService() async {
+        let spy = NotificationServiceSpy()
+        let sut = SettingsViewModel(localNotificationsManager: spy)
+        sut.notificationTime = createMockDate(
+            hour: 16,
+            minute: 45
+        )
+        
+        await sut.setNewNotificationTime()
+        
+        #expect(spy.scheduleReminderCalledWith != nil, "ViewModel failed to call the service layer.")
+        #expect(spy.scheduleReminderCalledWith?.hour == 16, "Should match the updated notification time.")
+        #expect(spy.scheduleReminderCalledWith?.minute == 45, "Should match the updated notification time.")
+    }
+    
+    @Test("When user chooses a new notification delivery time but service fails, VM handles alert message and updates state")
+    func settingsViewModel_setNewNotificationTime_serviceFails_handlesAlertMessageAndUpdatesState() async {
+        let spy = NotificationServiceSpy()
+        spy.shouldThrowError = true
+        let sut = SettingsViewModel(localNotificationsManager: spy)
+        sut.notificationTime = createMockDate(
+            hour: 16,
+            minute: 45
+        )
+        
+        await sut.setNewNotificationTime()
+        
+        #expect(spy.scheduleReminderCalledWith == nil, "Should be nil because service layer failed to set new time.")
+        #expect(sut.isShowingAlert, "An alert should be shown.")
+        #expect(sut.alertMessage != nil, "Should show the alert message from the service.")
     }
     
     // MARK: - Notification Service Spy
@@ -103,6 +136,9 @@ struct SettingsViewModelTests {
         var isPermissionGranted = false
         var alertMessage: String?
         var scheduledTimeString = "10:00"
+        
+        // Error boolean
+        var shouldThrowError = false
         
         // Spies
         private(set) var requestPermissionCallCount = 0
@@ -122,6 +158,13 @@ struct SettingsViewModelTests {
             hour: Int,
             minute: Int
         ) async throws {
+            if shouldThrowError {
+                throw NSError(
+                    domain: "scheduleDailyNotificationTest",
+                    code: -1,
+                    userInfo: nil
+                )
+            }
             scheduleReminderCalledWith = (hour, minute)
         }
         
@@ -130,7 +173,7 @@ struct SettingsViewModelTests {
         }
     }
     
-    //MARK: - Helper
+    //MARK: - Helpers
     private func getHourAndMinute(from time: Date) -> (
         hour: Int,
         minute: Int
@@ -139,5 +182,15 @@ struct SettingsViewModelTests {
         let hour = calendar.component(.hour, from: time)
         let minute = calendar.component(.minute, from: time)
         return (hour, minute)
+    }
+    
+    private func createMockDate(
+        hour: Int,
+        minute: Int
+    ) -> Date {
+        var components = DateComponents()
+        components.hour = hour
+        components.minute = minute
+        return Calendar.current.date(from: components) ?? Date()
     }
 }
