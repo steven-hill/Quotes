@@ -7,15 +7,6 @@
 
 import UserNotifications
 
-/// Responsible for interacting with the iOS notification subsystem
-protocol NotificationCentreEngine {
-    func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool
-    func fetchStatus() async -> NotificationConfig
-    func schedule(_ request: UNNotificationRequest) async throws
-    func cancelAllPendingRequests()
-    func resetBadge() async throws
-}
-
 protocol NotificationService {
     var isPermissionGranted: Bool { get }
     var alertMessage: String? { get set }
