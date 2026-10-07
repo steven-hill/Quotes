@@ -53,6 +53,83 @@ struct SettingsViewModelTests {
         #expect(minute == 00, "Should match the default time.")
     }
     
+    // MARK: - Request Permission Test
+    @Test("VM triggers service permission prompt, and, if granted, schedules notification with default time")
+    func settingsViewModel_requestPermissionAndSchedule_whenUserGrantsPermission_schedulesNotification() async {
+        let spy = NotificationServiceSpy()
+        spy.isPermissionGranted = true
+        let sut = SettingsViewModel(localNotificationsManager: spy)
+        
+        await sut.requestPermissionAndSchedule()
+        
+        #expect(spy.requestPermissionCallCount == 1, "Should have called method once.")
+        #expect(spy.scheduleReminderCalledWith != nil, "VM failed to auto-schedule default time upon granting permission.")
+        #expect(spy.scheduleReminderCalledWith?.hour == 10)
+        #expect(spy.scheduleReminderCalledWith?.minute == 00)
+        #expect(sut.isShowingAlert == false, "An alert was shown despite permission being granted successfully.")
+    }
+    
+    @Test("VM triggers service permission prompt, and, if denied, handles service's alert message and updates state")
+    func settingsViewModel_requestPermissionAndSchedule_whenPermissionIsDenied_handlesAlertMessageAndState() async {
+        let spy = NotificationServiceSpy()
+        spy.alertMessage = "" // Makes it not nil to simulate messsage provided by service.
+        let sut = SettingsViewModel(localNotificationsManager: spy)
+        
+        await sut.requestPermissionAndSchedule()
+        
+        #expect(spy.requestPermissionCallCount == 1, "Should have called method once.")
+        #expect(spy.scheduleReminderCalledWith == nil, "VM should never attempt to schedule notifications if permission is denied.")
+        #expect(sut.isShowingAlert, "An alert should be shown.")
+        #expect(sut.alertMessage != nil, "Should not be nil.")
+    }
+
+    @Test("VM triggers service permission prompt, and, if denied, shows fallback alert message if service doesn't provide one, and updates state")
+    func settingsViewModel_requestPermissionAndSchedule_whenPermissionIsDeniedButServiceDoesntProvideMessage_handlesAlertMessageAndState() async {
+        let spy = NotificationServiceSpy()
+        let sut = SettingsViewModel(localNotificationsManager: spy)
+        
+        await sut.requestPermissionAndSchedule()
+        
+        #expect(spy.requestPermissionCallCount == 1, "Should have called method once.")
+        #expect(spy.scheduleReminderCalledWith == nil, "VM should never attempt to schedule notifications if permission is denied.")
+        #expect(sut.isShowingAlert, "An alert should be shown.")
+        #expect(sut.alertMessage != nil, "Should not be nil.")
+        #expect(sut.alertMessage != nil, "Should show the fallback message because service didn't provide one.")
+    }
+    
+    // MARK: - Notification Service Spy
+    final class NotificationServiceSpy: NotificationService {
+        // Requirements
+        var isPermissionGranted = false
+        var alertMessage: String?
+        var scheduledTimeString = "10:00"
+        
+        // Spies
+        private(set) var requestPermissionCallCount = 0
+        private(set) var updatePermissionStateCount = 0
+        private(set) var scheduleReminderCalledWith: (hour: Int, minute: Int)?
+        private(set) var clearAppBadgeCount = 0
+
+        func requestPermission() async {
+            requestPermissionCallCount += 1
+        }
+        
+        func updatePermissionState() async {
+            updatePermissionStateCount += 1
+        }
+        
+        func scheduleDailyNotification(
+            hour: Int,
+            minute: Int
+        ) async throws {
+            scheduleReminderCalledWith = (hour, minute)
+        }
+        
+        func clearAppBadge() async throws {
+            clearAppBadgeCount += 1
+        }
+    }
+    
     //MARK: - Helper
     private func getHourAndMinute(from time: Date) -> (
         hour: Int,

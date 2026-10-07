@@ -16,8 +16,19 @@ protocol NotificationCentreEngine {
     func resetBadge() async throws
 }
 
+protocol NotificationService {
+    var isPermissionGranted: Bool { get }
+    var alertMessage: String? { get set }
+    var scheduledTimeString: String { get }
+    
+    func requestPermission() async
+    func updatePermissionState() async
+    func scheduleDailyNotification(hour: Int, minute: Int) async throws
+    func clearAppBadge() async throws
+}
+
 @Observable
-final class LocalNotificationsManager {
+final class LocalNotificationsManager: NotificationService  {
     // MARK: - Dependencies
     private let engine: NotificationCentreEngine
     private let storage: UserDefaults
