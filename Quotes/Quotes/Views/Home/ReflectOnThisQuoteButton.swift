@@ -22,7 +22,7 @@ struct ReflectOnThisQuoteButton: View {
     // MARK: - Properties
     let quoteContent: String
     let quoteAuthor: String
-        
+    
     // MARK: - Initialisation
     init(
         factory: ViewFactory,
@@ -36,13 +36,19 @@ struct ReflectOnThisQuoteButton: View {
     
     // MARK: - Body
     var body: some View {
-        Button("Reflect", systemImage: "square.and.pencil") {
+        Button {
             reflectionSheetIsPresented.toggle()
+        } label: {
+            Label(
+                "Reflect",
+                systemImage: "square.and.pencil"
+            )
+            .frame(maxWidth: .infinity)
+            .padding(.vertical)
+            .contentShape(Rectangle())
         }
         .tint(.primary)
         .bold()
-        .padding()
-        .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? Constants.iPad.buttonWidth : .infinity)
         .background(colorScheme == .light ? .black.opacity(0.1) : .gray)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(.horizontal)
