@@ -24,9 +24,9 @@ Networking:
 
 Persistence:
 - Persistence of saved quotes is achieved via `SwiftData`.
-- My approach is to separate `SwiftData` from the rest of the app as much as possible, which ruled out using `@Query` in my app's views.
+- My approach is to decouple `SwiftData` from other layers as much as possible, which ruled out using `@Query` in my app's views.
 - The user's appearance setting is persisted by `UserDefaults`, and the user can change the appearance in the app's settings.
-- If the user sets a new time for notifications that time will be saved to `UserDefaults`. 
+- If the user sets a different time to receive a daily notification (default is pre-set to 10:00am), that time will be saved to `UserDefaults`. 
   
 Accessibility:
 - There is support for VoiceOver and Dynamic Type.
