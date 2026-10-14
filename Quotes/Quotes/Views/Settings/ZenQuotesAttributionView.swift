@@ -6,21 +6,35 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct ZenQuotesAttributionView: View {
-    var body: some View {
-        Text(createAttributedString())
-            .font(.title3)
-    }
     
-    private func createAttributedString() -> AttributedString {
-        var attributedString = AttributedString("Inspirational quotes provided by ")
-        var linkPart = AttributedString("ZenQuotes API")
-        linkPart.link = URL(string: "https://www.zenquotes.io/")
-        linkPart.foregroundColor = .link
-        
-        attributedString += linkPart
-        return attributedString
+    // MARK: - State
+    @State private var showWebView = false
+    
+    // MARK: - Body
+    var body: some View {
+        Button("Zen Quotes API") {
+            showWebView = true
+        }
+        .foregroundStyle(.link)
+        .sheet(isPresented: $showWebView) {
+            NavigationStack {
+                WebView(
+                    url: URL(string: "https://www.zenquotes.io/")
+                )
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            showWebView = false
+                        } label: {
+                            Image(systemName: "xmark")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
