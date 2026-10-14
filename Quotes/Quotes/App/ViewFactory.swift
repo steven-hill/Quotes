@@ -73,6 +73,9 @@ final class ViewFactory {
     }
     
     func makeSettingsView() -> SettingsView {
-        SettingsView(appearanceManager: dependencies.appearanceManager)
+        SettingsView(
+            appearanceManager: dependencies.appearanceManager,
+            localNotificationsManager: dependencies.localNotificationsManager
+        )
     }
 }

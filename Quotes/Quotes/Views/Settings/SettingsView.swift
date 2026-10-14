@@ -17,13 +17,18 @@ struct SettingsView: View {
     
     // MARK: - State
     @State private var scheduleNotificationIsSuccessful = false
+    @State private var settingsVM: SettingsViewModel
     
     // MARK: - Bindable
     @Bindable private var appearanceManager: AppearanceManager
     
     // MARK: - Initialisation
-    init(appearanceManager: AppearanceManager) {
+    init(
+        appearanceManager: AppearanceManager,
+        localNotificationsManager: LocalNotificationsManager
+    ) {
         self.appearanceManager = appearanceManager
+        _settingsVM = State(initialValue: SettingsViewModel(localNotificationsManager: localNotificationsManager))
     }
     
     // MARK: - Body
@@ -124,6 +129,9 @@ struct SettingsView: View {
 
 #Preview {
     let appContainer = try! AppContainer(isInMemoryOnly: true)
-    SettingsView(appearanceManager: appContainer.appearanceManager)
+    SettingsView(
+        appearanceManager: appContainer.appearanceManager,
+        localNotificationsManager: appContainer.localNotificationsManager
+    )
         .environmentObject(LocalNotificationManager())
 }

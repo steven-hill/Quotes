@@ -12,6 +12,7 @@ protocol AppDependencyContaining {
     var quoteRepository: QuoteRepository { get }
     var networkClient: Networking { get }
     var appearanceManager: AppearanceManager { get }
+    var localNotificationsManager: LocalNotificationsManager { get }
 }
 
 /// Manages business logic dependencies.
@@ -23,6 +24,7 @@ final class AppContainer: AppDependencyContaining {
     let quoteRepository: QuoteRepository
     let networkClient: Networking
     let appearanceManager: AppearanceManager
+    let localNotificationsManager: LocalNotificationsManager
     private(set) var isRunningInDegradedMode = false
     
     // MARK: - Initialisation
@@ -32,6 +34,7 @@ final class AppContainer: AppDependencyContaining {
     ) throws {
         self.networkClient = NetworkClient()
         self.appearanceManager = AppearanceManager()
+        self.localNotificationsManager = LocalNotificationsManager()
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: isInMemoryOnly)
             self.modelContainer = try modelContainerFactory.makeContainer(schema: schema, configuration: config)
