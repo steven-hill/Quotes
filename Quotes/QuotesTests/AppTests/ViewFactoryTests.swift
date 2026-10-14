@@ -71,17 +71,29 @@ struct ViewFactoryTests {
         #expect(spy.didAccessAppearanceManager, "Should have got the appearance manager instance from the dependencies.")
     }
     
+    @Test("View factory successfully accesses local notifications manager for `SettingsView`")
+    func viewFactory_makeSettingsView_accessesLocalNotificationsManager()  {
+        let spy = DependencyContainerSpy()
+        let sut = ViewFactory(dependencies: spy)
+        
+        _ = sut.makeSettingsView()
+        
+        #expect(spy.didAccessLocalNotificationsManager, "Should have got the local notifications manager instance from the dependencies.")
+    }
+    
     //MARK: - Spy
     private final class DependencyContainerSpy: AppDependencyContaining {
         // MARK: - Properties
         private let mockQuoteRepository: QuoteRepository
         private let mockNetworkClient: Networking
         private let mockAppearanceManager: AppearanceManager
+        private let mockLocalNotificationsManager: LocalNotificationsManager
         
         // MARK: - Tracking States
         private(set) var didAccessQuoteRepository = false
         private(set) var didAccessNetworkClient = false
         private(set) var didAccessAppearanceManager = false
+        private(set) var didAccessLocalNotificationsManager = false
         
         var quoteRepository: QuoteRepository {
             didAccessQuoteRepository = true
@@ -95,16 +107,25 @@ struct ViewFactoryTests {
             didAccessAppearanceManager = true
             return mockAppearanceManager
         }
+        var localNotificationsManager: LocalNotificationsManager {
+            didAccessLocalNotificationsManager = true
+            return mockLocalNotificationsManager
+        }
         
         // MARK: - Initialisation
         init(
             quoteRepository: QuoteRepository = MockQuoteRepository(),
             networkClient: Networking = NetworkClient(session: MockNetworkSession()),
-            appearanceManager: AppearanceManager = AppearanceManager(store: UserDefaultsHelper.makeUserDefaults(for: "ViewFactoryTests"))
+            appearanceManager: AppearanceManager = AppearanceManager(store: UserDefaultsHelper.makeUserDefaults(for: "ViewFactoryTests")),
+            localNotificationsManager: LocalNotificationsManager = LocalNotificationsManager(
+                engine: MockNotificationEngine(),
+                storage: UserDefaultsHelper.makeUserDefaults(for: "ViewFactoryTests")
+            )
         ) {
             self.mockQuoteRepository = quoteRepository
             self.mockNetworkClient = networkClient
             self.mockAppearanceManager = appearanceManager
+            self.mockLocalNotificationsManager = localNotificationsManager
         }
     }
 
