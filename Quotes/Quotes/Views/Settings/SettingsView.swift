@@ -9,9 +9,6 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    // MARK: - Environment Object
-    @EnvironmentObject var localNotificationManager: LocalNotificationManager
-    
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
     
@@ -135,5 +132,4 @@ struct SettingsView: View {
         appearanceManager: appContainer.appearanceManager,
         localNotificationsManager: appContainer.localNotificationsManager
     )
-        .environmentObject(LocalNotificationManager())
 }
