@@ -58,12 +58,14 @@ struct SettingsView: View {
         }
         .alert(
             "Error",
-            isPresented: $localNotificationManager.hasError,
-            presenting: localNotificationManager.notificationError
+            isPresented: $settingsVM.isShowingAlert,
+            presenting: settingsVM.alertMessage
         ) { _ in
             Button("Ok") {}
-        } message: { detail in
-            Text(detail.errorDescription)
+        } message: { _ in
+            if let message = settingsVM.alertMessage  {
+                Text(message)
+            }
         }
         .overlay {
             if scheduleNotificationIsSuccessful {
@@ -83,7 +85,7 @@ struct SettingsView: View {
     // MARK: - UI Components
     @ViewBuilder
     private var notificationContent: some View {
-        if localNotificationManager.authorizationGranted {
+        if settingsVM.localNotificationsManager.isPermissionGranted {
             AuthorizationGrantedView(scheduleNotificationSuccess: {
                 withAnimation(.spring().delay(0.25)) {
                     scheduleNotificationIsSuccessful.toggle()
@@ -121,7 +123,7 @@ struct SettingsView: View {
     private func handleScenePhaseChange(_ newValue: ScenePhase) {
         if newValue == .active {
             Task {
-                await localNotificationManager.getCurrentAuthorizationSetting()
+                await settingsVM.localNotificationsManager.updatePermissionState()
             }
         }
     }
