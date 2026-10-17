@@ -9,15 +9,15 @@ import SwiftUI
 
 struct AuthorizationGrantedView: View {
     
-    // MARK: - Environment Object
-    @EnvironmentObject private var localNotificationManager: LocalNotificationManager
-    
     // MARK: - Environment
     @Environment(\.colorScheme) private var colorScheme
     
     // MARK: - State
     @State private var notificationTime = Date.now
     @State private var isConfirmButtonDisabled = true
+    
+    // MARK: - Bindable
+    @Bindable var viewModel: SettingsViewModel
     
     // MARK: - Action
     let scheduleNotificationSuccess: () -> Void
@@ -36,40 +36,42 @@ struct AuthorizationGrantedView: View {
     
     // MARK: - UI Components
     private var notificationExplanationText: some View {
-        Text("Each day has a new quote. We'll send you a notification at \(localNotificationManager.notificationTime) to ensure you don't miss it. If you prefer a different time, select it below and tap 'Confirm'.")
+        Text("Each day has a new quote. We'll send you a notification at \(viewModel.notificationTime.formatted(date: .omitted, time: .shortened)) to ensure you don't miss it. If you prefer a different time, select it below and tap 'Confirm'.")
             .font(.title3)
             .minimumScaleFactor(0.5)
     }
     
     private var timePicker: some View {
-        DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
+        DatePicker(
+            " ",
+            selection: $viewModel.notificationTime,
+            displayedComponents: .hourAndMinute
+        )
             .datePickerStyle(.compact)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Time picker. Button. Activate to choose a different time.")
-            .onChange(of: notificationTime) {
+            .onChange(of: viewModel.notificationTime) {
                 isConfirmButtonDisabled = false
         }
     }
     
     private var confirmButton: some View {
-        Button("Confirm", action: scheduleNotification)
-            .disabled(isConfirmButtonDisabled)
-            .buttonStyle(.borderedProminent)
-            .foregroundStyle(colorScheme == .dark ? .black : .white)
-    }
-    
-    // MARK: - Schedule notification function
-    private func scheduleNotification() {
-        Task {
-            let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
-            try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
-            isConfirmButtonDisabled = true
-            scheduleNotificationSuccess()
+        Button("Confirm") {
+            Task {
+                await viewModel.setNewNotificationTime()
+                isConfirmButtonDisabled = true
+                scheduleNotificationSuccess()
+            }
         }
+        .disabled(isConfirmButtonDisabled)
+        .buttonStyle(.borderedProminent)
+        .foregroundStyle(colorScheme == .dark ? .black : .white)
     }
 }
 
 #Preview {
-    AuthorizationGrantedView(scheduleNotificationSuccess: {})
-        .environmentObject(LocalNotificationManager())
+    AuthorizationGrantedView(
+        viewModel: SettingsViewModel(localNotificationsManager: LocalNotificationsManager()),
+        scheduleNotificationSuccess: {}
+    )
 }

@@ -9,9 +9,6 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    // MARK: - Environment Object
-    @EnvironmentObject var localNotificationManager: LocalNotificationManager
-    
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
     
@@ -58,12 +55,14 @@ struct SettingsView: View {
         }
         .alert(
             "Error",
-            isPresented: $localNotificationManager.hasError,
-            presenting: localNotificationManager.notificationError
+            isPresented: $settingsVM.isShowingAlert,
+            presenting: settingsVM.alertMessage
         ) { _ in
             Button("Ok") {}
-        } message: { detail in
-            Text(detail.errorDescription)
+        } message: { _ in
+            if let message = settingsVM.alertMessage  {
+                Text(message)
+            }
         }
         .overlay {
             if scheduleNotificationIsSuccessful {
@@ -83,14 +82,16 @@ struct SettingsView: View {
     // MARK: - UI Components
     @ViewBuilder
     private var notificationContent: some View {
-        if localNotificationManager.authorizationGranted {
-            AuthorizationGrantedView(scheduleNotificationSuccess: {
+        if settingsVM.localNotificationsManager.isPermissionGranted {
+            AuthorizationGrantedView(
+                viewModel: settingsVM,
+                scheduleNotificationSuccess: {
                 withAnimation(.spring().delay(0.25)) {
                     scheduleNotificationIsSuccessful.toggle()
                 }
             })
         } else {
-            AuthorizationNotGrantedView()
+            AuthorizationNotGrantedView(viewModel: settingsVM)
         }
     }
     
@@ -121,7 +122,7 @@ struct SettingsView: View {
     private func handleScenePhaseChange(_ newValue: ScenePhase) {
         if newValue == .active {
             Task {
-                await localNotificationManager.getCurrentAuthorizationSetting()
+                await settingsVM.localNotificationsManager.updatePermissionState()
             }
         }
     }
@@ -133,5 +134,4 @@ struct SettingsView: View {
         appearanceManager: appContainer.appearanceManager,
         localNotificationsManager: appContainer.localNotificationsManager
     )
-        .environmentObject(LocalNotificationManager())
 }

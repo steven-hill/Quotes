@@ -10,8 +10,7 @@ import SwiftUI
 @main
 struct QuotesApp: App {
     
-    // MARK: - State Objects
-    @StateObject private var localNotificationManager = LocalNotificationManager()
+    // MARK: - State Object
     @StateObject private var tabRouter = TabRouter()
     
     // MARK: - State
@@ -45,7 +44,6 @@ struct QuotesApp: App {
                     factory: factory,
                     isStorageDegraded: isStorageDegraded,
                 )
-                .environmentObject(localNotificationManager)
                 .environmentObject(tabRouter)
                 .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
             case .failed(let error):

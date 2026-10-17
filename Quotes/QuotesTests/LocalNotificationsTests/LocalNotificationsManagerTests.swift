@@ -72,18 +72,14 @@ struct LocalNotificationsManagerTests {
         #expect(sut.alertMessage != nil, "Should not be nil.")
     }
     
-    @Test("Provisional and authorised are considered as permission granted",
-          arguments: [
-            NotificationPermissionStatus.authorized,
-            NotificationPermissionStatus.provisional
-          ])
-    func localNotificationsManager_updatePermissionState_evaluatesProvisionalAndAuthorisedAsGrantedPermission(permissionStatus: NotificationPermissionStatus) async {
+    @Test("Authorised is considered as permission granted")
+    func localNotificationsManager_updatePermissionState_evaluatesAuthorisedAsGrantedPermission() async {
         let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
-        mockEngine.stubbedConfig = NotificationConfig(status: permissionStatus)
+        mockEngine.stubbedConfig = NotificationConfig(status: NotificationPermissionStatus.authorized)
         
         await sut.updatePermissionState()
         
-        #expect(sut.isPermissionGranted, "Status \(permissionStatus) should have resolved to a granted permission state.")
+        #expect(sut.isPermissionGranted, "Authorised should have resolved to a granted permission state.")
     }
     
     @Test("Denied and not determined are considered as permission has not been granted",

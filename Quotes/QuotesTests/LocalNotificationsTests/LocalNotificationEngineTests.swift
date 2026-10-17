@@ -18,7 +18,7 @@ struct LocalNotificationEngineTests {
         let (sut, mockRawNotificationCentre) = makeSUT(throwsError: false)
         mockRawNotificationCentre.stubbedAuthorisationResult = true
         
-        let result = try await sut.requestAuthorization(options: [.alert, .badge, .sound, .provisional])
+        let result = try await sut.requestAuthorization(options: [.alert, .badge, .sound])
         
         #expect(mockRawNotificationCentre.requestAuthorisationCount == 1, "Should request authorisation once.")
         #expect(result, "Should be true.")
@@ -29,7 +29,7 @@ struct LocalNotificationEngineTests {
         let (sut, mockRawNotificationCentre) = makeSUT(throwsError: true)
         
         do {
-            _ = try await sut.requestAuthorization(options: [.alert, .badge, .sound, .provisional])
+            _ = try await sut.requestAuthorization(options: [.alert, .badge, .sound])
             Issue.record("Engine should have thrown an error but succeeded instead.")
         } catch {
             #expect(mockRawNotificationCentre.requestAuthorisationCount == 1, "Should request authorisation once.")
