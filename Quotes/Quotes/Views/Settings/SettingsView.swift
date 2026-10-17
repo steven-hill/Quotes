@@ -91,7 +91,7 @@ struct SettingsView: View {
                 }
             })
         } else {
-            AuthorizationNotGrantedView()
+            AuthorizationNotGrantedView(viewModel: settingsVM)
         }
     }
     

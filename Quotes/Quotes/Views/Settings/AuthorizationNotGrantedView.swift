@@ -10,6 +10,10 @@ import SwiftUI
 struct AuthorizationNotGrantedView: View {
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     
+    // MARK: - View Model
+    var viewModel: SettingsViewModel
+    
+    // MARK: - Body
     var body: some View {
         VStack {
             Text("Each day has a new quote. Turn on notifications to ensure you don't miss it.")
@@ -25,5 +29,5 @@ struct AuthorizationNotGrantedView: View {
 }
 
 #Preview {
-    AuthorizationNotGrantedView()
+    AuthorizationNotGrantedView(viewModel: SettingsViewModel(localNotificationsManager: LocalNotificationsManager()))
 }
