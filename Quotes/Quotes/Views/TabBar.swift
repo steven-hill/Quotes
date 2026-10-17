@@ -12,8 +12,7 @@ struct TabBar: View {
     // MARK: - Environment
     @Environment(\.scenePhase) var scenePhase
     
-    // MARK: - Environment Objects
-    @EnvironmentObject var localNotificationManager: LocalNotificationManager
+    // MARK: - Environment Object
     @EnvironmentObject var tabRouter: TabRouter
     
     // MARK: - State
@@ -69,17 +68,6 @@ struct TabBar: View {
                 .tag(Tab.settings)
         }
         .tint(.primary)
-        .task {
-            try? await localNotificationManager.requestAuthorization()
-        }
-        .task {
-            localNotificationManager.setUpNotificationTabRouter(tabRouter: tabRouter)
-        }
-        .onChange(of: scenePhase) { _, newValue in
-            if newValue == .active {
-                localNotificationManager.setBadgeCountToZero()
-            }
-        }
         .onChange(of: tabRouter.tabToBeShown) { _, newValue in
             if newValue == .home {
                 selectedTab = .home
@@ -108,6 +96,5 @@ struct TabBar: View {
         ),
         isStorageDegraded: false
     )
-    .environmentObject(LocalNotificationManager())
     .environmentObject(TabRouter())
 }
