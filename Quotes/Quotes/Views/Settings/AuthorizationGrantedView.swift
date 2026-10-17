@@ -9,9 +9,6 @@ import SwiftUI
 
 struct AuthorizationGrantedView: View {
     
-    // MARK: - Environment Object
-    @EnvironmentObject private var localNotificationManager: LocalNotificationManager
-    
     // MARK: - Environment
     @Environment(\.colorScheme) private var colorScheme
     
@@ -62,21 +59,13 @@ struct AuthorizationGrantedView: View {
         Button("Confirm") {
             Task {
                 await viewModel.setNewNotificationTime()
+                isConfirmButtonDisabled = true
+                scheduleNotificationSuccess()
             }
         }
         .disabled(isConfirmButtonDisabled)
         .buttonStyle(.borderedProminent)
         .foregroundStyle(colorScheme == .dark ? .black : .white)
-    }
-    
-    // MARK: - Schedule notification function
-    private func scheduleNotification() {
-        Task {
-            let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
-            try await localNotificationManager.scheduleUserChosenNotificationTime(userChosenNotificationHour: components.hour ?? 10, userChosenNotificationMinute: components.minute ?? 00)
-            isConfirmButtonDisabled = true
-            scheduleNotificationSuccess()
-        }
     }
 }
 
@@ -85,5 +74,4 @@ struct AuthorizationGrantedView: View {
         viewModel: SettingsViewModel(localNotificationsManager: LocalNotificationsManager()),
         scheduleNotificationSuccess: {}
     )
-    .environmentObject(LocalNotificationManager())
 }
