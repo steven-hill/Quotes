@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AuthorizationNotGrantedView: View {
-    @EnvironmentObject var localNotificationManager: LocalNotificationManager
     
     // MARK: - View Model
     var viewModel: SettingsViewModel
