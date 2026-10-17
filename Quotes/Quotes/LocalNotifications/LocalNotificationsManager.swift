@@ -50,7 +50,7 @@ final class LocalNotificationsManager: NotificationService  {
     /// Requests authorisation permissions from the user via the underlying engine wrapper.
     func requestPermission() async {
         do {
-            let success = try await engine.requestAuthorization(options: [.alert, .badge, .sound, .provisional])
+            let success = try await engine.requestAuthorization(options: [.alert, .badge, .sound])
             self.isPermissionGranted = success
             if !success {
                 self.alertMessage = "Notification permissions were denied. Please enable them in the Settings app."
@@ -63,8 +63,7 @@ final class LocalNotificationsManager: NotificationService  {
     /// Refreshes the local observable state by fetching current settings.
     func updatePermissionState() async {
         let config = await engine.fetchStatus()
-        // Captures both explicit approval and silent provisional.
-        self.isPermissionGranted = (config.status == .authorized || config.status == .provisional)
+        self.isPermissionGranted = config.status == .authorized
     }
     
     /// Constructs, formats, and overwrites a repeating daily notification request.
