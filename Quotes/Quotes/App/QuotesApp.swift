@@ -23,7 +23,8 @@ struct QuotesApp: App {
         case ready(
             factory: ViewFactory,
             appearanceManager: AppearanceManager,
-            isStorageDegraded: Bool
+            isStorageDegraded: Bool,
+            localNotificationsManager: LocalNotificationsManager
         )
         case failed(AppContainerError)
     }
@@ -38,7 +39,8 @@ struct QuotesApp: App {
             case .ready(
                 let factory,
                 let appearanceManager,
-                let isStorageDegraded
+                let isStorageDegraded,
+                let localNotificationsManager
             ):
                 TabBar(
                     factory: factory,
@@ -46,6 +48,7 @@ struct QuotesApp: App {
                 )
                 .environmentObject(tabRouter)
                 .preferredColorScheme(appearanceManager.selectedAppearance.colorScheme)
+                .task { await localNotificationsManager.updatePermissionState() }
             case .failed(let error):
                 AppLaunchErrorView(error: error)
             }
@@ -67,7 +70,8 @@ struct QuotesApp: App {
                 appState = .ready(
                     factory: factory,
                     appearanceManager: container.appearanceManager,
-                    isStorageDegraded: container.isRunningInDegradedMode
+                    isStorageDegraded: container.isRunningInDegradedMode,
+                    localNotificationsManager: container.localNotificationsManager
                 )
             }
         } catch let error as AppContainerError {
