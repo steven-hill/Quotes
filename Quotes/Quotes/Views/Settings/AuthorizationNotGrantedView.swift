@@ -20,8 +20,11 @@ struct AuthorizationNotGrantedView: View {
                 .font(.title3)
                 .padding(.bottom, 8)
             
-            Button("Enable notifications", systemImage: "bell.badge.fill") {
-                localNotificationManager.goToQuotesInSettingsApp()
+            Button(
+                "Enable notifications",
+                systemImage: "bell.badge.fill"
+            ) {
+                Task { await viewModel.requestPermissionAndSchedule() }
             }
             .buttonStyle(.automatic)
         }
