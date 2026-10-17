@@ -83,7 +83,9 @@ struct SettingsView: View {
     @ViewBuilder
     private var notificationContent: some View {
         if settingsVM.localNotificationsManager.isPermissionGranted {
-            AuthorizationGrantedView(scheduleNotificationSuccess: {
+            AuthorizationGrantedView(
+                viewModel: settingsVM,
+                scheduleNotificationSuccess: {
                 withAnimation(.spring().delay(0.25)) {
                     scheduleNotificationIsSuccessful.toggle()
                 }
