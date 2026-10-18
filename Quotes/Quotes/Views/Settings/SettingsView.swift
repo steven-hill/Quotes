@@ -132,7 +132,7 @@ private struct NotificationDeniedSection: View {
                 Button("Open System Settings") {
                     // TODO: Deep link to the Settings app.
                 }
-                .buttonStyle(.borderedProminent)
+                .foregroundStyle(.link)
                 .padding(.top, 4)
             }
         }
