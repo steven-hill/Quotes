@@ -58,6 +58,7 @@ struct SettingsViewModelTests {
     func settingsViewModel_requestPermissionAndSchedule_whenUserGrantsPermission_schedulesNotification() async {
         let spy = NotificationServiceSpy()
         spy.isPermissionGranted = true
+        spy.currentPermissionStatus = .authorized
         let sut = SettingsViewModel(localNotificationsManager: spy)
         
         await sut.requestPermissionAndSchedule()
@@ -66,34 +67,36 @@ struct SettingsViewModelTests {
         #expect(spy.scheduleReminderCalledWith != nil, "Should auto-schedule default time upon permission being granted.")
         #expect(spy.scheduleReminderCalledWith?.hour == 10, "Should match the default notification time.")
         #expect(spy.scheduleReminderCalledWith?.minute == 00, "Should match the default notification time.")
+        #expect(sut.uiState == .authorised(scheduledTime: spy.scheduledTimeString), "Should be `.authorised` using the scheduled time.")
         #expect(sut.isShowingAlert == false, "An alert was shown despite permission being granted successfully.")
     }
     
-    @Test("VM triggers service permission prompt, and, if denied, handles service's alert message and updates state")
-    func settingsViewModel_requestPermissionAndSchedule_whenPermissionIsDenied_handlesAlertMessageAndState() async {
+    @Test("VM triggers service permission prompt and handles denied permission")
+    func settingsViewModel_requestPermissionAndSchedule_whenPermissionIsDenied_handlesStateCorrectly() async {
         let spy = NotificationServiceSpy()
-        spy.alertMessage = "" // Makes it not nil to simulate message provided by service.
+        spy.isPermissionGranted = false
+        spy.currentPermissionStatus = .denied
         let sut = SettingsViewModel(localNotificationsManager: spy)
         
         await sut.requestPermissionAndSchedule()
         
         #expect(spy.requestPermissionCallCount == 1, "Should have called method once.")
         #expect(spy.scheduleReminderCalledWith == nil, "VM should never attempt to schedule notifications if permission is denied.")
-        #expect(sut.isShowingAlert, "An alert should be shown.")
-        #expect(sut.alertMessage != nil, "Should show the alert message from the service.")
+        #expect(sut.uiState == .denied, "Should be `.denied`.")
     }
-
-    @Test("VM triggers service permission prompt, and, if denied, shows fallback alert message if service doesn't provide one, and updates state")
-    func settingsViewModel_requestPermissionAndSchedule_whenPermissionIsDeniedButServiceDoesntProvideMessage_handlesAlertMessageAndState() async {
+    
+    @Test("VM triggers service permission prompt and handles it when permission is not configured")
+    func settingsViewModel_requestPermissionAndSchedule_whenPermissionIsNotDetermined_handlesStateCorrectly() async {
         let spy = NotificationServiceSpy()
+        spy.isPermissionGranted = false
+        spy.currentPermissionStatus = .notDetermined
         let sut = SettingsViewModel(localNotificationsManager: spy)
         
         await sut.requestPermissionAndSchedule()
         
         #expect(spy.requestPermissionCallCount == 1, "Should have called method once.")
-        #expect(spy.scheduleReminderCalledWith == nil, "VM should never attempt to schedule notifications if permission is denied.")
-        #expect(sut.isShowingAlert, "An alert should be shown.")
-        #expect(sut.alertMessage != nil, "Should show the fallback message because service didn't provide one.")
+        #expect(spy.scheduleReminderCalledWith == nil, "VM should never attempt to schedule notifications if permission is not configured.")
+        #expect(sut.uiState == .notConfigured, "Should be `.notConfigured`.")
     }
     
     // MARK: - Set New Notification Time Tests
@@ -134,6 +137,7 @@ struct SettingsViewModelTests {
     final class NotificationServiceSpy: NotificationService {
         // Required properties
         var isPermissionGranted = false
+        var currentPermissionStatus: NotificationPermissionStatus = .notDetermined
         var alertMessage: String?
         var scheduledTimeString = "10:00"
         

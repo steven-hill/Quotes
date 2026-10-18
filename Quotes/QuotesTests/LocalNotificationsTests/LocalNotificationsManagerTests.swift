@@ -39,26 +39,29 @@ struct LocalNotificationsManagerTests {
     }
     
     // MARK: - Permission And Related State Tracking Tests
-    @Test("If requesting permission succeeds, update state correctly.")
+    @Test("If requesting permission succeeds, update state correctly")
     func localNotificationsManager_requestPermission_onSystemSuccess_updatesStateCorrectly() async {
         let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
         mockEngine.stubbedPermissionResult = true
+        mockEngine.stubbedConfig = NotificationConfig(status: .authorized)
         
         await sut.requestPermission()
         
         #expect(sut.isPermissionGranted, "Should be true.")
+        #expect(sut.currentPermissionStatus == .authorized, "Should be `.authorized`.")
         #expect(sut.alertMessage == nil, "Should be nil.")
     }
     
-    @Test("If user denies permission, alert message is set")
-    func localNotificationsManager_requestPermission_ifUserDenies_updatesAlertMessage() async {
+    @Test("If user denies permission, update state correctly")
+    func localNotificationsManager_requestPermission_ifUserDenies_updatesStateCorrectly() async {
         let (sut, mockEngine, _) = makeSUT(engineThrowsError: false)
         mockEngine.stubbedPermissionResult = false
+        mockEngine.stubbedConfig = NotificationConfig(status: .denied)
         
         await sut.requestPermission()
         
         #expect(sut.isPermissionGranted == false, "Should be false.")
-        #expect(sut.alertMessage != nil, "Should not be nil.")
+        #expect(sut.currentPermissionStatus == .denied, "Should be `.denied`.")
     }
     
     @Test("If system fails to execute permission request successfully, alert message is set")
@@ -80,6 +83,7 @@ struct LocalNotificationsManagerTests {
         await sut.updatePermissionState()
         
         #expect(sut.isPermissionGranted, "Authorised should have resolved to a granted permission state.")
+        #expect(sut.currentPermissionStatus == .authorized, "Should be `.authorized`.")
     }
     
     @Test("Denied and not determined are considered as permission has not been granted",
@@ -94,6 +98,7 @@ struct LocalNotificationsManagerTests {
         await sut.updatePermissionState()
         
         #expect(sut.isPermissionGranted == false, "Status \(permissionStatus) should have resolved to a state where user hasn't granted permission.")
+        #expect(sut.currentPermissionStatus == permissionStatus, "Should match the system's permission status.")
     }
     
     // MARK: - Notification Scheduling And Persistence Tests
