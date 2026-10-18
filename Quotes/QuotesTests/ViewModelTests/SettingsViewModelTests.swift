@@ -134,6 +134,7 @@ struct SettingsViewModelTests {
     final class NotificationServiceSpy: NotificationService {
         // Required properties
         var isPermissionGranted = false
+        var currentPermissionStatus: NotificationPermissionStatus = .notDetermined
         var alertMessage: String?
         var scheduledTimeString = "10:00"
         

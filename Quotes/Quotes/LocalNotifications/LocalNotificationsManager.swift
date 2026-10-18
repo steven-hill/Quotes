@@ -9,6 +9,7 @@ import UserNotifications
 
 protocol NotificationService {
     var isPermissionGranted: Bool { get }
+    var currentPermissionStatus: NotificationPermissionStatus { get }
     var alertMessage: String? { get set }
     var scheduledTimeString: String { get }
     
@@ -30,6 +31,7 @@ final class LocalNotificationsManager: NotificationService  {
     
     // MARK: - Observable State
     var isPermissionGranted = false
+    var currentPermissionStatus: NotificationPermissionStatus = .notDetermined
     var alertMessage: String?
     var scheduledTimeString = "10:00"
     
@@ -52,9 +54,7 @@ final class LocalNotificationsManager: NotificationService  {
         do {
             let success = try await engine.requestAuthorization(options: [.alert, .badge, .sound])
             self.isPermissionGranted = success
-            if !success {
-                self.alertMessage = "Notification permissions were denied. Please enable them in the Settings app."
-            }
+            await updatePermissionState()
         } catch {
             self.alertMessage = "An error occurred while requesting permission. Please try again."
         }
@@ -63,6 +63,7 @@ final class LocalNotificationsManager: NotificationService  {
     /// Refreshes the local observable state by fetching current settings.
     func updatePermissionState() async {
         let config = await engine.fetchStatus()
+        self.currentPermissionStatus = config.status
         self.isPermissionGranted = config.status == .authorized
     }
     
