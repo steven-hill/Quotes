@@ -40,7 +40,7 @@ final class SettingsViewModel {
     }
     
     // MARK: - Sync UI
-    private func syncUIState() {
+    func syncUIState() {
         if localNotificationsManager.isPermissionGranted {
             uiState = .authorised(scheduledTime: localNotificationsManager.scheduledTimeString)
         } else if localNotificationsManager.currentPermissionStatus == .denied {

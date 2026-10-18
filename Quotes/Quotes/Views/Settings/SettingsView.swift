@@ -15,6 +15,7 @@ struct SettingsView: View {
     // MARK: - State
     @State private var scheduleNotificationIsSuccessful = false
     @State private var settingsVM: SettingsViewModel
+    @State private var isShowingTimePicker = false
     
     // MARK: - Bindable
     @Bindable private var appearanceManager: AppearanceManager
@@ -30,28 +31,84 @@ struct SettingsView: View {
     
     // MARK: - Body
     var body: some View {
+        @Bindable var bindableVM = settingsVM
+        
         NavigationStack {
             Form {
-                Section(header: sectionHeader(title: "NOTIFICATIONS")) {
-                    notificationContent
+                switch settingsVM.uiState {
+                case .notConfigured:
+                    Section("Notifications") {
+                        HStack {
+                            Text("Permission")
+                            Spacer()
+                            Button("Enable") {
+                                Task { await settingsVM.requestPermissionAndSchedule() }
+                            }
+                        }
+                    }
+                case .denied:
+                    Section("Permissions") {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Notifications are Disabled")
+                                .font(.headline)
+                                .foregroundColor(.secondary)
+                            Text("Each day has a new quote. Turn on notifications to ensure you don't miss it.")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                            
+                            Button("Open System Settings") {
+                                // TODO: - Deep link to Settings App
+                            }
+                            .buttonStyle(.borderedProminent)
+                            // TODO: - Handle light & dark mode (.foregroundStyle(colorScheme == .dark ? .black : .white))
+                            .padding(.top, 4)
+                        }
+                    }
+                case .authorized(let time):
+                    Section("Notifications") {
+                        HStack {
+                            Text("Daily")
+                            Spacer()
+                            Text("Sent at \(time)")
+                                .foregroundColor(.green)
+                        }
+                        Button {
+                            isShowingTimePicker = true
+                        } label: {
+                            HStack {
+                                Text("Change Time")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                        .sheet(isPresented: $isShowingTimePicker) {
+                            TimePickerSheet(
+                                notificationTime: $bindableVM.notificationTime,
+                                onConfirm: {
+                                    Task { await settingsVM.setNewNotificationTime() }
+                                })
+                            .presentationDetents([.medium])
+                        }
+                    }
                 }
-                .listRowClearBackgroundModifier()
-                Section(header: sectionHeader(title: "APPEARANCE")) {
-                    appearanceContent
+            }
+            .onAppear {
+                settingsVM.syncUIState()
+            }
+            .onChange(of: scenePhase) { _, newValue in
+                if newValue == .active {
+                    Task {
+                        await settingsVM.localNotificationsManager.updatePermissionState()
+                        settingsVM.syncUIState()
+                    }
                 }
-                .listRowClearBackgroundModifier()
-                Section(header: sectionHeader(title: "ATTRIBUTION")) {
-                    ZenQuotesAttributionView()
-                }
-                .listRowClearBackgroundModifier()
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .scrollContentBackground(.hidden)
             .pinkBluePurpleBackgroundModifier()
-        }
-        .onChange(of: scenePhase) { _, newValue in
-            handleScenePhaseChange(newValue)
         }
         .alert(
             "Error",
@@ -79,29 +136,6 @@ struct SettingsView: View {
         }
     }
     
-    // MARK: - UI Components
-    @ViewBuilder
-    private var notificationContent: some View {
-        if settingsVM.localNotificationsManager.isPermissionGranted {
-            AuthorizationGrantedView(
-                viewModel: settingsVM,
-                scheduleNotificationSuccess: {
-                withAnimation(.spring().delay(0.25)) {
-                    scheduleNotificationIsSuccessful.toggle()
-                }
-            })
-        } else {
-            AuthorizationNotGrantedView(viewModel: settingsVM)
-        }
-    }
-    
-    private func sectionHeader(title: String) -> some View {
-        Text(title)
-            .font(.subheadline)
-            .bold()
-            .foregroundStyle(.secondary)
-    }
-    
     private var appearanceContent: some View {
         Picker(
             "Set to:",
@@ -116,15 +150,6 @@ struct SettingsView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Select appearance mode")
         .accessibilityHint("System, light, or dark appearance")
-    }
-    
-    // MARK: - Handle scene phase change function
-    private func handleScenePhaseChange(_ newValue: ScenePhase) {
-        if newValue == .active {
-            Task {
-                await settingsVM.localNotificationsManager.updatePermissionState()
-            }
-        }
     }
 }
 
