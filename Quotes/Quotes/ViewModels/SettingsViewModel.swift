@@ -7,10 +7,17 @@
 
 import Foundation
 
+enum NotificationUIState: Sendable, Equatable {
+    case notConfigured
+    case authorised(scheduledTime: String)
+    case denied
+}
+
 @Observable
 final class SettingsViewModel {
     
     //MARK: - Observable State
+    var uiState: NotificationUIState = .notConfigured
     var notificationTime = Date()
     var alertMessage: String?
     var isShowingAlert = false
@@ -27,27 +34,32 @@ final class SettingsViewModel {
             let defaultComponents = DateComponents(hour: 10, minute: 0)
             notificationTime = Calendar.current.date(from: defaultComponents) ?? .now
         }
+        syncUIState()
+    }
+    
+    // MARK: - Sync UI
+    private func syncUIState() {
+        if localNotificationsManager.isPermissionGranted {
+            uiState = .authorised(scheduledTime: localNotificationsManager.scheduledTimeString)
+        } else if localNotificationsManager.currentPermissionStatus == .denied {
+            uiState = .denied
+        } else {
+            uiState = .notConfigured
+        }
     }
     
     // MARK: - Request Permission
     /// First-Time Setup.
     func requestPermissionAndSchedule() async {
         await localNotificationsManager.requestPermission()
-        
-        if localNotificationsManager.isPermissionGranted {
-            await commitNotificationTime()
-        } else if let serviceMessage = localNotificationsManager.alertMessage {
-            self.alertMessage = serviceMessage
-            self.isShowingAlert = true
-        } else {
-            self.alertMessage = "Something went wrong. Please try again."
-            self.isShowingAlert = true
-        }
+        if localNotificationsManager.isPermissionGranted { await commitNotificationTime() }
+        syncUIState()
     }
     
     // MARK: - User changes notification time
     func setNewNotificationTime() async {
         await commitNotificationTime()
+        syncUIState()
     }
     
     //MARK: - Helper to set notification time
