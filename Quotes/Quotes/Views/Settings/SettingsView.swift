@@ -64,7 +64,7 @@ struct SettingsView: View {
                             .padding(.top, 4)
                         }
                     }
-                case .authorized(let time):
+                case .authorised(let time):
                     Section("Notifications") {
                         HStack {
                             Text("Daily")
