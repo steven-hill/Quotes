@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - UI State Enum
 /// Used by the VM to drive UI state.
 enum NotificationUIState: Sendable, Equatable {
     case notConfigured
@@ -17,7 +18,7 @@ enum NotificationUIState: Sendable, Equatable {
 @Observable
 final class SettingsViewModel {
     
-    //MARK: - Observable State
+    // MARK: - Observable State
     var uiState: NotificationUIState = .notConfigured
     var notificationTime = Date()
     var alertMessage: String?
@@ -63,7 +64,7 @@ final class SettingsViewModel {
         syncUIState()
     }
     
-    //MARK: - Helper to set notification time
+    // MARK: - Helper to set notification time
     private func commitNotificationTime() async {
         let components = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
         guard let hour = components.hour, let minute = components.minute else { return }
