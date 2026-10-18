@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Used by the VM to drive UI state.
 enum NotificationUIState: Sendable, Equatable {
     case notConfigured
     case authorised(scheduledTime: String)
