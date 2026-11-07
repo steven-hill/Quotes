@@ -13,8 +13,6 @@
 		5B3FB7C42C52DE47000994DC /* QuotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */; };
 		5B3FB7D12C52DFF9000994DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
 		5B416D7D306EE83000E1885B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FB7D02C52DFF9000994DC /* Constants.swift */; };
-		5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */; };
-		5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,26 +41,19 @@
 		5B3FB7C12C52DE47000994DC /* QuotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITests.swift; sourceTree = "<group>"; };
 		5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5B3FB7D02C52DFF9000994DC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubNetworkSession.swift; sourceTree = "<group>"; };
-		5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5B13026430752622008F7BDD /* LocalNotifications */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalNotifications; sourceTree = "<group>"; };
 		5B1BA72C305DDD8100E2DBE3 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
-		5B1BA732305DDD8700E2DBE3 /* ViewModelTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModelTests; sourceTree = "<group>"; };
+		5B3E33AF309FA9E800CBBE1C /* QuotesTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = QuotesTests; sourceTree = "<group>"; };
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
-		5B3F9D782D10C8EC009151CB /* AppearanceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppearanceTests; sourceTree = "<group>"; };
 		5B5A2910304C893100E5D1FC /* Networking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Networking; sourceTree = "<group>"; };
-		5B5CB660305B471A00262E01 /* AppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppTests; sourceTree = "<group>"; };
 		5B8B89DB3057034200819809 /* App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = App; sourceTree = "<group>"; };
 		5BAC3E1C2E1EC47200D185C0 /* Router */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Router; sourceTree = "<group>"; };
-		5BB40EC330658748007F3A28 /* PersistenceTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PersistenceTests; sourceTree = "<group>"; };
 		5BB40EC930658773007F3A28 /* Persistence */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Persistence; sourceTree = "<group>"; };
 		5BD2DF96306E73E00000FF34 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
 		5BDE29B430535EE6002F74F3 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
-		5BDE29B73054714A002F74F3 /* UnitTestUtilities */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UnitTestUtilities; sourceTree = "<group>"; };
-		5BDFEDBE2DC29DDF0065ACCC /* LocalNotificationsTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalNotificationsTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				5B3FB7A02C52DE45000994DC /* Quotes */,
-				5B3FB7B62C52DE47000994DC /* QuotesTests */,
+				5B3E33AF309FA9E800CBBE1C /* QuotesTests */,
 				5B3FB7C02C52DE47000994DC /* QuotesUITests */,
 				5B3FB79F2C52DE45000994DC /* Products */,
 			);
@@ -137,20 +128,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		5B3FB7B62C52DE47000994DC /* QuotesTests */ = {
-			isa = PBXGroup;
-			children = (
-				5B5CB660305B471A00262E01 /* AppTests */,
-				5BDE29B73054714A002F74F3 /* UnitTestUtilities */,
-				5BDFEDBE2DC29DDF0065ACCC /* LocalNotificationsTests */,
-				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
-				5BB40EC330658748007F3A28 /* PersistenceTests */,
-				5B1BA732305DDD8700E2DBE3 /* ViewModelTests */,
-				5B812CE82C5992B900B12213 /* NetworkingTests */,
-			);
-			path = QuotesTests;
-			sourceTree = "<group>";
-		};
 		5B3FB7C02C52DE47000994DC /* QuotesUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,15 +135,6 @@
 				5B3FB7C32C52DE47000994DC /* QuotesUITestsLaunchTests.swift */,
 			);
 			path = QuotesUITests;
-			sourceTree = "<group>";
-		};
-		5B812CE82C5992B900B12213 /* NetworkingTests */ = {
-			isa = PBXGroup;
-			children = (
-				5B5A291C304CA09E00E5D1FC /* StubNetworkSession.swift */,
-				5B5A291E304CA30F00E5D1FC /* NetworkClientTests.swift */,
-			);
-			path = NetworkingTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,12 +182,7 @@
 				5B3FB7B52C52DE47000994DC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				5B1BA732305DDD8700E2DBE3 /* ViewModelTests */,
-				5B3F9D782D10C8EC009151CB /* AppearanceTests */,
-				5B5CB660305B471A00262E01 /* AppTests */,
-				5BB40EC330658748007F3A28 /* PersistenceTests */,
-				5BDE29B73054714A002F74F3 /* UnitTestUtilities */,
-				5BDFEDBE2DC29DDF0065ACCC /* LocalNotificationsTests */,
+				5B3E33AF309FA9E800CBBE1C /* QuotesTests */,
 			);
 			name = QuotesTests;
 			productName = QuotesTests;
@@ -326,8 +289,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B5A291D304CA09E00E5D1FC /* StubNetworkSession.swift in Sources */,
-				5B5A291F304CA30F00E5D1FC /* NetworkClientTests.swift in Sources */,
 				5B416D7D306EE83000E1885B /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
