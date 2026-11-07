@@ -7,4 +7,17 @@
 
 import Foundation
 
-struct AppCoordinator {}
+/// Handles navigation.
+struct AppCoordinator {
+    
+    // MARK: - Dependency
+    private let urlHandler: URLOpening
+    
+    // MARK: - Init
+    init(urlHandler: URLOpening) {
+        self.urlHandler = urlHandler
+    }
+    
+    // MARK: - Method
+    func openSettingsApp() {}
+}
