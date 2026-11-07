@@ -15,6 +15,9 @@ struct SettingsView: View {
     // MARK: - State
     @State private var settingsVM: SettingsViewModel
     @State private var isShowingTimePicker = false
+    
+    //MARK: - Dependency
+    private let factory: ViewFactory
 
     // MARK: - Bindable
     @Bindable private var appearanceManager: AppearanceManager
@@ -22,7 +25,8 @@ struct SettingsView: View {
     // MARK: - Initialisation
     init(
         appearanceManager: AppearanceManager,
-        localNotificationsManager: LocalNotificationsManager
+        localNotificationsManager: LocalNotificationsManager,
+        factory: ViewFactory
     ) {
         self.appearanceManager = appearanceManager
         _settingsVM = State(
@@ -30,6 +34,7 @@ struct SettingsView: View {
                 localNotificationsManager: localNotificationsManager
             )
         )
+        self.factory = factory
     }
 
     // MARK: - Body
@@ -87,7 +92,7 @@ struct SettingsView: View {
                 }
 
         case .denied:
-            NotificationDeniedSection()
+            factory.makeNotificationDeniedSectionView()
 
         case .authorised(let time):
             NotificationAuthorisedSection(
@@ -117,7 +122,13 @@ private struct NotificationNotConfiguredSection: View {
 }
 
 // MARK: - Notification Denied
-private struct NotificationDeniedSection: View {
+struct NotificationDeniedSection: View {
+    private let coordinator: AppCoordinating
+    
+    init(coordinator: AppCoordinating) {
+        self.coordinator = coordinator
+    }
+    
     var body: some View {
         Section("Permissions") {
             VStack(alignment: .leading, spacing: 8) {
@@ -130,7 +141,7 @@ private struct NotificationDeniedSection: View {
                 .font(.caption)
                 .foregroundStyle(.gray)
                 Button("Open System Settings") {
-                    // TODO: Deep link to the Settings app.
+                    coordinator.openSettingsApp()
                 }
                 .foregroundStyle(.link)
                 .padding(.top, 4)
@@ -202,6 +213,10 @@ private struct AttributionSection: View {
     let appContainer = try! AppContainer(isInMemoryOnly: true)
     SettingsView(
         appearanceManager: appContainer.appearanceManager,
-        localNotificationsManager: appContainer.localNotificationsManager
+        localNotificationsManager: appContainer.localNotificationsManager,
+        factory: ViewFactory(
+            dependencies: appContainer,
+            coordinator: AppCoordinator(urlHandler: UIApplicationURLHandler())
+        )
     )
 }

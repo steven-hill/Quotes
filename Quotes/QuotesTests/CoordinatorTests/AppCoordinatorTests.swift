@@ -30,12 +30,11 @@ struct AppCoordinatorTests {
         
         sut.openSettingsApp()
         
-        #expect(urlHandlerSpy.openedURL == URL(string: UIApplication.openSettingsURLString), "Should call the correct URL.")
+        #expect(urlHandlerSpy.openedURL == URL(string: UIApplication.openSettingsURLString), "Should use the correct Settings URL.")
     }
     
     // MARK: - URL Handler Spy
-    final class URLHandlerSpy: URLOpening {
-
+    private final class URLHandlerSpy: URLOpening {
         private(set) var openedURL: URL?
         private(set) var openCallCount = 0
 

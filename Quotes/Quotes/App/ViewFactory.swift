@@ -10,12 +10,17 @@ import SwiftUI
 /// Manages `SwiftUI` presentation dependencies.
 final class ViewFactory {
     
-    //MARK: - Dependency
+    //MARK: - Dependencies
     private let dependencies: AppDependencyContaining
+    private let coordinator: AppCoordinating
     
     //MARK: - Initialisation
-    init(dependencies: AppDependencyContaining) {
+    init(
+        dependencies: AppDependencyContaining,
+        coordinator: AppCoordinating
+    ) {
         self.dependencies = dependencies
+        self.coordinator = coordinator
     }
     
     //MARK: - View Creation Methods
@@ -75,7 +80,12 @@ final class ViewFactory {
     func makeSettingsView() -> SettingsView {
         SettingsView(
             appearanceManager: dependencies.appearanceManager,
-            localNotificationsManager: dependencies.localNotificationsManager
+            localNotificationsManager: dependencies.localNotificationsManager,
+            factory: self
         )
+    }
+    
+    func makeNotificationDeniedSectionView() -> NotificationDeniedSection {
+        NotificationDeniedSection(coordinator: coordinator)
     }
 }

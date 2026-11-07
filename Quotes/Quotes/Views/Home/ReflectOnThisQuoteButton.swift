@@ -82,7 +82,10 @@ struct ReflectOnThisQuoteButton: View {
 
 #Preview {
     let appContainer = try! AppContainer(isInMemoryOnly: true)
-    let factory = ViewFactory(dependencies: appContainer)
+    let factory = ViewFactory(
+        dependencies: appContainer,
+        coordinator: AppCoordinator(urlHandler: UIApplicationURLHandler())
+    )
     ReflectOnThisQuoteButton(
         factory: factory,
         quoteContent: "A man is great not because he hasn't failed; a man is great because failure hasn't stopped him.",

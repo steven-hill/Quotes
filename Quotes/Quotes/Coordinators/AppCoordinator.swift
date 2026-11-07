@@ -8,8 +8,12 @@
 import Foundation
 import UIKit
 
+protocol AppCoordinating {
+    func openSettingsApp()
+}
+
 /// Handles navigation.
-struct AppCoordinator {
+struct AppCoordinator: AppCoordinating {
     
     // MARK: - Dependency
     private let urlHandler: URLOpening

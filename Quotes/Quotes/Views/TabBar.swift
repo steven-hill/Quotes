@@ -92,7 +92,8 @@ struct TabBar: View {
 #Preview {
     TabBar(
         factory: ViewFactory(
-            dependencies: try! AppContainer(isInMemoryOnly: true)
+            dependencies: try! AppContainer(isInMemoryOnly: true),
+            coordinator: AppCoordinator(urlHandler: UIApplicationURLHandler())
         ),
         isStorageDegraded: false
     )
