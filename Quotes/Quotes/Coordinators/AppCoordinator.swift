@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Handles navigation.
 struct AppCoordinator {
@@ -19,5 +20,8 @@ struct AppCoordinator {
     }
     
     // MARK: - Method
-    func openSettingsApp() {}
+    func openSettingsApp() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+        urlHandler.open(settingsURL)
+    }
 }

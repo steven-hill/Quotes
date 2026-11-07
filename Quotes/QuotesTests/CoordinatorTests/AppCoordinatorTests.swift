@@ -8,17 +8,29 @@
 import Testing
 @testable import Quotes
 import Foundation
+import UIKit
 
 @MainActor
 struct AppCoordinatorTests {
 
-    @Test func appCoordinator_openSettingsApp_callsURLHandler() {
+    @Test("Coordinator calls `UIApplicationURLHandler` once to open the device's Settings app")
+    func appCoordinator_openSettingsApp_callsURLHandler() {
         let urlHandlerSpy = URLHandlerSpy()
         let sut = AppCoordinator(urlHandler: urlHandlerSpy)
         
         sut.openSettingsApp()
         
         #expect(urlHandlerSpy.openCallCount == 1, "Should call the URL Handler once.")
+    }
+    
+    @Test("Coordinator calls `UIApplicationURLHandler` uses the correct Settings URL")
+    func appCoordinator_openSettingsApp_opensCorrectURL() {
+        let urlHandlerSpy = URLHandlerSpy()
+        let sut = AppCoordinator(urlHandler: urlHandlerSpy)
+        
+        sut.openSettingsApp()
+        
+        #expect(urlHandlerSpy.openedURL == URL(string: UIApplication.openSettingsURLString), "Should call the correct URL.")
     }
     
     // MARK: - URL Handler Spy
