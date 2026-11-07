@@ -103,7 +103,10 @@ struct QuoteOfTheDayView: View {
 
 #Preview {
     let appContainer = try! AppContainer(isInMemoryOnly: true)
-    let viewFactory = ViewFactory(dependencies: appContainer)
+    let viewFactory = ViewFactory(
+        dependencies: appContainer,
+        coordinator: AppCoordinator(urlHandler: UIApplicationURLHandler())
+    )
     QuoteOfTheDayView(
         networkClient: appContainer.networkClient,
         factory: viewFactory

@@ -14,8 +14,7 @@ struct ViewFactoryTests {
 
     @Test("View factory successfully accesses network client for `QuoteOfTheDayView`")
     func viewFactory_makeQuoteOfTheDayView_accessesNetworkClient() {
-        let spy = DependencyContainerSpy()
-        let sut = ViewFactory(dependencies: spy)
+        let (spy, sut) = makeSpyAndSUT()
         
         _ = sut.makeQuoteOfTheDayView()
         
@@ -24,8 +23,7 @@ struct ViewFactoryTests {
     
     @Test("View factory successfully accesses quote repository for `ReflectOnQuoteView`")
     func viewFactory_makeReflectOnQuoteView_accessesQuoteRepository() {
-        let spy = DependencyContainerSpy()
-        let sut = ViewFactory(dependencies: spy)
+        let (spy, sut) = makeSpyAndSUT()
         
         _ = sut.makeReflectOnQuoteView(
             quoteContent: Quote.sample[0].text,
@@ -38,8 +36,7 @@ struct ViewFactoryTests {
     
     @Test("View factory successfully accesses quote repository for `SavedView`")
     func viewFactory_makeSavedView_accessesQuoteRepository() {
-        let spy = DependencyContainerSpy()
-        let sut = ViewFactory(dependencies: spy)
+        let (spy, sut) = makeSpyAndSUT()
         
         _ = sut.makeSavedView()
         
@@ -48,8 +45,7 @@ struct ViewFactoryTests {
     
     @Test("View factory successfully accesses quote repository for `EditReflectionView`")
     func viewFactory_makeEditReflectionView_accessesQuoteRepository() {
-        let spy = DependencyContainerSpy()
-        let sut = ViewFactory(dependencies: spy)
+        let (spy, sut) = makeSpyAndSUT()
         
         _ = sut.makeEditReflectionView(
             savedQuote: Quote.sample[0],
@@ -63,8 +59,7 @@ struct ViewFactoryTests {
     
     @Test("View factory successfully accesses appearance manager for `SettingsView`")
     func viewFactory_makeSettingsView_accessesAppearanceManager()  {
-        let spy = DependencyContainerSpy()
-        let sut = ViewFactory(dependencies: spy)
+        let (spy, sut) = makeSpyAndSUT()
         
         _ = sut.makeSettingsView()
         
@@ -73,15 +68,27 @@ struct ViewFactoryTests {
     
     @Test("View factory successfully accesses local notifications manager for `SettingsView`")
     func viewFactory_makeSettingsView_accessesLocalNotificationsManager()  {
-        let spy = DependencyContainerSpy()
-        let sut = ViewFactory(dependencies: spy)
+        let (spy, sut) = makeSpyAndSUT()
         
         _ = sut.makeSettingsView()
         
         #expect(spy.didAccessLocalNotificationsManager, "Should have got the local notifications manager instance from the dependencies.")
     }
     
-    //MARK: - Spy
+    //MARK: - SUT Helper
+    private func makeSpyAndSUT() -> (
+        spy: DependencyContainerSpy,
+        sut: ViewFactory
+    ) {
+        let spy = DependencyContainerSpy()
+        let sut = ViewFactory(
+            dependencies: spy,
+            coordinator: DummyAppCoordinator()
+        )
+        return (spy, sut)
+    }
+    
+    //MARK: - Dependency Container Spy
     private final class DependencyContainerSpy: AppDependencyContaining {
         // MARK: - Properties
         private let mockQuoteRepository: QuoteRepository
@@ -127,6 +134,11 @@ struct ViewFactoryTests {
             self.mockAppearanceManager = appearanceManager
             self.mockLocalNotificationsManager = localNotificationsManager
         }
+    }
+    
+    //MARK: - Dummy App Coordinator
+    private struct DummyAppCoordinator: AppCoordinating {
+        func openSettingsApp() {}
     }
 
     //MARK: - Mock Network Session

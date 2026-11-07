@@ -98,7 +98,10 @@ struct SavedView: View {
 
 #Preview {
     let appContainer = try! AppContainer(isInMemoryOnly: true)
-    let viewFactory = ViewFactory(dependencies: appContainer)
+    let viewFactory = ViewFactory(
+        dependencies: appContainer,
+        coordinator: AppCoordinator(urlHandler: UIApplicationURLHandler())
+    )
     SavedView(
         quoteRepository: appContainer.quoteRepository,
         factory: viewFactory

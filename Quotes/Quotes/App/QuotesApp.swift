@@ -65,8 +65,13 @@ struct QuotesApp: App {
     nonisolated private func initialiseAppContainer() async {
         do {
             let container = try await AppContainer()
+            let urlHandler = UIApplicationURLHandler()
+            let appCoordinator = await AppCoordinator(urlHandler: urlHandler)
             await MainActor.run {
-                let factory = ViewFactory(dependencies: container)
+                let factory = ViewFactory(
+                    dependencies: container,
+                    coordinator: appCoordinator
+                )
                 appState = .ready(
                     factory: factory,
                     appearanceManager: container.appearanceManager,
