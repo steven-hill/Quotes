@@ -6,9 +6,11 @@
 //
 
 import Testing
+@testable import Quotes
 
 struct AppCoordinatorTests {
 
-    @Test func doNothing() {
+    @Test func appCoordinator_openSettingsApp_callsURLHandler() {
+        let sut = AppCoordinator()
     }
 }

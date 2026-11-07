@@ -47,6 +47,7 @@
 		5B13026430752622008F7BDD /* LocalNotifications */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalNotifications; sourceTree = "<group>"; };
 		5B1BA72C305DDD8100E2DBE3 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
 		5B3E33AF309FA9E800CBBE1C /* QuotesTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = QuotesTests; sourceTree = "<group>"; };
+		5B3E33C5309FAD3900CBBE1C /* Coordinators */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coordinators; sourceTree = "<group>"; };
 		5B3F58A62D0CD207007EF5F6 /* Appearance */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Appearance; sourceTree = "<group>"; };
 		5B5A2910304C893100E5D1FC /* Networking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Networking; sourceTree = "<group>"; };
 		5B8B89DB3057034200819809 /* App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = App; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		5B3FB7A02C52DE45000994DC /* Quotes */ = {
 			isa = PBXGroup;
 			children = (
+				5B3E33C5309FAD3900CBBE1C /* Coordinators */,
 				5B8B89DB3057034200819809 /* App */,
 				5BDE29B430535EE6002F74F3 /* Model */,
 				5BAC3E1C2E1EC47200D185C0 /* Router */,
@@ -155,6 +157,7 @@
 			fileSystemSynchronizedGroups = (
 				5B13026430752622008F7BDD /* LocalNotifications */,
 				5B1BA72C305DDD8100E2DBE3 /* ViewModels */,
+				5B3E33C5309FAD3900CBBE1C /* Coordinators */,
 				5B3F58A62D0CD207007EF5F6 /* Appearance */,
 				5B5A2910304C893100E5D1FC /* Networking */,
 				5B8B89DB3057034200819809 /* App */,
